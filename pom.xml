@@ -50,11 +50,6 @@
             <artifactId>jersey-media-moxy</artifactId>
         </dependency>
         -->
-    	<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
-			<version>1.9</version>
-		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>

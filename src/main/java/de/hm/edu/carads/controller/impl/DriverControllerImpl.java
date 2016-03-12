@@ -21,4 +21,10 @@ public class DriverControllerImpl implements DriverController{
 		return new Driver(id, "Benni", "Keckes", "09.06.1988");
 	}
 
+	@Override
+	public Driver addDriver(Driver driver) {
+		System.out.println(driver.toString());
+		return driver;
+	}
+
 }
