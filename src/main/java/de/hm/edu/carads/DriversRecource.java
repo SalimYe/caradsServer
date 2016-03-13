@@ -1,19 +1,30 @@
 package de.hm.edu.carads;
 
 
+import java.util.List;
+import java.util.Collection;
+
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Variant;
+import javax.xml.bind.JAXBElement;
+
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.DriverController;
-import de.hm.edu.carads.controller.impl.DriverControllerImpl;
+import de.hm.edu.carads.controller.DriverControllerImpl;
+import de.hm.edu.carads.controller.EntityValidator;
 import de.hm.edu.carads.models.Driver;
 
 @Path("drivers")
@@ -23,24 +34,50 @@ public class DriversRecource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getDriver() {
-		return gson.toJson(dc.getDrivers());
+	public Response getDriver(
+			@DefaultValue("0") @QueryParam("startAt") int startAt,
+			@DefaultValue("10") @QueryParam("length") int length) {
+		
+		Collection<Driver> drivers;
+		
+		drivers = dc.getDrivers(startAt, length);
+		
+		if(drivers.isEmpty())
+			return Response.noContent().build();
+		else
+			return Response.ok(gson.toJson(drivers)).build();
 	}
 	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getDrivers(@PathParam("id") String id) {
-		return gson.toJson(dc.getDriver(id));
+	public Response getDrivers(@PathParam("id") String id) {
+		Driver driver = dc.getDriver(id);
+		if(driver == null)
+			throw new WebApplicationException(404);
+		return Response.ok(gson.toJson(driver)).build();
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response setDriver(String input) {
+	public Response addDriver(String input) {
 		Driver driver = gson.fromJson(input, Driver.class);
-		System.out.println("asd");
-		return  Response.ok(gson.toJson(dc.addDriver(driver))).build();
+		
+		if(driver == null || !EntityValidator.isNewDriverValid(driver)){
+			throw new WebApplicationException(400);
+		}
+		
+		Driver registredDriver = dc.addDriver(driver);
+		return  Response.ok(gson.toJson(registredDriver)).build();
+		
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_XML)
+	public String changeDriver(JAXBElement<Driver> driver){
+		System.out.println("put");
+		return "";
 	}
 	
 }
