@@ -48,16 +48,6 @@ public class DriversRecource {
 			return Response.ok(gson.toJson(drivers)).build();
 	}
 	
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDrivers(@PathParam("id") String id) {
-		Driver driver = dc.getDriver(id);
-		if(driver == null)
-			throw new WebApplicationException(404);
-		return Response.ok(gson.toJson(driver)).build();
-	}
-	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -73,11 +63,32 @@ public class DriversRecource {
 		
 	}
 	
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDrivers(@PathParam("id") String id) {
+		Driver driver = dc.getDriver(id);
+		if(driver == null)
+			throw new WebApplicationException(404);
+		return Response.ok(gson.toJson(driver)).build();
+	}
+	
 	@PUT
-	@Consumes(MediaType.APPLICATION_XML)
-	public String changeDriver(JAXBElement<Driver> driver){
+	@Path("/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response changeDriver(String input){
+		Driver driverChanges = gson.fromJson(input, Driver.class);
+		if(driverChanges == null || !EntityValidator.isNewDriverValid(driverChanges)){
+			throw new WebApplicationException(400);
+		}
+		Driver changedDriver = dc.changeDriver(driverChanges);
+		
+		if(changedDriver == null){
+			throw new WebApplicationException(404);
+		}
 		System.out.println("put");
-		return "";
+		return Response.ok(gson.toJson(changedDriver)).build();
 	}
 	
 }

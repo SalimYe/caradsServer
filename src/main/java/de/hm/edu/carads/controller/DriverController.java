@@ -12,5 +12,6 @@ public interface DriverController {
 	
 	public Driver getDriver(String id);
 	public Driver addDriver(Driver driver);
+	public Driver changeDriver(Driver driver);
 	public void deleteDriver(String id);
 }

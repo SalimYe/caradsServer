@@ -105,5 +105,15 @@ public class DriverControllerImpl implements DriverController{
 		
 		return null;
 	}
+	@Override
+	public Driver changeDriver(Driver driver) {
+		if(!isIDInList(driver.getId())){
+			return null;
+		}
+		Iterator<Driver> it = list.iterator();
+		
+		
+		return driver;
+	}
 
 }
