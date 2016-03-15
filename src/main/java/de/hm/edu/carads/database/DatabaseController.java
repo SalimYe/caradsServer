@@ -2,10 +2,15 @@ package de.hm.edu.carads.database;
 
 import java.util.List;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
 import de.hm.edu.carads.models.Driver;
 
 public interface DatabaseController {
-	public List<Driver> getDrivers();
+	public List<DBObject> getDrivers();
 	public Driver getDriver(String id);
-	public Driver addDriver(Driver driver);
+	public Driver addDriver(BasicDBObject driver);
+	public Driver changeDriver(Driver driver);
+	public void deleteDriver(String id);
 }
