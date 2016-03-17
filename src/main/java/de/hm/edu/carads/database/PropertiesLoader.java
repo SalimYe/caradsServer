@@ -10,7 +10,7 @@ public class PropertiesLoader {
 		properties = new Properties();
 		BufferedInputStream stream;
 		try {
-			stream = new BufferedInputStream(DBTest.class.getResourceAsStream("db.properties"));
+			stream = new BufferedInputStream(PropertiesLoader.class.getResourceAsStream("db.properties"));
 			properties.load(stream);
 			stream.close();
 			

@@ -58,6 +58,9 @@ public class DriversRecource {
 			throw new WebApplicationException(400);
 		}
 		
+		if(dc.existDriver(driver.getEmail()))
+			throw new WebApplicationException(409);
+		
 		Driver registredDriver = dc.addDriver(driver);
 		return  Response.ok(gson.toJson(registredDriver)).build();
 		

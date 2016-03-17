@@ -14,4 +14,7 @@ public interface DriverController {
 	public Driver addDriver(Driver driver);
 	public Driver changeDriver(Driver driver);
 	public void deleteDriver(String id);
+	
+	public boolean existDriver(String email);
+	
 }

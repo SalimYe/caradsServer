@@ -14,6 +14,7 @@ import javax.ws.rs.WebApplicationException;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
 
 import de.hm.edu.carads.database.DatabaseController;
 import de.hm.edu.carads.database.DatabaseControllerImpl;
@@ -25,6 +26,8 @@ public class DriverControllerImpl implements DriverController{
 	private List<Driver> list;
 	private DatabaseController dbController;
 	private Gson gson;
+	
+	
 	
 	public DriverControllerImpl(){
 		list = new ArrayList<Driver>();
@@ -57,8 +60,10 @@ public class DriverControllerImpl implements DriverController{
 
 	@Override
 	public Driver addDriver(Driver driver) {
-		dbController.addDriver(new BasicDBObject("Name", gson.toJson(driver)));
-		System.out.println("bam");
+		
+		WriteResult res = dbController.addEntity(Driver.class, BasicDBObject.parse(gson.toJson(driver)));
+		
+		
 		if(!isEmailInList(driver.getEmail())){
 			if(driver.setId(UUID.randomUUID().toString()))
 				return driver;	
@@ -126,6 +131,13 @@ public class DriverControllerImpl implements DriverController{
 		
 		
 		return driver;
+	}
+	@Override
+	public boolean existDriver(String email) {
+		if(dbController.existEntity(Driver.class, email))
+			return true;
+		
+		return false;
 	}
 
 }
