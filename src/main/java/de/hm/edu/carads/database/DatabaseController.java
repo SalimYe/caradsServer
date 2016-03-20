@@ -9,12 +9,10 @@ import com.mongodb.WriteResult;
 import de.hm.edu.carads.models.Driver;
 
 public interface DatabaseController {
-	public List<DBObject> getDrivers();
-	public Driver getDriver(String id);
+		
+	public BasicDBObject addEntity(Class collectionClass, BasicDBObject entity);
+	public boolean existEntityByEmail(Class collectionClass, String email);
+	public BasicDBObject getEntity(Class collectionClass, String id);
 	
-	public Driver changeDriver(Driver driver);
-	public void deleteDriver(String id);
-	
-	public WriteResult addEntity(Class collectionClass, BasicDBObject entity);
-	public boolean existEntity(Class collectionClass, String email);
+	public List<DBObject> getEntities(Class collectionClass);
 }

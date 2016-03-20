@@ -7,7 +7,8 @@ public class EntityValidator {
 	//TODO richtige Validierung
 	public static boolean isNewDriverValid(Driver driver){
 		if(driver.getEmail()!= null && !driver.getEmail().isEmpty())
-			return true;
+			if(driver.getId() == null)
+				return true;
 		
 		return false;
 	}

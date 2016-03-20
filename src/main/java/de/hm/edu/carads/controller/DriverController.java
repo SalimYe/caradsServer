@@ -16,5 +16,4 @@ public interface DriverController {
 	public void deleteDriver(String id);
 	
 	public boolean existDriver(String email);
-	
 }

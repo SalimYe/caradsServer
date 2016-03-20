@@ -27,19 +27,13 @@ public class DriverControllerImpl implements DriverController{
 	private DatabaseController dbController;
 	private Gson gson;
 	
-	
-	
+
 	public DriverControllerImpl(){
-		list = new ArrayList<Driver>();
-		list.add(new Driver("b34b41a1-2c46-4f26-ad1c-90f57d84e855", "ben.k@hm.edu", "Benni", "Keckes", "09.06.1988"));
-		list.add(new Driver("3asd2", "fs@hm.edu", "Flo", "Schaeffer", "19.03.1992"));
-		list.add(new Driver("gdfhj", "asd.da@asd.de", "EE", "GTT", "19.03.1992"));
-		list.add(new Driver("a34b41a1-2c46-4f26-ad1c-90f57d84e855", "narf@mg.com", "FFF", "GTT", "19.03.1992"));
-		
 		PropertiesLoader pLoader = new PropertiesLoader();
 		dbController = new DatabaseControllerImpl(pLoader.getPropertyString("DB_HOST"), Integer.parseInt(pLoader.getPropertyString("DB_PORT")), pLoader.getPropertyString("DB_NAME"));
 		gson = new Gson();
 	}
+	
 	@Override
 	public Collection<Driver> getDrivers() {
 		
@@ -48,27 +42,15 @@ public class DriverControllerImpl implements DriverController{
 
 	@Override
 	public Driver getDriver(String id) {
-		Iterator<Driver> it = list.iterator();
-		
-		while(it.hasNext()){
-			Driver d = it.next();
-			if(d.getId().equals(id))
-				return d;
-		}
-		return null;
+		BasicDBObject dbObj = dbController.getEntity(Driver.class, id);
+		return makeDriverFromBasicDBObject(dbObj);
 	}
 
 	@Override
 	public Driver addDriver(Driver driver) {
-		
-		WriteResult res = dbController.addEntity(Driver.class, BasicDBObject.parse(gson.toJson(driver)));
-		
-		
-		if(!isEmailInList(driver.getEmail())){
-			if(driver.setId(UUID.randomUUID().toString()))
-				return driver;	
-		}
-		throw new WebApplicationException(409);
+		BasicDBObject dbObj = dbController.addEntity(Driver.class, BasicDBObject.parse(gson.toJson(driver)));
+
+		return makeDriverFromBasicDBObject(dbObj);
 	}
 
 	@Override
@@ -78,11 +60,15 @@ public class DriverControllerImpl implements DriverController{
 
 	@Override
 	public Collection<Driver> getDrivers(int startAt, int length) {
-		List<DBObject> drivers = dbController.getDrivers();
-		
-		Driver one = gson.fromJson(drivers.get(0).toString(), Driver.class);
+		List<DBObject> drivers = dbController.getEntities(Driver.class);
 		List<Driver> smallList = new ArrayList<Driver>();
-		smallList.add(one);
+		
+		Iterator<DBObject> it = drivers.iterator();
+		
+		while(it.hasNext()){
+			smallList.add(makeDriverFromBasicDBObject((BasicDBObject)it.next()));
+		}
+		
 		return smallList;
 	}
 
@@ -134,10 +120,16 @@ public class DriverControllerImpl implements DriverController{
 	}
 	@Override
 	public boolean existDriver(String email) {
-		if(dbController.existEntity(Driver.class, email))
+		if(dbController.existEntityByEmail(Driver.class, email))
 			return true;
 		
 		return false;
 	}
 
+	private Driver makeDriverFromBasicDBObject(BasicDBObject dbObj){
+		
+		Driver driver = gson.fromJson(dbObj.toJson(), Driver.class);
+		driver.setId(dbObj.getString("_id"));
+		return driver;
+	}
 }
