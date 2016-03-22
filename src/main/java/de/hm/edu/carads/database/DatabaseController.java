@@ -10,9 +10,13 @@ import de.hm.edu.carads.models.Driver;
 
 public interface DatabaseController {
 		
-	public BasicDBObject addEntity(Class collectionClass, BasicDBObject entity);
-	public boolean existEntityByEmail(Class collectionClass, String email);
 	public BasicDBObject getEntity(Class collectionClass, String id);
+	public BasicDBObject addEntity(Class collectionClass, BasicDBObject entity);
+	public BasicDBObject updateEntity(Class collectionClass, String id, BasicDBObject newEntity);
+	public void deleteEntity(Class collectionClass, String id);
 	
-	public List<DBObject> getEntities(Class collectionClass);
+	public boolean existEntityByEmail(Class collectionClass, String email);
+	
+	
+	public List<DBObject> getAllEntities(Class collectionClass);
 }

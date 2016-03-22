@@ -5,4 +5,12 @@ public class Car {
 	private String brand;
 	private String model;
 	private String color;
+	
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 }

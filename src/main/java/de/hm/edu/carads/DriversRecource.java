@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Collection;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -80,18 +81,31 @@ public class DriversRecource {
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response changeDriver(String input){
-		Driver driverChanges = gson.fromJson(input, Driver.class);
-		if(driverChanges == null || !EntityValidator.isNewDriverValid(driverChanges)){
+	public Response changeDriver(@PathParam("id") String id, String input){
+		Driver driverData = gson.fromJson(input, Driver.class);
+		
+		if(driverData == null || !EntityValidator.isNewDriverValid(driverData)){
+			System.out.println("bad");
 			throw new WebApplicationException(400);
 		}
-		Driver changedDriver = dc.changeDriver(driverChanges);
+		driverData.setId(id);
+		Driver changedDriver = dc.changeDriver(driverData);
 		
 		if(changedDriver == null){
 			throw new WebApplicationException(404);
 		}
 		System.out.println("put");
 		return Response.ok(gson.toJson(changedDriver)).build();
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	public Response deleteDriver(@PathParam("id") String id){
+		
+		if(!dc.deleteDriver(id))
+			throw new WebApplicationException(404);
+		
+		return Response.ok().build();
 	}
 	
 }

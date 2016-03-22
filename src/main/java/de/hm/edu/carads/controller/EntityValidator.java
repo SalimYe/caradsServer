@@ -9,7 +9,7 @@ public class EntityValidator {
 		if(driver.getEmail()!= null && !driver.getEmail().isEmpty())
 			if(driver.getId() == null)
 				return true;
-		
+		System.out.println("not valid: ");
 		return false;
 	}
 }

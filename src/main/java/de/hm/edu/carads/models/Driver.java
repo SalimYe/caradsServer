@@ -6,6 +6,7 @@ public class Driver {
 	private String firstName;
 	private String birthdate;
 	private String lastName;
+	private MetaInformation meta;
 	
 	public Driver(String id, String email, String firstName, String lastName, String age) {
 		super();
@@ -14,6 +15,7 @@ public class Driver {
 		this.firstName = firstName;
 		this.birthdate = age;
 		this.lastName = lastName;
+		this.meta = new MetaInformation();
 	}
 
 	public String getId() {
@@ -30,6 +32,16 @@ public class Driver {
 
 	public String getEmail() {
 		return email;
+	}
+	
+	public MetaInformation getMetaInformation(){
+		if(this.meta == null)
+			this.meta = new MetaInformation();
+		return this.meta;
+	}
+	
+	public void removeIdForUpdate(){
+		this.id = "";
 	}
 	
 	

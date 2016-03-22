@@ -1,7 +1,10 @@
 package de.hm.edu.carads.database;
 
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -22,6 +25,7 @@ import com.mongodb.client.MongoDatabase;
 
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.MetaInformation;
 
 
 public class DatabaseControllerImpl implements DatabaseController{
@@ -73,12 +77,34 @@ public class DatabaseControllerImpl implements DatabaseController{
 	}
 
 	@Override
-	public List<DBObject> getEntities(Class collectionClass) {
+	public List<DBObject> getAllEntities(Class collectionClass) {
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));	
 		List<DBObject> list = collection.find().toArray();
 		DBCursor cursor = collection.find();
 	
 		return list;
+	}
+
+	@Override
+	public BasicDBObject updateEntity(Class collectionClass, String id,
+			BasicDBObject newEntity) {
+		DBCollection collection = db.getCollection(getCollectionName(collectionClass));	
+		BasicDBObject query = new BasicDBObject();
+		query.put("_id", new ObjectId(id));
+		
+		
+		collection.findAndModify(query, newEntity);
+		return null;
+	}
+
+	@Override
+	public void deleteEntity(Class collectionClass, String id) {
+		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
+		
+		BasicDBObject query = new BasicDBObject();
+		query.put("_id", new ObjectId(id));
+		
+		collection.remove(query);
 	}
 	
 
