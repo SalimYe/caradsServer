@@ -15,6 +15,8 @@ public interface DatabaseController {
 	public BasicDBObject updateEntity(Class collectionClass, String id, BasicDBObject newEntity);
 	public void deleteEntity(Class collectionClass, String id);
 	
+	public long getCollectionCount(Class collectionClass);
+	
 	public boolean existEntityByEmail(Class collectionClass, String email);
 	
 	

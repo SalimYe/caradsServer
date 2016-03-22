@@ -27,7 +27,6 @@ import de.hm.edu.carads.models.MetaInformation;
 
 public class DriverControllerImpl implements DriverController{
 
-	private List<Driver> list;
 	private DatabaseController dbController;
 	private Gson gson;
 	
@@ -36,12 +35,6 @@ public class DriverControllerImpl implements DriverController{
 		PropertiesLoader pLoader = new PropertiesLoader();
 		dbController = new DatabaseControllerImpl(pLoader.getPropertyString("DB_HOST"), Integer.parseInt(pLoader.getPropertyString("DB_PORT")), pLoader.getPropertyString("DB_NAME"));
 		gson = new Gson();
-	}
-	
-	@Override
-	public Collection<Driver> getDrivers() {
-		
-		return new ArrayList<Driver>();
 	}
 
 	@Override
@@ -85,9 +78,8 @@ public class DriverControllerImpl implements DriverController{
 	}
 
 	@Override
-	public int getDriverCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getDriverCount() {
+		return dbController.getCollectionCount(Driver.class);
 	}
 	
 	public String makeNewId(String email){

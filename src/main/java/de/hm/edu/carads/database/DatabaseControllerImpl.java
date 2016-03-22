@@ -106,6 +106,12 @@ public class DatabaseControllerImpl implements DatabaseController{
 		
 		collection.remove(query);
 	}
+
+	@Override
+	public long getCollectionCount(Class collectionClass) {
+		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
+		return collection.count();
+	}
 	
 
 }
