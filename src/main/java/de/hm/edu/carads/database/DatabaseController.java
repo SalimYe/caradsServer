@@ -17,7 +17,7 @@ public interface DatabaseController {
 	
 	public long getCollectionCount(Class collectionClass);
 	
-	public boolean existEntityByEmail(Class collectionClass, String email);
+	public boolean existEntityByKeyValue(Class collectionClass, String key, String value);
 	
 	
 	public List<DBObject> getAllEntities(Class collectionClass);

@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -35,9 +36,10 @@ public class DatabaseControllerImpl implements DatabaseController{
 	private static final String COLLECTION_CAR = "car";
 	private static final String COLLECTION_CAMPAIGN = "campaign";
 	
-	public DatabaseControllerImpl(String host, int port, String dbName){
-		mongoClient = new MongoClient(host, port);
-		db = mongoClient.getDB(dbName);
+	public DatabaseControllerImpl(){
+		PropertiesLoader pLoader = new PropertiesLoader();
+		mongoClient = new MongoClient(pLoader.getPropertyString("DB_HOST"), Integer.parseInt(pLoader.getPropertyString("DB_PORT")));
+		db = mongoClient.getDB(pLoader.getPropertyString("DB_NAME"));
 		mongoClient.setWriteConcern(WriteConcern.ACKNOWLEDGED);
 	}
 
@@ -57,9 +59,9 @@ public class DatabaseControllerImpl implements DatabaseController{
 	}
 
 	@Override
-	public boolean existEntityByEmail(Class collectionClass, String email) {
+	public boolean existEntityByKeyValue(Class collectionClass, String key, String value) {
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));	
-		DBObject theOne = collection.findOne(new BasicDBObject("email", email));
+		DBObject theOne = collection.findOne(new BasicDBObject(key, value));
 		if(theOne!=null){
 			System.out.println("Collection' " + getCollectionName(collectionClass) + "' enthaelt bereits: "+ theOne.toString());
 			return true;

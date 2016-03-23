@@ -7,6 +7,7 @@ public class Driver {
 	private String birthdate;
 	private String lastName;
 	private MetaInformation meta;
+	private Car car;
 	
 	public Driver(String id, String email, String firstName, String lastName, String age) {
 		super();
@@ -16,6 +17,7 @@ public class Driver {
 		this.birthdate = age;
 		this.lastName = lastName;
 		this.meta = new MetaInformation();
+		this.car = null;
 	}
 
 	public String getId() {

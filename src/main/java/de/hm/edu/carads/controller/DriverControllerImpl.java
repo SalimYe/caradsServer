@@ -33,7 +33,7 @@ public class DriverControllerImpl implements DriverController{
 
 	public DriverControllerImpl(){
 		PropertiesLoader pLoader = new PropertiesLoader();
-		dbController = new DatabaseControllerImpl(pLoader.getPropertyString("DB_HOST"), Integer.parseInt(pLoader.getPropertyString("DB_PORT")), pLoader.getPropertyString("DB_NAME"));
+		dbController = new DatabaseControllerImpl();
 		gson = new Gson();
 	}
 
@@ -58,7 +58,7 @@ public class DriverControllerImpl implements DriverController{
 		Driver driver = makeDriverFromBasicDBObject(dbController.getEntity(Driver.class, id));
 		
 		dbController.deleteEntity(Driver.class, id);
-		if(dbController.existEntityByEmail(Driver.class, driver.getEmail()))
+		if(dbController.existEntityByKeyValue(Driver.class, "email", driver.getEmail()))
 			return false;
 		return true;
 	}
@@ -107,7 +107,7 @@ public class DriverControllerImpl implements DriverController{
 	}
 	@Override
 	public boolean existDriver(String email) {
-		if(dbController.existEntityByEmail(Driver.class, email))
+		if(dbController.existEntityByKeyValue(Driver.class, "email", email))
 			return true;
 		
 		return false;
