@@ -22,6 +22,7 @@ import com.mongodb.WriteResult;
 import de.hm.edu.carads.database.DatabaseController;
 import de.hm.edu.carads.database.DatabaseControllerImpl;
 import de.hm.edu.carads.database.PropertiesLoader;
+import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.MetaInformation;
 
@@ -95,9 +96,9 @@ public class DriverControllerImpl implements DriverController{
 		return null;
 	}
 	@Override
-	public Driver changeDriver(Driver driver) {
-		Driver old = getDriver(driver.getId());
-		
+	public Driver changeDriver(String driverid, Driver driver) {
+		Driver old = getDriver(driverid);
+		driver.setId(driverid);
 		driver.getMetaInformation().setCreated(old.getMetaInformation().getCreated());
 		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
 	
@@ -106,7 +107,7 @@ public class DriverControllerImpl implements DriverController{
 		return driver;
 	}
 	@Override
-	public boolean existDriver(String email) {
+	public boolean existDriverByEmail(String email) {
 		if(dbController.existEntityByKeyValue(Driver.class, "email", email))
 			return true;
 		
@@ -118,5 +119,31 @@ public class DriverControllerImpl implements DriverController{
 		Driver driver = gson.fromJson(dbObj.toJson(), Driver.class);
 		driver.setId(dbObj.getString("_id"));
 		return driver;
+	}
+
+	@Override
+	public Car getCar(String driverid) {
+		Car car = getDriver(driverid).getCar();
+		if(car == null)
+			return null;
+		return car;
+	}
+
+	@Override
+	public boolean existDriverById(String id) {
+		if(dbController.existEntityByKeyValue(Driver.class, "id", id))
+			return true;
+		
+		return false;
+	}
+
+	@Override
+	public Car addCar(String driverid, Car car) {
+		Driver driver = getDriver(driverid);
+		driver.setCar(car);
+		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
+		
+		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
+		return car;
 	}
 }

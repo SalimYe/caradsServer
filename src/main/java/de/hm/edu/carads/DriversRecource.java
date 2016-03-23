@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import de.hm.edu.carads.controller.DriverController;
 import de.hm.edu.carads.controller.DriverControllerImpl;
 import de.hm.edu.carads.controller.EntityValidator;
+import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 
 @Path("drivers")
@@ -59,7 +60,7 @@ public class DriversRecource {
 			throw new WebApplicationException(400);
 		}
 		
-		if(dc.existDriver(driver.getEmail()))
+		if(dc.existDriverByEmail(driver.getEmail()))
 			throw new WebApplicationException(409);
 		
 		Driver registredDriver = dc.addDriver(driver);
@@ -88,8 +89,8 @@ public class DriversRecource {
 			System.out.println("bad");
 			throw new WebApplicationException(400);
 		}
-		driverData.setId(id);
-		Driver changedDriver = dc.changeDriver(driverData);
+
+		Driver changedDriver = dc.changeDriver(id, driverData);
 		
 		if(changedDriver == null){
 			throw new WebApplicationException(404);
@@ -108,4 +109,43 @@ public class DriversRecource {
 		return Response.ok().build();
 	}
 	
+	
+	@GET
+	@Path("/{id}/cars")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDriverCars(@PathParam("id") String driverid) {
+		
+		if(dc.getDriver(driverid) == null)
+			throw new WebApplicationException(404);
+		
+		Car car;
+		
+		car = dc.getCar(driverid);
+		
+		if(car == null)
+			return Response.noContent().build();
+		else
+			return Response.ok(gson.toJson(car)).build();
+	}
+	
+	@POST
+	@Path("/{id}/cars")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addDriverCar(@PathParam("id") String driverid, String input) {
+		Driver driver = dc.getDriver(driverid);
+		Car car = gson.fromJson(input, Car.class);
+		
+		if(driver == null)
+			throw new WebApplicationException(404);
+		
+				
+		if(car == null || !EntityValidator.isNewCarValid(car)){
+			throw new WebApplicationException(400);
+		}
+		
+		Car registredCar = dc.addCar(driverid, car);
+		return  Response.ok(gson.toJson(registredCar)).build();
+		
+	}
 }

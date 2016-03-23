@@ -1,5 +1,6 @@
 package de.hm.edu.carads.controller;
 
+import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 
 public class EntityValidator {
@@ -11,5 +12,11 @@ public class EntityValidator {
 				return true;
 		System.out.println("not valid: ");
 		return false;
+	}
+	
+	//TODO
+	public static boolean isNewCarValid(Car car){
+		
+		return true;
 	}
 }
