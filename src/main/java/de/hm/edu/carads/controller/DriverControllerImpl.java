@@ -101,6 +101,7 @@ public class DriverControllerImpl implements DriverController{
 		driver.setId(driverid);
 		driver.getMetaInformation().setCreated(old.getMetaInformation().getCreated());
 		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
+		driver.setCar(old.getCar());
 	
 		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
 		

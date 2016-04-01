@@ -86,7 +86,6 @@ public class DriversRecource {
 		Driver driverData = gson.fromJson(input, Driver.class);
 		
 		if(driverData == null || !EntityValidator.isNewDriverValid(driverData)){
-			System.out.println("bad");
 			throw new WebApplicationException(400);
 		}
 
@@ -95,7 +94,6 @@ public class DriversRecource {
 		if(changedDriver == null){
 			throw new WebApplicationException(404);
 		}
-		System.out.println("put");
 		return Response.ok(gson.toJson(changedDriver)).build();
 	}
 	
