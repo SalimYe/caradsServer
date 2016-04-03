@@ -15,6 +15,10 @@ public class Image {
 		this.altText = altText;
 		this.isTitle = isTitle;
 	}
+	
+	public Image(String url){
+		this.url = url;
+	}
 
 	public String getUrl() {
 		return url;
