@@ -33,7 +33,6 @@ public class DriverControllerImpl implements DriverController{
 	
 
 	public DriverControllerImpl(){
-		PropertiesLoader pLoader = new PropertiesLoader();
 		dbController = new DatabaseControllerImpl();
 		gson = new Gson();
 	}
