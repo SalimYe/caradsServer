@@ -1,12 +1,8 @@
 package de.hm.edu.carads.models;
 
-public class Driver {
-	private String id;
-	private String email;
-	private String firstName;
+public class Driver extends Person{
+
 	private String birthdate;
-	private String lastName;
-	private MetaInformation meta;
 	private Car car;
 	private Image image;
 	
@@ -99,9 +95,6 @@ public class Driver {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
 	
 }
 
