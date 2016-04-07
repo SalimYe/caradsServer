@@ -26,6 +26,7 @@ import com.mongodb.client.MongoDatabase;
 
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.Image;
 import de.hm.edu.carads.models.MetaInformation;
 
 
@@ -35,6 +36,7 @@ public class DatabaseControllerImpl implements DatabaseController{
 	private static final String COLLECTION_DRIVER = "driver";
 	private static final String COLLECTION_CAR = "car";
 	private static final String COLLECTION_CAMPAIGN = "campaign";
+	private static final String COLLECTION_IMAGE = "image";
 	
 	public DatabaseControllerImpl(){
 		PropertiesLoader pLoader = new PropertiesLoader();
@@ -55,6 +57,8 @@ public class DatabaseControllerImpl implements DatabaseController{
 			return COLLECTION_DRIVER;
 		else if(c == Car.class)
 			return COLLECTION_CAR;
+		else if(c == Image.class)
+			return COLLECTION_IMAGE;
 		return null;
 	}
 

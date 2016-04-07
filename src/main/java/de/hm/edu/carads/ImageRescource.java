@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -30,7 +31,6 @@ public class ImageRescource {
 	private static final String UPLOAD_PATH = "/tmp/";
 	
 	@POST
-	@Path("/upload")
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response uploadPdfFile(  @FormDataParam("file") InputStream fileInputStream,
@@ -63,13 +63,13 @@ public class ImageRescource {
 	    }
 	    
 	    Image image = new Image(filename);
-	    return Response.ok(gson.toJson(image)).build();
+	    return Response.status(201).entity(gson.toJson(image)).build();
 	}
 	
 	
 	@GET
-	@Path("/upload")
-	public Response get(){
+	@Path("/{id}")
+	public Response get(@PathParam("id") String id){
 		return Response.status(200).build();
 	}
 }

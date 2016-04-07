@@ -8,6 +8,7 @@ public class Driver {
 	private String lastName;
 	private MetaInformation meta;
 	private Car car;
+	private Image image;
 	
 	public Driver(String id, String email, String firstName, String lastName, String age) {
 		super();
@@ -18,6 +19,7 @@ public class Driver {
 		this.lastName = lastName;
 		this.meta = new MetaInformation();
 		this.car = null;
+		this.image = null;
 	}
 
 	public String getId() {
@@ -52,6 +54,50 @@ public class Driver {
 
 	public void setCar(Car car) {
 		this.car = car;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public MetaInformation getMeta() {
+		return meta;
+	}
+
+	public void setMeta(MetaInformation meta) {
+		this.meta = meta;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

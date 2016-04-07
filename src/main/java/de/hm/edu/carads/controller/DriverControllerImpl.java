@@ -97,15 +97,11 @@ public class DriverControllerImpl implements DriverController{
 	}
 	@Override
 	public Driver changeDriver(String driverid, Driver driver) {
-		Driver old = getDriver(driverid);
-		driver.setId(driverid);
-		driver.getMetaInformation().setCreated(old.getMetaInformation().getCreated());
-		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
-		driver.setCar(old.getCar());
+		Driver updatedDriver = changeIfNew(getDriver(driverid), driver);		
 	
-		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
+		dbController.updateEntity(Driver.class, updatedDriver.getId(), BasicDBObject.parse(gson.toJson(updatedDriver)));
 		
-		return driver;
+		return updatedDriver;
 	}
 	@Override
 	public boolean existDriverByEmail(String email) {
@@ -146,5 +142,23 @@ public class DriverControllerImpl implements DriverController{
 		
 		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
 		return car;
+	}
+	
+	private Driver changeIfNew(Driver oldDriver, Driver newDriver){
+		if(newDriver.getEmail()!=null)
+			oldDriver.setEmail(newDriver.getEmail());
+		if(newDriver.getFirstName() != null )
+			oldDriver.setFirstName(newDriver.getFirstName());
+		if(newDriver.getLastName() != null )
+			oldDriver.setLastName(newDriver.getLastName());
+		if(newDriver.getBirthdate() != null )
+			oldDriver.setBirthdate(newDriver.getBirthdate());
+		if(newDriver.getCar() != null)
+			oldDriver.setCar(newDriver.getCar());
+		if(newDriver.getImage() != null)
+			oldDriver.setImage(newDriver.getImage());
+		
+		oldDriver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
+		return oldDriver;
 	}
 }
