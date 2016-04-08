@@ -1,5 +1,6 @@
 package de.hm.edu.carads;
 
+import javax.imageio.ImageIO;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,9 +16,15 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.google.gson.Gson;
 
+import de.hm.edu.carads.controller.ImageController;
+import de.hm.edu.carads.controller.ImageControllerImpl;
 import de.hm.edu.carads.models.Image;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +35,8 @@ import java.util.UUID;
 public class ImageRescource {
 
 	private Gson gson = new Gson();
-	private static final String UPLOAD_PATH = "/tmp/";
+	private ImageController ic = new ImageControllerImpl();
+	
 	
 	@POST
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
@@ -36,40 +44,41 @@ public class ImageRescource {
 	public Response uploadPdfFile(  @FormDataParam("file") InputStream fileInputStream,
 	                                @FormDataParam("file") FormDataContentDisposition fileMetaData) throws Exception
 	{
-	    String filename;
-	    
-	    try
-	    {
-	        int read = 0;
-	        byte[] bytes = new byte[1024];
-	        
-	        String dataType = fileMetaData.getFileName().split("\\.")[1];
-	        
-	        if(!dataType.equals("jpg"))
-	        	throw new WebApplicationException(406);
-	        
-	        filename = UPLOAD_PATH + UUID.randomUUID() + "." + dataType;
-	        
-	        OutputStream out = new FileOutputStream(new File(filename));
-	        while ((read = fileInputStream.read(bytes)) != -1) 
-	        {
-	            out.write(bytes, 0, read);
-	        }
-	        out.flush();
-	        out.close();
-	    } catch (IOException e) 
-	    {
-	        throw new WebApplicationException(500);
+	   
+	    String dataType = fileMetaData.getFileName().split("\\.")[1];
+	    Image image;
+	    try{
+	    	image = ic.saveImage(fileInputStream, dataType);  
+	    	return Response.status(201).entity(gson.toJson(image)).build();
+	    	
+	    }catch(IllegalArgumentException e){
+	    	throw new WebApplicationException(406);
+	    }catch(IOException e){
+	    	throw new WebApplicationException(500);
 	    }
+	      
 	    
-	    Image image = new Image(filename);
-	    return Response.status(201).entity(gson.toJson(image)).build();
 	}
 	
 	
 	@GET
 	@Path("/{id}")
+	@Produces({ "image/png", "image/jpg" })
 	public Response get(@PathParam("id") String id){
-		return Response.status(200).build();
+		
+		try{
+			byte[] imageData = ic.getImage(id);
+			
+		    return Response.ok(imageData).build();
+		    //return Response.ok(new ByteArrayInputStream(imageData)).build();
+		}
+		catch(FileNotFoundException e){
+			throw new WebApplicationException(404);
+		}
+		catch(Exception e){
+			throw new WebApplicationException(500);
+		}
+		
+		
 	}
 }
