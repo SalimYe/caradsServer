@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.NoContentException;
 
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
@@ -38,10 +39,10 @@ public class DriverControllerImpl implements DriverController{
 	}
 
 	@Override
-	public Driver getDriver(String id) {
+	public Driver getDriver(String id) throws NoContentException {
 		BasicDBObject dbObj = dbController.getEntity(Driver.class, id);
 		if(dbObj == null)
-			return null;
+			throw new NoContentException("Driver not found");
 		return makeDriverFromBasicDBObject(dbObj);
 	}
 
@@ -95,12 +96,16 @@ public class DriverControllerImpl implements DriverController{
 		return null;
 	}
 	@Override
-	public Driver changeDriver(String driverid, Driver driver) {
-		Driver updatedDriver = changeIfNew(getDriver(driverid), driver);		
-	
-		dbController.updateEntity(Driver.class, updatedDriver.getId(), BasicDBObject.parse(gson.toJson(updatedDriver)));
+	public Driver changeDriver(String driverid, Driver driver) throws NoContentException{
+		Driver updatedDriver;
+		try {
+			updatedDriver = changeIfNew(getDriver(driverid), driver);
+			dbController.updateEntity(Driver.class, updatedDriver.getId(), BasicDBObject.parse(gson.toJson(updatedDriver)));
+			return updatedDriver;
+		} catch (NoContentException e) {
+			throw new NoContentException("Driver not found");
+		}
 		
-		return updatedDriver;
 	}
 	@Override
 	public boolean existDriverByEmail(String email) {
@@ -118,11 +123,8 @@ public class DriverControllerImpl implements DriverController{
 	}
 
 	@Override
-	public Car getCar(String driverid) {
-		Car car = getDriver(driverid).getCar();
-		if(car == null)
-			return null;
-		return car;
+	public Car getCar(String driverid) throws Exception{
+		return getDriver(driverid).getCar();
 	}
 
 	@Override
@@ -134,8 +136,10 @@ public class DriverControllerImpl implements DriverController{
 	}
 
 	@Override
-	public Car addCar(String driverid, Car car) {
+	public Car addCar(String driverid, Car car) throws NoContentException {
+		
 		Driver driver = getDriver(driverid);
+		
 		driver.setCar(car);
 		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
 		

@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
@@ -63,8 +64,13 @@ public class DriversRecource {
 		if(dc.existDriverByEmail(driver.getEmail()))
 			throw new WebApplicationException(409);
 		
-		Driver registredDriver = dc.addDriver(driver);
-		return  Response.ok(gson.toJson(registredDriver)).build();
+		try{
+			Driver registredDriver = dc.addDriver(driver);
+			return  Response.ok(gson.toJson(registredDriver)).build();
+		}catch(NoContentException e){
+			throw new WebApplicationException(404);
+		}
+		
 		
 	}
 	
@@ -72,10 +78,18 @@ public class DriversRecource {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDrivers(@PathParam("id") String id) {
-		Driver driver = dc.getDriver(id);
-		if(driver == null)
+		try{
+			
+			Driver driver = dc.getDriver(id);
+			return Response.ok(gson.toJson(driver)).build();
+			
+		}catch(NoContentException e){
 			throw new WebApplicationException(404);
-		return Response.ok(gson.toJson(driver)).build();
+		}catch(Exception e){
+			throw new WebApplicationException(500);
+		}
+		
+		
 	}
 	
 	@PUT
@@ -88,13 +102,16 @@ public class DriversRecource {
 		if(driverData == null || !EntityValidator.isNewDriverValid(driverData)){
 			throw new WebApplicationException(400);
 		}
-
-		Driver changedDriver = dc.changeDriver(id, driverData);
 		
-		if(changedDriver == null){
+		try{
+			Driver changedDriver = dc.changeDriver(id, driverData);
+			return Response.ok(gson.toJson(changedDriver)).build();
+		}catch(NoContentException e){
 			throw new WebApplicationException(404);
+		} catch (Exception e) {
+			throw new WebApplicationException(500);
 		}
-		return Response.ok(gson.toJson(changedDriver)).build();
+				
 	}
 	
 	@DELETE
@@ -113,17 +130,24 @@ public class DriversRecource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDriverCars(@PathParam("id") String driverid) {
 		
-		if(dc.getDriver(driverid) == null)
-			throw new WebApplicationException(404);
 		
 		Car car;
 		
-		car = dc.getCar(driverid);
-		
-		if(car == null)
-			return Response.noContent().build();
-		else
+		try {
+			car = dc.getCar(driverid);
+			if(car == null){
+				return Response.noContent().build();
+			}
 			return Response.ok(gson.toJson(car)).build();
+			
+			
+		} catch(NoContentException e){
+			throw new WebApplicationException(404);
+		}
+		catch (Exception e) {
+			throw new WebApplicationException(500);
+		}
+		
 	}
 	
 	@POST
@@ -131,19 +155,27 @@ public class DriversRecource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addDriverCar(@PathParam("id") String driverid, String input) {
-		Driver driver = dc.getDriver(driverid);
-		Car car = gson.fromJson(input, Car.class);
-		
-		if(driver == null)
+		Driver driver;
+		Car car;
+		try {
+			driver = dc.getDriver(driverid);
+			car = gson.fromJson(input, Car.class);
+		} catch (Exception e) {
 			throw new WebApplicationException(404);
+		}
+		
+		
+			
 		
 				
 		if(car == null || !EntityValidator.isNewCarValid(car)){
 			throw new WebApplicationException(400);
 		}
-		
-		Car registredCar = dc.addCar(driverid, car);
-		return  Response.ok(gson.toJson(registredCar)).build();
-		
+		try{
+			Car registredCar = dc.addCar(driverid, car);
+			return  Response.ok(gson.toJson(registredCar)).build();
+		}catch(NoContentException e){
+			throw new WebApplicationException(404);
+		}
 	}
 }

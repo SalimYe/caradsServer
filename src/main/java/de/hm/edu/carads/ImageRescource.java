@@ -44,7 +44,6 @@ public class ImageRescource {
 	public Response uploadPdfFile(  @FormDataParam("file") InputStream fileInputStream,
 	                                @FormDataParam("file") FormDataContentDisposition fileMetaData) throws Exception
 	{
-	   
 	    String dataType = fileMetaData.getFileName().split("\\.")[1];
 	    Image image;
 	    try{
@@ -57,9 +56,7 @@ public class ImageRescource {
 	    	throw new WebApplicationException(500);
 	    }
 	      
-	    
 	}
-	
 	
 	@GET
 	@Path("/{id}")
@@ -68,9 +65,7 @@ public class ImageRescource {
 		
 		try{
 			byte[] imageData = ic.getImage(id);
-			
 		    return Response.ok(imageData).build();
-		    //return Response.ok(new ByteArrayInputStream(imageData)).build();
 		}
 		catch(FileNotFoundException e){
 			throw new WebApplicationException(404);

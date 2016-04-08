@@ -19,7 +19,7 @@ import de.hm.edu.carads.models.Image;
 public class ImageControllerImpl implements ImageController{
 
 	private static final String UPLOAD_PATH = "/tmp/";
-	public static final String[] VALID_DATATYPES = new String[] {"jpg","png","gif"};
+	public static final String[] VALID_DATATYPES = new String[] {"jpg","png"};
 	
 	@Override
 	public Image saveImage(InputStream input, String datatype) throws Exception{
@@ -32,7 +32,7 @@ public class ImageControllerImpl implements ImageController{
         if(!isDatatypeValid(datatype))
         	throw new IllegalArgumentException("wrong datatype");
         
-        imageData.setId(/*UPLOAD_PATH + */UUID.randomUUID() + "." + datatype);
+        imageData.setId(UUID.randomUUID() + "." + datatype);
         imageData.setDatatype(datatype);
         
         OutputStream out = new FileOutputStream(new File(UPLOAD_PATH + imageData.getId()));
@@ -51,7 +51,7 @@ public class ImageControllerImpl implements ImageController{
 		BufferedImage img = null;
 		String dataType = id.split("\\.")[1];
 		try{
-		    img = ImageIO.read(new File(UPLOAD_PATH + id)); // eventually C:\\ImageTest\\pic2.jpg
+		    img = ImageIO.read(new File(UPLOAD_PATH + id));
 		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		    ImageIO.write(img, dataType, baos);
 		    byte[] imageData = baos.toByteArray();
