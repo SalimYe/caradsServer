@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.core.NoContentException;
 
+import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 
@@ -14,7 +15,7 @@ public interface DriverController {
 	
 	public Driver getDriver(String id) throws Exception;
 	
-	public Driver addDriver(Driver driver) throws NoContentException;
+	public Driver addDriver(Driver driver) throws Exception;
 	public Driver changeDriver(String driverid, Driver driver) throws NoContentException;
 	public boolean deleteDriver(String id);
 	public boolean existDriverByEmail(String email);

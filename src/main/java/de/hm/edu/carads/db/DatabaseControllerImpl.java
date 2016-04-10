@@ -1,4 +1,4 @@
-package de.hm.edu.carads.database;
+package de.hm.edu.carads.db;
 
 import java.net.UnknownHostException;
 import java.text.DateFormat;
@@ -24,17 +24,18 @@ import com.mongodb.bulk.WriteRequest;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 
+import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.Image;
 import de.hm.edu.carads.models.MetaInformation;
-import de.hm.edu.carads.util.DatabaseFactory;
 
 
 public class DatabaseControllerImpl implements DatabaseController{
 	private MongoClient mongoClient;
 	private DB db;
+	private String environment;
 	private static final String COLLECTION_DRIVER = "driver";
 	private static final String COLLECTION_CAR = "car";
 	private static final String COLLECTION_CAMPAIGN = "campaign";
@@ -43,6 +44,7 @@ public class DatabaseControllerImpl implements DatabaseController{
 	
 	public DatabaseControllerImpl(String environment){
 		db = DatabaseFactory.getInstanceDB(environment);
+		this.environment = environment;
 	}
 
 	@Override
@@ -120,6 +122,5 @@ public class DatabaseControllerImpl implements DatabaseController{
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
 		return collection.count();
 	}
-	
 
 }

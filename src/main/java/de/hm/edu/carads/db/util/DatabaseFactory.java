@@ -1,4 +1,4 @@
-package de.hm.edu.carads.util;
+package de.hm.edu.carads.db.util;
 
 import java.io.IOException;
 import java.util.EmptyStackException;
@@ -9,7 +9,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
 
 import de.flapdoodle.embed.mongo.tests.MongodForTestsFactory;
-import de.hm.edu.carads.database.PropertiesLoader;
+import de.hm.edu.carads.db.PropertiesLoader;
 
 
 public class DatabaseFactory {
@@ -55,5 +55,10 @@ public class DatabaseFactory {
         catch (IOException exception) {
             throw new IllegalStateException(exception);
         }
+    }
+    
+    public static void dropTestDB(){
+    	if(testDB!=null)
+    		testDB.dropDatabase();
     }
 }

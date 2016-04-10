@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import javax.activity.InvalidActivityException;
+import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.NoContentException;
 
@@ -20,9 +22,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 
-import de.hm.edu.carads.database.DatabaseController;
-import de.hm.edu.carads.database.DatabaseControllerImpl;
-import de.hm.edu.carads.database.PropertiesLoader;
+import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.db.DatabaseController;
+import de.hm.edu.carads.db.DatabaseControllerImpl;
+import de.hm.edu.carads.db.PropertiesLoader;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.MetaInformation;
@@ -47,7 +50,13 @@ public class DriverControllerImpl implements DriverController{
 	}
 
 	@Override
-	public Driver addDriver(Driver driver) {
+	public Driver addDriver(Driver driver) throws Exception{
+		if(existDriverByEmail(driver.getEmail()))
+			throw new AlreadyExistsException();
+		
+		if(!EntityValidator.isNewDriverValid(driver))
+			throw new InvalidAttributesException("Driver is not valid");
+		
 		driver.getMetaInformation().setCreated(MetaInformationController.makeDate());
 		BasicDBObject dbObj = dbController.addEntity(Driver.class, BasicDBObject.parse(gson.toJson(driver)));
 

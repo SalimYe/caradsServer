@@ -1,4 +1,4 @@
-package de.hm.edu.carads.database;
+package de.hm.edu.carads.db;
 
 import java.util.List;
 
@@ -18,7 +18,6 @@ public interface DatabaseController {
 	public long getCollectionCount(Class collectionClass);
 	
 	public boolean existEntityByKeyValue(Class collectionClass, String key, String value);
-	
 	
 	public List<DBObject> getAllEntities(Class collectionClass);
 }

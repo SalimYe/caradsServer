@@ -28,9 +28,9 @@ import de.hm.edu.carads.controller.AdvertiserControllerImpl;
 import de.hm.edu.carads.controller.DriverController;
 import de.hm.edu.carads.controller.DriverControllerImpl;
 import de.hm.edu.carads.controller.EntityValidator;
+import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Car;
-import de.hm.edu.carads.util.DatabaseFactory;
 
 @Path("advertisers")
 public class AdvertiserRecource {

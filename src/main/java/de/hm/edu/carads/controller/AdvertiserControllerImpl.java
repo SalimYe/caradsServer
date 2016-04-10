@@ -9,8 +9,8 @@ import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
-import de.hm.edu.carads.database.DatabaseController;
-import de.hm.edu.carads.database.DatabaseControllerImpl;
+import de.hm.edu.carads.db.DatabaseController;
+import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Driver;
 

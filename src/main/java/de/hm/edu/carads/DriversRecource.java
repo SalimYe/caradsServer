@@ -3,6 +3,7 @@ package de.hm.edu.carads;
 
 import java.util.Collection;
 
+import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -26,9 +27,10 @@ import com.google.gson.Gson;
 import de.hm.edu.carads.controller.DriverController;
 import de.hm.edu.carads.controller.DriverControllerImpl;
 import de.hm.edu.carads.controller.EntityValidator;
+import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.util.DatabaseFactory;
 
 @Path("drivers")
 public class DriversRecource {
@@ -56,19 +58,21 @@ public class DriversRecource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addDriver(String input) {
 		Driver driver = gson.fromJson(input, Driver.class);
-		
-		if(driver == null || !EntityValidator.isNewDriverValid(driver)){
-			throw new WebApplicationException(400);
-		}
-		
-		if(dc.existDriverByEmail(driver.getEmail()))
-			throw new WebApplicationException(409);
+			
 		
 		try{
 			Driver registredDriver = dc.addDriver(driver);
 			return  Response.ok(gson.toJson(registredDriver)).build();
-		}catch(NoContentException e){
-			throw new WebApplicationException(404);
+			
+		}
+		catch(AlreadyExistsException e){
+			throw new WebApplicationException(409);
+		}
+		catch(InvalidAttributesException e){
+			throw new WebApplicationException(400);
+		}
+		catch(Exception e){
+			throw new WebApplicationException(500);
 		}
 		
 		

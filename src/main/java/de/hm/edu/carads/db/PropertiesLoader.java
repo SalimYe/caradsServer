@@ -1,4 +1,4 @@
-package de.hm.edu.carads.database;
+package de.hm.edu.carads.db;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
