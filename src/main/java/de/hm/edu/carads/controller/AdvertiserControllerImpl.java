@@ -19,8 +19,8 @@ public class AdvertiserControllerImpl implements AdvertiserController{
 	private DatabaseController dbController;
 	private Gson gson;
 	
-	public AdvertiserControllerImpl(){
-		dbController = new DatabaseControllerImpl();
+	public AdvertiserControllerImpl(String environment){
+		dbController = new DatabaseControllerImpl(environment);
 		gson = new Gson();
 	}
 	@Override

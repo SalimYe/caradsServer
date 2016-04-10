@@ -30,11 +30,12 @@ import de.hm.edu.carads.controller.DriverControllerImpl;
 import de.hm.edu.carads.controller.EntityValidator;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Car;
+import de.hm.edu.carads.util.DatabaseFactory;
 
 @Path("advertisers")
 public class AdvertiserRecource {
 	private Gson gson = new Gson();
-	private AdvertiserController ac = new AdvertiserControllerImpl();
+	private AdvertiserController ac = new AdvertiserControllerImpl(DatabaseFactory.INST_PROD);
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

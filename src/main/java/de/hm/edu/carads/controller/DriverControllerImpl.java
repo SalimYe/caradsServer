@@ -33,8 +33,8 @@ public class DriverControllerImpl implements DriverController{
 	private Gson gson;
 	
 
-	public DriverControllerImpl(){
-		dbController = new DatabaseControllerImpl();
+	public DriverControllerImpl(String environment){
+		dbController = new DatabaseControllerImpl(environment);
 		gson = new Gson();
 	}
 

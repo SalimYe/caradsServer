@@ -28,11 +28,12 @@ import de.hm.edu.carads.controller.DriverControllerImpl;
 import de.hm.edu.carads.controller.EntityValidator;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.util.DatabaseFactory;
 
 @Path("drivers")
 public class DriversRecource {
 	private Gson gson = new Gson();
-	private DriverController dc = new DriverControllerImpl();
+	private DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_PROD);
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

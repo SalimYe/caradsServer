@@ -29,6 +29,7 @@ import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.Image;
 import de.hm.edu.carads.models.MetaInformation;
+import de.hm.edu.carads.util.DatabaseFactory;
 
 
 public class DatabaseControllerImpl implements DatabaseController{
@@ -40,11 +41,8 @@ public class DatabaseControllerImpl implements DatabaseController{
 	private static final String COLLECTION_IMAGE = "image";
 	private static final String COLLECTION_ADVERTISER = "advertiser";
 	
-	public DatabaseControllerImpl(){
-		PropertiesLoader pLoader = new PropertiesLoader();
-		mongoClient = new MongoClient(pLoader.getPropertyString("DB_HOST"), Integer.parseInt(pLoader.getPropertyString("DB_PORT")));
-		db = mongoClient.getDB(pLoader.getPropertyString("DB_NAME"));
-		mongoClient.setWriteConcern(WriteConcern.ACKNOWLEDGED);
+	public DatabaseControllerImpl(String environment){
+		db = DatabaseFactory.getInstanceDB(environment);
 	}
 
 	@Override
@@ -90,7 +88,7 @@ public class DatabaseControllerImpl implements DatabaseController{
 	public List<DBObject> getAllEntities(Class collectionClass) {
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));	
 		List<DBObject> list = collection.find().toArray();
-		DBCursor cursor = collection.find();
+		//DBCursor cursor = collection.find();
 	
 		return list;
 	}
