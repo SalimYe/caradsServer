@@ -1,5 +1,8 @@
 package de.hm.edu.carads.controller;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 
@@ -7,10 +10,10 @@ public class EntityValidator {
 	
 	//TODO richtige Validierung
 	public static boolean isNewDriverValid(Driver driver){
-		if(driver.getEmail()!= null && !driver.getEmail().isEmpty())
+		if(isEmailValid(driver.getEmail()))
 			if(driver.getId() == null)
 				return true;
-		System.out.println("not valid: ");
+
 		return false;
 	}
 	
@@ -18,5 +21,17 @@ public class EntityValidator {
 	public static boolean isNewCarValid(Car car){
 		
 		return true;
+	}
+	
+	private static boolean isEmailValid(String email){
+		String EMAIL_PATTERN = 
+				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		
+	
+		
+
+		return pattern.matcher(email).matches();
 	}
 }

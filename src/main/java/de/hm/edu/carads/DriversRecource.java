@@ -1,7 +1,6 @@
 package de.hm.edu.carads;
 
 
-import java.util.List;
 import java.util.Collection;
 
 import javax.ws.rs.Consumes;

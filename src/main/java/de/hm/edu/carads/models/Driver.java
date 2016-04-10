@@ -6,13 +6,8 @@ public class Driver extends Person{
 	private Car car;
 	private Image image;
 	
-	public Driver(String id, String email, String firstName, String lastName, String age) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.firstName = firstName;
-		this.birthdate = age;
-		this.lastName = lastName;
+	public Driver(String email, String firstName, String lastName) {
+		super(email, firstName, lastName);
 		this.meta = new MetaInformation();
 		this.car = null;
 		this.image = null;

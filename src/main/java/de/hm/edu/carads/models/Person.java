@@ -12,5 +12,9 @@ public abstract class Person {
 	protected String country;
 	protected String phone;
 	
-	
+	public Person(String email, String firstName, String lastName){
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 }

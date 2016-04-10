@@ -5,6 +5,9 @@ public class Car {
 	private String brand;
 	private String model;
 	private String color;
+	private int buildYear;
+	private int milage;
+	private String description;
 	
 	
 	public String getId() {
@@ -31,6 +34,7 @@ public class Car {
 	public void setColor(String color) {
 		this.color = color;
 	}
+	
 	
 	
 }
