@@ -1,36 +1,23 @@
 package de.hm.edu.carads;
 
 
-import java.util.List;
 import java.util.Collection;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Variant;
-import javax.xml.bind.JAXBElement;
 
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.AdvertiserController;
 import de.hm.edu.carads.controller.AdvertiserControllerImpl;
-import de.hm.edu.carads.controller.DriverController;
-import de.hm.edu.carads.controller.DriverControllerImpl;
-import de.hm.edu.carads.controller.EntityValidator;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
-import de.hm.edu.carads.models.Car;
 
 @Path("advertisers")
 public class AdvertiserRecource {

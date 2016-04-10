@@ -14,7 +14,6 @@ import de.hm.edu.carads.db.PropertiesLoader;
 
 public class DatabaseFactory {
 	public static String INST_TEST = "test";
-	public static String INST_DEV = "development";
 	public static String INST_PROD = "live";
 	
     private static DB testDB;

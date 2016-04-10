@@ -1,41 +1,26 @@
 package de.hm.edu.carads.db;
 
-import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 
 import org.bson.types.ObjectId;
 
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.WriteConcern;
-import com.mongodb.WriteResult;
-
-import com.mongodb.bulk.WriteRequest;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.DBCursor;
 
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
+import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.Image;
-import de.hm.edu.carads.models.MetaInformation;
+
 
 
 public class DatabaseControllerImpl implements DatabaseController{
-	private MongoClient mongoClient;
 	private DB db;
-	private String environment;
 	private static final String COLLECTION_DRIVER = "driver";
 	private static final String COLLECTION_CAR = "car";
 	private static final String COLLECTION_CAMPAIGN = "campaign";
@@ -44,7 +29,6 @@ public class DatabaseControllerImpl implements DatabaseController{
 	
 	public DatabaseControllerImpl(String environment){
 		db = DatabaseFactory.getInstanceDB(environment);
-		this.environment = environment;
 	}
 
 	@Override
@@ -63,6 +47,8 @@ public class DatabaseControllerImpl implements DatabaseController{
 			return COLLECTION_IMAGE;
 		else if(c == Advertiser.class)
 			return COLLECTION_ADVERTISER;
+		else if(c == Campaign.class)
+			return COLLECTION_CAMPAIGN;
 		return "";
 	}
 
@@ -81,7 +67,8 @@ public class DatabaseControllerImpl implements DatabaseController{
 	public BasicDBObject getEntity(Class collectionClass, String id) {
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));	
 		BasicDBObject query = new BasicDBObject();
-		query.put("_id", new ObjectId(id));
+		//query.put("_id", new ObjectId(id));
+		query.append("_id", id);
 		
 		return (BasicDBObject) collection.findOne(query);
 	}
@@ -100,7 +87,8 @@ public class DatabaseControllerImpl implements DatabaseController{
 			BasicDBObject newEntity) {
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));	
 		BasicDBObject query = new BasicDBObject();
-		query.put("_id", new ObjectId(id));
+		//query.put("_id", new ObjectId(id));
+		query.append("_id", id);
 		
 		
 		collection.findAndModify(query, newEntity);
@@ -112,7 +100,8 @@ public class DatabaseControllerImpl implements DatabaseController{
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
 		
 		BasicDBObject query = new BasicDBObject();
-		query.put("_id", new ObjectId(id));
+		//query.put("_id", new ObjectId(id));
+		query.append("_id", id);
 		
 		collection.remove(query);
 	}

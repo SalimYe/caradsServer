@@ -83,7 +83,6 @@ public class DriversRecource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDrivers(@PathParam("id") String id) {
 		try{
-			
 			Driver driver = dc.getDriver(id);
 			return Response.ok(gson.toJson(driver)).build();
 			

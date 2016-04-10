@@ -17,4 +17,79 @@ public abstract class Person {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public boolean setId(String id) {
+		if(this.id == null || this.id.isEmpty()){
+			this.id = id;
+			return true;
+		}
+		else return false;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public MetaInformation getMetaInformation() {
+		if(this.meta == null)
+			this.meta = new MetaInformation();
+		return this.meta;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
 }
