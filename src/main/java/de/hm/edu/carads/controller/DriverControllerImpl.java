@@ -64,13 +64,13 @@ public class DriverControllerImpl implements DriverController{
 	}
 
 	@Override
-	public boolean deleteDriver(String id) {
-		Driver driver = makeDriverFromBasicDBObject(dbController.getEntity(Driver.class, id));
+	public void deleteDriver(String id) throws Exception{
+		
+		Driver driver = getDriver(id);
 		
 		dbController.deleteEntity(Driver.class, id);
 		if(dbController.existEntityByKeyValue(Driver.class, "email", driver.getEmail()))
-			return false;
-		return true;
+			throw new Exception("entity not deleted");
 	}
 
 	@Override
@@ -105,8 +105,11 @@ public class DriverControllerImpl implements DriverController{
 		return null;
 	}
 	@Override
-	public Driver changeDriver(String driverid, Driver driver) throws NoContentException{
+	public Driver changeDriver(String driverid, Driver driver) throws Exception{
 		Driver updatedDriver;
+		if(!EntityValidator.isNewDriverValid(driver))
+			throw new InvalidAttributesException();
+		
 		try {
 			updatedDriver = changeIfNew(getDriver(driverid), driver);
 			dbController.updateEntity(Driver.class, updatedDriver.getId(), BasicDBObject.parse(gson.toJson(updatedDriver)));
@@ -116,7 +119,6 @@ public class DriverControllerImpl implements DriverController{
 		}
 		
 	}
-	@Override
 	public boolean existDriverByEmail(String email) {
 		if(dbController.existEntityByKeyValue(Driver.class, "email", email))
 			return true;
@@ -133,19 +135,17 @@ public class DriverControllerImpl implements DriverController{
 
 	@Override
 	public Car getCar(String driverid) throws Exception{
-		return getDriver(driverid).getCar();
+		Car car = getDriver(driverid).getCar();
+		if(car == null)
+			throw new NoContentException("no car found");
+		return car;
 	}
 
 	@Override
-	public boolean existDriverById(String id) {
-		if(dbController.existEntityByKeyValue(Driver.class, "id", id))
-			return true;
-		
-		return false;
-	}
-
-	@Override
-	public Car addCar(String driverid, Car car) throws NoContentException {
+	public Car addCar(String driverid, Car car) throws Exception {
+		if(!EntityValidator.isNewCarValid(car)){
+			throw new InvalidAttributesException();
+		}
 		
 		Driver driver = getDriver(driverid);
 		
@@ -172,5 +172,13 @@ public class DriverControllerImpl implements DriverController{
 		
 		oldDriver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
 		return oldDriver;
+	}
+
+	@Override
+	public void deleteCar(String driverid) throws Exception {
+		Driver driver = getDriver(driverid);
+		driver.setCar(null);
+		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
+		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
 	}
 }

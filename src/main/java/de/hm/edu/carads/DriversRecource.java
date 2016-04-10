@@ -3,6 +3,7 @@ package de.hm.edu.carads;
 
 import java.util.Collection;
 
+import javax.management.InvalidAttributeValueException;
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -42,11 +43,8 @@ public class DriversRecource {
 	public Response getDriver(
 			@DefaultValue("0") @QueryParam("startAt") int startAt,
 			@DefaultValue("10") @QueryParam("length") int length) {
-		
 		Collection<Driver> drivers;
-		
 		drivers = dc.getDrivers(startAt, length);
-		
 		if(drivers.isEmpty())
 			return Response.noContent().build();
 		else
@@ -58,12 +56,9 @@ public class DriversRecource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addDriver(String input) {
 		Driver driver = gson.fromJson(input, Driver.class);
-			
-		
 		try{
 			Driver registredDriver = dc.addDriver(driver);
 			return  Response.ok(gson.toJson(registredDriver)).build();
-			
 		}
 		catch(AlreadyExistsException e){
 			throw new WebApplicationException(409);
@@ -74,8 +69,6 @@ public class DriversRecource {
 		catch(Exception e){
 			throw new WebApplicationException(500);
 		}
-		
-		
 	}
 	
 	@GET
@@ -91,8 +84,6 @@ public class DriversRecource {
 		}catch(Exception e){
 			throw new WebApplicationException(500);
 		}
-		
-		
 	}
 	
 	@PUT
@@ -101,30 +92,33 @@ public class DriversRecource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response changeDriver(@PathParam("id") String id, String input){
 		Driver driverData = gson.fromJson(input, Driver.class);
-		
-		if(driverData == null || !EntityValidator.isNewDriverValid(driverData)){
+		if(driverData == null)
 			throw new WebApplicationException(400);
-		}
 		
 		try{
 			Driver changedDriver = dc.changeDriver(id, driverData);
 			return Response.ok(gson.toJson(changedDriver)).build();
+		}
+		catch(InvalidAttributesException e){
+			throw new WebApplicationException(400);
 		}catch(NoContentException e){
 			throw new WebApplicationException(404);
 		} catch (Exception e) {
 			throw new WebApplicationException(500);
-		}
-				
+		}		
 	}
 	
 	@DELETE
 	@Path("/{id}")
 	public Response deleteDriver(@PathParam("id") String id){
-		
-		if(!dc.deleteDriver(id))
+		try {
+			dc.deleteDriver(id);
+			return Response.ok().build();
+		} catch(NoContentException e){
 			throw new WebApplicationException(404);
-		
-		return Response.ok().build();
+		} catch (Exception e) {
+			throw new WebApplicationException(500);
+		}
 	}
 	
 	
@@ -132,25 +126,19 @@ public class DriversRecource {
 	@Path("/{id}/cars")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDriverCars(@PathParam("id") String driverid) {
-		
-		
-		Car car;
-		
 		try {
+			Car car;
 			car = dc.getCar(driverid);
 			if(car == null){
 				return Response.noContent().build();
 			}
 			return Response.ok(gson.toJson(car)).build();
-			
-			
 		} catch(NoContentException e){
 			throw new WebApplicationException(404);
 		}
 		catch (Exception e) {
 			throw new WebApplicationException(500);
 		}
-		
 	}
 	
 	@POST
@@ -160,25 +148,35 @@ public class DriversRecource {
 	public Response addDriverCar(@PathParam("id") String driverid, String input) {
 		Driver driver;
 		Car car;
-		try {
-			driver = dc.getDriver(driverid);
-			car = gson.fromJson(input, Car.class);
-		} catch (Exception e) {
-			throw new WebApplicationException(404);
-		}
-		
-		
-			
-		
-				
-		if(car == null || !EntityValidator.isNewCarValid(car)){
+
+		car = gson.fromJson(input, Car.class);
+		if(car == null){
 			throw new WebApplicationException(400);
 		}
+		
 		try{
 			Car registredCar = dc.addCar(driverid, car);
 			return  Response.ok(gson.toJson(registredCar)).build();
-		}catch(NoContentException e){
+		} catch (InvalidAttributesException e){
+			throw new WebApplicationException(400);
+		} catch(NoContentException e){
 			throw new WebApplicationException(404);
+		} catch (Exception e) {
+			throw new WebApplicationException(500);
+		}
+	}
+	
+	@DELETE
+	@Path("/{id}/cars")
+	public Response deleteDriverCar(@PathParam("id") String driverid){
+		try {
+			dc.deleteCar(driverid);
+			return Response.ok().build();
+		} catch(NoContentException e){
+			throw new WebApplicationException(404);
+		}
+		catch (Exception e) {
+			throw new WebApplicationException(500);
 		}
 	}
 }

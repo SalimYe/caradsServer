@@ -2,13 +2,16 @@ package de.hm.edu.carads.db;
 
 import java.util.List;
 
+import javax.ws.rs.core.NoContentException;
+
+
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.DBCursor;
+
 
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
@@ -64,11 +67,14 @@ public class DatabaseControllerImpl implements DatabaseController{
 	}
 
 	@Override
-	public BasicDBObject getEntity(Class collectionClass, String id) {
+	public BasicDBObject getEntity(Class collectionClass, String id) throws NoContentException{
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));	
 		BasicDBObject query = new BasicDBObject();
-		//query.put("_id", new ObjectId(id));
-		query.append("_id", id);
+		try{
+			query.put("_id", new ObjectId(id));
+		}catch(Exception e){
+			throw new NoContentException("id not found");
+		}
 		
 		return (BasicDBObject) collection.findOne(query);
 	}
@@ -84,11 +90,14 @@ public class DatabaseControllerImpl implements DatabaseController{
 
 	@Override
 	public BasicDBObject updateEntity(Class collectionClass, String id,
-			BasicDBObject newEntity) {
+			BasicDBObject newEntity) throws NoContentException{
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));	
 		BasicDBObject query = new BasicDBObject();
-		//query.put("_id", new ObjectId(id));
-		query.append("_id", id);
+		try{
+			query.put("_id", new ObjectId(id));
+		}catch(Exception e){
+			throw new NoContentException("id not found");
+		}
 		
 		
 		collection.findAndModify(query, newEntity);
@@ -96,12 +105,15 @@ public class DatabaseControllerImpl implements DatabaseController{
 	}
 
 	@Override
-	public void deleteEntity(Class collectionClass, String id) {
+	public void deleteEntity(Class collectionClass, String id) throws NoContentException{
 		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
 		
 		BasicDBObject query = new BasicDBObject();
-		//query.put("_id", new ObjectId(id));
-		query.append("_id", id);
+		try{
+			query.put("_id", new ObjectId(id));
+		}catch(Exception e){
+			throw new NoContentException("id not found");
+		}
 		
 		collection.remove(query);
 	}

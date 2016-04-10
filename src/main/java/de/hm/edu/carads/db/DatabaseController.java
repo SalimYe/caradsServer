@@ -2,6 +2,8 @@ package de.hm.edu.carads.db;
 
 import java.util.List;
 
+import javax.ws.rs.core.NoContentException;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
@@ -10,10 +12,10 @@ import de.hm.edu.carads.models.Driver;
 
 public interface DatabaseController {
 		
-	public BasicDBObject getEntity(Class collectionClass, String id);
+	public BasicDBObject getEntity(Class collectionClass, String id) throws NoContentException;
 	public BasicDBObject addEntity(Class collectionClass, BasicDBObject entity);
-	public BasicDBObject updateEntity(Class collectionClass, String id, BasicDBObject newEntity);
-	public void deleteEntity(Class collectionClass, String id);
+	public BasicDBObject updateEntity(Class collectionClass, String id, BasicDBObject newEntity) throws NoContentException;
+	public void deleteEntity(Class collectionClass, String id) throws NoContentException;
 	
 	public long getCollectionCount(Class collectionClass);
 	

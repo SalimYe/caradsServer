@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.hm.edu.carads.db.util.DatabaseFactory;
+import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 public class DriverControllerTest {
@@ -17,6 +18,9 @@ public class DriverControllerTest {
 	private static String FIRSTNAME = "Muster";
 	private static String LASTNAME = "Mann";
 	
+	private static String CARBRAND = "Mercedes";
+	private static String CARMODEL = "E-Klasse";
+	private static String CARCOLOR = "red";
 
 	@Test
 	
@@ -69,8 +73,7 @@ public class DriverControllerTest {
 	(expected = NoContentException.class)
 	public void readWrongIDTest() throws Exception {
 		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
-
-		dc.getDriver("123456");
+		dc.getDriver("1123");
 	}
 	
 	@Test
@@ -114,10 +117,47 @@ public class DriverControllerTest {
 		}
 	}
 	
+	@Test
+	public void addCarToDriverTest(){
+		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
+		try {
+			Driver driver = dc.addDriver(makeNewDriver());
+			dc.addCar(driver.getId(), makeNewCar());
+			Car car = dc.getCar(driver.getId());
+			assertEquals(CARCOLOR, car.getColor());
+			assertEquals(CARBRAND, car.getBrand());
+			assertEquals(CARMODEL, car.getModel());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	(expected = NoContentException.class)
+	public void deleteCar() throws Exception{
+		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
+		
+		Driver d = dc.addDriver(makeNewDriver());
+		dc.addCar(d.getId(), makeNewCar());
+		assertNotNull(dc.getCar(d.getId()));
+		
+		dc.deleteCar(d.getId());
+		dc.getCar(d.getId());
+		
+		
+	}
 	private Driver makeNewDriver(){
 		Driver driver = new Driver(EMAIL, FIRSTNAME, LASTNAME);
 		driver.setBirthdate("2000");
 		return driver;
+	}
+	
+	private Car makeNewCar(){
+		Car car = new Car();
+		car.setBrand(CARBRAND);
+		car.setModel(CARMODEL);
+		car.setColor(CARCOLOR);
+		return car;
 	}
 	
 	@Before

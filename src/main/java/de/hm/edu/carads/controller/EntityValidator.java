@@ -19,7 +19,10 @@ public class EntityValidator {
 	
 	//TODO
 	public static boolean isNewCarValid(Car car){
-		
+		if(car.getBrand() == null || car.getBrand().isEmpty())
+			return false;
+		if(car.getModel() == null || car.getModel().isEmpty())
+			return false;
 		return true;
 	}
 	
