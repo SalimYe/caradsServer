@@ -9,6 +9,17 @@
     <version>1.0-SNAPSHOT</version>
     <name>api</name>
 
+	<developers>
+	    <developer>
+	      <id>BK</id>
+	      <name>Benjamin Keckes</name>
+	      <email>keckes@hm.edu</email>
+	      <roles>
+	        <role>architect</role>
+	        <role>developer</role>
+	      </roles>
+	    </developer>
+  	</developers>
     <build>
         <finalName>caradsapp</finalName>
         <plugins>
