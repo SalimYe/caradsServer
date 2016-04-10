@@ -3,7 +3,6 @@ package de.hm.edu.carads;
 
 import java.util.Collection;
 
-import javax.management.InvalidAttributeValueException;
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,16 +17,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NoContentException;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Variant;
-import javax.xml.bind.JAXBElement;
 
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.DriverController;
 import de.hm.edu.carads.controller.DriverControllerImpl;
-import de.hm.edu.carads.controller.EntityValidator;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;

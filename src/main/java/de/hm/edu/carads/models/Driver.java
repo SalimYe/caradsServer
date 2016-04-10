@@ -3,6 +3,8 @@ package de.hm.edu.carads.models;
 public class Driver extends Person{
 
 	private String birthdate;
+	private String occupation;
+	private String licenseDate;
 	private Car car;
 	private Image image;
 	
@@ -36,6 +38,5 @@ public class Driver extends Person{
 	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
-	
 }
 

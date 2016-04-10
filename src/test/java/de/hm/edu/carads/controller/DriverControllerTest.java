@@ -143,9 +143,8 @@ public class DriverControllerTest {
 		
 		dc.deleteCar(d.getId());
 		dc.getCar(d.getId());
-		
-		
 	}
+	
 	private Driver makeNewDriver(){
 		Driver driver = new Driver(EMAIL, FIRSTNAME, LASTNAME);
 		driver.setBirthdate("2000");

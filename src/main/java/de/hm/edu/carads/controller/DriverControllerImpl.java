@@ -23,6 +23,7 @@ import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.PropertiesLoader;

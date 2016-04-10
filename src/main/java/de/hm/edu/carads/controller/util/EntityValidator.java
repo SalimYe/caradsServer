@@ -1,4 +1,4 @@
-package de.hm.edu.carads.controller;
+package de.hm.edu.carads.controller.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

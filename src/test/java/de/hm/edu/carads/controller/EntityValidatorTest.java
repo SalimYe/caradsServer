@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.models.Driver;
 
 public class EntityValidatorTest {

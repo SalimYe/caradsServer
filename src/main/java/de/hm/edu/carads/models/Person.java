@@ -11,6 +11,7 @@ public abstract class Person {
 	protected String zip;
 	protected String country;
 	protected String phone;
+	protected String description;
 	
 	public Person(String email, String firstName, String lastName){
 		this.email = email;
