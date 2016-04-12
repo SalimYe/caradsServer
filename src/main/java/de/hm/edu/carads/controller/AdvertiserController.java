@@ -11,5 +11,4 @@ public interface AdvertiserController {
 	public Advertiser changeAdvertiser(String adID, Advertiser advertiser);
 	public boolean deleteAdvertiser(String id);
 	public boolean existAdvertiserByEmail(String email);
-	public boolean existAdvertiserById(String id);
 }

@@ -1,8 +1,7 @@
 package de.hm.edu.carads.models;
 
-public abstract class Person {
+public abstract class Person extends Model{
 
-	protected String id;
 	protected String email;
 	protected String firstName;
 	protected String lastName;
@@ -17,18 +16,6 @@ public abstract class Person {
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public boolean setId(String id) {
-		if(this.id == null || this.id.isEmpty()){
-			this.id = id;
-			return true;
-		}
-		else return false;
 	}
 
 	public String getEmail() {

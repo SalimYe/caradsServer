@@ -1,5 +1,5 @@
 package de.hm.edu.carads.models;
 
-public class Campaign {
+public class Campaign extends Model{
 
 }

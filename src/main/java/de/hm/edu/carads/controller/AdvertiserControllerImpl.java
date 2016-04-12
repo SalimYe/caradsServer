@@ -65,14 +65,8 @@ public class AdvertiserControllerImpl implements AdvertiserController{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public boolean existAdvertiserById(String id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
-private Advertiser makeAdvertiserFromBasicDBObject(BasicDBObject dbObj){
+	private Advertiser makeAdvertiserFromBasicDBObject(BasicDBObject dbObj){
 		
 		Advertiser advertiser = gson.fromJson(dbObj.toJson(), Advertiser.class);
 		advertiser.setId(dbObj.getString("_id"));

@@ -22,8 +22,11 @@ import javax.ws.rs.core.Response;
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.DriverController;
+import de.hm.edu.carads.controller.DriverController2;
 import de.hm.edu.carads.controller.DriverControllerImpl;
+import de.hm.edu.carads.controller.EntityController;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
@@ -31,7 +34,8 @@ import de.hm.edu.carads.models.Driver;
 @Path("drivers")
 public class DriversRecource {
 	private Gson gson = new Gson();
-	private DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_PROD);
+	private DriverController2 dc = new DriverController2(Driver.class, new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
+	//private DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -39,7 +43,7 @@ public class DriversRecource {
 			@DefaultValue("0") @QueryParam("startAt") int startAt,
 			@DefaultValue("10") @QueryParam("length") int length) {
 		Collection<Driver> drivers;
-		drivers = dc.getDrivers(startAt, length);
+		drivers = dc.getAllEntities();
 		if(drivers.isEmpty())
 			return Response.noContent().build();
 		else
@@ -52,7 +56,7 @@ public class DriversRecource {
 	public Response addDriver(String input) {
 		Driver driver = gson.fromJson(input, Driver.class);
 		try{
-			Driver registredDriver = dc.addDriver(driver);
+			Driver registredDriver = dc.addEntity(driver);
 			return  Response.ok(gson.toJson(registredDriver)).build();
 		}
 		catch(AlreadyExistsException e){
@@ -71,7 +75,7 @@ public class DriversRecource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDrivers(@PathParam("id") String id) {
 		try{
-			Driver driver = dc.getDriver(id);
+			Driver driver = dc.getEntity(id);
 			return Response.ok(gson.toJson(driver)).build();
 			
 		}catch(NoContentException e){
@@ -80,7 +84,7 @@ public class DriversRecource {
 			throw new WebApplicationException(500);
 		}
 	}
-	
+	/*
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -174,4 +178,5 @@ public class DriversRecource {
 			throw new WebApplicationException(500);
 		}
 	}
+	*/
 }
