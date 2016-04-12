@@ -22,9 +22,7 @@ import javax.ws.rs.core.Response;
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.DriverController;
-import de.hm.edu.carads.controller.DriverController2;
 import de.hm.edu.carads.controller.DriverControllerImpl;
-import de.hm.edu.carads.controller.EntityController;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
@@ -34,8 +32,8 @@ import de.hm.edu.carads.models.Driver;
 @Path("drivers")
 public class DriversRecource {
 	private Gson gson = new Gson();
-	private DriverController2 dc = new DriverController2(Driver.class, new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
-	//private DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
+	private DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
+	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -84,7 +82,7 @@ public class DriversRecource {
 			throw new WebApplicationException(500);
 		}
 	}
-	/*
+	
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -95,7 +93,7 @@ public class DriversRecource {
 			throw new WebApplicationException(400);
 		
 		try{
-			Driver changedDriver = dc.changeDriver(id, driverData);
+			Driver changedDriver = dc.changeEntity(id, driverData);
 			return Response.ok(gson.toJson(changedDriver)).build();
 		}
 		catch(InvalidAttributesException e){
@@ -111,7 +109,7 @@ public class DriversRecource {
 	@Path("/{id}")
 	public Response deleteDriver(@PathParam("id") String id){
 		try {
-			dc.deleteDriver(id);
+			dc.deleteEntity(id);
 			return Response.ok().build();
 		} catch(NoContentException e){
 			throw new WebApplicationException(404);
@@ -178,5 +176,5 @@ public class DriversRecource {
 			throw new WebApplicationException(500);
 		}
 	}
-	*/
+	
 }

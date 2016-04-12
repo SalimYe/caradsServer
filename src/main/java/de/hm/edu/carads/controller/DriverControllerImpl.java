@@ -31,130 +31,76 @@ import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.MetaInformation;
 
-public class DriverControllerImpl implements DriverController{
+public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver> implements DriverController{
 
-	private DatabaseController dbController;
-	private Gson gson;
-	
-
-	public DriverControllerImpl(DatabaseController database){
-		dbController = database;
-		gson = new Gson();
+	public DriverControllerImpl(DatabaseController database) {
+		super(Driver.class, database);
 	}
 
 	@Override
-	public Driver getDriver(String id) throws NoContentException {
-		BasicDBObject dbObj = dbController.getEntity(Driver.class, id);
-		if(dbObj == null)
-			throw new NoContentException("Driver not found");
-		return makeDriverFromBasicDBObject(dbObj);
-	}
-
-	@Override
-	public Driver addDriver(Driver driver) throws Exception{
-		if(existDriverByEmail(driver.getEmail()))
-			throw new AlreadyExistsException();
-		
-		if(!EntityValidator.isNewDriverValid(driver))
-			throw new InvalidAttributesException("Driver is not valid");
-		
-		driver.getMetaInformation().setCreated(MetaInformationController.makeDate());
-		BasicDBObject dbObj = dbController.addEntity(Driver.class, BasicDBObject.parse(gson.toJson(driver)));
-
-		return makeDriverFromBasicDBObject(dbObj);
-	}
-
-	@Override
-	public void deleteDriver(String id) throws Exception{
-		
-		Driver driver = getDriver(id);
-		
-		dbController.deleteEntity(Driver.class, id);
-		if(dbController.existEntityByKeyValue(Driver.class, "email", driver.getEmail()))
-			throw new Exception("entity not deleted");
-	}
-
-	@Override
-	public Collection<Driver> getDrivers(int startAt, int length) {
-		List<DBObject> drivers = dbController.getAllEntities(Driver.class);
-		List<Driver> smallList = new ArrayList<Driver>();
-		
-		Iterator<DBObject> it = drivers.iterator();
-		
-		while(it.hasNext()){
-			smallList.add(makeDriverFromBasicDBObject((BasicDBObject)it.next()));
-		}
-		
-		return smallList;
-	}
-
-	@Override
-	public long getDriverCount() {
-		return dbController.getCollectionCount(Driver.class);
-	}
-	
-	public String makeNewId(String email){
-		try {
-			byte[] bytesOfMessage = email.getBytes("UTF-8");
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			byte[] thedigest = md.digest(bytesOfMessage);
-			return new StringBuffer().append(thedigest).toString();
-		} catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-	@Override
-	public Driver changeDriver(String driverid, Driver driver) throws Exception{
-		Driver updatedDriver;
-		if(!EntityValidator.isNewDriverValid(driver))
-			throw new InvalidAttributesException();
-		
-		try {
-			updatedDriver = changeIfNew(getDriver(driverid), driver);
-			dbController.updateEntity(Driver.class, updatedDriver.getId(), BasicDBObject.parse(gson.toJson(updatedDriver)));
-			return updatedDriver;
-		} catch (NoContentException e) {
-			throw new NoContentException("Driver not found");
-		}
-		
-	}
-	public boolean existDriverByEmail(String email) {
-		if(dbController.existEntityByKeyValue(Driver.class, "email", email))
-			return true;
-		
-		return false;
-	}
-
-	private Driver makeDriverFromBasicDBObject(BasicDBObject dbObj){
-		
-		Driver driver = gson.fromJson(dbObj.toJson(), Driver.class);
-		driver.setId(dbObj.getString("_id"));
-		return driver;
-	}
-
-	@Override
-	public Car getCar(String driverid) throws Exception{
-		Car car = getDriver(driverid).getCar();
+	public Car getCar(String entitiyid) throws Exception {
+		Car car = getEntity(entitiyid).getCar();
 		if(car == null)
 			throw new NoContentException("no car found");
 		return car;
 	}
 
 	@Override
-	public Car addCar(String driverid, Car car) throws Exception {
+	public Car addCar(String entitiyid, Car car) throws Exception {
 		if(!EntityValidator.isNewCarValid(car)){
 			throw new InvalidAttributesException();
 		}
 		
-		Driver driver = getDriver(driverid);
+		Driver driver = getEntity(entitiyid);
 		
 		driver.setCar(car);
 		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
 		
 		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
 		return car;
+	}
+
+	@Override
+	public void deleteCar(String entitiyid) throws Exception {
+		Driver driver = getEntity(entitiyid);
+		driver.setCar(null);
+		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
+		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
+	}
+
+	@Override
+	public Driver changeEntity(String id, Driver updatedEntity) throws Exception {
+		Driver updatedDriver;
+		if(!EntityValidator.isNewDriverValid(updatedEntity))
+			throw new InvalidAttributesException();
+		
+		try {
+			updatedDriver = changeIfNew(getEntity(id), updatedEntity);
+			dbController.updateEntity(Driver.class, updatedDriver.getId(), BasicDBObject.parse(gson.toJson(updatedDriver)));
+			return updatedDriver;
+		} catch (NoContentException e) {
+			throw new NoContentException("Driver not found");
+		}
+	}
+
+	@Override
+	public Driver addEntity(Driver entity) throws Exception {
+		if(existDriverByEmail(entity.getEmail()))
+			throw new AlreadyExistsException();
+		
+		if(!EntityValidator.isNewDriverValid(entity))
+			throw new InvalidAttributesException("Driver is not valid");
+		
+		entity.getMetaInformation().setCreated(MetaInformationController.makeDate());
+		BasicDBObject dbObj = dbController.addEntity(Driver.class, BasicDBObject.parse(gson.toJson(entity)));
+
+		return makeEntityFromBasicDBObject(dbObj);
+	}
+	
+	private boolean existDriverByEmail(String email) {
+		if(dbController.existEntityByKeyValue(Driver.class, "email", email))
+			return true;
+		return false;
 	}
 	
 	private Driver changeIfNew(Driver oldDriver, Driver newDriver){
@@ -175,11 +121,5 @@ public class DriverControllerImpl implements DriverController{
 		return oldDriver;
 	}
 
-	@Override
-	public void deleteCar(String driverid) throws Exception {
-		Driver driver = getDriver(driverid);
-		driver.setCar(null);
-		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
-		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
-	}
+	
 }

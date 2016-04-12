@@ -8,6 +8,7 @@ import javax.ws.rs.core.NoContentException;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
@@ -25,16 +26,17 @@ public class DriverControllerTest {
 	@Test
 	
 	public void addDriverTest() {
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
+		//DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
 		
-		assertEquals(0, dc.getDriverCount());
+		assertEquals(0, dc.getEntityCount());
 		
 		Driver driver;
 		try {
-			driver = dc.addDriver(makeNewDriver());
+			driver = dc.addEntity(makeNewDriver());
 			assertNotNull(driver.getId());
 			assertEquals(LASTNAME, driver.getLastName());
-			assertEquals(1, dc.getDriverCount());
+			assertEquals(1, dc.getEntityCount());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,26 +46,26 @@ public class DriverControllerTest {
 	@Test
 	(expected=AlreadyExistsException.class)
 	public void addDriverWhenSameEmailExistTest() throws Exception {
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
-		Driver driver = dc.addDriver(makeNewDriver());
-		dc.addDriver(makeNewDriver());
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
+		Driver driver = dc.addEntity(makeNewDriver());
+		dc.addEntity(makeNewDriver());
 	}
 	
 	@Test
 	(expected=InvalidAttributesException.class)
 	public void addDriverWithInvalidDataTest() throws Exception {
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
-		dc.addDriver(new Driver("asd", FIRSTNAME, LASTNAME));
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
+		dc.addEntity(new Driver("asd", FIRSTNAME, LASTNAME));
 	}
 	
 	@Test
 	public void readFromDBTest() {
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
 
 		try {
-			Driver driver = dc.addDriver(makeNewDriver());
+			Driver driver = dc.addEntity(makeNewDriver());
 			String id = driver.getId();
-			assertEquals(driver.getFirstName(), dc.getDriver(id).getFirstName());
+			assertEquals(driver.getFirstName(), dc.getEntity(id).getFirstName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,26 +74,26 @@ public class DriverControllerTest {
 	@Test
 	(expected = NoContentException.class)
 	public void readWrongIDTest() throws Exception {
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
-		dc.getDriver("1123");
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
+		dc.getEntity("1123");
 	}
 	
 	@Test
 	public void changeDriverTest(){
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
 		
 		try {
 			//Fahrer wird erstellt.
 			Driver driver = makeNewDriver();
 			driver.setBirthdate("1988");
-			driver = dc.addDriver(driver);
+			driver = dc.addEntity(driver);
 			
 			//Fahrer wird verändert.
 			driver.setFirstName("Benni");
-			dc.changeDriver(driver.getId(), driver);
+			dc.changeEntity(driver.getId(), driver);
 			
 			//Daten werden aus der DB geholt und ueberprueft.
-			Driver driverNew = dc.getDriver(driver.getId());
+			Driver driverNew = dc.getEntity(driver.getId());
 			assertEquals("Benni", driverNew.getFirstName());
 			assertEquals("1988", driverNew.getBirthdate());
 		} catch (Exception e) {
@@ -101,17 +103,17 @@ public class DriverControllerTest {
 	
 	@Test
 	public void changeDriverWithOtherEmailTest(){
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
 		
 		try {
 			//Fahrer wird erstellt.
 			Driver driver = makeNewDriver();
-			driver = dc.addDriver(driver);
+			driver = dc.addEntity(driver);
 			
 			//Fahrer wird verändert.
 			driver.setEmail("bla@asd.de");
-			dc.changeDriver(driver.getId(), driver);
-			assertEquals(driver.getEmail(), dc.getDriver(driver.getEmail()).getEmail());
+			dc.changeEntity(driver.getId(), driver);
+			assertEquals(driver.getEmail(), dc.getEntity(driver.getEmail()).getEmail());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -119,9 +121,9 @@ public class DriverControllerTest {
 	
 	@Test
 	public void addCarToDriverTest(){
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
 		try {
-			Driver driver = dc.addDriver(makeNewDriver());
+			Driver driver = dc.addEntity(makeNewDriver());
 			dc.addCar(driver.getId(), makeNewCar());
 			Car car = dc.getCar(driver.getId());
 			assertEquals(CARCOLOR, car.getColor());
@@ -135,9 +137,9 @@ public class DriverControllerTest {
 	@Test
 	(expected = NoContentException.class)
 	public void deleteCar() throws Exception{
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
 		
-		Driver d = dc.addDriver(makeNewDriver());
+		Driver d = dc.addEntity(makeNewDriver());
 		dc.addCar(d.getId(), makeNewCar());
 		assertNotNull(dc.getCar(d.getId()));
 		
@@ -162,7 +164,7 @@ public class DriverControllerTest {
 	@Before
 	public void resetDB(){
 		DatabaseFactory.dropTestDB();
-		DriverController dc = new DriverControllerImpl(DatabaseFactory.INST_TEST);
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
 	}
 
 }

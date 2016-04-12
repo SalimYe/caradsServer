@@ -16,13 +16,14 @@ import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.AdvertiserController;
 import de.hm.edu.carads.controller.AdvertiserControllerImpl;
+import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 
 @Path("advertisers")
 public class AdvertiserRecource {
 	private Gson gson = new Gson();
-	private AdvertiserController ac = new AdvertiserControllerImpl(DatabaseFactory.INST_PROD);
+	private AdvertiserController ac = new AdvertiserControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -30,7 +31,7 @@ public class AdvertiserRecource {
 		
 		Collection<Advertiser> advertiser;
 		
-		advertiser = ac.getAdvertiser();
+		advertiser = ac.getAllEntities();
 		
 		if(advertiser.isEmpty())
 			return Response.noContent().build();
