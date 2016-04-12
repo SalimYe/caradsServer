@@ -5,31 +5,43 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.ws.rs.NotFoundException;
+
 public class PropertiesLoader {
 	private Properties properties;
-	public PropertiesLoader(){
+	public PropertiesLoader() throws Exception{
 		properties = new Properties();
+		BufferedInputStream stream;
+		String dbConfigPath = getConfigFile();
+		
+		try{
+			stream = new BufferedInputStream(new FileInputStream(dbConfigPath));
+			properties.load(stream);
+			stream.close();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private String getConfigFile() throws Exception{
+		Properties config = new Properties();
 		BufferedInputStream stream;
 		try {
 			//Get file from resources folder
 			stream = new BufferedInputStream(getClass().getClassLoader().getResourceAsStream("config.properties"));
-			properties.load(stream);
+			config.load(stream);
 			stream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+			config = null;
 		}
-		
-		if(getPropertyString("DB_HOST") == null){
-			if(getPropertyString("PATH_TO_SERVER_CONFIG") != null){
-				try{
-					stream = new BufferedInputStream(new FileInputStream(getPropertyString("PATH_TO_SERVER_CONFIG")));
-					properties.load(stream);
-					stream.close();
-				}catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+		if(config == null){
+			throw new IllegalAccessException();
+		}else if(config.getProperty("PATH_TO_SERVER_CONFIG").isEmpty()){
+			throw new NotFoundException();
 		}
+		return config.getProperty("PATH_TO_SERVER_CONFIG");
 	}
 	
 	public String getPropertyString(String id){

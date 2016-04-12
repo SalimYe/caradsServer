@@ -22,43 +22,43 @@ public class EntityValidatorTest {
 	@Test
 	public void testNormalNewDriver() {
 		Driver driver = new Driver(this.EMAIL, this.FIRSTNAME, this.LASTNAME);
-		assertTrue(EntityValidator.isNewDriverValid(driver));
+		assertTrue(EntityValidator.isNewEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver() {
 		Driver driver = new Driver("", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewDriverValid(driver));
+		assertFalse(EntityValidator.isNewEntityValid(driver));
 	}
 	
 	@Test
 	public void testInvalidEmailFromDriver2() {
 		Driver driver = new Driver("name", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewDriverValid(driver));
+		assertFalse(EntityValidator.isNewEntityValid(driver));
 	}
 	
 	@Test
 	public void testInvalidEmailFromDriver3() {
 		Driver driver = new Driver("asd@", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewDriverValid(driver));
+		assertFalse(EntityValidator.isNewEntityValid(driver));
 	}
 	
 	@Test
 	public void testInvalidEmailFromDriver4() {
 		Driver driver = new Driver("asd@d", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewDriverValid(driver));
+		assertFalse(EntityValidator.isNewEntityValid(driver));
 	}
 	
 	@Test
 	public void testInvalidEmailFromDriver5() {
 		Driver driver = new Driver("asd@asd@.de", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewDriverValid(driver));
+		assertFalse(EntityValidator.isNewEntityValid(driver));
 	}
 	
 	@Test
 	public void testValidEmailFromDriver() {
 		Driver driver = new Driver("asd@dd.de", this.FIRSTNAME, this.LASTNAME);
-		assertTrue(EntityValidator.isNewDriverValid(driver));
+		assertTrue(EntityValidator.isNewEntityValid(driver));
 	}
 	
 }

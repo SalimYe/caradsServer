@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
-import javax.ws.rs.WebApplicationException;
 
 import de.hm.edu.carads.models.Image;
 

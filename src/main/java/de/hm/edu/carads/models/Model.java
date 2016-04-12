@@ -14,4 +14,6 @@ public abstract class Model {
 		}
 		else return false;
 	}
+	
+	public abstract void updateAttributes(Model newModel);
 }

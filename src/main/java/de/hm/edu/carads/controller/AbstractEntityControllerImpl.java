@@ -14,7 +14,6 @@ import com.mongodb.DBObject;
 
 import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
-import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.Model;
 
 public abstract class AbstractEntityControllerImpl<E extends Model> implements AbstractEntityController<E>{
@@ -26,7 +25,6 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 	
 	public AbstractEntityControllerImpl(Class<E> model, DatabaseController database){
 		this.dbController = database;
-		this.modelClass = model;
 		this.modelClass = model;
 		gson = new Gson();
 	}
@@ -69,10 +67,30 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 	}
 	
 	@Override
-	public abstract E changeEntity(String id, E updatedEntity) throws Exception;
+	public E changeEntity(String id, E entityData) throws Exception{
+		E updatedEntry;
+		if(!EntityValidator.isEntityValid((entityData)))
+			throw new InvalidAttributesException();
+		
+		try {
+			updatedEntry = getEntity(id);
+			updatedEntry.updateAttributes(entityData);
+			dbController.updateEntity(modelClass, updatedEntry.getId(), BasicDBObject.parse(gson.toJson(updatedEntry)));
+			return updatedEntry;
+		} catch (NoContentException e) {
+			throw new NoContentException("Entity not found");
+		}
+	}
 	
 	@Override
-	public abstract E addEntity(E entity) throws Exception;
+	public E addEntity(E entity) throws Exception{
+		if(!EntityValidator.isNewEntityValid(entity))
+			throw new InvalidAttributesException("Entity is not valid");
+		
+		BasicDBObject dbObj = dbController.addEntity(modelClass, BasicDBObject.parse(gson.toJson(entity)));
+
+		return makeEntityFromBasicDBObject(dbObj);
+	}
 	
 	
 	protected E makeEntityFromBasicDBObject(BasicDBObject dbObj){

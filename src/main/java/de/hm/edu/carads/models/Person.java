@@ -1,5 +1,7 @@
 package de.hm.edu.carads.models;
 
+import de.hm.edu.carads.controller.MetaInformationController;
+
 public abstract class Person extends Model{
 
 	protected String email;
@@ -80,4 +82,17 @@ public abstract class Person extends Model{
 		this.phone = phone;
 	}
 	
+	public void updateAttributes(Model newModel) {
+		
+		Person newPerson = (Person) newModel;
+		
+		if(newPerson.getEmail()!=null)
+			this.setEmail(newPerson.getEmail());
+		if(newPerson.getFirstName() != null )
+			this.setFirstName(newPerson.getFirstName());
+		if(newPerson.getLastName() != null )
+			this.setLastName(newPerson.getLastName());
+		
+		this.getMetaInformation().setLastModified(MetaInformationController.makeDate());
+	}
 }

@@ -1,7 +1,5 @@
 package de.hm.edu.carads.controller;
 
-import java.util.Collection;
-
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 

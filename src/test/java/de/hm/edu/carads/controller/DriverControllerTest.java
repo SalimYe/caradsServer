@@ -120,6 +120,24 @@ public class DriverControllerTest {
 	}
 	
 	@Test
+	public void changeDriverWithOtherEmailTest2(){
+		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
+		
+		try {
+			//Fahrer wird erstellt.
+			Driver driver = makeNewDriver();
+			driver = dc.addEntity(driver);
+			
+			//Fahrer wird verändert.
+			driver.setCountry("Norway");
+			dc.changeEntity(driver.getId(), driver);
+			assertEquals(driver.getEmail(), dc.getEntity(driver.getEmail()).getEmail());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
 	public void addCarToDriverTest(){
 		DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
 		try {
