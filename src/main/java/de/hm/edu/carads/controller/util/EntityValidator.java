@@ -13,6 +13,8 @@ public class EntityValidator {
 		if(model instanceof Driver){
 			return isDriverValid((Driver)model);
 		}
+		else if(model instanceof Advertiser)
+			return isNewAdvertiserValid((Advertiser)model);
 		return false;
 	}
 	

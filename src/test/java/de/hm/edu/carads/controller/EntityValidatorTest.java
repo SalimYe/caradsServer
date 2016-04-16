@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.hm.edu.carads.controller.util.EntityValidator;
+import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Driver;
 
 public class EntityValidatorTest {
@@ -61,4 +62,9 @@ public class EntityValidatorTest {
 		assertTrue(EntityValidator.isNewEntityValid(driver));
 	}
 	
+	@Test
+	public void testValidAdvertiser(){
+		Advertiser newAdv = new Advertiser(EMAIL, FIRSTNAME, "Neuer");
+		assertTrue(EntityValidator.isEntityValid(newAdv));
+	}
 }
