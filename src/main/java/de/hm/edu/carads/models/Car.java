@@ -1,5 +1,7 @@
 package de.hm.edu.carads.models;
 
+import java.util.Collection;
+
 public class Car {
 	private String id;
 	private String brand;
@@ -8,6 +10,7 @@ public class Car {
 	private int buildYear;
 	private int milage;
 	private String description;
+	private Collection<Image> images;
 	
 	
 	public String getId() {

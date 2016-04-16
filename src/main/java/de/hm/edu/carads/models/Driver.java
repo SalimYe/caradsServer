@@ -51,6 +51,8 @@ public class Driver extends Person{
 			this.setCar(newDriver.getCar());
 		if(newDriver.getImage() != null)
 			this.setImage(newDriver.getImage());
+		
+		
 	}
 }
 

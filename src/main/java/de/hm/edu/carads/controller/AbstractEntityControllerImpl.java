@@ -93,7 +93,9 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 	}
 	
 	
-	private E makeEntityFromBasicDBObject(BasicDBObject dbObj){
+	protected E makeEntityFromBasicDBObject(BasicDBObject dbObj){
+		if(dbObj == null)
+			return null;
 		E model = (E) gson.fromJson(dbObj.toJson(), modelClass);
 		model.setId(dbObj.getString("_id"));
 		return model;

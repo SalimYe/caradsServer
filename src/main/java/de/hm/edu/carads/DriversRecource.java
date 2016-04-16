@@ -96,6 +96,9 @@ public class DriversRecource {
 			Driver changedDriver = dc.changeEntity(id, driverData);
 			return Response.ok(gson.toJson(changedDriver)).build();
 		}
+		catch(AlreadyExistsException e){
+			throw new WebApplicationException(409);
+		}
 		catch(InvalidAttributesException e){
 			throw new WebApplicationException(400);
 		}catch(NoContentException e){

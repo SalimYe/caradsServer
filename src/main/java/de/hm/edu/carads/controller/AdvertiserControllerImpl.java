@@ -12,6 +12,16 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	}
 	
 	@Override
+	public Advertiser changeEntity(String id, Advertiser entityData) throws Exception {
+		Advertiser d = getAdvertiserByEmail(entityData.getEmail());
+		if(d!=null)
+			if (!d.getId().equals(id))
+				throw new AlreadyExistsException();
+
+		return super.changeEntity(id, entityData);
+	}
+	
+	@Override
 	public Advertiser addEntity(Advertiser entity) throws Exception {
 		if(existAdvertiserByEmail(entity.getEmail()))
 			throw new AlreadyExistsException();
@@ -23,4 +33,9 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 			return true;
 		return false;
 	}	
+	
+	private Advertiser getAdvertiserByEmail(String email) {
+		return this.makeEntityFromBasicDBObject(dbController
+				.getEntityByKeyValue(Advertiser.class, "email", email));
+	}
 }
