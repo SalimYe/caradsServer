@@ -71,7 +71,7 @@ public class DriversRecource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDrivers(@PathParam("id") String id) {
+	public Response getDriver(@PathParam("id") String id) {
 		try{
 			Driver driver = dc.getEntity(id);
 			return Response.ok(gson.toJson(driver)).build();

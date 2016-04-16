@@ -34,7 +34,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver> i
 		Driver driver = getEntity(entitiyid);
 		
 		driver.setCar(car);
-		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
+		driver.getMetaInformation().update();
 		
 		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
 		return car;
@@ -44,7 +44,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver> i
 	public void deleteCar(String entitiyid) throws Exception {
 		Driver driver = getEntity(entitiyid);
 		driver.setCar(null);
-		driver.getMetaInformation().setLastModified(MetaInformationController.makeDate());
+		driver.getMetaInformation().update();
 		dbController.updateEntity(Driver.class, driver.getId(), BasicDBObject.parse(gson.toJson(driver)));
 	}
 
@@ -53,7 +53,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver> i
 		if(existDriverByEmail(entity.getEmail()))
 			throw new AlreadyExistsException();
 		
-		entity.getMetaInformation().setCreated(MetaInformationController.makeDate());
+		entity.getMetaInformation().makeNewMetaInformation();
 		
 		return super.addEntity(entity);
 	}

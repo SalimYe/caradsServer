@@ -1,6 +1,5 @@
 package de.hm.edu.carads.models;
 
-import de.hm.edu.carads.controller.MetaInformationController;
 
 public class Driver extends Person{
 
@@ -41,7 +40,7 @@ public class Driver extends Person{
 		this.birthdate = birthdate;
 	}
 
-	
+	@Override
 	public void updateAttributes(Model newModel) {
 		super.updateAttributes(newModel);
 		Driver newDriver = (Driver) newModel;
@@ -52,8 +51,6 @@ public class Driver extends Person{
 			this.setCar(newDriver.getCar());
 		if(newDriver.getImage() != null)
 			this.setImage(newDriver.getImage());
-		
-		
 	}
 }
 
