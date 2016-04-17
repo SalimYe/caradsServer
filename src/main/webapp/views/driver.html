@@ -1,0 +1,93 @@
+<main>
+    <h3>Fahrer</h3>
+    <h4>{{driver.firstname}} {{driver.lastname}}</h4>
+    <form>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="firstname">Vorname</label>
+                    <input type="text" class="form-control" id="firstname" ng-model="driver.firstname">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Nachname</label>
+                    <input type="text" class="form-control" id="lastname" ng-model="driver.lastname">
+                </div>
+                <div class="form-group">
+                    <label for="email">Mail</label>
+                    <input type="text" class="form-control" id="email" ng-model="driver.email">
+                </div>  
+                <div class="form-group">
+                    <label for="phone">Mobil</label>
+                    <input type="text" class="form-control" id="phone" ng-model="driver.phone">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="image">Profilbild</label>
+                            <input name="file" id="image" class="form-control" type="file" fileread="image">
+                            <button type="submit" class="btn btn-success" ng-click="saveImage()">Bild hinzufügen</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profilePicture">
+                            <div ng-if="driver.profilePicture !== undefined" ng-click="deleteImage()">
+                                <div class="delete bg"></div>
+                                <div class="delete">
+                                    <span>Profilbild entfernen</span>
+                                </div>
+                            </div>
+                            <img ng-if="driver.profilePicture !== undefined" ng-src="../api/images/{{driver.profilePicture.id}}" />
+                            <img ng-if="driver.profilePicture === undefined" ng-src="../img/symbols/empty_profilepicture.jpg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="city">Stadt</label>
+                    <input type="text" class="form-control" id="city" ng-model="driver.city">
+                </div>  
+                <div class="form-group">
+                    <label for="zip">PLZ</label>
+                    <input type="text" class="form-control" id="zip" ng-model="driver.zip">
+                </div>  
+                <div class="form-group">
+                    <label for="country">Land</label>
+                    <input type="text" class="form-control" id="country" ng-model="driver.country">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="occupation">Beruf</label>
+                    <input type="text" class="form-control" id="occupation" ng-model="driver.occupation">
+                </div>  
+                <div class="form-group">
+                    <label for="birthdate">Geburtsdatum</label>
+                    <input type="text" class="form-control" id="birthdate" ng-model="driver.birthdate">
+                </div>  
+                <div class="form-group">
+                    <label for="licenseDate">F&uuml;hrerschein seit</label>
+                    <input type="text" class="form-control" id="licenseDate" ng-model="driver.licenseDate">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="description">Kurzbeschreibung</label>
+                    <textarea type="text" class="form-control" id="description" ng-model="driver.description"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-danger" ng-click="exitDriver()">Schlie&szlig;en</button>
+                <button type="submit" class="btn btn-success" ng-click="saveDriver()">Speichern</button>
+            </div>
+        </div>
+    </form>
+</main>
