@@ -18,9 +18,4 @@ public class Image extends Model{
 	public void setTitle(boolean isTitle) {
 		this.isTitle = isTitle;
 	}
-	@Override
-	public void updateAttributes(Model newModel) {
-		// TODO Auto-generated method stub
-		
-	}	
 }

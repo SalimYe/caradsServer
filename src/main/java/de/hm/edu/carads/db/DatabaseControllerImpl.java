@@ -110,9 +110,8 @@ public class DatabaseControllerImpl implements DatabaseController {
 		} catch (Exception e) {
 			throw new NoContentException("id not found");
 		}
-
-		collection.findAndModify(query, newEntity);
-		return null;
+	
+		return (BasicDBObject) collection.findAndModify(query, newEntity);
 	}
 
 	@Override

@@ -98,12 +98,12 @@ public class DriversRecource {
 		}
 		catch(AlreadyExistsException e){
 			throw new WebApplicationException(409);
-		}
-		catch(InvalidAttributesException e){
+		}catch(InvalidAttributesException e){
 			throw new WebApplicationException(400);
 		}catch(NoContentException e){
 			throw new WebApplicationException(404);
 		} catch (Exception e) {
+			System.out.println("woo");
 			throw new WebApplicationException(500);
 		}		
 	}

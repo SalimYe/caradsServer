@@ -145,7 +145,7 @@ public class DriverControllerTest {
 	}
 
 	@Test
-	public void changeDriverWithOtherEmailTest2() throws Exception {
+	public void changeDriverTest2() throws Exception {
 		DriverController dc = getDriverController();
 
 		// Fahrer wird erstellt.
@@ -156,6 +156,23 @@ public class DriverControllerTest {
 		driver.setCountry("Norway");
 		dc.changeEntity(driver.getId(), driver);
 		assertEquals(driver.getEmail(), dc.getEntity(driver.getId()).getEmail());
+	}
+
+	@Test
+	public void changeDriverWithLessInformationTest() throws Exception {
+		DriverController dc = getDriverController();
+
+		Driver driver = makeNewDriver();
+		driver.setCar(makeNewCar());
+		driver.setCity("Munich");
+		driver = dc.addEntity(driver);
+
+		String id = driver.getId();
+
+		Driver newDriver = makeNewDriver();
+		newDriver = dc.changeEntity(id, newDriver);
+		System.out.println("c: "+newDriver.getCar().getBrand());
+		assertNull(newDriver.getCar());
 	}
 
 	@Test
@@ -192,7 +209,7 @@ public class DriverControllerTest {
 		dc.deleteCar(d.getId());
 		dc.getCar(d.getId());
 	}
-	
+
 	@Test(expected = AlreadyExistsException.class)
 	public void updateDriverWithSameEmailTest() throws Exception {
 		DriverController dc = getDriverController();
@@ -203,7 +220,7 @@ public class DriverControllerTest {
 		dc.addEntity(driver1);
 		driver2 = dc.addEntity(driver2);
 		driver2.setEmail(EMAIL);
-		
+
 		dc.changeEntity(driver2.getId(), driver2);
 	}
 

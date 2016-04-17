@@ -8,17 +8,6 @@ public class Advertiser extends Person{
 	public Advertiser(String email, String firstName, String lastName) {
 		super(email, firstName, lastName);
 	}
-	
-	@Override
-	public void updateAttributes(Model model){
-		super.updateAttributes(model);
-		Advertiser newAdvertiser = (Advertiser) model;
-		
-		if(newAdvertiser.getLogo() != null )
-			this.setLogo(newAdvertiser.getLogo());
-		if(newAdvertiser.getCompany() != null )
-			this.setCompany(newAdvertiser.getCompany());
-	}
 
 	public String getCompany() {
 		return company;
@@ -35,10 +24,4 @@ public class Advertiser extends Person{
 	public void setLogo(Image logo) {
 		this.logo = logo;
 	}
-
-	
-	
-	
-
-	
 }

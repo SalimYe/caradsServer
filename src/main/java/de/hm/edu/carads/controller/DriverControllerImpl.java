@@ -63,6 +63,9 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 
 	@Override
 	public Driver changeEntity(String id, Driver entityData) throws Exception {
+		if(!EntityValidator.isEntityValid((entityData)))
+			throw new InvalidAttributesException();
+		
 		Driver d = getDriverByEmail(entityData.getEmail());
 		if(d!=null)
 			if (!d.getId().equals(id))

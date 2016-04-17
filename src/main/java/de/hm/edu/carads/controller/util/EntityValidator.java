@@ -11,15 +11,6 @@ public class EntityValidator {
 	
 	public static boolean isEntityValid(Model model){
 		if(model instanceof Driver){
-			return isDriverValid((Driver)model);
-		}
-		else if(model instanceof Advertiser)
-			return isNewAdvertiserValid((Advertiser)model);
-		return false;
-	}
-	
-	public static boolean isNewEntityValid(Model model){
-		if(model instanceof Driver){
 			return isNewDriverValid((Driver)model);
 		}
 		else if(model instanceof Advertiser)
@@ -66,6 +57,8 @@ public class EntityValidator {
 	}
 	
 	private static boolean isEmailValid(String email){
+		if(email == null)
+			return false;
 		String EMAIL_PATTERN = 	"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);

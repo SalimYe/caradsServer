@@ -39,20 +39,5 @@ public class Driver extends Person{
 	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
-
-	@Override
-	public void updateAttributes(Model newModel) {
-		super.updateAttributes(newModel);
-		Driver newDriver = (Driver) newModel;
-		
-		if(newDriver.getBirthdate() != null )
-			this.setBirthdate(newDriver.getBirthdate());
-		if(newDriver.getCar() != null)
-			this.setCar(newDriver.getCar());
-		if(newDriver.getImage() != null)
-			this.setImage(newDriver.getImage());
-		
-		
-	}
 }
 

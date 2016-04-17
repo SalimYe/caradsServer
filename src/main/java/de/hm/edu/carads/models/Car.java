@@ -10,7 +10,10 @@ public class Car extends Model{
 	private int mileage;
 	private String description;
 	private Collection<Image> images;
-	private MetaInformation meta;
+	
+	public Car(){
+		super();
+	}
 	
 	public String getBrand() {
 		return brand;
@@ -29,10 +32,5 @@ public class Car extends Model{
 	}
 	public void setColor(String color) {
 		this.color = color;
-	}
-	@Override
-	public void updateAttributes(Model newModel) {
-		// TODO Auto-generated method stub
-		
 	}
 }

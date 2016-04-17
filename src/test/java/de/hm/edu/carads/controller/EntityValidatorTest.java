@@ -23,48 +23,54 @@ public class EntityValidatorTest {
 	@Test
 	public void testNormalNewDriver() {
 		Driver driver = new Driver(this.EMAIL, this.FIRSTNAME, this.LASTNAME);
-		assertTrue(EntityValidator.isNewEntityValid(driver));
+		assertTrue(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver() {
 		Driver driver = new Driver("", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewEntityValid(driver));
+		assertFalse(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver2() {
 		Driver driver = new Driver("name", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewEntityValid(driver));
+		assertFalse(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver3() {
 		Driver driver = new Driver("asd@", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewEntityValid(driver));
+		assertFalse(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver4() {
 		Driver driver = new Driver("asd@d", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewEntityValid(driver));
+		assertFalse(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver5() {
 		Driver driver = new Driver("asd@asd@.de", this.FIRSTNAME, this.LASTNAME);
-		assertFalse(EntityValidator.isNewEntityValid(driver));
+		assertFalse(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testValidEmailFromDriver() {
 		Driver driver = new Driver("asd@dd.de", this.FIRSTNAME, this.LASTNAME);
-		assertTrue(EntityValidator.isNewEntityValid(driver));
+		assertTrue(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testValidAdvertiser() {
 		Advertiser newAdv = new Advertiser(EMAIL, FIRSTNAME, "Neuer");
 		assertTrue(EntityValidator.isEntityValid(newAdv));
+	}
+	
+	@Test
+	public void testNullEMail() {
+		Advertiser newAdv = new Advertiser(null, FIRSTNAME, "Neuer");
+		assertFalse(EntityValidator.isEntityValid((newAdv)));
 	}
 }
