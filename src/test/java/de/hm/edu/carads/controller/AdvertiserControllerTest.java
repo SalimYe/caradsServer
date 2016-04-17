@@ -12,8 +12,6 @@ import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
-import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.Image;
 
 public class AdvertiserControllerTest {
 

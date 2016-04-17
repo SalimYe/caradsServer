@@ -15,6 +15,8 @@ public class EntityValidator {
 		}
 		else if(model instanceof Advertiser)
 			return isNewAdvertiserValid((Advertiser) model);
+		else if(model instanceof Car)
+			return isNewCarValid((Car) model);
 		return false;
 	}
 	
@@ -36,7 +38,7 @@ public class EntityValidator {
 
 		return false;
 	}	
-	//TODO
+
 	public static boolean isNewCarValid(Car car){
 		if(car.getBrand() == null || car.getBrand().isEmpty())
 			return false;
