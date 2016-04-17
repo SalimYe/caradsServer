@@ -5,6 +5,7 @@ import java.util.Collection;
 
 public class Campaign extends Model{
 
+	private String name;
 	private String description;
 	private String campaignBudget;
 	private String startDate;

@@ -7,13 +7,13 @@ public class Driver extends Person{
 	private String occupation;
 	private String licenseDate;
 	private Car car;
-	private Image image;
+	private Image profilePicture;
 	
 	public Driver(String email, String firstName, String lastName) {
 		super(email, firstName, lastName);
 		this.meta = new MetaInformation();
 		this.car = null;
-		this.image = null;
+		this.profilePicture = null;
 	}
 
 	public Car getCar() {
@@ -25,11 +25,11 @@ public class Driver extends Person{
 	}
 
 	public Image getImage() {
-		return image;
+		return profilePicture;
 	}
 
 	public void setImage(Image image) {
-		this.image = image;
+		this.profilePicture = image;
 	}
 
 	public String getBirthdate() {

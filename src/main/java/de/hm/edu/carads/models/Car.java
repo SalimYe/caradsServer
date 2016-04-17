@@ -2,23 +2,16 @@ package de.hm.edu.carads.models;
 
 import java.util.Collection;
 
-public class Car {
-	private String id;
+public class Car extends Model{
 	private String brand;
 	private String model;
 	private String color;
 	private int buildYear;
-	private int milage;
+	private int mileage;
 	private String description;
 	private Collection<Image> images;
+	private MetaInformation meta;
 	
-	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	public String getBrand() {
 		return brand;
 	}
@@ -36,5 +29,10 @@ public class Car {
 	}
 	public void setColor(String color) {
 		this.color = color;
+	}
+	@Override
+	public void updateAttributes(Model newModel) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -4,20 +4,21 @@ import de.hm.edu.carads.controller.MetaInformationController;
 
 public abstract class Person extends Model{
 
+	
+	protected String firstname;
+	protected String lastname;
 	protected String email;
-	protected String firstName;
-	protected String lastName;
-	protected MetaInformation meta;
+	protected String phone;
+	protected String country;
 	protected String city;
 	protected String zip;
-	protected String country;
-	protected String phone;
 	protected String description;
+	protected MetaInformation meta;
 	
 	public Person(String email, String firstName, String lastName){
 		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.firstname = firstName;
+		this.lastname = lastName;
 	}
 
 	public String getEmail() {
@@ -29,19 +30,19 @@ public abstract class Person extends Model{
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return firstname;
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		this.firstname = firstName;
 	}
 
 	public String getLastName() {
-		return lastName;
+		return lastname;
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		this.lastname = lastName;
 	}
 
 	public MetaInformation getMetaInformation() {

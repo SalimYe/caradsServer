@@ -32,7 +32,6 @@ public class ImageControllerImpl implements ImageController{
         	throw new IllegalArgumentException("wrong datatype");
         
         imageData.setId(UUID.randomUUID() + "." + datatype);
-        imageData.setDatatype(datatype);
         
         OutputStream out = new FileOutputStream(new File(UPLOAD_PATH + imageData.getId()));
         while ((read = input.read(bytes)) != -1) 
