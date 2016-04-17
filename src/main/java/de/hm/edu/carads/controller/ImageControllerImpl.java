@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.ws.rs.WebApplicationException;
 
 import de.hm.edu.carads.models.Image;
 
@@ -62,6 +63,18 @@ public class ImageControllerImpl implements ImageController{
 	
 	private boolean isDatatypeValid(String type){
 		return Arrays.asList(VALID_DATATYPES).contains(type);
+	}
+
+	@Override
+	public void deleteImage(String id) throws Exception {
+		File file = new File(UPLOAD_PATH + id);
+    	
+		if(!file.exists())
+			throw new FileNotFoundException();
+		
+		if(!file.delete())
+			throw new Exception("Delete operation failed");
+		
 	}
 
 }

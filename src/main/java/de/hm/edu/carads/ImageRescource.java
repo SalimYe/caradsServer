@@ -2,6 +2,7 @@ package de.hm.edu.carads;
 
 import javax.imageio.ImageIO;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -55,7 +56,6 @@ public class ImageRescource {
 	    }catch(IOException e){
 	    	throw new WebApplicationException(500);
 	    }
-	      
 	}
 	
 	@GET
@@ -73,7 +73,20 @@ public class ImageRescource {
 		catch(Exception e){
 			throw new WebApplicationException(500);
 		}
-		
-		
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	public Response deleteImage(@PathParam("id") String id){
+		try{
+			ic.deleteImage(id);
+			return Response.ok().build();
+		}
+		catch(FileNotFoundException e){
+			throw new WebApplicationException(404);
+		}
+		catch(Exception e){
+			throw new WebApplicationException(500);
+		}
 	}
 }
