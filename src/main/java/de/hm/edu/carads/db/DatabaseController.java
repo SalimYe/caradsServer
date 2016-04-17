@@ -6,9 +6,6 @@ import javax.ws.rs.core.NoContentException;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.mongodb.WriteResult;
-
-import de.hm.edu.carads.models.Driver;
 
 public interface DatabaseController {
 		

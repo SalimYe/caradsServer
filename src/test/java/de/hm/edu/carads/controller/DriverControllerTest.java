@@ -171,7 +171,6 @@ public class DriverControllerTest {
 
 		Driver newDriver = makeNewDriver();
 		newDriver = dc.changeEntity(id, newDriver);
-		System.out.println("c: "+newDriver.getCar().getBrand());
 		assertNull(newDriver.getCar());
 	}
 

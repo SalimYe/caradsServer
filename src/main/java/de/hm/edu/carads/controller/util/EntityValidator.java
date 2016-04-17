@@ -32,21 +32,10 @@ public class EntityValidator {
 	 */
 	private static boolean isNewDriverValid(Driver driver){
 		if(isEmailValid(driver.getEmail()))
-			if(driver.getId() == null)
-				return true;
+			return true;
 
 		return false;
-	}
-	
-	/**
-	 * Alle vorhanden Daten sollen geprüft werden. Wenn ein Attribut nicht da ist, macht es nichts.
-	 * @param driver
-	 * @return
-	 */
-	private static boolean isDriverValid(Driver driver){
-		return true;
-	}
-	
+	}	
 	//TODO
 	public static boolean isNewCarValid(Car car){
 		if(car.getBrand() == null || car.getBrand().isEmpty())

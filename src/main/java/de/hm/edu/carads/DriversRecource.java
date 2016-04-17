@@ -146,7 +146,6 @@ public class DriversRecource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addDriverCar(@PathParam("id") String driverid, String input) {
-		Driver driver;
 		Car car;
 
 		car = gson.fromJson(input, Car.class);

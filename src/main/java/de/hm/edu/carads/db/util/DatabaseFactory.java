@@ -44,7 +44,7 @@ public class DatabaseFactory {
     private static DB createNewProductiveMongoDB() throws Exception{
     	MongoClient mongoClient;
 		PropertiesLoader pLoader;
-		pLoader = new PropertiesLoader();
+		pLoader = PropertiesLoader.getInstance();
 		mongoClient = new MongoClient(pLoader.getPropertyString("DB_HOST"), Integer.parseInt(pLoader.getPropertyString("DB_PORT")));
 		mongoClient.setWriteConcern(WriteConcern.ACKNOWLEDGED);
 		return mongoClient.getDB(pLoader.getPropertyString("DB_NAME"));

@@ -63,6 +63,7 @@ public class AdvertiserControllerTest {
 		ac.getEntity("123123123");
 	}
 
+	/*
 	@Test
 	public void updateAdvertiserTest() throws Exception {
 		AdvertiserController ac = getController();
@@ -85,6 +86,7 @@ public class AdvertiserControllerTest {
 		assertNotNull(ac.getEntity(oldAdv.getId()).getCompany());
 	}
 	
+	*/
 	@Test(expected = AlreadyExistsException.class)
 	public void updateAdvertiserWithSameEmailTest() throws Exception {
 		AdvertiserController ac = getController();

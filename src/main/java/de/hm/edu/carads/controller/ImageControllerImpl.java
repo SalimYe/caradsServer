@@ -12,13 +12,13 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
-import javax.ws.rs.WebApplicationException;
 
+import de.hm.edu.carads.db.PropertiesLoader;
 import de.hm.edu.carads.models.Image;
 
 public class ImageControllerImpl implements ImageController{
 
-	private static final String UPLOAD_PATH = "/tmp/";
+	private static final String UPLOAD_PATH = PropertiesLoader.getInstance().getPropertyString("IMG_DIR");
 	public static final String[] VALID_DATATYPES = new String[] {"jpg","png"};
 	
 	@Override

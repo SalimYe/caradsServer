@@ -1,9 +1,11 @@
 package de.hm.edu.carads.controller;
 
+import javax.naming.directory.InvalidAttributesException;
+
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.models.Advertiser;
-import de.hm.edu.carads.models.Driver;
 
 public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Advertiser> implements AdvertiserController{
 
@@ -13,6 +15,9 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	
 	@Override
 	public Advertiser changeEntity(String id, Advertiser entityData) throws Exception {
+		if(!EntityValidator.isEntityValid((entityData)))
+			throw new InvalidAttributesException();
+		
 		Advertiser d = getAdvertiserByEmail(entityData.getEmail());
 		if(d!=null)
 			if (!d.getId().equals(id))

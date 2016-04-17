@@ -1,6 +1,6 @@
 package de.hm.edu.carads.models;
 
-public class Image extends Model{
+public class Image{
 	
 	private String id;
 	private String altText;
@@ -18,4 +18,11 @@ public class Image extends Model{
 	public void setTitle(boolean isTitle) {
 		this.isTitle = isTitle;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 }

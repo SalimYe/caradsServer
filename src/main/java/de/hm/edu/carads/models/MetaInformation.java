@@ -11,8 +11,8 @@ public class MetaInformation{
 	public static final String DATE_FORMAT = "MM/dd/yyyy HH:mm:ss"; 
 	
 	public MetaInformation(){
-		this.created = "";
-		this.lastModified = "";
+//		this.created = "";
+//		this.lastModified = "";
 	}
 	
 	public String getLastModified() {

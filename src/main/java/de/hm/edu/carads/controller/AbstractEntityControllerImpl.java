@@ -14,7 +14,6 @@ import com.mongodb.DBObject;
 
 import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
-import de.hm.edu.carads.models.MetaInformation;
 import de.hm.edu.carads.models.Model;
 
 public abstract class AbstractEntityControllerImpl<E extends Model> implements AbstractEntityController<E>{

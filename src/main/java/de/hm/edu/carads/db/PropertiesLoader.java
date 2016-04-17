@@ -8,43 +8,45 @@ import java.util.Properties;
 import javax.ws.rs.NotFoundException;
 
 public class PropertiesLoader {
-	private Properties properties;
-	public PropertiesLoader() throws Exception{
+	private static Properties properties;
+	private static PropertiesLoader pLoader = new PropertiesLoader();
+	private PropertiesLoader(){
 		properties = new Properties();
 		BufferedInputStream stream;
-		String dbConfigPath = getConfigFile();
 		
 		try{
-			stream = new BufferedInputStream(new FileInputStream(dbConfigPath));
+			stream = new BufferedInputStream(getClass().getClassLoader().getResourceAsStream("config.properties"));
 			properties.load(stream);
 			stream.close();
+			
+			//Gibt es ein weiteres Configfile?
+			properties = getConfigFile(properties);
+			
 		}catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	public static PropertiesLoader getInstance(){
+		return pLoader;
+	}
+	
+	private Properties getConfigFile(Properties properties){
+		Properties tmp = properties;
+		BufferedInputStream stream;
+		try {
+			stream = new BufferedInputStream(new FileInputStream(properties.getProperty("PATH_TO_SERVER_CONFIG")));
+			properties.load(stream);
+			stream.close();
+			return properties;
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		return tmp;
 	}
 	
-	private String getConfigFile() throws Exception{
-		Properties config = new Properties();
-		BufferedInputStream stream;
-		try {
-			//Get file from resources folder
-			stream = new BufferedInputStream(getClass().getClassLoader().getResourceAsStream("config.properties"));
-			config.load(stream);
-			stream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			config = null;
-		}
-		if(config == null){
-			throw new IllegalAccessException();
-		}else if(config.getProperty("PATH_TO_SERVER_CONFIG").isEmpty()){
-			throw new NotFoundException();
-		}
-		return config.getProperty("PATH_TO_SERVER_CONFIG");
-	}
-	
-	public String getPropertyString(String id){
+	public static String getPropertyString(String id){
 		return properties.getProperty(id);
 	}
 }
