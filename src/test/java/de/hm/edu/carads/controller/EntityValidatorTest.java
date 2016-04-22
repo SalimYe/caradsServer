@@ -87,7 +87,5 @@ public class EntityValidatorTest {
 		Car car = new Car();
 		car.setColor(COLOR);
 		assertFalse(EntityValidator.isEntityValid(car));
-	}
-	
-	
+	}	
 }

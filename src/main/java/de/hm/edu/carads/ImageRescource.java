@@ -46,6 +46,7 @@ public class ImageRescource {
 	    }catch(IllegalArgumentException e){
 	    	throw new WebApplicationException(406);
 	    }catch(IOException e){
+	    	System.out.println("Error while uploading");
 	    	throw new WebApplicationException(500);
 	    }
 	}
