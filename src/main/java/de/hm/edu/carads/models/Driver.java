@@ -1,27 +1,41 @@
 package de.hm.edu.carads.models;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
 
 public class Driver extends Person{
 
 	private String birthdate;
 	private String occupation;
 	private String licenseDate;
-	private Car car;
+	private Collection<Car> cars = new ArrayList<Car>();
 	private Image profilePicture;
+
 	
 	public Driver(String email, String firstName, String lastName) {
 		super(email, firstName, lastName);
 		this.meta = new MetaInformation();
-		this.car = null;
+		this.cars = new ArrayList<Car>();
 		this.profilePicture = null;
 	}
-
-	public Car getCar() {
-		return car;
+	
+	public Car getCar(String carId){
+		Iterator<Car> it = cars.iterator();
+		while(it.hasNext()){
+			Car tmp = it.next();
+			if(tmp.getId().equals(carId))
+				return tmp;
+		}
+		return null;
 	}
 
-	public void setCar(Car car) {
-		this.car = car;
+	public Collection<Car> getCars(){
+		return cars;
+	}
+	public void addCar(Car car) {
+		this.cars.add(car);
 	}
 
 	public Image getImage() {
