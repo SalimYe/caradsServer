@@ -1,5 +1,7 @@
 package de.hm.edu.carads.controller;
 
+import java.util.Collection;
+
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.core.NoContentException;
 
@@ -19,22 +21,22 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 	}
 
 	@Override
-	public Car getCar(String entitiyid) throws Exception {
-		Car car = getEntity(entitiyid).getCar();
+	public Car getCar(String driverId, String carId) throws Exception {
+		Car car = getEntity(driverId).getCar(carId);
 		if (car == null)
 			throw new NoContentException("no car found");
 		return car;
 	}
 
 	@Override
-	public Car addCar(String entitiyid, Car car) throws Exception {
+	public Car addCar(String driverId, Car car) throws Exception {
 		if (!EntityValidator.isNewCarValid(car)) {
 			throw new InvalidAttributesException();
 		}
 
-		Driver driver = getEntity(entitiyid);
+		Driver driver = getEntity(driverId);
 
-		driver.setCar(car);
+		driver.addCar(car);
 		driver.getMetaInformation().update();
 
 		dbController.updateEntity(Driver.class, driver.getId(),
@@ -43,9 +45,9 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 	}
 
 	@Override
-	public void deleteCar(String entitiyid) throws Exception {
-		Driver driver = getEntity(entitiyid);
-		driver.setCar(null);
+	public void deleteCar(String driverId, String carId) throws Exception {
+		Driver driver = getEntity(driverId);
+
 		driver.getMetaInformation().update();
 		dbController.updateEntity(Driver.class, driver.getId(),
 				BasicDBObject.parse(gson.toJson(driver)));
@@ -59,6 +61,12 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 		entity.getMetaInformation().makeNewMetaInformation();
 
 		return super.addEntity(entity);
+	}
+	
+	@Override
+	public Collection<Car> getCars(String driverId) throws Exception {
+		Driver driver = getEntity(driverId);
+		return driver.getCars();
 	}
 
 	@Override
@@ -84,4 +92,6 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 		return this.makeEntityFromBasicDBObject(dbController
 				.getEntityByKeyValue(Driver.class, "email", email));
 	}
+
+	
 }

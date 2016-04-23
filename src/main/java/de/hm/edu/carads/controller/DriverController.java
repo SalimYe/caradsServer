@@ -1,12 +1,15 @@
 package de.hm.edu.carads.controller;
 
+import java.util.Collection;
+
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 
 
 public interface DriverController extends AbstractEntityController<Driver>{
 	//Auto
-	public Car getCar(String entitiyid) throws Exception;
-	public Car addCar(String entitiyid, Car car) throws Exception;
-	public void deleteCar(String entitiyid) throws Exception;
+	public Car getCar(String driverId, String carId) throws Exception;
+	public Collection<Car> getCars(String driverId) throws Exception;
+	public Car addCar(String driverId, Car car) throws Exception;
+	public void deleteCar(String driverId, String carId) throws Exception;
 }
