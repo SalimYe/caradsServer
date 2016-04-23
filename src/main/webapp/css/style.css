@@ -1,0 +1,56 @@
+div.profilePicture {
+    width: 220px;
+    float: right;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+
+/** Form */
+input.ng-touched.ng-invalid, 
+input.ng-invalid:active,
+input.ng-invalid:focus {
+    border-color: red;
+}
+
+label.required:before,
+div.required:before {
+    content: "* ";
+    color: red;
+}
+
+/** Profile Picture */
+
+div.profilePicture img {
+    width: 100%;
+}
+
+div.profilePicture div.delete {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    opacity: 0;
+    cursor: pointer;
+    -webkit-transition: opacity 0.4s; /* Safari */
+    transition: opacity 0.4s;
+}
+
+div.profilePicture div.delete {
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+div.profilePicture:hover div.delete {
+    opacity: 0.8;
+}
+
+div.profilePicture:hover div.delete.bg {
+    background-color: black;
+    height: 100%;
+    opacity: 0.5;
+}
