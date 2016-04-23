@@ -13,6 +13,10 @@ app.config(function ($routeProvider) {
             controller: 'driver',
             templateUrl: 'views/driver.html'
         })
+        .when('/drivers/', {
+            controller: 'drivers',
+            templateUrl: 'views/drivers.html'
+        })
         .when('/home', {
             controller: 'home',
             templateUrl: 'views/home.html'

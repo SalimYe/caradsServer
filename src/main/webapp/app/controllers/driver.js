@@ -1,5 +1,16 @@
 app.controller('driver', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate) {
 
+    var alert = function (title, content, level) {
+        $scope.alert = [];
+        $scope.alert.title = title;
+        $scope.alert.content = content;
+        $scope.alert.level = level;
+    };
+
+    $scope.deleteAlert = function () {
+        delete $scope.alert;
+    };
+
     $scope.driver;
     var isNewDriver = ($routeParams.id === undefined);
 
@@ -26,10 +37,19 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
     var createDriver = function () {
         $http.post('/api/drivers/', $scope.driver).
                 success(function (data, status, headers, config) {
-                    $location.path('driver/' + data.id);
+                    alert("Fahrer angelegt", "Der Fahrer wurde erfolgreich registriert!", "success");
+                    $routeParams.id = data.id;
                 }).
-                error(function (data, status, headers, config) {
-                    //TODO
+                error(function (data, status) {
+                    if (status === 409) {
+                        alert("Speichern fehlgeschlagen", "Es ist bereits ein Fahrer mit der Mail \""
+                                + $scope.driver.email + "\" registiert!", "danger");
+                    } else {
+                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " + 
+                                "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
+                                "den Administrator.", "danger");
+                    }
+
                 });
     };
 
@@ -42,7 +62,7 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
     };
 
     $scope.exitDriver = function () {
-        $location.path('/saveDriver');
+
     };
 
     $scope.saveImage = function () {

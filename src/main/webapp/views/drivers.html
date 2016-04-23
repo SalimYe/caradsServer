@@ -1,0 +1,26 @@
+<main>
+    <h3>Fahrer Übersicht</h3>
+    <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
+        <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
+        <strong>{{alert.title}}:</strong> {{alert.content}}
+    </div>
+    <div class="row">
+        <div ng-repeat="driver in drivers">
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="thumb-img">
+                        <img ng-src="{{getProfileImage(driver.profilePicture.id)}}" alt="{{driver.firstname}} {{driver.lastname}}" />
+                    </div>
+                    <div class="caption">
+                        <h3>{{driver.firstname}} {{driver.lastname}}</h3>
+                        <div class="details">
+                            <div>{{driver.description}}</div>
+                            <div class="details-fade"></div>
+                        </div>
+                        <p><a href="#/driver/{{driver.id}}" class="btn btn-primary" role="button">Details</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

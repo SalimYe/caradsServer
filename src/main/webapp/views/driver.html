@@ -1,5 +1,9 @@
 <main>
     <h3>Fahrer</h3>
+    <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
+        <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
+        <strong>{{alert.title}}:</strong> {{alert.content}}
+    </div>
     <form name="driverForm">
         <div class="row">
             <div class="col-md-6">
@@ -80,6 +84,12 @@
                     <label for="description">Kurzbeschreibung</label>
                     <textarea type="text" class="form-control" id="description" ng-model="driver.description"></textarea>
                 </div>
+            </div>
+        </div>
+        <div class="row" ng-if="driver.cars !== undefined">
+            <div class="col-md-12">
+                <h3>Fahrzeuge</h3>
+                // TODO
             </div>
         </div>
         <div class="row">
