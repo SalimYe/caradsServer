@@ -19,4 +19,6 @@ public interface DatabaseController {
 	public boolean existEntityByKeyValue(Class collectionClass, String key, String value);
 	public BasicDBObject getEntityByKeyValue(Class collectionClass, String key, String value);
 	public List<DBObject> getAllEntities(Class collectionClass);
+	
+	public String getNewId();
 }

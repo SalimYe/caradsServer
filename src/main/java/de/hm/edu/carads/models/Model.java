@@ -1,7 +1,7 @@
 package de.hm.edu.carads.models;
 
 public abstract class Model {
-	protected String id;
+	protected String id="";
 	protected MetaInformation meta;
 	
 	public Model(){

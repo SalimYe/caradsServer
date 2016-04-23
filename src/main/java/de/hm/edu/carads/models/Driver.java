@@ -2,6 +2,7 @@ package de.hm.edu.carads.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 
 public class Driver extends Person{
@@ -9,8 +10,9 @@ public class Driver extends Person{
 	private String birthdate;
 	private String occupation;
 	private String licenseDate;
-	private Collection<Car> cars;
+	private Collection<Car> cars = new ArrayList<Car>();
 	private Image profilePicture;
+
 	
 	public Driver(String email, String firstName, String lastName) {
 		super(email, firstName, lastName);
@@ -20,6 +22,12 @@ public class Driver extends Person{
 	}
 	
 	public Car getCar(String carId){
+		Iterator<Car> it = cars.iterator();
+		while(it.hasNext()){
+			Car tmp = it.next();
+			if(tmp.getId().equals(carId))
+				return tmp;
+		}
 		return null;
 	}
 
