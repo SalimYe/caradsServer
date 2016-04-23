@@ -1,11 +1,3 @@
-main {
-    
-}
-
-aside {
-    
-}
-
 div.profilePicture {
     width: 220px;
     float: right;
@@ -14,6 +6,21 @@ div.profilePicture {
     border: 1px solid lightgray;
     border-radius: 4px;
 }
+
+/** Form */
+input.ng-touched.ng-invalid, 
+input.ng-invalid:active,
+input.ng-invalid:focus {
+    border-color: red;
+}
+
+label.required:before,
+div.required:before {
+    content: "* ";
+    color: red;
+}
+
+/** Profile Picture */
 
 div.profilePicture img {
     width: 100%;

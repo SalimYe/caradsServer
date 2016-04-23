@@ -1,20 +1,19 @@
 <main>
     <h3>Fahrer</h3>
-    <h4>{{driver.firstname}} {{driver.lastname}}</h4>
-    <form>
+    <form name="driverForm">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="firstname">Vorname</label>
-                    <input type="text" class="form-control" id="firstname" ng-model="driver.firstname">
+                    <label for="firstname" class="required">Vorname</label>
+                    <input type="text" class="form-control" id="firstname" ng-model="driver.firstname" required="">
                 </div>
                 <div class="form-group">
-                    <label for="lastname">Nachname</label>
-                    <input type="text" class="form-control" id="lastname" ng-model="driver.lastname">
+                    <label for="lastname" class="required">Nachname</label>
+                    <input type="text" class="form-control" id="lastname" ng-model="driver.lastname" required="">
                 </div>
                 <div class="form-group">
-                    <label for="email">Mail</label>
-                    <input type="text" class="form-control" id="email" ng-model="driver.email">
+                    <label for="email" class="required">Mail</label>
+                    <input type="email" class="form-control" id="email" ng-model="driver.email" required="">
                 </div>  
                 <div class="form-group">
                     <label for="phone">Mobil</label>
@@ -85,8 +84,14 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <div class="required">Pflichtfeld</div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
                 <button type="submit" class="btn btn-danger" ng-click="exitDriver()">Schlie&szlig;en</button>
-                <button type="submit" class="btn btn-success" ng-click="saveDriver()">Speichern</button>
+                <button type="submit" class="btn btn-success" ng-click="saveDriver()" ng-disabled="!driverForm.$valid">Speichern</button>
             </div>
         </div>
     </form>
