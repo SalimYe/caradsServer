@@ -4,20 +4,20 @@
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
     </div>
-    <form name="advertieserForm">
+    <form name="advertiserForm">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="company" class="required">Unternehmen</label>
-                    <input type="text" class="form-control" id="company" ng-model="advertieser.company" required="">
+                    <input type="text" class="form-control" id="company" ng-model="advertiser.company" required="">
                 </div>
                 <div class="form-group">
                     <label for="firstname" class="required">Vorname</label>
-                    <input type="text" class="form-control" id="firstname" ng-model="driver.firstname" required="">
+                    <input type="text" class="form-control" id="firstname" ng-model="advertiser.firstname" required="">
                 </div>
                 <div class="form-group">
                     <label for="lastname" class="required">Nachname</label>
-                    <input type="text" class="form-control" id="lastname" ng-model="advertieser.lastname" required="">
+                    <input type="text" class="form-control" id="lastname" ng-model="advertiser.lastname" required="">
                 </div>                            
             </div>
             <div class="col-md-6">
@@ -25,20 +25,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="image">Logo</label>
-                            <input name="file" id="image" class="form-control" type="file" fileread="image">
+                            <input name="file" id="logo" class="form-control" type="file" readlogo="logo">
                             <button type="submit" class="btn btn-success" ng-click="saveImage()">Bild hinzufügen</button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="profilePicture">
-                            <div ng-if="advertieser.logo !== undefined" ng-click="deleteImage()">
+                            <div ng-if="advertiser.logo !== undefined" ng-click="deleteImage()">
                                 <div class="delete bg"></div>
                                 <div class="delete">
                                     <span>Profilbild entfernen</span>
                                 </div>
                             </div>
-                            <img ng-if="advertieser.logo !== undefined" ng-src="../api/images/{{advertieser.logo.id}}" />
-                            <img ng-if="advertieser.logo === undefined" ng-src="../img/symbols/empty_profilepicture.jpg" />
+                            <img ng-if="advertiser.logo !== undefined" ng-src="../api/images/{{advertiser.logo.id}}" />
+                            <img ng-if="advertiser.logo === undefined" ng-src="../img/symbols/empty_profilepicture.jpg" />
                         </div>
                     </div>
                 </div>
@@ -48,25 +48,25 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="city">Stadt</label>
-                    <input type="text" class="form-control" id="city" ng-model="advertieser.city">
+                    <input type="text" class="form-control" id="city" ng-model="advertiser.city">
                 </div>  
                 <div class="form-group">
                     <label for="zip">PLZ</label>
-                    <input type="text" class="form-control" id="zip" ng-model="advertieser.zip">
+                    <input type="text" class="form-control" id="zip" ng-model="advertiser.zip">
                 </div>  
                 <div class="form-group">
                     <label for="country">Land</label>
-                    <input type="text" class="form-control" id="country" ng-model="advertieser.country">
+                    <input type="text" class="form-control" id="country" ng-model="advertiser.country">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="phone">Telefon</label>
-                    <input type="text" class="form-control" id="phone" ng-model="advertieser.phone">
+                    <input type="text" class="form-control" id="phone" ng-model="advertiser.phone">
                 </div>
                 <div class="form-group">
                     <label for="email" class="required">Mail</label>
-                    <input type="email" class="form-control" id="email" ng-model="advertieser.email" required="">
+                    <input type="email" class="form-control" id="email" ng-model="advertiser.email" required="">
                 </div> 
             </div>            
         </div>
@@ -79,7 +79,7 @@
         <div class="row">
             <div class="col-md-12">
                 <button type="submit" class="btn btn-danger" ng-click="exitAdvertiser()">Schlie&szlig;en</button>
-                <button type="submit" class="btn btn-success" ng-click="saveAdvertiser()" ng-disabled="!advertieserForm.$valid">Speichern</button>
+                <button type="submit" class="btn btn-success" ng-click="saveAdvertiser()" ng-disabled="!advertiserForm.$valid">Speichern</button>
             </div>
         </div>
     </form>

@@ -1,4 +1,11 @@
-app.controller('driver', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate) {
+app.controller('car', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate) {
+
+    var driverId = $routeParams.driverId;
+    var carId = $routeParams.carId;
+
+    if (driverId === undefined) {
+        $location.path('/');
+    }
 
     var alert = function (title, content, level) {
         $scope.alert = [];
@@ -11,63 +18,53 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
         delete $scope.alert;
     };
 
-    var driverId = $routeParams.id;
-    var isNewDriver = (driverId === undefined);
-    $scope.driver;
-    $scope.isNewDriver = isNewDriver;
+    $scope.car;
 
-    if (!isNewDriver) {
-        $http.get('/api/drivers/' + driverId).
+    var isNewCar = ($routeParams.carId === undefined);
+
+    if (!isNewCar) {
+        $http.get('/api/drivers/' + driverId + '/cars/' + carId).
                 success(function (data, status, headers, config) {
-                    $scope.driver = data;
+                    $scope.car = data;
                 }).
                 error(function (data, status, headers, config) {
-                    $location.path('driver/');
+                    $location.path('driver/' + driverId);
                 });
     }
 
-    var updateDriver = function () {
-        $http.put('/api/drivers/' + driverId, $scope.driver).
+    var updateCar = function () {
+        $http.put('/api/drivers/' + driverId + '/cars/' + carId, $scope.car).
                 success(function (data, status, headers, config) {
-                    $location.path('driver/' + $scope.driver.id);
+                    //TODO
                 }).
                 error(function (data, status, headers, config) {
                     //TODO
                 });
     };
 
-    var createDriver = function () {
-        $http.post('/api/drivers/', $scope.driver).
+    var createCar = function () {
+        console.log($scope.car);
+        $http.post('/api/drivers/' + driverId + '/cars/', $scope.car).
                 success(function (data, status, headers, config) {
-                    alert("Fahrer angelegt", "Der Fahrer wurde erfolgreich registriert!", "success");
+                    alert("Fahrzeug angelegt", "Das Fahrzeug wurde erfolgreich angelegt!", "success");
                 }).
                 error(function (data, status) {
-                    if (status === 409) {
-                        alert("Speichern fehlgeschlagen", "Es ist bereits ein Fahrer mit der Mail \""
-                                + $scope.driver.email + "\" registiert!", "danger");
-                    } else {
-                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " + 
-                                "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                                "den Administrator.", "danger");
-                    }
-
+                    alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
+                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
+                            "den Administrator.", "danger");
                 });
     };
 
-    $scope.saveDriver = function () {
-        if (isNewDriver) {
-            createDriver();
+    $scope.saveCar = function () {
+        if (isNewCar) {
+            createCar();
         } else {
-            updateDriver();
+            updateCar();
         }
     };
 
-    $scope.exitDriver = function () {
+    $scope.exitCar = function () {
 
-    };
-    
-    $scope.addCar = function () {
-        $location.path('/driver/' + driverId + '/car/');
     };
 
     $scope.saveImage = function () {
@@ -94,15 +91,15 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
     $scope.getImageUrl = function () {
         return '../api/images/' + $scope.driver.profilePicture.id;
     };
-}).directive("fileread", [function () {
+}).directive("carimage", [function () {
         return {
             scope: {
-                fileread: "="
+                carimage: "="
             },
             link: function (scope, element, attributes) {
                 element.bind("change", function (changeEvent) {
                     scope.$apply(function () {
-                        scope.fileread = changeEvent.target.files[0];
+                        scope.carimage = changeEvent.target.files[0];
                         // or all selected files:
                         // scope.fileread = changeEvent.target.files;
                     });

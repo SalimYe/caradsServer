@@ -5,6 +5,14 @@ var app = angular.module('client', ['ngRoute', 'ngTable', 'pascalprecht.translat
 app.config(function ($routeProvider) {
 
     $routeProvider
+            .when('/driver/:driverId/car/', {
+                controller: 'car',
+                templateUrl: 'views/car.html'
+            })
+            .when('/driver/:driverId/car/:carId', {
+                controller: 'car',
+                templateUrl: 'views/car.html'
+            })
             .when('/cars/', {
                 controller: 'cars',
                 templateUrl: 'views/cars.html'
