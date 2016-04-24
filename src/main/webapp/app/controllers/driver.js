@@ -46,7 +46,7 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
                         alert("Speichern fehlgeschlagen", "Es ist bereits ein Fahrer mit der Mail \""
                                 + $scope.driver.email + "\" registiert!", "danger");
                     } else {
-                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " + 
+                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
                                 "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
                                 "den Administrator.", "danger");
                     }
@@ -61,13 +61,27 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
             updateDriver();
         }
     };
+    
+    $scope.deleteDriver = function () {
+        $http.delete('/api/drivers/' + driverId).
+                success(function (data, status, headers, config) {
+                    $location.path('/home/');
+                }).
+                error(function (data, status, headers, config) {
+                    alert("Löschen fehlgeschlagen", "Der Fahrer konnte nicht gelöscht werden.");
+                });
+    };
 
     $scope.exitDriver = function () {
-
+        $location.path('/home/');
     };
-    
+
     $scope.addCar = function () {
         $location.path('/driver/' + driverId + '/car/');
+    };
+
+    $scope.editCar = function (carId) {
+        $location.path('/driver/' + driverId + '/car/' + carId);
     };
 
     $scope.saveImage = function () {

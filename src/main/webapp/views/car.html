@@ -47,8 +47,18 @@
         <hr />
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" class="btn btn-danger" ng-click="exitCar()">Schlie&szlig;en</button>
-                <button type="submit" class="btn btn-success" ng-click="saveCar()" ng-disabled="!carForm.$valid">Speichern</button>
+                <button type="submit" class="btn btn-primary" ng-click="exitCar()">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Schlie&szlig;en
+                </button>
+                <button type="submit" class="btn btn-danger" ng-click="deleteCar()" ng-if="!isNewCar">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    Löschen
+                </button>
+                <button type="submit" class="btn btn-success" ng-click="saveCar()" ng-disabled="!carForm.$valid">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Speichern
+                </button>
             </div>
         </div>
     </form>

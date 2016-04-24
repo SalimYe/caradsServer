@@ -78,8 +78,14 @@
         <hr />
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" class="btn btn-danger" ng-click="exitAdvertiser()">Schlie&szlig;en</button>
-                <button type="submit" class="btn btn-success" ng-click="saveAdvertiser()" ng-disabled="!advertiserForm.$valid">Speichern</button>
+                <button type="submit" class="btn btn-primary" ng-click="exitAdvertiser()">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Schlie&szlig;en
+                </button>
+                <button type="submit" class="btn btn-success" ng-click="saveAdvertiser()" ng-disabled="!advertiserForm.$valid">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Speichern
+                </button>
             </div>
         </div>
     </form>

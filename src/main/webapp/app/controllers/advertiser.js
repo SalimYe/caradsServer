@@ -64,7 +64,7 @@ app.controller('advertiser', function ($scope, $routeParams, $http, $location, $
     };
 
     $scope.exitAdvertiser = function () {
-
+        $location.path('/home/');
     };
 
     $scope.saveImage = function () {

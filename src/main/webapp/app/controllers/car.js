@@ -1,4 +1,4 @@
-app.controller('car', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate) {
+app.controller('car', function ($scope, $routeParams, $http, $location, $modal, $document, $timeout, $window, $translate) {
 
     var driverId = $routeParams.driverId;
     var carId = $routeParams.carId;
@@ -13,14 +13,18 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
         $scope.alert.content = content;
         $scope.alert.level = level;
     };
+    
+    var redirectToDriver = function() {
+        $location.path('driver/' + driverId);
+    };
 
     $scope.deleteAlert = function () {
         delete $scope.alert;
     };
 
-    $scope.car;
-
     var isNewCar = ($routeParams.carId === undefined);
+    $scope.car;
+    $scope.isNewCar = isNewCar;
 
     if (!isNewCar) {
         $http.get('/api/drivers/' + driverId + '/cars/' + carId).
@@ -28,17 +32,31 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
                     $scope.car = data;
                 }).
                 error(function (data, status, headers, config) {
-                    $location.path('driver/' + driverId);
+                    redirectToDriver();
                 });
     }
 
     var updateCar = function () {
         $http.put('/api/drivers/' + driverId + '/cars/' + carId, $scope.car).
                 success(function (data, status, headers, config) {
-                    //TODO
+                    redirectToDriver();
                 }).
                 error(function (data, status, headers, config) {
-                    //TODO
+                    alert("Update fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
+                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
+                            "den Administrator.", "danger");
+                });
+    };
+    
+    $scope.deleteCar = function () {
+        $http.delete('/api/drivers/' + driverId + '/cars/' + carId).
+                success(function (data, status, headers, config) {
+                    redirectToDriver();
+                }).
+                error(function (data, status, headers, config) {
+                    alert("Löschen fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
+                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
+                            "den Administrator.", "danger");
                 });
     };
 
@@ -46,7 +64,7 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
         console.log($scope.car);
         $http.post('/api/drivers/' + driverId + '/cars/', $scope.car).
                 success(function (data, status, headers, config) {
-                    alert("Fahrzeug angelegt", "Das Fahrzeug wurde erfolgreich angelegt!", "success");
+                    redirectToDriver();
                 }).
                 error(function (data, status) {
                     alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
@@ -64,7 +82,7 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
     };
 
     $scope.exitCar = function () {
-
+        redirectToDriver();
     };
 
     $scope.saveImage = function () {
