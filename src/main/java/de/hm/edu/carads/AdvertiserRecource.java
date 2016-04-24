@@ -25,6 +25,7 @@ import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
+import de.hm.edu.carads.models.Campaign;
 
 @Path("advertisers")
 public class AdvertiserRecource {
@@ -113,6 +114,23 @@ public class AdvertiserRecource {
 		} catch(NoContentException e){
 			throw new WebApplicationException(404);
 		} catch (Exception e) {
+			throw new WebApplicationException(500);
+		}
+	}
+	
+	@POST
+	@Path("/{id}/campaigns")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addCampaign(@PathParam("id") String id, String input){
+		Campaign c = gson.fromJson(input, Campaign.class);
+		if(c==null)
+			throw new WebApplicationException(400);
+		
+		try{
+			Campaign addedCampaign = ac.addCampaign(id, c);
+			return Response.ok(gson.toJson(addedCampaign)).build();
+		}catch(Exception e){
 			throw new WebApplicationException(500);
 		}
 	}

@@ -37,9 +37,11 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 		Driver driver = getEntity(driverId);
 
 		car.setId(dbController.getNewId());
+		car.renewMetaInformation();
 		driver.addCar(car);
-		driver.getMetaInformation().update();
 
+		driver.getMetaInformation().update();
+		
 		dbController.updateEntity(Driver.class, driver.getId(),
 				BasicDBObject.parse(gson.toJson(driver)));
 		return car;
@@ -48,7 +50,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 	@Override
 	public void deleteCar(String driverId, String carId) throws Exception {
 		Driver driver = getEntity(driverId);
-
+		driver.removeCar(carId);
 		driver.getMetaInformation().update();
 		dbController.updateEntity(Driver.class, driver.getId(),
 				BasicDBObject.parse(gson.toJson(driver)));

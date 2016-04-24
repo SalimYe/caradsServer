@@ -146,8 +146,8 @@ public class DriversRecource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addDriverCar(@PathParam("id") String driverid, String input) {
+		
 		Car car;
-
 		car = gson.fromJson(input, Car.class);
 		if(car == null){
 			throw new WebApplicationException(400);
