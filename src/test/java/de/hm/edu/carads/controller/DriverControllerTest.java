@@ -253,7 +253,7 @@ public class DriverControllerTest {
 	}
 
 	@Test(expected = NoContentException.class)
-	public void deleteCar() throws Exception {
+	public void deleteCarFailureTest() throws Exception {
 		DriverController dc = getDriverController();
 
 		Driver d = dc.addEntity(makeNewDriver());
