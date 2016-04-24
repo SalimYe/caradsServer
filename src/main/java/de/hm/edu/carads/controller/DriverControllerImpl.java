@@ -84,6 +84,24 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 
 		return super.changeEntity(id, entityData);
 	}
+	
+	@Override
+	public Car updateCar(String driverId, String carId, Car car) throws Exception{
+		if(!EntityValidator.isEntityValid(car))
+			throw new InvalidAttributesException();
+		
+		Driver driver = getEntity(driverId);
+		Car oldCar = driver.getCar(carId);
+		if(!driver.removeCar(carId))
+			throw new NoContentException("Could not find Car in Driver "+driverId);
+		
+		car.update(oldCar.getMetaInformation());
+		car.setId(carId);
+		driver.addCar(car);
+		
+		dbController.updateEntity(Driver.class, driverId, BasicDBObject.parse(gson.toJson(driver)));
+		return car;
+	}
 
 	private boolean existDriverByEmail(String email) {
 		if (dbController.existEntityByKeyValue(Driver.class, "email", email))
@@ -94,7 +112,5 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 	private Driver getDriverByEmail(String email) {
 		return this.makeEntityFromBasicDBObject(dbController
 				.getEntityByKeyValue(Driver.class, "email", email));
-	}
-
-	
+	}	
 }

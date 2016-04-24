@@ -194,4 +194,27 @@ public class DriversRecource {
 		}
 	}
 	
+	@PUT
+	@Path("/{id}/cars/{car}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId, String input){
+		Car car= gson.fromJson(input, Car.class);
+		if(car==null)
+			throw new WebApplicationException(400);
+		
+		try {
+			Car newCar = dc.updateCar(driverId, carId, car);
+			return Response.ok(gson.toJson(newCar)).build();
+		} catch(NoContentException e){
+			e.printStackTrace();
+			throw new WebApplicationException(404);
+		}catch(InvalidAttributesException e){
+			throw new WebApplicationException(400);
+		}
+		catch (Exception e) {
+			throw new WebApplicationException(500);
+		}
+	}
+	
 }

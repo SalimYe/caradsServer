@@ -263,6 +263,45 @@ public class DriverControllerTest {
 		dc.deleteCar(d.getId(), car.getId());
 		dc.getCar(d.getId(), car.getId());
 	}
+	
+	@Test
+	public void updateCarTest() throws Exception{
+		DriverController dc = getDriverController();
+		Driver d = dc.addEntity(makeNewDriver());
+		Car car = dc.addCar(d.getId(), makeNewCar());
+		String id = car.getId();
+		Car newCar = new Car();
+		newCar.setBrand("Daihatsu");
+		newCar.setModel("Cuore");
+		
+		dc.updateCar(d.getId(), id, newCar);
+		
+		Car updated = dc.getCar(d.getId(), id);
+		assertEquals("Cuore", updated.getModel());
+	}
+	
+	@Test (expected = NoContentException.class)
+	public void updateNotExistingCar() throws Exception{
+		DriverController dc = getDriverController();
+		Driver d = dc.addEntity(makeNewDriver());
+		
+		Car newCar = new Car();
+		newCar.setBrand("Daihatsu");
+		newCar.setModel("Cuore");
+		
+		dc.updateCar(d.getId(), "11234123", newCar);
+	}
+	
+	@Test (expected = InvalidAttributesException.class)
+	public void updateCarWithInvalidInformation() throws Exception{
+		DriverController dc = getDriverController();
+		Driver d = dc.addEntity(makeNewDriver());
+		Car car = dc.addCar(d.getId(), makeNewCar());
+		Car newCar = new Car();
+		newCar.setBrand("Daihatsu");
+		
+		dc.updateCar(d.getId(), car.getId(), newCar);
+	}
 
 	@Test(expected = AlreadyExistsException.class)
 	public void updateDriverWithSameEmailTest() throws Exception {

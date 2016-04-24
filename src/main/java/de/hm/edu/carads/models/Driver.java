@@ -31,10 +31,10 @@ public class Driver extends Person{
 		return null;
 	}
 	
-	public void removeCar(String carId){
+	public boolean removeCar(String carId){
 		if(cars == null)
 			cars = new ArrayList<Car>();
-		cars.remove(getCar(carId));
+		return cars.remove(getCar(carId));
 	}
 
 	public Collection<Car> getCars(){
