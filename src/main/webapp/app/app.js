@@ -3,34 +3,50 @@
 var app = angular.module('client', ['ngRoute', 'ngTable', 'pascalprecht.translate', 'ui.bootstrap']);
 
 app.config(function ($routeProvider) {
-    
+
     $routeProvider
-        .when('/driver/', {
-            controller: 'driver',
-            templateUrl: 'views/driver.html'
-        })
-        .when('/driver/:id', {
-            controller: 'driver',
-            templateUrl: 'views/driver.html'
-        })
-        .when('/drivers/', {
-            controller: 'drivers',
-            templateUrl: 'views/drivers.html'
-        })
-        .when('/home', {
-            controller: 'home',
-            templateUrl: 'views/home.html'
-        })
-        .when('/', {
-            redirectTo: '/home'
-        })
-        .otherwise({redirectTo: '/'});
+            .when('/driver/:driverId/car/', {
+                controller: 'car',
+                templateUrl: 'views/car.html'
+            })
+            .when('/driver/:driverId/car/:carId', {
+                controller: 'car',
+                templateUrl: 'views/car.html'
+            })
+            .when('/advertiser/', {
+                controller: 'advertiser',
+                templateUrl: 'views/advertiser.html'
+            })
+            .when('/advertiser/:id', {
+                controller: 'advertiser',
+                templateUrl: 'views/advertiser.html'
+            })
+            .when('/driver/', {
+                controller: 'driver',
+                templateUrl: 'views/driver.html'
+            })
+            .when('/driver/:id', {
+                controller: 'driver',
+                templateUrl: 'views/driver.html'
+            })
+            .when('/drivers/', {
+                controller: 'drivers',
+                templateUrl: 'views/drivers.html'
+            })
+            .when('/home', {
+                controller: 'home',
+                templateUrl: 'views/home.html'
+            })
+            .when('/', {
+                redirectTo: '/home'
+            })
+            .otherwise({redirectTo: '/'});
 
 });
 
 app.config(function ($translateProvider) {
 
-    var de = (function() {
+    var de = (function () {
         var json = null;
         $.ajax({
             'async': false,
@@ -43,8 +59,8 @@ app.config(function ($translateProvider) {
         });
         return json;
     })();
-    
-    var en = (function() {
+
+    var en = (function () {
         var json = null;
         $.ajax({
             'async': false,

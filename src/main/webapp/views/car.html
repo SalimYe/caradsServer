@@ -1,0 +1,65 @@
+<main>
+    <h3>Fahrzeug</h3>
+    <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
+        <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
+        <strong>{{alert.title}}:</strong> {{alert.content}}
+    </div>
+    <form name="carForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="brand" class="required">Marke</label>
+                    <input type="text" class="form-control" id="brand" ng-model="car.brand" required="">
+                </div>
+                <div class="form-group">
+                    <label for="model" class="required">Modell</label>
+                    <input type="text" class="form-control" id="model" ng-model="car.model" required="">
+                </div>
+                <div class="form-group">
+                    <label for="color" class="required">Farbe</label>
+                    <input type="text" class="form-control" id="color" ng-model="car.color" required="">
+                </div> 
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="buildYear" class="required" >Erstzulassung</label>
+                    <input type="text" class="form-control" id="buildYear" ng-model="car.buildYear" required="">
+                </div>            
+                <div class="form-group">
+                    <label for="mileage" class="required" >Kilometerstand</label>
+                    <input type="text" class="form-control" id="mileage" ng-model="car.mileage" required="">
+                </div>  
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="description">Kurzbeschreibung</label>
+                    <textarea type="text" class="form-control" id="description" ng-model="car.description"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="required">Pflichtfeld</div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary" ng-click="exitCar()">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Schlie&szlig;en
+                </button>
+                <button type="submit" class="btn btn-danger" ng-click="deleteCar()" ng-if="!isNewCar">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    Löschen
+                </button>
+                <button type="submit" class="btn btn-success" ng-click="saveCar()" ng-disabled="!carForm.$valid">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Speichern
+                </button>
+            </div>
+        </div>
+    </form>
+</main>

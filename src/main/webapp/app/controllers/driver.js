@@ -11,11 +11,13 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
         delete $scope.alert;
     };
 
+    var driverId = $routeParams.id;
+    var isNewDriver = (driverId === undefined);
     $scope.driver;
-    var isNewDriver = ($routeParams.id === undefined);
+    $scope.isNewDriver = isNewDriver;
 
     if (!isNewDriver) {
-        $http.get('/api/drivers/' + $routeParams.id).
+        $http.get('/api/drivers/' + driverId).
                 success(function (data, status, headers, config) {
                     $scope.driver = data;
                 }).
@@ -25,7 +27,7 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
     }
 
     var updateDriver = function () {
-        $http.put('/api/drivers/' + $routeParams.id, $scope.driver).
+        $http.put('/api/drivers/' + driverId, $scope.driver).
                 success(function (data, status, headers, config) {
                     $location.path('driver/' + $scope.driver.id);
                 }).
@@ -38,14 +40,13 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
         $http.post('/api/drivers/', $scope.driver).
                 success(function (data, status, headers, config) {
                     alert("Fahrer angelegt", "Der Fahrer wurde erfolgreich registriert!", "success");
-                    $routeParams.id = data.id;
                 }).
                 error(function (data, status) {
                     if (status === 409) {
                         alert("Speichern fehlgeschlagen", "Es ist bereits ein Fahrer mit der Mail \""
                                 + $scope.driver.email + "\" registiert!", "danger");
                     } else {
-                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " + 
+                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
                                 "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
                                 "den Administrator.", "danger");
                     }
@@ -60,9 +61,27 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
             updateDriver();
         }
     };
+    
+    $scope.deleteDriver = function () {
+        $http.delete('/api/drivers/' + driverId).
+                success(function (data, status, headers, config) {
+                    $location.path('/home/');
+                }).
+                error(function (data, status, headers, config) {
+                    alert("Löschen fehlgeschlagen", "Der Fahrer konnte nicht gelöscht werden.");
+                });
+    };
 
     $scope.exitDriver = function () {
+        $location.path('/home/');
+    };
 
+    $scope.addCar = function () {
+        $location.path('/driver/' + driverId + '/car/');
+    };
+
+    $scope.editCar = function (carId) {
+        $location.path('/driver/' + driverId + '/car/' + carId);
     };
 
     $scope.saveImage = function () {
