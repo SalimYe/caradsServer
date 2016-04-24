@@ -21,9 +21,6 @@ import de.hm.edu.carads.models.Image;
 public class DatabaseControllerImpl implements DatabaseController {
 	private DB db;
 	private static final String COLLECTION_DRIVER = "driver";
-	private static final String COLLECTION_CAR = "car";
-	private static final String COLLECTION_CAMPAIGN = "campaign";
-	private static final String COLLECTION_IMAGE = "image";
 	private static final String COLLECTION_ADVERTISER = "advertiser";
 
 	public DatabaseControllerImpl(String environment) {
@@ -41,14 +38,8 @@ public class DatabaseControllerImpl implements DatabaseController {
 	private String getCollectionName(Class c) {
 		if (c == Driver.class)
 			return COLLECTION_DRIVER;
-		else if (c == Car.class)
-			return COLLECTION_CAR;
-		else if (c == Image.class)
-			return COLLECTION_IMAGE;
 		else if (c == Advertiser.class)
 			return COLLECTION_ADVERTISER;
-		else if (c == Campaign.class)
-			return COLLECTION_CAMPAIGN;
 		return "";
 	}
 
@@ -135,6 +126,11 @@ public class DatabaseControllerImpl implements DatabaseController {
 		DBCollection collection = db
 				.getCollection(getCollectionName(collectionClass));
 		return collection.count();
+	}
+
+	@Override
+	public String getNewId() {
+		return new ObjectId().toString();
 	}
 
 }

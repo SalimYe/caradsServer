@@ -127,12 +127,12 @@ public class DriversRecource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDriverCars(@PathParam("id") String driverid) {
 		try {
-			Car car;
-			car = dc.getCar(driverid);
-			if(car == null){
+			Collection<Car> cars;
+			cars = dc.getCars(driverid);
+			if(cars.isEmpty()){
 				return Response.noContent().build();
 			}
-			return Response.ok(gson.toJson(car)).build();
+			return Response.ok(gson.toJson(cars)).build();
 		} catch(NoContentException e){
 			throw new WebApplicationException(404);
 		}
@@ -146,8 +146,8 @@ public class DriversRecource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addDriverCar(@PathParam("id") String driverid, String input) {
+		
 		Car car;
-
 		car = gson.fromJson(input, Car.class);
 		if(car == null){
 			throw new WebApplicationException(400);
@@ -165,11 +165,26 @@ public class DriversRecource {
 		}
 	}
 	
-	@DELETE
-	@Path("/{id}/cars")
-	public Response deleteDriverCar(@PathParam("id") String driverid){
+	@GET
+	@Path("/{id}/cars/{car}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId){
 		try {
-			dc.deleteCar(driverid);
+			Car car = dc.getCar(driverId, carId);
+			return Response.ok(gson.toJson(car)).build();
+		} catch(NoContentException e){
+			throw new WebApplicationException(404);
+		}
+		catch (Exception e) {
+			throw new WebApplicationException(500);
+		}
+	}
+	
+	@DELETE
+	@Path("/{id}/cars/{car}")
+	public Response deleteDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId){
+		try {
+			dc.deleteCar(driverId, carId);
 			return Response.ok().build();
 		} catch(NoContentException e){
 			throw new WebApplicationException(404);

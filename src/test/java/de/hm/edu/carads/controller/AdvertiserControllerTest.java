@@ -12,6 +12,7 @@ import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
+import de.hm.edu.carads.models.Campaign;
 
 public class AdvertiserControllerTest {
 
@@ -98,6 +99,16 @@ public class AdvertiserControllerTest {
 		
 		ac.changeEntity(a2.getId(), a2);
 	}
+	
+	@Test
+	public void addCampaignTest() throws Exception{
+		AdvertiserController ac = getController();
+		
+		Advertiser ad = ac.addEntity(makeNewAdvertiser());
+		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
+		assertNotNull(c);
+		assertFalse(c.getId().isEmpty());
+	}
 
 	@Before
 	public void resetDB() {
@@ -108,10 +119,16 @@ public class AdvertiserControllerTest {
 		Advertiser adv = new Advertiser(EMAIL, FIRSTNAME, LASTNAME);
 		return adv;
 	}
+	
+	private Campaign makeNewCampaign(){
+		Campaign c = new Campaign();
+		c.setTitle("Red Bull Icerace");
+		c.setCampaignBudget("10000 Euro");
+		return c;
+	}
 
 	private AdvertiserController getController() {
 		return new AdvertiserControllerImpl(new DatabaseControllerImpl(
 				DatabaseFactory.INST_TEST));
 	}
-
 }

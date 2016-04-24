@@ -163,7 +163,7 @@ public class DriverControllerTest {
 		DriverController dc = getDriverController();
 
 		Driver driver = makeNewDriver();
-		driver.setCar(makeNewCar());
+		driver.addCar(makeNewCar());
 		driver.setCity("Munich");
 		driver = dc.addEntity(driver);
 
@@ -171,7 +171,7 @@ public class DriverControllerTest {
 
 		Driver newDriver = makeNewDriver();
 		newDriver = dc.changeEntity(id, newDriver);
-		assertNull(newDriver.getCar());
+		assertNotEquals("Munich", newDriver.getCity());
 	}
 
 	@Test
@@ -180,11 +180,66 @@ public class DriverControllerTest {
 
 		Driver driver = dc.addEntity(makeNewDriver());
 		dc.addCar(driver.getId(), makeNewCar());
-		Car car = dc.getCar(driver.getId());
-		assertEquals(CARCOLOR, car.getColor());
-		assertEquals(CARBRAND, car.getBrand());
-		assertEquals(CARMODEL, car.getModel());
+		assertFalse(dc.getEntity(driver.getId()).getCars().isEmpty());
+		//Car car = dc.getCar(driver.getId());
+//		assertEquals(CARCOLOR, car.getColor());
+//		assertEquals(CARBRAND, car.getBrand());
+//		assertEquals(CARMODEL, car.getModel());
 
+	}
+	
+	@Test
+	public void addCarsToDriverTest() throws Exception {
+		DriverController dc = getDriverController();
+		Driver driver = dc.addEntity(makeNewDriver());
+		
+		Car car1 = new Car();
+		car1.setBrand("BMW");
+		car1.setModel("1er");
+		Car car2 = new Car();
+		car2.setBrand("Ford");
+		car2.setModel("Ka");
+		
+		dc.addCar(driver.getId(), car1);
+		dc.addCar(driver.getId(), car2);
+		
+		assertEquals(2, dc.getEntity(driver.getId()).getCars().size());
+	}
+	
+	@Test
+	public void addCarToDriverAndGetIDTest() throws Exception {
+		DriverController dc = getDriverController();
+		Driver driver = dc.addEntity(makeNewDriver());
+		
+		Car car1 = new Car();
+		car1.setBrand("BMW");
+		car1.setModel("1er");
+		
+		Car addedCar = dc.addCar(driver.getId(), car1);
+		assertFalse(addedCar.getId().isEmpty());
+	}
+	
+	@Test
+	public void addCarToDriverAndGetIDTest2() throws Exception {
+		DriverController dc = getDriverController();
+		Driver driver = dc.addEntity(makeNewDriver());
+		
+		Car addedCar1 = dc.addCar(driver.getId(), makeNewCar());
+		Car addedCar2 = dc.addCar(driver.getId(), makeNewCar());
+		
+		assertNotEquals(addedCar1.getId(), addedCar2.getId());
+	}
+	
+	@Test
+	public void getSpecificCarTest() throws Exception {
+		DriverController dc = getDriverController();
+		Driver driver = dc.addEntity(makeNewDriver());
+		
+
+		String id = dc.addCar(driver.getId(), makeNewCar()).getId();
+		
+		Car car = dc.getCar(driver.getId(), id);
+		assertEquals(CARBRAND, car.getBrand());
 	}
 
 	@Test
@@ -198,15 +253,15 @@ public class DriverControllerTest {
 	}
 
 	@Test(expected = NoContentException.class)
-	public void deleteCar() throws Exception {
+	public void deleteCarFailureTest() throws Exception {
 		DriverController dc = getDriverController();
 
 		Driver d = dc.addEntity(makeNewDriver());
-		dc.addCar(d.getId(), makeNewCar());
-		assertNotNull(dc.getCar(d.getId()));
+		Car car = dc.addCar(d.getId(), makeNewCar());
+		assertNotNull(dc.getCar(d.getId(), car.getId()));
 
-		dc.deleteCar(d.getId());
-		dc.getCar(d.getId());
+		dc.deleteCar(d.getId(), car.getId());
+		dc.getCar(d.getId(), car.getId());
 	}
 
 	@Test(expected = AlreadyExistsException.class)
