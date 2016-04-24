@@ -37,7 +37,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 		Driver driver = getEntity(driverId);
 
 		car.setId(dbController.getNewId());
-		car.update();
+		car.renewMetaInformation();
 		driver.addCar(car);
 
 		driver.getMetaInformation().update();

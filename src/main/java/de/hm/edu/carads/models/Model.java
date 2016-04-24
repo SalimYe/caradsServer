@@ -28,7 +28,7 @@ public abstract class Model {
 		return this.meta;
 	}
 	
-	public void update(){
+	public void renewMetaInformation(){
 		//meta = new MetaInformation();
 		meta.makeNewMetaInformation();
 	}
