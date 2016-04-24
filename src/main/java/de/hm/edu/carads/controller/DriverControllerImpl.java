@@ -48,7 +48,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 	@Override
 	public void deleteCar(String driverId, String carId) throws Exception {
 		Driver driver = getEntity(driverId);
-
+		driver.removeCar(carId);
 		driver.getMetaInformation().update();
 		dbController.updateEntity(Driver.class, driver.getId(),
 				BasicDBObject.parse(gson.toJson(driver)));

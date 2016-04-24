@@ -25,10 +25,16 @@ public class Driver extends Person{
 		Iterator<Car> it = cars.iterator();
 		while(it.hasNext()){
 			Car tmp = it.next();
+			System.out.println("ayy "+tmp.getBrand());
 			if(tmp.getId().equals(carId))
 				return tmp;
 		}
 		return null;
+	}
+	
+	public void removeCar(String carId){
+		cars.remove(getCar(carId));
+		
 	}
 
 	public Collection<Car> getCars(){
