@@ -25,7 +25,6 @@ public class Driver extends Person{
 		Iterator<Car> it = cars.iterator();
 		while(it.hasNext()){
 			Car tmp = it.next();
-			System.out.println("ayy "+tmp.getBrand());
 			if(tmp.getId().equals(carId))
 				return tmp;
 		}
@@ -33,14 +32,19 @@ public class Driver extends Person{
 	}
 	
 	public void removeCar(String carId){
+		if(cars == null)
+			cars = new ArrayList<Car>();
 		cars.remove(getCar(carId));
-		
 	}
 
 	public Collection<Car> getCars(){
+		if(cars == null)
+			cars = new ArrayList<Car>();
 		return cars;
 	}
 	public void addCar(Car car) {
+		if(cars == null)
+			cars = new ArrayList<Car>();
 		this.cars.add(car);
 	}
 
