@@ -13,10 +13,6 @@ app.config(function ($routeProvider) {
                 controller: 'car',
                 templateUrl: 'views/car.html'
             })
-            .when('/cars/', {
-                controller: 'cars',
-                templateUrl: 'views/cars.html'
-            })
             .when('/advertiser/', {
                 controller: 'advertiser',
                 templateUrl: 'views/advertiser.html'
