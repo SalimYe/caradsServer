@@ -1,6 +1,6 @@
-app.controller('advertiser', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate) {
+app.controller('advertiser', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate, $timeout) {
 
-    $scope.advertiser;
+    $scope.advertiser = {};
 
     var alert = function (title, content, level) {
         $scope.alert = [];
@@ -68,42 +68,24 @@ app.controller('advertiser', function ($scope, $routeParams, $http, $location, $
     };
 
     $scope.saveImage = function () {
-        var fd = new FormData();
-        fd.append('file', $scope.logo);
-        $http.post("http://localhost:8080/api/images/", fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        })
-                .success(function (data, status) {
-                    var image = {id: data.id, isTitle: true, altText: $scope.advertiser.firstname + " " + $scope.advertiser.lastname};
-                    $scope.advertiser.logo = image;
+        $timeout(function () {
+            var fd = new FormData();
+            fd.append('file', $scope.image[0]);
+            $http.post("http://localhost:8080/api/images/", fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            })
+                    .success(function (data, status) {
+                        var image = {id: data.id, isTitle: true, altText: ""};
+                        $scope.advertiser.logo = image;
+                    })
+                    .error(function (data, status) {
 
-                })
-                .error(function (data, status) {
-
-                });
+                    });
+        }, 200);
     };
 
     $scope.deleteImage = function () {
-        delete $scope.advertiser.profilePicture;
+        delete $scope.advertiser.logo;
     };
-
-    $scope.getImageUrl = function () {
-        return '../api/images/' + $scope.advertiser.logo.id;
-    };
-}).directive("readlogo", [function () {
-        return {
-            scope: {
-                readlogo: "="
-            },
-            link: function (scope, element, attributes) {
-                element.bind("change", function (changeEvent) {
-                    scope.$apply(function () {
-                        scope.readlogo = changeEvent.target.files[0];
-                        // or all selected files:
-                        // scope.fileread = changeEvent.target.files;
-                    });
-                });
-            }
-        }
-    }]);
+});

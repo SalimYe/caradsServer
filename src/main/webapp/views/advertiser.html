@@ -25,20 +25,18 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="image">Logo</label>
-                            <input name="file" id="logo" class="form-control" type="file" readlogo="logo">
-                            <button type="submit" class="btn btn-success" ng-click="saveImage()">Bild hinzufügen</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="profilePicture">
-                            <div ng-if="advertiser.logo !== undefined" ng-click="deleteImage()">
-                                <div class="delete bg"></div>
-                                <div class="delete">
-                                    <span>Profilbild entfernen</span>
+                            <div class="profilePicture" ng-show="advertiser.logo !== undefined">
+                                <div ng-if="advertiser.logo !== undefined" ng-click="deleteImage()">
+                                    <div class="delete bg"></div>
+                                    <div class="delete">
+                                        <span>Logo entfernen</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <img ng-if="advertiser.logo !== undefined" ng-src="../api/images/{{advertiser.logo.id}}" />
-                            <img ng-if="advertiser.logo === undefined" ng-src="../img/symbols/empty_profilepicture.jpg" />
+                                <img ng-src="../api/images/{{advertiser.logo.id}}" />
+                            </div>                            
+                            <input name="file" id="logo" class="form-control" type="file" fileread="image"
+                                   onchange="angular.element(this).scope().saveImage()" 
+                                   ng-show="advertiser.logo === undefined" />
                         </div>
                     </div>
                 </div>

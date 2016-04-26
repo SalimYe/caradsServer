@@ -1,4 +1,4 @@
-app.controller('driver', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate) {
+app.controller('driver', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate, $timeout) {
 
     var alert = function (title, content, level) {
         $scope.alert = [];
@@ -13,7 +13,7 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
 
     var driverId = $routeParams.id;
     var isNewDriver = (driverId === undefined);
-    $scope.driver;
+    $scope.driver = {};
     $scope.isNewDriver = isNewDriver;
 
     if (!isNewDriver) {
@@ -54,14 +54,6 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
                 });
     };
 
-    $scope.saveDriver = function () {
-        if (isNewDriver) {
-            createDriver();
-        } else {
-            updateDriver();
-        }
-    };
-    
     $scope.deleteDriver = function () {
         $http.delete('/api/drivers/' + driverId).
                 success(function (data, status, headers, config) {
@@ -85,42 +77,33 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
     };
 
     $scope.saveImage = function () {
-        var fd = new FormData();
-        fd.append('file', $scope.image);
-        $http.post("http://localhost:8080/api/images/", fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        })
-                .success(function (data, status) {
-                    var image = {id: data.id, isTitle: true, altText: $scope.driver.firstname + " " + $scope.driver.lastname};
-                    $scope.driver.profilePicture = image;
+        $timeout(function () {
+            var fd = new FormData();
+            fd.append('file', $scope.image[0]);
+            $http.post("http://localhost:8080/api/images/", fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            })
+                    .success(function (data, status) {
+                        var image = {id: data.id, isTitle: true, altText: ""};
+                        $scope.driver.profilePicture = image;
+                    })
+                    .error(function (data, status) {
 
-                })
-                .error(function (data, status) {
+                    });
+        }, 200);
 
-                });
+    };
+
+    $scope.saveDriver = function () {
+        if (isNewDriver) {
+            createDriver();
+        } else {
+            updateDriver();
+        }
     };
 
     $scope.deleteImage = function () {
         delete $scope.driver.profilePicture;
     };
-
-    $scope.getImageUrl = function () {
-        return '../api/images/' + $scope.driver.profilePicture.id;
-    };
-}).directive("fileread", [function () {
-        return {
-            scope: {
-                fileread: "="
-            },
-            link: function (scope, element, attributes) {
-                element.bind("change", function (changeEvent) {
-                    scope.$apply(function () {
-                        scope.fileread = changeEvent.target.files[0];
-                        // or all selected files:
-                        // scope.fileread = changeEvent.target.files;
-                    });
-                });
-            }
-        }
-    }]);
+});

@@ -29,20 +29,17 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="image">Profilbild</label>
-                            <input name="file" id="image" class="form-control" type="file" fileread="image">
-                            <button type="submit" class="btn btn-success" ng-click="saveImage()">Bild hinzufügen</button>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="profilePicture">
-                            <div ng-if="driver.profilePicture !== undefined" ng-click="deleteImage()">
-                                <div class="delete bg"></div>
-                                <div class="delete">
-                                    <span>Profilbild entfernen</span>
+                            <input name="file" id="image" class="form-control" type="file" fileread="image" onchange="angular.element(this).scope().saveImage()" 
+                                   ng-show="driver.profilePicture === undefined">
+                            <div class="profilePicture" ng-if="driver.profilePicture !== undefined">
+                                <div ng-click="deleteImage()">
+                                    <div class="delete bg"></div>
+                                    <div class="delete">
+                                        <span>Profilbild entfernen</span>
+                                    </div>
                                 </div>
+                                <img ng-src="../api/images/{{driver.profilePicture.id}}" />
                             </div>
-                            <img ng-if="driver.profilePicture !== undefined" ng-src="../api/images/{{driver.profilePicture.id}}" />
-                            <img ng-if="driver.profilePicture === undefined" ng-src="../img/symbols/empty_profilepicture.jpg" />
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,5 @@
 div.profilePicture {
     width: 220px;
-    float: right;
     position: relative;
     overflow: hidden;
     border: 1px solid lightgray;
