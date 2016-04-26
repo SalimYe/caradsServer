@@ -41,6 +41,23 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <div class="form-group">
+                    <label for="image">Fahrzeug Fotos</label>
+                    <input name="file" id="image" class="form-control" type="file" fileread="image"
+                           onchange="angular.element(this).scope().saveImages()" multiple="" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="elementImage multi" ng-repeat="image in car.images">
+                    <span class="glyphicon glyphicon-trash imgDelete" aria-hidden="true" ng-click="deleteImage(image.id)"><span> löschen</span></span>
+                    <img ng-src="../api/images/{{image.id}}" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="required">Pflichtfeld</div>
             </div>
         </div>

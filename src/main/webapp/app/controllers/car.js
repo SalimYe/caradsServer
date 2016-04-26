@@ -13,8 +13,8 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
         $scope.alert.content = content;
         $scope.alert.level = level;
     };
-    
-    var redirectToDriver = function() {
+
+    var redirectToDriver = function () {
         $location.path('driver/' + driverId);
     };
 
@@ -47,7 +47,7 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
                             "den Administrator.", "danger");
                 });
     };
-    
+
     $scope.deleteCar = function () {
         $http.delete('/api/drivers/' + driverId + '/cars/' + carId).
                 success(function (data, status, headers, config) {
@@ -85,43 +85,35 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
         redirectToDriver();
     };
 
-    $scope.saveImage = function () {
-        var fd = new FormData();
-        fd.append('file', $scope.image);
-        $http.post("http://localhost:8080/api/images/", fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        })
-                .success(function (data, status) {
-                    var image = {id: data.id, isTitle: true, altText: $scope.driver.firstname + " " + $scope.driver.lastname};
-                    $scope.driver.profilePicture = image;
+    $scope.saveImages = function () {
+        $timeout(function () {
+            if ($scope.image !== undefined) {
+                for (var i = 0; i < $scope.image.length; i++) {
+                    var fd = new FormData();
+                    fd.append('file', $scope.image[i]);
+                    $http.post("http://localhost:8080/api/images/", fd, {
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}
+                    })
+                            .success(function (data, status) {
+                                var image = {id: data.id, isTitle: true, altText: ""};
+                                if ($scope.car.images === undefined) {
+                                    $scope.car.images = [];
+                                }
+                                $scope.car.images.push(image);
+                            })
+                            .error(function (data, status) {
 
-                })
-                .error(function (data, status) {
-
-                });
-    };
-
-    $scope.deleteImage = function () {
-        delete $scope.driver.profilePicture;
-    };
-
-    $scope.getImageUrl = function () {
-        return '../api/images/' + $scope.driver.profilePicture.id;
-    };
-}).directive("carimage", [function () {
-        return {
-            scope: {
-                carimage: "="
-            },
-            link: function (scope, element, attributes) {
-                element.bind("change", function (changeEvent) {
-                    scope.$apply(function () {
-                        scope.carimage = changeEvent.target.files[0];
-                        // or all selected files:
-                        // scope.fileread = changeEvent.target.files;
-                    });
-                });
+                            });
+                }
             }
-        }
-    }]);
+        }, 400);
+
+    };
+
+    $scope.deleteImage = function (imageId) {
+        $scope.car.images = $scope.car.images.filter(function (obj) {
+            return obj.id !== imageId;
+        });
+    };
+});

@@ -31,13 +31,8 @@
                             <label for="image">Profilbild</label>
                             <input name="file" id="image" class="form-control" type="file" fileread="image" onchange="angular.element(this).scope().saveImage()" 
                                    ng-show="driver.profilePicture === undefined">
-                            <div class="profilePicture" ng-if="driver.profilePicture !== undefined">
-                                <div ng-click="deleteImage()">
-                                    <div class="delete bg"></div>
-                                    <div class="delete">
-                                        <span>Profilbild entfernen</span>
-                                    </div>
-                                </div>
+                            <div class="elementImage" ng-if="driver.profilePicture !== undefined">
+                                <span class="glyphicon glyphicon-trash imgDelete" aria-hidden="true" ng-click="deleteImage()"><span> löschen</span></span>
                                 <img ng-src="../api/images/{{driver.profilePicture.id}}" />
                             </div>
                         </div>
@@ -131,7 +126,7 @@
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     Schlie&szlig;en
                 </button>
-                <button type="submit" class="btn btn-danger" ng-click="deleteDriver()" ng-if="!isNewCar">
+                <button type="submit" class="btn btn-danger" ng-click="deleteDriver()" ng-if="!isNewDriver">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     Löschen
                 </button>

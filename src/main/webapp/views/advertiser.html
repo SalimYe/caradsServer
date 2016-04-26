@@ -25,18 +25,12 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="image">Logo</label>
-                            <div class="profilePicture" ng-show="advertiser.logo !== undefined">
-                                <div ng-if="advertiser.logo !== undefined" ng-click="deleteImage()">
-                                    <div class="delete bg"></div>
-                                    <div class="delete">
-                                        <span>Logo entfernen</span>
-                                    </div>
-                                </div>
+                            <input name="file" id="image" class="form-control" type="file" fileread="image" onchange="angular.element(this).scope().saveImage()" 
+                                   ng-show="advertiser.logo === undefined">
+                            <div class="elementImage" ng-if="advertiser.logo !== undefined">
+                                <span class="glyphicon glyphicon-trash imgDelete" aria-hidden="true" ng-click="deleteImage()"><span> löschen</span></span>
                                 <img ng-src="../api/images/{{advertiser.logo.id}}" />
-                            </div>                            
-                            <input name="file" id="logo" class="form-control" type="file" fileread="image"
-                                   onchange="angular.element(this).scope().saveImage()" 
-                                   ng-show="advertiser.logo === undefined" />
+                            </div>
                         </div>
                     </div>
                 </div>
