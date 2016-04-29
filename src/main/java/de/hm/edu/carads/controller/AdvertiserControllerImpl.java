@@ -1,6 +1,10 @@
 package de.hm.edu.carads.controller;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.naming.directory.InvalidAttributesException;
+import javax.ws.rs.core.NoContentException;
 
 import com.mongodb.BasicDBObject;
 
@@ -9,6 +13,9 @@ import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
+import de.hm.edu.carads.models.Car;
+import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.MetaInformation;
 
 public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Advertiser> implements AdvertiserController{
 
@@ -59,6 +66,53 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 		
 		dbController.updateEntity(Advertiser.class, ad.getId(), BasicDBObject.parse(gson.toJson(ad)));
 		
+		return campaign;
+	}
+
+	@Override
+	public Collection<Campaign> getCampaigns(String advertiserId) throws Exception {
+		Advertiser advertiser = getEntity(advertiserId);
+		
+		return advertiser.getCampaigns();
+	}
+
+	@Override
+	public Campaign getCampaign(String advertiserId, String campaignId) throws Exception {
+		Advertiser advertiser = getEntity(advertiserId);
+		Campaign c = advertiser.getCampaign(campaignId);
+		if(c==null)
+			throw new NoContentException(campaignId + " not found");
+		
+		return c;
+	}
+
+	@Override
+	public void deleteCampaign(String advertiserId, String campaignId)
+			throws Exception {
+		Advertiser advertiser = getEntity(advertiserId);
+		if(!advertiser.removeCampaign(campaignId))
+			throw new NoContentException(campaignId + " not found");
+		advertiser.getMetaInformation().update();
+		
+		dbController.updateEntity(Advertiser.class, advertiserId, BasicDBObject.parse(gson.toJson(advertiser)));
+	}
+
+	@Override
+	public Campaign updateCampaign(String advertiserId, String campaignId, Campaign campaign) throws Exception {		
+		if(!EntityValidator.isEntityValid(campaign))
+			throw new InvalidAttributesException();
+		
+		Advertiser advertiser = getEntity(advertiserId);
+		Campaign oldC = advertiser.getCampaign(campaignId);
+		if(oldC == null)
+			throw new NoContentException(campaignId + " not found");
+		MetaInformation oldMeta = oldC.getMetaInformation();
+		advertiser.removeCampaign(campaignId);
+		campaign.update(oldMeta);
+		campaign.setId(campaignId);
+		advertiser.addCampaign(campaign);
+		
+		dbController.updateEntity(Advertiser.class, advertiserId, BasicDBObject.parse(gson.toJson(advertiser)));
 		return campaign;
 	}
 }

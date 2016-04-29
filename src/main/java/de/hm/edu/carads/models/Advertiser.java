@@ -2,6 +2,9 @@ package de.hm.edu.carads.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+
+import javax.ws.rs.core.NoContentException;
 
 public class Advertiser extends Person{
 
@@ -30,18 +33,34 @@ public class Advertiser extends Person{
 	}
 	
 	public void addCampaign(Campaign campaign) {
-		if(this.campaigns == null)
-			this.campaigns = new ArrayList<Campaign>();
+		checkCampaigns();
 		this.campaigns.add(campaign);
 	}
 	
 	public Campaign getCampaign(String id){
+		checkCampaigns();
+		Iterator<Campaign> it = campaigns.iterator();
+		
+		while(it.hasNext()){
+			Campaign c = it.next();
+			if(c.getId().equals(id))
+				return c;
+		}
 		return null;
 	}
 	
+	public boolean removeCampaign(String id){
+		checkCampaigns();
+		return campaigns.remove(this.getCampaign(id));
+	}
+	
 	public Collection<Campaign> getCampaigns(){ 
+		checkCampaigns();
+		return this.campaigns;
+	}
+	
+	private void checkCampaigns(){
 		if(this.campaigns == null)
 			this.campaigns = new ArrayList<Campaign>();
-		return this.campaigns;
 	}
 }

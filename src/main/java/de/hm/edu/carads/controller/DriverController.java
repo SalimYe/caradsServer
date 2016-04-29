@@ -13,4 +13,6 @@ public interface DriverController extends AbstractEntityController<Driver>{
 	public Car addCar(String driverId, Car car) throws Exception;
 	public void deleteCar(String driverId, String carId) throws Exception;
 	public Car updateCar(String driverId, String carId, Car car) throws Exception;
+	
+	public Collection<Car> getAllFreeCars() throws Exception;
 }

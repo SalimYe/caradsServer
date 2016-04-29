@@ -3,6 +3,7 @@ package de.hm.edu.carads.controller.util;
 import java.util.regex.Pattern;
 
 import de.hm.edu.carads.models.Advertiser;
+import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.Model;
@@ -17,6 +18,8 @@ public class EntityValidator {
 			return isNewAdvertiserValid((Advertiser) model);
 		else if(model instanceof Car)
 			return isNewCarValid((Car) model);
+		else if(model instanceof Campaign)
+			return isCampaignValid((Campaign)model);
 		return false;
 	}
 	
@@ -39,10 +42,16 @@ public class EntityValidator {
 		return false;
 	}	
 
-	public static boolean isNewCarValid(Car car){
+	private static boolean isNewCarValid(Car car){
 		if(car.getBrand() == null || car.getBrand().isEmpty())
 			return false;
 		if(car.getModel() == null || car.getModel().isEmpty())
+			return false;
+		return true;
+	}
+	
+	private static boolean isCampaignValid(Campaign campaign){
+		if(campaign.getTitle() == null)
 			return false;
 		return true;
 	}

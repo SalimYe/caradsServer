@@ -103,11 +103,54 @@ public class AdvertiserControllerTest {
 	@Test
 	public void addCampaignTest() throws Exception{
 		AdvertiserController ac = getController();
-		
 		Advertiser ad = ac.addEntity(makeNewAdvertiser());
 		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
 		assertNotNull(c);
 		assertFalse(c.getId().isEmpty());
+	}
+	
+	@Test
+	public void getCampaignTest() throws Exception{
+		AdvertiserController ac = getController();
+		Advertiser ad = ac.addEntity(makeNewAdvertiser());
+		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
+		
+		assertEquals(1, ac.getCampaigns(ad.getId()).size());
+	}
+	
+	@Test
+	public void removeCampaignTest() throws Exception{
+		AdvertiserController ac = getController();
+		Advertiser ad = ac.addEntity(makeNewAdvertiser());
+		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
+		ac.deleteCampaign(ad.getId(), c.getId());
+		assertEquals(0, ac.getCampaigns(ad.getId()).size());
+	}
+	
+	@Test
+	public void updateCampaignTest() throws Exception{
+		AdvertiserController ac = getController();
+		Advertiser ad = ac.addEntity(makeNewAdvertiser());
+		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
+		
+		Campaign newCampaign = new Campaign();
+		newCampaign.setTitle("BMW Promo");
+		
+		ac.updateCampaign(ad.getId(), c.getId(), newCampaign);
+		
+		assertEquals("BMW Promo", ac.getCampaign(ad.getId(), c.getId()).getTitle());
+	}
+	
+	@Test (expected = NoContentException.class)
+	public void updateCampaignTest2() throws Exception{
+		AdvertiserController ac = getController();
+		Advertiser ad = ac.addEntity(makeNewAdvertiser());
+		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
+		
+		Campaign newCampaign = new Campaign();
+		newCampaign.setTitle("BMW Promo");
+		
+		ac.updateCampaign(ad.getId(), "123123", newCampaign);
 	}
 
 	@Before

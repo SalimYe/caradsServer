@@ -30,7 +30,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 
 	@Override
 	public Car addCar(String driverId, Car car) throws Exception {
-		if (!EntityValidator.isNewCarValid(car)) {
+		if (!EntityValidator.isEntityValid(car)) {
 			throw new InvalidAttributesException();
 		}
 
@@ -112,5 +112,13 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 	private Driver getDriverByEmail(String email) {
 		return this.makeEntityFromBasicDBObject(dbController
 				.getEntityByKeyValue(Driver.class, "email", email));
-	}	
+	}
+
+	@Override
+	public Collection<Car> getAllFreeCars() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

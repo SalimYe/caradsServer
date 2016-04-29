@@ -134,4 +134,65 @@ public class AdvertiserRecource {
 			throw new WebApplicationException(500);
 		}
 	}
+	
+	@GET
+	@Path("/{id}/campaigns")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCampaigns(@PathParam("id") String id){
+		try{
+			Collection<Campaign> campaigns = ac.getCampaigns(id);
+			if(campaigns.isEmpty())
+				return Response.noContent().build();
+			else
+				return Response.ok(gson.toJson(campaigns)).build();
+		} catch(NoContentException e){
+			throw new WebApplicationException(404);
+		} catch(Exception e){
+			throw new WebApplicationException(500);
+		}
+	}
+	
+	@GET
+	@Path("/{id}/campaigns/{cid}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCampaign(@PathParam("id") String id, @PathParam("cid") String cid){
+		try{
+			Campaign campaign = ac.getCampaign(id, cid);
+			return Response.ok(gson.toJson(campaign)).build();
+		} catch(NoContentException e){
+			throw new WebApplicationException(404);
+		} catch(Exception e){
+			throw new WebApplicationException(500);
+		}
+	}
+	
+	@DELETE
+	@Path("/{id}/campaigns/{cid}")
+	public Response deleteCampaign(@PathParam("id") String id, @PathParam("cid") String cid){
+		try{
+			ac.deleteCampaign(id, cid);
+			return Response.ok().build();
+		} catch(NoContentException e){
+			throw new WebApplicationException(404);
+		} catch(Exception e){
+			throw new WebApplicationException(500);
+		}
+	}
+	
+	@PUT
+	@Path("/{id}/campaigns/{cid}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateCampaign(@PathParam("id") String id, @PathParam("cid") String cid, String input){
+		Campaign c = gson.fromJson(input, Campaign.class);
+		if(c==null)
+			throw new WebApplicationException(400);
+		
+		try{
+			Campaign updatedCampaign = ac.updateCampaign(id, cid, c);
+			return Response.ok(gson.toJson(updatedCampaign)).build();
+		}catch(Exception e){
+			throw new WebApplicationException(500);
+		}
+	}
 }

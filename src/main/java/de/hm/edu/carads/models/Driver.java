@@ -32,19 +32,16 @@ public class Driver extends Person{
 	}
 	
 	public boolean removeCar(String carId){
-		if(cars == null)
-			cars = new ArrayList<Car>();
+		checkCars();
 		return cars.remove(getCar(carId));
 	}
 
 	public Collection<Car> getCars(){
-		if(cars == null)
-			cars = new ArrayList<Car>();
+		checkCars();
 		return cars;
 	}
 	public void addCar(Car car) {
-		if(cars == null)
-			cars = new ArrayList<Car>();
+		checkCars();
 		this.cars.add(car);
 	}
 
@@ -62,6 +59,11 @@ public class Driver extends Person{
 
 	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
+	}
+	
+	private void checkCars(){
+		if(cars == null)
+			cars = new ArrayList<Car>();
 	}
 }
 
