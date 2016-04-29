@@ -15,7 +15,7 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.MetaInformation;
+import de.hm.edu.carads.models.util.MetaInformation;
 
 public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Advertiser> implements AdvertiserController{
 
@@ -106,13 +106,25 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 		Campaign oldC = advertiser.getCampaign(campaignId);
 		if(oldC == null)
 			throw new NoContentException(campaignId + " not found");
-		MetaInformation oldMeta = oldC.getMetaInformation();
+
+	
 		advertiser.removeCampaign(campaignId);
-		campaign.update(oldMeta);
+		//campaign.setFellows(oldC.getFellows());
+		campaign.update(oldC.getMetaInformation());
 		campaign.setId(campaignId);
 		advertiser.addCampaign(campaign);
 		
 		dbController.updateEntity(Advertiser.class, advertiserId, BasicDBObject.parse(gson.toJson(advertiser)));
 		return campaign;
+	}
+
+	@Override
+	public Campaign addVehicleToCampaign(String advertiserId, String campaignId, String carId) throws Exception {
+		Advertiser advertiser = getEntity(advertiserId);
+		Campaign campaign = advertiser.getCampaign(campaignId);
+		if(!campaign.addFellow(carId))
+			throw new AlreadyExistsException();
+		
+		return this.updateCampaign(advertiserId, campaignId, campaign);
 	}
 }

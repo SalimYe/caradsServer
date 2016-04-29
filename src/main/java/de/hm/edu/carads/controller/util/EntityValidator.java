@@ -6,7 +6,7 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.Model;
+import de.hm.edu.carads.models.util.Model;
 
 public class EntityValidator {
 	

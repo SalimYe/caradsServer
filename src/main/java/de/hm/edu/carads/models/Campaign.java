@@ -2,6 +2,11 @@ package de.hm.edu.carads.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+
+import de.hm.edu.carads.models.util.Fellow;
+import de.hm.edu.carads.models.util.FellowState;
+import de.hm.edu.carads.models.util.Model;
 
 public class Campaign extends Model{
 
@@ -11,6 +16,7 @@ public class Campaign extends Model{
 	private String startDate;
 	private String endDate;
 	private Collection<Image> images;
+	private Collection<Fellow> fellows;
 	
 	
 	public String getTitle() {
@@ -48,6 +54,35 @@ public class Campaign extends Model{
 	}
 	public void setImages(Collection<Image> images) {
 		this.images = images;
+	}
+	public boolean addFellow(String carId){
+		if(this.fellows == null)
+			this.fellows = new ArrayList<Fellow>();
+		if(carId == null || carId.isEmpty())
+			return false;
+		if(isCarAFellow(carId))
+			return false;
+		
+		System.out.println("asd");
+		fellows.add(new Fellow(carId, FellowState.ASKED));
+		return true;
+	}
+	
+	public Collection<Fellow> getFellows(){
+		return this.fellows;
+	}
+	public void setFellows(Collection<Fellow> fellows){
+		this.fellows = fellows;
+	}
+	
+	public boolean isCarAFellow(String carId){
+		Iterator<Fellow> it = fellows.iterator();
+		while(it.hasNext()){
+			Fellow f = it.next();
+			if(f.getCarId().equals(carId))
+				return true;
+		}
+		return false;
 	}
 	
 	

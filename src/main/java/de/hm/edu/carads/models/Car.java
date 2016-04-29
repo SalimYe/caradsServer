@@ -2,6 +2,8 @@ package de.hm.edu.carads.models;
 
 import java.util.Collection;
 
+import de.hm.edu.carads.models.util.Model;
+
 public class Car extends Model{
 	private String brand;
 	private String model;

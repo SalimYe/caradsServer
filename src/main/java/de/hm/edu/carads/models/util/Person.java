@@ -1,4 +1,5 @@
-package de.hm.edu.carads.models;
+package de.hm.edu.carads.models.util;
+
 
 
 public abstract class Person extends Model{

@@ -26,6 +26,7 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
+import de.hm.edu.carads.models.util.Fellow;
 
 @Path("advertisers")
 public class AdvertiserRecource {
@@ -192,6 +193,27 @@ public class AdvertiserRecource {
 			Campaign updatedCampaign = ac.updateCampaign(id, cid, c);
 			return Response.ok(gson.toJson(updatedCampaign)).build();
 		}catch(Exception e){
+			throw new WebApplicationException(500);
+		}
+	}
+	
+	@POST
+	@Path("/{id}/campaigns/{cid}/fellows")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addCarToCampaign(@PathParam("id") String id, @PathParam("cid") String cid, String input){
+		Fellow f = gson.fromJson(input, Fellow.class);
+		if(f==null || f.getCarId().isEmpty())
+			throw new WebApplicationException(400);
+		
+		try{
+			Campaign campaign = ac.addVehicleToCampaign(id, cid, f.getCarId());
+			return Response.ok(gson.toJson(campaign)).build();
+		}
+		catch(AlreadyExistsException e){
+			throw new WebApplicationException(409);
+		}
+		catch(Exception e){
 			throw new WebApplicationException(500);
 		}
 	}

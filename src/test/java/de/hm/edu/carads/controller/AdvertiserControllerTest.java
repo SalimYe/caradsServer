@@ -152,6 +152,16 @@ public class AdvertiserControllerTest {
 		
 		ac.updateCampaign(ad.getId(), "123123", newCampaign);
 	}
+	
+	@Test
+	public void addCarToCampaignTest() throws Exception{
+		AdvertiserController ac = getController();
+		Advertiser ad = ac.addEntity(makeNewAdvertiser());
+		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
+		
+		c = ac.addVehicleToCampaign(ad.getId(), c.getId(), "123");
+		assertEquals(1, ac.getCampaign(ad.getId(), c.getId()).getFellows().size());
+	}
 
 	@Before
 	public void resetDB() {

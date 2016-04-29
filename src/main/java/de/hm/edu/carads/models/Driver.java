@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import de.hm.edu.carads.models.util.MetaInformation;
+import de.hm.edu.carads.models.util.Person;
+
 
 public class Driver extends Person{
 

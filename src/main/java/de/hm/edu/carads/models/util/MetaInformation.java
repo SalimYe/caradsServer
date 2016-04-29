@@ -1,4 +1,4 @@
-package de.hm.edu.carads.models;
+package de.hm.edu.carads.models.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

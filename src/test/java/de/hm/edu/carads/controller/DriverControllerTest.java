@@ -16,7 +16,7 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.MetaInformation;
+import de.hm.edu.carads.models.util.MetaInformation;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 
 public class DriverControllerTest {
