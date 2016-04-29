@@ -1,6 +1,5 @@
 package de.hm.edu.carads;
 
-
 import java.util.Collection;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -28,193 +27,226 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 
 @Path("drivers")
 public class DriversRecource {
-	private Gson gson = new Gson();
-	private DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
-	
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDriver(
-			@DefaultValue("0") @QueryParam("startAt") int startAt,
-			@DefaultValue("10") @QueryParam("length") int length) {
-		Collection<Driver> drivers;
-		drivers = dc.getAllEntities();
-		if(drivers.isEmpty())
-			return Response.noContent().build();
-		else
-			return Response.ok(gson.toJson(drivers)).build();
-	}
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addDriver(String input) {
-		Driver driver = gson.fromJson(input, Driver.class);
-		try{
-			Driver registredDriver = dc.addEntity(driver);
-			return  Response.ok(gson.toJson(registredDriver)).build();
-		}
-		catch(AlreadyExistsException e){
-			throw new WebApplicationException(409);
-		}
-		catch(InvalidAttributesException e){
-			throw new WebApplicationException(400);
-		}
-		catch(Exception e){
-			throw new WebApplicationException(500);
-		}
-	}
-	
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDriver(@PathParam("id") String id) {
-		try{
-			Driver driver = dc.getEntity(id);
-			return Response.ok(gson.toJson(driver)).build();
-			
-		}catch(NoContentException e){
-			throw new WebApplicationException(404);
-		}catch(Exception e){
-			throw new WebApplicationException(500);
-		}
-	}
-	
-	@PUT
-	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response changeDriver(@PathParam("id") String id, String input){
-		Driver driverData = gson.fromJson(input, Driver.class);
-		if(driverData == null)
-			throw new WebApplicationException(400);
-		
-		try{
-			Driver changedDriver = dc.changeEntity(id, driverData);
-			return Response.ok(gson.toJson(changedDriver)).build();
-		}
-		catch(AlreadyExistsException e){
-			throw new WebApplicationException(409);
-		}catch(InvalidAttributesException e){
-			throw new WebApplicationException(400);
-		}catch(NoContentException e){
-			throw new WebApplicationException(404);
-		} catch (Exception e) {
-			System.out.println("woo");
-			throw new WebApplicationException(500);
-		}		
-	}
-	
-	@DELETE
-	@Path("/{id}")
-	public Response deleteDriver(@PathParam("id") String id){
-		try {
-			dc.deleteEntity(id);
-			return Response.ok().build();
-		} catch(NoContentException e){
-			throw new WebApplicationException(404);
-		} catch (Exception e) {
-			throw new WebApplicationException(500);
-		}
-	}
-	
-	
-	@GET
-	@Path("/{id}/cars")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDriverCars(@PathParam("id") String driverid) {
-		try {
-			Collection<Car> cars;
-			cars = dc.getCars(driverid);
-			if(cars.isEmpty()){
-				return Response.noContent().build();
-			}
-			return Response.ok(gson.toJson(cars)).build();
-		} catch(NoContentException e){
-			throw new WebApplicationException(404);
-		}
-		catch (Exception e) {
-			throw new WebApplicationException(500);
-		}
-	}
-	
-	@POST
-	@Path("/{id}/cars")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addDriverCar(@PathParam("id") String driverid, String input) {
-		
-		Car car;
-		car = gson.fromJson(input, Car.class);
-		if(car == null){
-			throw new WebApplicationException(400);
-		}
-		
-		try{
-			Car registredCar = dc.addCar(driverid, car);
-			return  Response.ok(gson.toJson(registredCar)).build();
-		} catch (InvalidAttributesException e){
-			throw new WebApplicationException(400);
-		} catch(NoContentException e){
-			throw new WebApplicationException(404);
-		} catch (Exception e) {
-			throw new WebApplicationException(500);
-		}
-	}
-	
-	@GET
-	@Path("/{id}/cars/{car}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId){
-		try {
-			Car car = dc.getCar(driverId, carId);
-			return Response.ok(gson.toJson(car)).build();
-		} catch(NoContentException e){
-			throw new WebApplicationException(404);
-		}
-		catch (Exception e) {
-			throw new WebApplicationException(500);
-		}
-	}
-	
-	@DELETE
-	@Path("/{id}/cars/{car}")
-	public Response deleteDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId){
-		try {
-			dc.deleteCar(driverId, carId);
-			return Response.ok().build();
-		} catch(NoContentException e){
-			throw new WebApplicationException(404);
-		}
-		catch (Exception e) {
-			throw new WebApplicationException(500);
-		}
-	}
-	
-	@PUT
-	@Path("/{id}/cars/{car}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId, String input){
-		Car car= gson.fromJson(input, Car.class);
-		if(car==null)
-			throw new WebApplicationException(400);
-		
-		try {
-			Car newCar = dc.updateCar(driverId, carId, car);
-			return Response.ok(gson.toJson(newCar)).build();
-		} catch(NoContentException e){
-			e.printStackTrace();
-			throw new WebApplicationException(404);
-		}catch(InvalidAttributesException e){
-			throw new WebApplicationException(400);
-		}
-		catch (Exception e) {
-			throw new WebApplicationException(500);
-		}
-	}
-	
+
+    @Context
+    private HttpServletRequest httpServletRequest;
+    private Gson gson = new Gson();
+    private DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDriver(
+            @DefaultValue("0") @QueryParam("startAt") int startAt,
+            @DefaultValue("10") @QueryParam("length") int length) {
+        Collection<Driver> drivers;
+        drivers = dc.getAllEntities();
+        if (drivers.isEmpty()) {
+            return Response.noContent().build();
+        } else {
+            return Response.ok(gson.toJson(drivers)).build();
+        }
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addDriver(String input) {
+        Driver driver = gson.fromJson(input, Driver.class);
+        try {
+            Driver registredDriver = dc.addEntity(driver);
+            return Response.ok(gson.toJson(registredDriver)).build();
+        } catch (AlreadyExistsException e) {
+            throw new WebApplicationException(409);
+        } catch (InvalidAttributesException e) {
+            throw new WebApplicationException(400);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDriver(@PathParam("id") String id) {
+        try {
+            Driver driver = dc.getEntity(id);
+            return Response.ok(gson.toJson(driver)).build();
+
+        } catch (NoContentException e) {
+            throw new WebApplicationException(404);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response changeDriver(@PathParam("id") String id, String input) {
+        Driver driverData = gson.fromJson(input, Driver.class);
+        if (driverData == null) {
+            throw new WebApplicationException(400);
+        }
+
+        try {
+            Driver changedDriver = dc.changeEntity(id, driverData);
+            return Response.ok(gson.toJson(changedDriver)).build();
+        } catch (AlreadyExistsException e) {
+            throw new WebApplicationException(409);
+        } catch (InvalidAttributesException e) {
+            throw new WebApplicationException(400);
+        } catch (NoContentException e) {
+            throw new WebApplicationException(404);
+        } catch (Exception e) {
+            System.out.println("woo");
+            throw new WebApplicationException(500);
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteDriver(@PathParam("id") String id) {
+        try {
+            dc.deleteEntity(id);
+            return Response.ok().build();
+        } catch (NoContentException e) {
+            throw new WebApplicationException(404);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+
+    @GET
+    @Path("/{id}/cars")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDriverCars(@PathParam("id") String driverid) {
+        try {
+            Collection<Car> cars;
+            cars = dc.getCars(driverid);
+            if (cars.isEmpty()) {
+                return Response.noContent().build();
+            }
+            return Response.ok(gson.toJson(cars)).build();
+        } catch (NoContentException e) {
+            throw new WebApplicationException(404);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+
+    @POST
+    @Path("/{id}/cars")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addDriverCar(@PathParam("id") String driverid, String input) {
+
+        Car car;
+        car = gson.fromJson(input, Car.class);
+        if (car == null) {
+            throw new WebApplicationException(400);
+        }
+
+        try {
+            Car registredCar = dc.addCar(driverid, car);
+            return Response.ok(gson.toJson(registredCar)).build();
+        } catch (InvalidAttributesException e) {
+            throw new WebApplicationException(400);
+        } catch (NoContentException e) {
+            throw new WebApplicationException(404);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+
+    @GET
+    @Path("/{id}/cars/{car}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId) {
+        try {
+            Car car = dc.getCar(driverId, carId);
+            return Response.ok(gson.toJson(car)).build();
+        } catch (NoContentException e) {
+            throw new WebApplicationException(404);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+
+    @GET
+    @Path("/cars/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCar(@PathParam("car") String carId) {
+        Driver currentDriver = getCurrentDriver();
+
+        if (currentDriver == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
+
+        try {
+            Collection<Car> cars;
+            cars = dc.getCars(currentDriver.getId());
+            if (cars.isEmpty()) {
+                return Response.noContent().build();
+            }
+            return Response.ok(gson.toJson(cars)).build();
+        } catch (NoContentException e) {
+            throw new WebApplicationException(404);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+
+    @DELETE
+    @Path("/{id}/cars/{car}")
+    public Response deleteDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId) {
+        try {
+            dc.deleteCar(driverId, carId);
+            return Response.ok().build();
+        } catch (NoContentException e) {
+            throw new WebApplicationException(404);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+
+    @PUT
+    @Path("/{id}/cars/{car}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId, String input) {
+        Car car = gson.fromJson(input, Car.class);
+        if (car == null) {
+            throw new WebApplicationException(400);
+        }
+
+        try {
+            Car newCar = dc.updateCar(driverId, carId, car);
+            return Response.ok(gson.toJson(newCar)).build();
+        } catch (NoContentException e) {
+            e.printStackTrace();
+            throw new WebApplicationException(404);
+        } catch (InvalidAttributesException e) {
+            throw new WebApplicationException(400);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+
+    private Driver getCurrentDriver() {
+        try {
+            Principal principal = httpServletRequest.getUserPrincipal();
+            String driverMail = principal.getName();
+            Driver driver = dc.getEntityByMail(driverMail);
+            return driver;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
