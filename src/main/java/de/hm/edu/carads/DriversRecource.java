@@ -179,30 +179,6 @@ public class DriversRecource {
         }
     }
 
-    @GET
-    @Path("/cars/")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCar(@PathParam("car") String carId) {
-        Driver currentDriver = getCurrentDriver();
-
-        if (currentDriver == null) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-        }
-
-        try {
-            Collection<Car> cars;
-            cars = dc.getCars(currentDriver.getId());
-            if (cars.isEmpty()) {
-                return Response.noContent().build();
-            }
-            return Response.ok(gson.toJson(cars)).build();
-        } catch (NoContentException e) {
-            throw new WebApplicationException(404);
-        } catch (Exception e) {
-            throw new WebApplicationException(500);
-        }
-    }
-
     @DELETE
     @Path("/{id}/cars/{car}")
     public Response deleteDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId) {
