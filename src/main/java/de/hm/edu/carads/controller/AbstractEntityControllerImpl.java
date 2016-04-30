@@ -50,6 +50,14 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 			throw new NoContentException("Entity not found");
 		return makeEntityFromBasicDBObject(dbObj);
 	}
+        
+        @Override
+        public E getEntityByMail(String mail) throws NoContentException {
+                BasicDBObject dbObj = dbController.getEntityByKeyValue(modelClass, "email", mail);
+                if(dbObj == null)
+			throw new NoContentException("Entity not found");
+		return makeEntityFromBasicDBObject(dbObj);
+        }
 	
 	@Override
 	public void deleteEntity(String id) throws Exception{

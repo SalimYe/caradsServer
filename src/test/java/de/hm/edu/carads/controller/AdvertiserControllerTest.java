@@ -13,10 +13,12 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
+import de.hm.edu.carads.models.Driver;
 
 public class AdvertiserControllerTest {
 
 	private static String EMAIL = "muster.mann@mustermann.com";
+        private static String EMAILTWO = "flosch@bosch.de";
 	private static String FIRSTNAME = "Muster";
 	private static String LASTNAME = "Mann";
 
@@ -60,6 +62,19 @@ public class AdvertiserControllerTest {
 	public void getNotExistingAdvertiserTest() throws Exception {
 		AdvertiserController ac = getController();
 		ac.getEntity("123123123");
+	}
+        
+        @Test
+	public void getAdvertiserByIdTest() throws Exception {
+		AdvertiserController ac = getController();
+
+		Advertiser advertiser = makeNewAdvertiser();
+                advertiser.setEmail(EMAILTWO);
+
+		ac.addEntity(advertiser);
+                
+                Advertiser dbAdvertiser = ac.getEntityByMail(EMAILTWO);
+		assertEquals(EMAILTWO, dbAdvertiser.getEmail());
 	}
 
 	/*

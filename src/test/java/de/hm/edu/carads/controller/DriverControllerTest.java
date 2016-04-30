@@ -22,6 +22,7 @@ import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 public class DriverControllerTest {
 
 	private static String EMAIL = "muster.mann@hm.edu";
+        private static String EMAILTWO = "flosch@web.de";
 	private static String FIRSTNAME = "Muster";
 	private static String LASTNAME = "Mann";
 
@@ -80,6 +81,18 @@ public class DriverControllerTest {
 		driver2 = dc.addEntity(driver2);
 		assertEquals(2, dc.getAllEntities().size());
 
+	}
+        
+        @Test
+	public void getDriverByIdTest() throws Exception {
+		DriverController dc = getDriverController();
+
+		Driver driver = makeNewDriver();
+                driver.setEmail(EMAILTWO);
+		dc.addEntity(driver);
+                
+                Driver dbDriver = dc.getEntityByMail(EMAILTWO);
+		assertEquals(EMAILTWO, dbDriver.getEmail());
 	}
 
 	@Test(expected = AlreadyExistsException.class)

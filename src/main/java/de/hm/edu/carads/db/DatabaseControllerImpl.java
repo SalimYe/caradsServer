@@ -17,11 +17,13 @@ import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.Image;
+import de.hm.edu.carads.models.Realm;
 
 public class DatabaseControllerImpl implements DatabaseController {
 	private DB db;
 	private static final String COLLECTION_DRIVER = "driver";
 	private static final String COLLECTION_ADVERTISER = "advertiser";
+        private static final String COLLECTION_REALM = "realm";
 
 	public DatabaseControllerImpl(String environment) {
 		db = DatabaseFactory.getInstanceDB(environment);
@@ -40,6 +42,8 @@ public class DatabaseControllerImpl implements DatabaseController {
 			return COLLECTION_DRIVER;
 		else if (c == Advertiser.class)
 			return COLLECTION_ADVERTISER;
+                else if (c == Realm.class)
+                        return COLLECTION_REALM;
 		return "";
 	}
 

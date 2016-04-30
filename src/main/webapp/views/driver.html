@@ -7,13 +7,19 @@
     <form name="driverForm">
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="firstname" class="required">Vorname</label>
-                    <input type="text" class="form-control" id="firstname" ng-model="driver.firstname" required="">
-                </div>
-                <div class="form-group">
-                    <label for="lastname" class="required">Nachname</label>
-                    <input type="text" class="form-control" id="lastname" ng-model="driver.lastname" required="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname" class="required">Vorname</label>
+                            <input type="text" class="form-control" id="firstname" ng-model="driver.firstname" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="lastname" class="required">Nachname</label>
+                            <input type="text" class="form-control" id="lastname" ng-model="driver.lastname" required="">
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="required">Mail</label>
@@ -22,6 +28,28 @@
                 <div class="form-group">
                     <label for="phone">Mobil</label>
                     <input type="text" class="form-control" id="phone" ng-model="driver.phone">
+                </div>
+                <div ng-if="isNewDriver">
+                    <div class="form-group">
+                        <label for="password" class="required">Passwort</label>
+                        <input type="password" class="form-control" id="password" ng-model="driver.password" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="required">Passwort Wiederholung</label>
+                        <input type="password" class="form-control" id="password" ng-model="passwordConfirm"
+                               required="" compare-to="driver.password">
+                    </div>
+                </div>
+                <div ng-if="!isNewDriver">
+                    <div class="form-group">
+                        <label for="password" class="required">Passwort</label>
+                        <input type="password" class="form-control" id="password" placeholder="********" ng-model="driver.password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="required">Passwort Wiederholung</label>
+                        <input type="password" class="form-control" id="password" placeholder="********" ng-model="passwordConfirm"
+                               compare-to="driver.password">
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
