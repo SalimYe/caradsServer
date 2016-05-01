@@ -3,10 +3,6 @@ package de.hm.edu.carads.models.util;
 public class Fellow {
 	private String carid;
 	private FellowState state;
-	
-	public Fellow(){
-		
-	}
 
 	public Fellow(String carId, FellowState state) {
 		this.carid = carId;

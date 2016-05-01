@@ -3,6 +3,8 @@ package de.hm.edu.carads.models;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import de.hm.edu.carads.models.util.Model;
+
 /**
  *
  * @author florian

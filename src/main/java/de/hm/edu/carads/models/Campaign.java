@@ -13,8 +13,8 @@ public class Campaign extends Model{
 	private String title;
 	private String description;
 	private String campaignBudget;
-	private String startDate;
-	private String endDate;
+	private String startDate="";
+	private String endDate="";
 	private Collection<Image> images;
 	private Collection<Fellow> fellows;
 	
@@ -63,7 +63,6 @@ public class Campaign extends Model{
 		if(isCarAFellow(carId))
 			return false;
 		
-		System.out.println("asd");
 		fellows.add(new Fellow(carId, FellowState.ASKED));
 		return true;
 	}
@@ -76,6 +75,11 @@ public class Campaign extends Model{
 	}
 	
 	public boolean isCarAFellow(String carId){
+		if(carId==null)
+			return false;
+		if(this.fellows == null)
+			this.fellows = new ArrayList<Fellow>();
+		
 		Iterator<Fellow> it = fellows.iterator();
 		while(it.hasNext()){
 			Fellow f = it.next();

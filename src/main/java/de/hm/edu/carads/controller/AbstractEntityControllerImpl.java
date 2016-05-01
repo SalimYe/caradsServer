@@ -51,18 +51,17 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 		return makeEntityFromBasicDBObject(dbObj);
 	}
         
-        @Override
-        public E getEntityByMail(String mail) throws NoContentException {
-                BasicDBObject dbObj = dbController.getEntityByKeyValue(modelClass, "email", mail);
-                if(dbObj == null)
-			throw new NoContentException("Entity not found");
+    @Override
+    public E getEntityByMail(String mail) throws NoContentException {
+    	BasicDBObject dbObj = dbController.getEntityByKeyValue(modelClass, "email", mail);
+        if(dbObj == null)
+        	throw new NoContentException("Entity not found");
 		return makeEntityFromBasicDBObject(dbObj);
-        }
+    }
 	
 	@Override
 	public void deleteEntity(String id) throws Exception{
-		//E entity = getEntity(id);
-		
+		//Innerhalb von deleteEntity wird gecheckt ob das Dokument existiert		
 		dbController.deleteEntity(modelClass, id);
 		
 		if(dbController.existEntityByKeyValue(modelClass, "_id", id))

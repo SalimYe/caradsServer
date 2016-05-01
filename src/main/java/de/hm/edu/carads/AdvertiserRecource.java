@@ -198,7 +198,7 @@ public class AdvertiserRecource {
 	}
 	
 	@POST
-	@Path("/{id}/campaigns/{cid}/fellows")
+	@Path("/{id}/campaigns/{cid}/cars")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCarToCampaign(@PathParam("id") String id, @PathParam("cid") String cid, String input){
@@ -209,6 +209,9 @@ public class AdvertiserRecource {
 		try{
 			Campaign campaign = ac.addVehicleToCampaign(id, cid, f.getCarId());
 			return Response.ok(gson.toJson(campaign)).build();
+		}
+		catch(IllegalAccessException e){
+			throw new WebApplicationException(404);
 		}
 		catch(AlreadyExistsException e){
 			throw new WebApplicationException(409);

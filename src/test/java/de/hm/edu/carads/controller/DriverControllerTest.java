@@ -16,6 +16,7 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.util.DateController;
 import de.hm.edu.carads.models.util.MetaInformation;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 
@@ -48,7 +49,7 @@ public class DriverControllerTest {
 	@Test
 	public void metaInformationTest() throws Exception {
 		DriverController dc = getDriverController();
-		DateFormat df = new SimpleDateFormat(MetaInformation.DATE_FORMAT);
+		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_METAINFORMATION);
 		Driver driver;
 
 		driver = dc.addEntity(makeNewDriver());

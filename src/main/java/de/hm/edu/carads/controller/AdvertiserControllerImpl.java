@@ -1,6 +1,8 @@
 package de.hm.edu.carads.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -15,6 +17,7 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.util.DateController;
 import de.hm.edu.carads.models.util.MetaInformation;
 
 public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Advertiser> implements AdvertiserController{
@@ -55,8 +58,10 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	}
 
 	@Override
-	public Campaign addCampaign(String advertiserId, Campaign campaign)
-			throws Exception {
+	public Campaign addCampaign(String advertiserId, Campaign campaign) throws Exception {
+		if(!EntityValidator.isEntityValid(campaign))
+			throw new IllegalArgumentException();
+		
 		Advertiser ad = getEntity(advertiserId);
 		
 		campaign.setId(dbController.getNewId());
@@ -122,9 +127,44 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	public Campaign addVehicleToCampaign(String advertiserId, String campaignId, String carId) throws Exception {
 		Advertiser advertiser = getEntity(advertiserId);
 		Campaign campaign = advertiser.getCampaign(campaignId);
-		if(!campaign.addFellow(carId))
+		
+		if(isCarOccupiedInTime(carId, campaign.getStartDate(), campaign.getEndDate()))
 			throw new AlreadyExistsException();
+		if(!campaign.addFellow(carId))
+			throw new IllegalArgumentException();
 		
 		return this.updateCampaign(advertiserId, campaignId, campaign);
+	}
+	
+	private boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception{
+		Iterator<Campaign> it = getAllCampaignsInTime(start, end).iterator();
+		while(it.hasNext()){
+			Campaign campaign = it.next();
+			if(campaign.isCarAFellow(carId))
+				return true;
+		}
+		return false;
+	}
+	
+	private Collection<Campaign> getAllCampaignsInTime(String start, String end){
+		Collection<Campaign> inTimeCampaigns = new ArrayList<Campaign>();
+		Iterator<Campaign> it = getAllCampaigns().iterator();
+		while(it.hasNext()){
+			Campaign c = it.next();
+			if(DateController.isABeforeB(c.getStartDate(), end) || DateController.isAAfterB(c.getEndDate(), start))
+				inTimeCampaigns.add(c);
+		}
+		return inTimeCampaigns;
+	}
+	
+	
+	private Collection<Campaign> getAllCampaigns(){
+		Collection<Campaign> allCampaigns = new ArrayList<Campaign>();
+		
+		Iterator<Advertiser> advertisers = this.getAllEntities().iterator();
+		while(advertisers.hasNext()){
+			allCampaigns.addAll(advertisers.next().getCampaigns());
+		}
+		return allCampaigns;
 	}
 }
