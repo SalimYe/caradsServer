@@ -68,6 +68,8 @@ public class Campaign extends Model{
 	}
 	
 	public Collection<Fellow> getFellows(){
+		if(this.fellows == null)
+			this.fellows = new ArrayList<Fellow>();
 		return this.fellows;
 	}
 	public void setFellows(Collection<Fellow> fellows){

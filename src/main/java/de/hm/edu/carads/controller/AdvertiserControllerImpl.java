@@ -18,6 +18,7 @@ import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.util.DateController;
+import de.hm.edu.carads.models.util.Fellow;
 import de.hm.edu.carads.models.util.MetaInformation;
 
 public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Advertiser> implements AdvertiserController{
@@ -166,5 +167,21 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 			allCampaigns.addAll(advertisers.next().getCampaigns());
 		}
 		return allCampaigns;
+	}
+
+	@Override
+	public Collection<Campaign> getCarRequests(String carid) {		
+		Collection<Campaign> carCampaigns = new ArrayList<Campaign>();
+		Iterator<Campaign> it = getAllCampaigns().iterator();
+		while(it.hasNext()){
+			Campaign c = it.next();
+			Iterator<Fellow> fellowIterator = c.getFellows().iterator();
+			while(fellowIterator.hasNext()){
+				Fellow fellow = fellowIterator.next();
+				if(fellow.getCarId().equals(carid))
+					carCampaigns.add(c);
+			}
+		}
+		return carCampaigns;
 	}
 }

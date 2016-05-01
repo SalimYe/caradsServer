@@ -54,8 +54,9 @@ public class EntityValidator {
 	private static boolean isCampaignValid(Campaign campaign){
 		if(campaign.getTitle() == null)
 			return false;
-		if(!DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
-			return false;
+		if(!campaign.getStartDate().isEmpty() && !campaign.getEndDate().isEmpty())
+			if(!DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
+				return false;
 		return true;
 	}
 	

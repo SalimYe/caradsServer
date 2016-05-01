@@ -29,7 +29,7 @@ import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.util.Fellow;
 
 @Path("advertisers")
-public class AdvertiserRecource {
+public class AdvertiserRessource {
 	private Gson gson = new Gson();
 	private AdvertiserController ac = new AdvertiserControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 	
@@ -187,12 +187,22 @@ public class AdvertiserRecource {
 	public Response updateCampaign(@PathParam("id") String id, @PathParam("cid") String cid, String input){
 		Campaign c = gson.fromJson(input, Campaign.class);
 		if(c==null)
-			throw new WebApplicationException(400);
+			throw new WebApplicationException(401);
 		
 		try{
 			Campaign updatedCampaign = ac.updateCampaign(id, cid, c);
 			return Response.ok(gson.toJson(updatedCampaign)).build();
-		}catch(Exception e){
+		}
+		catch(InvalidAttributesException e){
+			throw new WebApplicationException(400);
+		}
+		catch(IllegalArgumentException e){
+			throw new WebApplicationException(403);
+		}
+		catch(NoContentException e){
+			throw new WebApplicationException(404);
+		}
+		catch(Exception e){
 			throw new WebApplicationException(500);
 		}
 	}

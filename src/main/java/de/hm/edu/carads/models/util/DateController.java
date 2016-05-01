@@ -20,6 +20,11 @@ public class DateController {
 	}
 	
 	public static boolean isABeforeB(String a, String b){
+		if(a.isEmpty())
+			a="01.01.1970";
+		if(b.isEmpty())
+			b="01.01.1970";
+		
 		Date date1 = DateController.fromStringToDate(a);
 		Date date2 = DateController.fromStringToDate(b);
 		if(date1 == null || date2 == null)

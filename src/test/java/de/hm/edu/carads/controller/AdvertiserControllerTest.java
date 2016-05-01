@@ -20,6 +20,8 @@ public class AdvertiserControllerTest {
         private static String EMAILTWO = "flosch@bosch.de";
 	private static String FIRSTNAME = "Muster";
 	private static String LASTNAME = "Mann";
+	
+	private AdvertiserController advertiserController;
 
 	@Test
 	public void addAvertiserTest() throws Exception {
@@ -291,7 +293,9 @@ public class AdvertiserControllerTest {
 	}
 
 	private AdvertiserController getController() {
-		return new AdvertiserControllerImpl(new DatabaseControllerImpl(
+		if(advertiserController==null)
+			advertiserController = new AdvertiserControllerImpl(new DatabaseControllerImpl(
 				DatabaseFactory.INST_TEST));
+		return advertiserController;
 	}
 }
