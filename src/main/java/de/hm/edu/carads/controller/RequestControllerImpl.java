@@ -54,10 +54,29 @@ public class RequestControllerImpl implements RequestController{
 	}
 	
 	@Override
-	public OfferInformation respondToOffer(String driverId, String campaignId, String respond) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public void respondToOffer(String driverId, String carId, String advertiserId,  String campaignId, String respond) throws Exception{
+		Campaign campaign = ac.getCampaign(advertiserId, campaignId);
+		Iterator<Fellow> fellowIterator = campaign.getFellows().iterator();
+		Collection<Fellow> updatedFellows = new ArrayList<Fellow>();
+		while(fellowIterator.hasNext()){
+			Fellow fellow = fellowIterator.next();
+			if(fellow.getCarId().equals(carId))
+				fellow.setState(getFellowState(respond));
+			updatedFellows.add(fellow);
+		}
+		campaign.setFellows(updatedFellows);
+		ac.updateCampaign(advertiserId, campaignId, campaign);
 	}
+	
+	private FellowState getFellowState(String state){
+		if(state.equals(FellowState.ACCEPTED.toString()))
+			return FellowState.ACCEPTED;
+		else if(state.equals(FellowState.ASKED.toString()))
+			return FellowState.ASKED;
+		else if(state.equals(FellowState.REJECTED.toString()));
+			return FellowState.REJECTED;
+	}
+
 	
 	private FellowState getStateFromCampaign(String carid, Campaign campaign){
 		

@@ -6,5 +6,5 @@ import de.hm.edu.carads.models.comm.OfferInformation;
 
 public interface RequestController {
 	public Collection<OfferInformation> getOfferInformation(String driverId) throws Exception;
-	public OfferInformation respondToOffer(String driverId, String campaignId, String respond) throws Exception;
+	public void respondToOffer(String driverId, String carId, String advertiserId,  String campaignId, String respond) throws Exception;
 }

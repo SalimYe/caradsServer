@@ -17,6 +17,8 @@ public class OfferInformation {
 		this.campaign = campaign;
 		this.state = state;
 	}
-	
-	
+
+	public FellowState getState() {
+		return state;
+	}	
 }

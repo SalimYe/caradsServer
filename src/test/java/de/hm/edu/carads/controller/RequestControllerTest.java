@@ -2,6 +2,9 @@ package de.hm.edu.carads.controller;
 
 import static org.junit.Assert.*;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,6 +14,8 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.comm.OfferInformation;
+import de.hm.edu.carads.models.util.FellowState;
 
 public class RequestControllerTest {
 	private static String EMAIL = "muster.mann@mustermann.com";
@@ -62,6 +67,21 @@ public class RequestControllerTest {
 		
 		advertiserController.addVehicleToCampaign(ad.getId(), camp.getId(), car.getId());
 		assertEquals(1, requestController.getOfferInformation(driver.getId()).size());
+	}
+	
+	@Test
+	public void responseTest() throws Exception {
+		Advertiser ad = advertiserController.addEntity(makeNewAdvertiser());
+		Campaign camp = advertiserController.addCampaign(ad.getId(), makeNewCampaign());
+		Driver driver = driverController.addEntity(makeNewDriver());
+		Car car = driverController.addCar(driver.getId(), makeNewCar());
+		
+		advertiserController.addVehicleToCampaign(ad.getId(), camp.getId(), car.getId());
+		
+		requestController.respondToOffer(driver.getId(), car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		Iterator<OfferInformation> offers = requestController.getOfferInformation(driver.getId()).iterator();
+		OfferInformation offer = offers.next();
+		assertEquals(FellowState.ACCEPTED, offer.getState());
 	}
 	
 	private RequestController getRequestController(){
