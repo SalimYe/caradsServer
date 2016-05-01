@@ -63,8 +63,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 	@Override
 	public BasicDBObject getEntityByKeyValue(Class collectionClass, String key,
 			String value) {
-		DBCollection collection = db
-				.getCollection(getCollectionName(collectionClass));
+		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
 		return (BasicDBObject) collection
 				.findOne(new BasicDBObject(key, value));
 	}
@@ -72,8 +71,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 	@Override
 	public BasicDBObject getEntity(Class collectionClass, String id)
 			throws NoContentException {
-		DBCollection collection = db
-				.getCollection(getCollectionName(collectionClass));
+		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
 		BasicDBObject query = new BasicDBObject();
 		try {
 			query.put("_id", new ObjectId(id));

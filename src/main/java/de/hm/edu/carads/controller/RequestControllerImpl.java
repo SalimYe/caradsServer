@@ -9,11 +9,12 @@ import sun.util.EmptyListResourceBundle;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
+import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
-import de.hm.edu.carads.models.util.Fellow;
+import de.hm.edu.carads.models.comm.Fellow;
+import de.hm.edu.carads.models.comm.OfferInformation;
 import de.hm.edu.carads.models.util.FellowState;
-import de.hm.edu.carads.models.util.OfferInformation;
 
 public class RequestControllerImpl implements RequestController{
 
@@ -35,15 +36,27 @@ public class RequestControllerImpl implements RequestController{
 		while(carIterator.hasNext()){
 			Car car = carIterator.next();
 			//Collection<Campaign> requestingCampaigns = new ArrayList<Campaign>();
-			Iterator<Campaign> requestingCampaignsIterator = ac.getCarRequests(car.getId()).iterator();
+			Iterator<Campaign> requestingCampaignsIterator = ac.getCarRequestingCampaigns(car.getId()).iterator();
 			while(requestingCampaignsIterator.hasNext()){
 				Campaign reqCamp = requestingCampaignsIterator.next();
 				FellowState state = getStateFromCampaign(car.getId(), reqCamp);
+				Advertiser advertiser = ac.getAdvertiserFromCampaign(reqCamp.getId());
+				
+				//Loesche unnoetige Informationen
 				reqCamp.setFellows(null);
-				offers.add(new OfferInformation(car, reqCamp, state));
+				advertiser.removeAllCampaigns();
+				
+				
+				offers.add(new OfferInformation(car, advertiser, reqCamp, state));
 			}
 		}
 		return offers;
+	}
+	
+	@Override
+	public OfferInformation respondToOffer(String driverId, String campaignId, String respond) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	private FellowState getStateFromCampaign(String carid, Campaign campaign){
@@ -56,5 +69,7 @@ public class RequestControllerImpl implements RequestController{
 		}
 		return null;
 	}
+
+	
 	
 }

@@ -2,7 +2,10 @@ package de.hm.edu.carads;
 
 import java.util.Collection;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -22,7 +25,7 @@ import de.hm.edu.carads.controller.RequestControllerImpl;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
-import de.hm.edu.carads.models.util.OfferInformation;
+import de.hm.edu.carads.models.comm.OfferInformation;
 
 @Path("requests")
 public class RequestRessource {
@@ -35,6 +38,23 @@ public class RequestRessource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCarRequests(@PathParam("id") String driverId) {
+        try {
+            Collection<OfferInformation> offerInfo = rc.getOfferInformation(driverId);
+            if(offerInfo.isEmpty())
+            	return Response.noContent().build();
+            return Response.ok(gson.toJson(offerInfo)).build();
+        } catch (NoContentException e) {
+            throw new WebApplicationException(404);
+        } catch (Exception e) {
+            throw new WebApplicationException(500);
+        }
+    }
+	
+	@PUT
+    @Path("/{id}/response")
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response respond(@PathParam("id") String driverId, String input) {
         try {
             Collection<OfferInformation> offerInfo = rc.getOfferInformation(driverId);
             if(offerInfo.isEmpty())

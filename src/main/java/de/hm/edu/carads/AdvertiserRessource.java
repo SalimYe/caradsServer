@@ -26,7 +26,7 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
-import de.hm.edu.carads.models.util.Fellow;
+import de.hm.edu.carads.models.comm.Fellow;
 
 @Path("advertisers")
 public class AdvertiserRessource {

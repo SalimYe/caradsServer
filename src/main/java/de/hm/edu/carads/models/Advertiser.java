@@ -51,9 +51,19 @@ public class Advertiser extends Person{
 		return null;
 	}
 	
+	public boolean containsCampaign(String id){
+		if(getCampaign(id)!=null)
+			return true;
+		return false;
+	}
+	
 	public boolean removeCampaign(String id){
 		checkCampaigns();
 		return campaigns.remove(this.getCampaign(id));
+	}
+	
+	public void removeAllCampaigns(){
+		this.campaigns = null;
 	}
 	
 	public Collection<Campaign> getCampaigns(){ 

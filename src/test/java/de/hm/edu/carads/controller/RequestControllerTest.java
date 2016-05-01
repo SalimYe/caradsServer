@@ -47,7 +47,7 @@ public class RequestControllerTest {
 	@Test
 	public void offerInformationSizeTest2() throws Exception {
 		Driver driver = driverController.addEntity(makeNewDriver());
-		Car car = driverController.addCar(driver.getId(), makeNewCar());
+		driverController.addCar(driver.getId(), makeNewCar());
 
 		assertEquals(0, requestController.getOfferInformation(driver.getId()).size());
 	}

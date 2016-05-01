@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import de.hm.edu.carads.models.util.Fellow;
+import de.hm.edu.carads.models.comm.Fellow;
 import de.hm.edu.carads.models.util.FellowState;
 import de.hm.edu.carads.models.util.Model;
 

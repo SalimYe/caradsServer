@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import javax.naming.directory.InvalidAttributesException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.NoContentException;
 
 import com.mongodb.BasicDBObject;
@@ -17,8 +18,8 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.comm.Fellow;
 import de.hm.edu.carads.models.util.DateController;
-import de.hm.edu.carads.models.util.Fellow;
 import de.hm.edu.carads.models.util.MetaInformation;
 
 public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Advertiser> implements AdvertiserController{
@@ -54,8 +55,7 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	}	
 	
 	private Advertiser getAdvertiserByEmail(String email) {
-		return this.makeEntityFromBasicDBObject(dbController
-				.getEntityByKeyValue(Advertiser.class, "email", email));
+		return this.makeEntityFromBasicDBObject(dbController.getEntityByKeyValue(Advertiser.class, "email", email));
 	}
 
 	@Override
@@ -170,7 +170,7 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	}
 
 	@Override
-	public Collection<Campaign> getCarRequests(String carid) {		
+	public Collection<Campaign> getCarRequestingCampaigns(String carid) {		
 		Collection<Campaign> carCampaigns = new ArrayList<Campaign>();
 		Iterator<Campaign> it = getAllCampaigns().iterator();
 		while(it.hasNext()){
@@ -183,5 +183,16 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 			}
 		}
 		return carCampaigns;
+	}
+
+	@Override
+	public Advertiser getAdvertiserFromCampaign(String campaignId) throws Exception {
+		Iterator<Advertiser> advertIterator = getAllEntities().iterator();
+		while(advertIterator.hasNext()){
+			Advertiser ad = advertIterator.next();
+			if(ad.containsCampaign(campaignId))
+				return ad;
+		}
+		throw new NotFoundException();
 	}
 }
