@@ -86,7 +86,7 @@ public class RequestControllerTest {
 	
 	private RequestController getRequestController(){
 		if(requestController == null)
-			requestController = new RequestControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_TEST));
+			requestController = new RequestControllerImpl(getDriverController(), getAdvertiserController());
 		return requestController;
 	}
 	

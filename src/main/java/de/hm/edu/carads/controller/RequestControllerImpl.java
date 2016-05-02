@@ -21,9 +21,9 @@ public class RequestControllerImpl implements RequestController{
 	private DriverController dc;
 	private AdvertiserController ac;
 	
-	public RequestControllerImpl(DatabaseController database){
-		dc = new DriverControllerImpl(database);
-		ac = new AdvertiserControllerImpl(database);
+	public RequestControllerImpl(DriverController dc, AdvertiserController ac){
+		this.dc = dc;
+		this.ac = ac;
 	}
 	
 	@Override
