@@ -27,7 +27,7 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
     $scope.isNewCar = isNewCar;
 
     if (!isNewCar) {
-        $http.get('/api/drivers/' + driverId + '/cars/' + carId).
+        $http.get('../api/drivers/' + driverId + '/cars/' + carId).
                 success(function (data, status, headers, config) {
                     $scope.car = data;
                 }).
@@ -37,7 +37,7 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
     }
 
     var updateCar = function () {
-        $http.put('/api/drivers/' + driverId + '/cars/' + carId, $scope.car).
+        $http.put('../api/drivers/' + driverId + '/cars/' + carId, $scope.car).
                 success(function (data, status, headers, config) {
                     redirectToDriver();
                 }).
@@ -49,7 +49,7 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
     };
 
     $scope.deleteCar = function () {
-        $http.delete('/api/drivers/' + driverId + '/cars/' + carId).
+        $http.delete('../api/drivers/' + driverId + '/cars/' + carId).
                 success(function (data, status, headers, config) {
                     redirectToDriver();
                 }).
@@ -62,7 +62,7 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
 
     var createCar = function () {
         console.log($scope.car);
-        $http.post('/api/drivers/' + driverId + '/cars/', $scope.car).
+        $http.post('../api/drivers/' + driverId + '/cars/', $scope.car).
                 success(function (data, status, headers, config) {
                     redirectToDriver();
                 }).
@@ -91,7 +91,7 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
                 for (var i = 0; i < $scope.image.length; i++) {
                     var fd = new FormData();
                     fd.append('file', $scope.image[i]);
-                    $http.post("http://localhost:8080/api/images/", fd, {
+                    $http.post("../api/images/", fd, {
                         transformRequest: angular.identity,
                         headers: {'Content-Type': undefined}
                     })

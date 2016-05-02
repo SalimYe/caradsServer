@@ -13,7 +13,7 @@ app.controller('drivers', function ($scope, $routeParams, $http, $location, $mod
 
     $scope.drivers;
 
-    $http.get('/api/drivers/').
+    $http.get('../api/drivers/').
             success(function (data, status, headers, config) {
                 $scope.drivers = data;
             }).
@@ -23,8 +23,8 @@ app.controller('drivers', function ($scope, $routeParams, $http, $location, $mod
             
     $scope.getProfileImage = function (imageId) {
         if(imageId === undefined) {
-            return "../img/symbols/empty_profilepicture.jpg";
+            return "../../img/symbols/empty_profilepicture.jpg";
         }
-        return '../api/images/' + imageId;
+        return '../../api/images/' + imageId;
     };
 });

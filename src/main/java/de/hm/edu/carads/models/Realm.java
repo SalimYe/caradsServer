@@ -1,5 +1,6 @@
 package de.hm.edu.carads.models;
 
+import de.hm.edu.carads.models.util.Model;
 import java.util.ArrayList;
 import java.util.Collection;
 

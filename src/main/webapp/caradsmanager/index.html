@@ -6,20 +6,20 @@
         <link rel="icon" href="../favicon.ico" type="image/x-icon">
 
         <!-- CSS -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/activity.css">
-        <link rel="stylesheet" href="css/ng-table.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/activity.css">
+        <link rel="stylesheet" href="../css/ng-table.css">
 
         <!-- JS Library -->
-        <script src="js/angular.min.js"></script>
-        <script src="js/angular-route.min.js"></script>
-        <script src="js/angular-translate.min.js"></script>
-        <script src="js/ng-table.min.js"></script>
-        <script src="js/jquery-1.11.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/ui-bootstrap-0.14.3.min.js"></script>
+        <script src="../js/angular.min.js"></script>
+        <script src="../js/angular-route.min.js"></script>
+        <script src="../js/angular-translate.min.js"></script>
+        <script src="../js/ng-table.min.js"></script>
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/ui-bootstrap-0.14.3.min.js"></script>
 
         <!-- JS AngularJs  -->
         <script src="app/app.js" type="text/javascript"></script>
@@ -28,7 +28,9 @@
         <script src="app/controllers/modalController.js" type="text/javascript"></script>
         <script src="app/controllers/advertiser.js" type="text/javascript"></script>
         <script src="app/controllers/driver.js" type="text/javascript"></script>
-        <script src="app/controllers/home.js" type="text/javascript"></script>   
+        <script src="app/controllers/drivers.js" type="text/javascript"></script>
+        <script src="app/controllers/home.js" type="text/javascript"></script>  
+        <script src="app/controllers/car.js" type="text/javascript"></script>  
     </head>
     <body>
         <div class="container">
@@ -41,15 +43,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">CarAds</a>
+                    <a class="navbar-brand" href="#">CarAds Client App</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="#/home">Home</a></li>
+                        <li><a href="#/advertiser/">Werbender</a></li>
+                        <li><a href="#/driver/">Driver</a></li>
+                        <li><a href="#/drivers/">Driver Overview</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Registrierung</a></li>
-                        <li><a href="./caradsmanager/">Login</a></li>
+                        <li><a href="#">Link</a></li>
                     </ul>
                 </div>
             </div>

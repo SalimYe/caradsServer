@@ -1,0 +1,84 @@
+<main>
+    <h3>Werbender</h3>
+    <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
+        <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
+        <strong>{{alert.title}}:</strong> {{alert.content}}
+    </div>
+    <form name="advertiserForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="company" class="required">Unternehmen</label>
+                    <input type="text" class="form-control" id="company" ng-model="advertiser.company" required="">
+                </div>
+                <div class="form-group">
+                    <label for="firstname" class="required">Vorname</label>
+                    <input type="text" class="form-control" id="firstname" ng-model="advertiser.firstname" required="">
+                </div>
+                <div class="form-group">
+                    <label for="lastname" class="required">Nachname</label>
+                    <input type="text" class="form-control" id="lastname" ng-model="advertiser.lastname" required="">
+                </div>                            
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="image">Logo</label>
+                            <input name="file" id="image" class="form-control" type="file" fileread="image" onchange="angular.element(this).scope().saveImage()" 
+                                   ng-show="advertiser.logo === undefined">
+                            <div class="elementImage" ng-if="advertiser.logo !== undefined">
+                                <span class="glyphicon glyphicon-trash imgDelete" aria-hidden="true" ng-click="deleteImage()"><span> löschen</span></span>
+                                <img ng-src="../api/images/{{advertiser.logo.id}}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="city">Stadt</label>
+                    <input type="text" class="form-control" id="city" ng-model="advertiser.city">
+                </div>  
+                <div class="form-group">
+                    <label for="zip">PLZ</label>
+                    <input type="text" class="form-control" id="zip" ng-model="advertiser.zip">
+                </div>  
+                <div class="form-group">
+                    <label for="country">Land</label>
+                    <input type="text" class="form-control" id="country" ng-model="advertiser.country">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="phone">Telefon</label>
+                    <input type="text" class="form-control" id="phone" ng-model="advertiser.phone">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="required">Mail</label>
+                    <input type="email" class="form-control" id="email" ng-model="advertiser.email" required="">
+                </div> 
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="required">Pflichtfeld</div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary" ng-click="exitAdvertiser()">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    Schlie&szlig;en
+                </button>
+                <button type="submit" class="btn btn-success" ng-click="saveAdvertiser()" ng-disabled="!advertiserForm.$valid">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    Speichern
+                </button>
+            </div>
+        </div>
+    </form>
+</main>
