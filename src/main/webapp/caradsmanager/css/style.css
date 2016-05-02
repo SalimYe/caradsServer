@@ -88,10 +88,6 @@ div.thumbnail div.details div.details-fade {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 }
 
-div.thumbnail.registration div.thumb-img {
-    height: 20em;
-}
-
 /** Car Table */
 table.table-car tr td span {
     float: right;

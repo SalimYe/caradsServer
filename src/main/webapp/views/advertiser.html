@@ -1,5 +1,5 @@
 <main>
-    <h3>Werbender</h3>
+    <h3>Werbender Registrierung</h3>
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
@@ -70,13 +70,13 @@
         <hr />
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" class="btn btn-primary" ng-click="exitAdvertiser()">
+                <a class="btn btn-default" href="#/registration/">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Schlie&szlig;en
-                </button>
-                <button type="submit" class="btn btn-success" ng-click="saveAdvertiser()" ng-disabled="!advertiserForm.$valid">
+                    Abbrechen
+                </a>
+                <button type="submit" class="btn btn-success" ng-click="registerAdvertiser()" ng-disabled="!advertiserForm.$valid">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    Speichern
+                    Registrieren
                 </button>
             </div>
         </div>

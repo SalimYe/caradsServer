@@ -23,7 +23,7 @@ app.controller('drivers', function ($scope, $routeParams, $http, $location, $mod
             
     $scope.getProfileImage = function (imageId) {
         if(imageId === undefined) {
-            return "../../img/symbols/empty_profilepicture.jpg";
+            return "./img/symbols/empty_profilepicture.jpg";
         }
         return '../../api/images/' + imageId;
     };

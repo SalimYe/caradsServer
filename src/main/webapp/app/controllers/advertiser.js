@@ -1,4 +1,4 @@
-app.controller('advertiser', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate, $timeout) {
+app.controller('advertiser', function ($scope, $routeParams, $http) {
 
     $scope.advertiser = {};
 
@@ -13,30 +13,7 @@ app.controller('advertiser', function ($scope, $routeParams, $http, $location, $
         delete $scope.alert;
     };
 
-
-    var isNewAdvertiser = ($routeParams.id === undefined);
-
-    if (!isNewAdvertiser) {
-        $http.get('/api/advertisers/' + $routeParams.id).
-                success(function (data, status, headers, config) {
-                    $scope.advertiser = data;
-                }).
-                error(function (data, status, headers, config) {
-                    $location.path('advertiser/');
-                });
-    }
-
-    var updateAdvertiser = function () {
-        $http.put('/api/advertisers/' + $routeParams.id, $scope.advertiser).
-                success(function (data, status, headers, config) {
-                    // TODO
-                }).
-                error(function (data, status, headers, config) {
-                    //TODO
-                });
-    };
-
-    var createAdvertiser = function () {
+    $scope.registerAdvertiser = function () {
         $http.post('/api/advertisers/', $scope.advertiser).
                 success(function (data, status, headers, config) {
                     alert("Werbender angelegt", "Der Werbende wurde erfolgreich registriert!", "success");
@@ -47,24 +24,12 @@ app.controller('advertiser', function ($scope, $routeParams, $http, $location, $
                         alert("Speichern fehlgeschlagen", "Es ist bereits ein Werbender mit der Mail \""
                                 + $scope.advertiser.email + "\" registiert!", "danger");
                     } else {
-                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " + 
+                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
                                 "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
                                 "den Administrator.", "danger");
                     }
 
                 });
-    };
-
-    $scope.saveAdvertiser = function () {
-        if (isNewAdvertiser) {
-            createAdvertiser();
-        } else {
-            updateAdvertiser();
-        }
-    };
-
-    $scope.exitAdvertiser = function () {
-        $location.path('/home/');
     };
 
     $scope.saveImage = function () {

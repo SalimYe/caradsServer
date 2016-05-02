@@ -1,37 +1,21 @@
 'use strict';
 
-var app = angular.module('client', ['ngRoute', 'ngTable', 'pascalprecht.translate', 'ui.bootstrap']);
+var app = angular.module('startapp', ['ngRoute', 'ngTable', 'pascalprecht.translate', 'ui.bootstrap']);
 
 app.config(function ($routeProvider) {
 
     $routeProvider
-            .when('/driver/:driverId/car/', {
-                controller: 'car',
-                templateUrl: 'views/car.html'
+            .when('/registration/', {
+                controller: 'registration',
+                templateUrl: 'views/registration.html'
             })
-            .when('/driver/:driverId/car/:carId', {
-                controller: 'car',
-                templateUrl: 'views/car.html'
-            })
-            .when('/advertiser/', {
-                controller: 'advertiser',
-                templateUrl: 'views/advertiser.html'
-            })
-            .when('/advertiser/:id', {
-                controller: 'advertiser',
-                templateUrl: 'views/advertiser.html'
-            })
-            .when('/driver/', {
+            .when('/registration/driver/', {
                 controller: 'driver',
                 templateUrl: 'views/driver.html'
             })
-            .when('/driver/:id', {
-                controller: 'driver',
-                templateUrl: 'views/driver.html'
-            })
-            .when('/drivers/', {
-                controller: 'drivers',
-                templateUrl: 'views/drivers.html'
+            .when('/registration/advertiser/', {
+                controller: 'advertiser',
+                templateUrl: 'views/advertiser.html'
             })
             .when('/home', {
                 controller: 'home',
