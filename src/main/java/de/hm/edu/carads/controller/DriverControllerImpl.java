@@ -1,6 +1,8 @@
 package de.hm.edu.carads.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.core.NoContentException;
@@ -115,9 +117,14 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 	}
 
 	@Override
-	public Collection<Car> getAllFreeCars() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Car> getAllCars(){
+		Collection<Car> allCars = new ArrayList<Car>();
+		
+		Iterator<Driver> drivers = this.getAllEntities().iterator();
+		while(drivers.hasNext()){
+			allCars.addAll(drivers.next().getCars());
+		}
+		return allCars;
 	}
 
 	

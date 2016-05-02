@@ -8,8 +8,6 @@ public class MetaInformation{
 	private String created;
 	private String lastModified;
 	
-	public static final String DATE_FORMAT = "MM/dd/yyyy HH:mm:ss"; 
-	
 	public MetaInformation(){
 //		this.created = "";
 //		this.lastModified = "";
@@ -43,7 +41,7 @@ public class MetaInformation{
 	}
 	
 	private static String makeDate(){
-		DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_METAINFORMATION);
 		return df.format(Calendar.getInstance().getTime());
 	}	
 }

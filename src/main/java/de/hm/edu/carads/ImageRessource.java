@@ -25,7 +25,7 @@ import de.hm.edu.carads.controller.ImageControllerImpl;
 import de.hm.edu.carads.models.Image;
 
 @Path("images")
-public class ImageRescource {
+public class ImageRessource {
 
 	private Gson gson = new Gson();
 	private ImageController ic = new ImageControllerImpl();

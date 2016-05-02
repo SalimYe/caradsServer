@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 
 @Path("drivers")
-public class DriversRecource {
+public class DriversRessource {
 
     @Context
     private HttpServletRequest httpServletRequest;
@@ -214,7 +214,8 @@ public class DriversRecource {
             throw new WebApplicationException(500);
         }
     }
-
+    
+    
     private Driver getCurrentDriver() {
         try {
             Principal principal = httpServletRequest.getUserPrincipal();

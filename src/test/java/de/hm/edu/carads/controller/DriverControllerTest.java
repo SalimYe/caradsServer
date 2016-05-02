@@ -16,19 +16,22 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.util.DateController;
 import de.hm.edu.carads.models.util.MetaInformation;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 
 public class DriverControllerTest {
 
 	private static String EMAIL = "muster.mann@hm.edu";
-        private static String EMAILTWO = "flosch@web.de";
+	private static String EMAILTWO = "flosch@web.de";
 	private static String FIRSTNAME = "Muster";
 	private static String LASTNAME = "Mann";
 
 	private static String CARBRAND = "Mercedes";
 	private static String CARMODEL = "E-Klasse";
 	private static String CARCOLOR = "red";
+	
+	private DriverController driverController;
 
 	@Test
 	public void addDriverTest() throws Exception {
@@ -48,7 +51,7 @@ public class DriverControllerTest {
 	@Test
 	public void metaInformationTest() throws Exception {
 		DriverController dc = getDriverController();
-		DateFormat df = new SimpleDateFormat(MetaInformation.DATE_FORMAT);
+		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_METAINFORMATION);
 		Driver driver;
 
 		driver = dc.addEntity(makeNewDriver());
@@ -331,8 +334,10 @@ public class DriverControllerTest {
 	}
 
 	private DriverController getDriverController() {
-		return new DriverControllerImpl(new DatabaseControllerImpl(
+		if(driverController == null)
+			driverController = new DriverControllerImpl(new DatabaseControllerImpl(
 				DatabaseFactory.INST_TEST));
+		return driverController;
 	}
 
 	private Driver makeNewDriver() {

@@ -42,8 +42,8 @@ public class DatabaseControllerImpl implements DatabaseController {
 			return COLLECTION_DRIVER;
 		else if (c == Advertiser.class)
 			return COLLECTION_ADVERTISER;
-                else if (c == Realm.class)
-                        return COLLECTION_REALM;
+		else if (c == Realm.class)
+			return COLLECTION_REALM;
 		return "";
 	}
 
@@ -63,8 +63,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 	@Override
 	public BasicDBObject getEntityByKeyValue(Class collectionClass, String key,
 			String value) {
-		DBCollection collection = db
-				.getCollection(getCollectionName(collectionClass));
+		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
 		return (BasicDBObject) collection
 				.findOne(new BasicDBObject(key, value));
 	}
@@ -72,8 +71,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 	@Override
 	public BasicDBObject getEntity(Class collectionClass, String id)
 			throws NoContentException {
-		DBCollection collection = db
-				.getCollection(getCollectionName(collectionClass));
+		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
 		BasicDBObject query = new BasicDBObject();
 		try {
 			query.put("_id", new ObjectId(id));
@@ -95,10 +93,8 @@ public class DatabaseControllerImpl implements DatabaseController {
 	}
 
 	@Override
-	public BasicDBObject updateEntity(Class collectionClass, String id,
-			BasicDBObject newEntity) throws NoContentException {
-		DBCollection collection = db
-				.getCollection(getCollectionName(collectionClass));
+	public BasicDBObject updateEntity(Class collectionClass, String id, BasicDBObject newEntity) throws NoContentException {
+		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
 		BasicDBObject query = new BasicDBObject();
 		try {
 			query.put("_id", new ObjectId(id));
@@ -110,10 +106,8 @@ public class DatabaseControllerImpl implements DatabaseController {
 	}
 
 	@Override
-	public void deleteEntity(Class collectionClass, String id)
-			throws NoContentException {
-		DBCollection collection = db
-				.getCollection(getCollectionName(collectionClass));
+	public void deleteEntity(Class collectionClass, String id) throws NoContentException {
+		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
 
 		BasicDBObject query = new BasicDBObject();
 		try {

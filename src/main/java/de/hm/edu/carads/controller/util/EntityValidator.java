@@ -6,6 +6,7 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.util.DateController;
 import de.hm.edu.carads.models.util.Model;
 
 public class EntityValidator {
@@ -53,6 +54,9 @@ public class EntityValidator {
 	private static boolean isCampaignValid(Campaign campaign){
 		if(campaign.getTitle() == null)
 			return false;
+		if(!campaign.getStartDate().isEmpty() && !campaign.getEndDate().isEmpty())
+			if(!DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
+				return false;
 		return true;
 	}
 	

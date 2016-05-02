@@ -13,4 +13,6 @@ public interface AdvertiserController extends AbstractEntityController<Advertise
 	public Collection<Campaign> getCampaigns(String advertiserId) throws Exception;
 	
 	public Campaign addVehicleToCampaign(String advertiserId, String campaignId, String carId) throws Exception;
+	public Collection<Campaign> getCarRequestingCampaigns(String carid);
+	public Advertiser getAdvertiserFromCampaign(String campaignId) throws Exception;
 }

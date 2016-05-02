@@ -1,9 +1,12 @@
 package de.hm.edu.carads.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.naming.directory.InvalidAttributesException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.NoContentException;
 
 import com.mongodb.BasicDBObject;
@@ -15,6 +18,8 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.comm.Fellow;
+import de.hm.edu.carads.models.util.DateController;
 import de.hm.edu.carads.models.util.MetaInformation;
 
 public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Advertiser> implements AdvertiserController{
@@ -50,13 +55,14 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	}	
 	
 	private Advertiser getAdvertiserByEmail(String email) {
-		return this.makeEntityFromBasicDBObject(dbController
-				.getEntityByKeyValue(Advertiser.class, "email", email));
+		return this.makeEntityFromBasicDBObject(dbController.getEntityByKeyValue(Advertiser.class, "email", email));
 	}
 
 	@Override
-	public Campaign addCampaign(String advertiserId, Campaign campaign)
-			throws Exception {
+	public Campaign addCampaign(String advertiserId, Campaign campaign) throws Exception {
+		if(!EntityValidator.isEntityValid(campaign))
+			throw new IllegalArgumentException();
+		
 		Advertiser ad = getEntity(advertiserId);
 		
 		campaign.setId(dbController.getNewId());
@@ -122,9 +128,71 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	public Campaign addVehicleToCampaign(String advertiserId, String campaignId, String carId) throws Exception {
 		Advertiser advertiser = getEntity(advertiserId);
 		Campaign campaign = advertiser.getCampaign(campaignId);
-		if(!campaign.addFellow(carId))
+		
+		if(isCarOccupiedInTime(carId, campaign.getStartDate(), campaign.getEndDate()))
 			throw new AlreadyExistsException();
+		if(!campaign.addFellow(carId))
+			throw new IllegalArgumentException();
 		
 		return this.updateCampaign(advertiserId, campaignId, campaign);
+	}
+	
+	private boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception{
+		Iterator<Campaign> it = getAllCampaignsInTime(start, end).iterator();
+		while(it.hasNext()){
+			Campaign campaign = it.next();
+			if(campaign.isCarAFellow(carId))
+				return true;
+		}
+		return false;
+	}
+	
+	private Collection<Campaign> getAllCampaignsInTime(String start, String end){
+		Collection<Campaign> inTimeCampaigns = new ArrayList<Campaign>();
+		Iterator<Campaign> it = getAllCampaigns().iterator();
+		while(it.hasNext()){
+			Campaign c = it.next();
+			if(DateController.isABeforeB(c.getStartDate(), end) || DateController.isAAfterB(c.getEndDate(), start))
+				inTimeCampaigns.add(c);
+		}
+		return inTimeCampaigns;
+	}
+	
+	
+	private Collection<Campaign> getAllCampaigns(){
+		Collection<Campaign> allCampaigns = new ArrayList<Campaign>();
+		
+		Iterator<Advertiser> advertisers = this.getAllEntities().iterator();
+		while(advertisers.hasNext()){
+			allCampaigns.addAll(advertisers.next().getCampaigns());
+		}
+		return allCampaigns;
+	}
+
+	@Override
+	public Collection<Campaign> getCarRequestingCampaigns(String carid) {		
+		Collection<Campaign> carCampaigns = new ArrayList<Campaign>();
+		Iterator<Campaign> it = getAllCampaigns().iterator();
+		while(it.hasNext()){
+			Campaign c = it.next();
+			Iterator<Fellow> fellowIterator = c.getFellows().iterator();
+			while(fellowIterator.hasNext()){
+				Fellow fellow = fellowIterator.next();
+				if(fellow.getCarId().equals(carid))
+					carCampaigns.add(c);
+			}
+		}
+		return carCampaigns;
+	}
+
+	@Override
+	public Advertiser getAdvertiserFromCampaign(String campaignId) throws Exception {
+		Iterator<Advertiser> advertIterator = getAllEntities().iterator();
+		while(advertIterator.hasNext()){
+			Advertiser ad = advertIterator.next();
+			if(ad.containsCampaign(campaignId))
+				return ad;
+		}
+		throw new NotFoundException();
 	}
 }

@@ -1,12 +1,10 @@
-package de.hm.edu.carads.models.util;
+package de.hm.edu.carads.models.comm;
+
+import de.hm.edu.carads.models.util.FellowState;
 
 public class Fellow {
 	private String carid;
 	private FellowState state;
-	
-	public Fellow(){
-		
-	}
 
 	public Fellow(String carId, FellowState state) {
 		this.carid = carId;
