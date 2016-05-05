@@ -1,8 +1,8 @@
 'use strict';
 
-var app = angular.module('startapp', ['ngRoute', 'ngTable', 'pascalprecht.translate', 'ui.bootstrap']);
+var startapp = angular.module('startapp', ['ngRoute', 'ngTable', 'pascalprecht.translate', 'ui.bootstrap']);
 
-app.config(function ($routeProvider) {
+startapp.config(function ($routeProvider) {
 
     $routeProvider
             .when('/registration/', {
@@ -28,7 +28,7 @@ app.config(function ($routeProvider) {
 
 });
 
-app.config(function ($translateProvider) {
+startapp.config(function ($translateProvider) {
 
     var de = (function () {
         var json = null;

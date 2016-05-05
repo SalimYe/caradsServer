@@ -1,4 +1,4 @@
-app.controller('home', function ($scope, $translate) {
+startapp.controller('home', function ($scope, $translate) {
 
     
 });

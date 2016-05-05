@@ -17,9 +17,9 @@ var compareTo = function() {
     };
 };
  
-app.directive("compareTo", compareTo);
+startapp.directive("compareTo", compareTo);
 
-app.directive("fileread", [function () {
+startapp.directive("fileread", [function () {
         return {
             scope: {
                 fileread: "="
