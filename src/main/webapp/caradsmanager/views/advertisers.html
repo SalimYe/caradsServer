@@ -1,0 +1,27 @@
+<main>
+    <h3>Werbende Übersicht</h3>
+    <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
+        <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
+        <strong>{{alert.title}}:</strong> {{alert.content}}
+    </div>
+    <div class="row">
+        <div ng-repeat="advertiser in advertisers">
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="thumb-img">
+                        <img ng-src="{{getProfileImage(advertiser.logo.id)}}" alt="{{advertiser.company}}" />
+                    </div>
+                    <div class="caption">
+                        <h3>{{advertiser.company}}</h3>
+                        <h4>{{advertiser.firstname}} {{advertiser.lastname}}</h4>
+                        <div class="details">
+                            <div>{{advertiser.description}}</div>
+                            <div class="details-fade"></div>
+                        </div>
+                        <p><a href="#/advertiser/{{advertiser.id}}" class="btn btn-primary" role="button">Details</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

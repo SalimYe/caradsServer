@@ -1,7 +1,6 @@
 package de.hm.edu.carads;
 
 import java.util.Collection;
-
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,16 +16,18 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
-
 import com.google.gson.Gson;
-
 import de.hm.edu.carads.controller.DriverController;
 import de.hm.edu.carads.controller.DriverControllerImpl;
+import de.hm.edu.carads.controller.RealmController;
+import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.DriverRegistration;
+import de.hm.edu.carads.models.Realm;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
@@ -57,10 +58,21 @@ public class DriversRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addDriver(String input) {
-        Driver driver = gson.fromJson(input, Driver.class);
         try {
-            Driver registredDriver = dc.addEntity(driver);
-            return Response.ok(gson.toJson(registredDriver)).build();
+            DriverRegistration driverRegistration = gson.fromJson(input, DriverRegistration.class);
+            RealmController rc = new RealmControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
+
+            String username = driverRegistration.getUsername();
+            String passwordHash = driverRegistration.getPasswordHash();
+
+            Realm realm = new Realm(username, passwordHash, "driver");
+            Driver driver = driverRegistration.getDriver();
+
+            driver = dc.addEntity(driver);
+            rc.addEntity(realm);
+
+            return Response.ok(gson.toJson(driver)).build();
+
         } catch (AlreadyExistsException e) {
             throw new WebApplicationException(409);
         } catch (InvalidAttributesException e) {
@@ -214,8 +226,7 @@ public class DriversRessource {
             throw new WebApplicationException(500);
         }
     }
-    
-    
+
     private Driver getCurrentDriver() {
         try {
             Principal principal = httpServletRequest.getUserPrincipal();
@@ -226,4 +237,5 @@ public class DriversRessource {
             return null;
         }
     }
+
 }

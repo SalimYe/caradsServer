@@ -7,66 +7,89 @@ import java.util.Iterator;
 import de.hm.edu.carads.models.util.MetaInformation;
 import de.hm.edu.carads.models.util.Person;
 
+public class Driver extends Person {
 
-public class Driver extends Person{
+    private String birthdate;
+    private String occupation;
+    private String licenseDate;
+    private Collection<Car> cars;
+    private Image profilePicture;
 
-	private String birthdate;
-	private String occupation;
-	private String licenseDate;
-	private Collection<Car> cars = new ArrayList<Car>();
-	private Image profilePicture;
+    public Driver(String email, String firstName, String lastName) {
+        super(email, firstName, lastName);
+        this.meta = new MetaInformation();
+        this.cars = new ArrayList<>();
+        this.profilePicture = null;
+    }
 
-	
-	public Driver(String email, String firstName, String lastName) {
-		super(email, firstName, lastName);
-		this.meta = new MetaInformation();
-		this.cars = new ArrayList<Car>();
-		this.profilePicture = null;
-	}
-	
-	public Car getCar(String carId){
-		Iterator<Car> it = cars.iterator();
-		while(it.hasNext()){
-			Car tmp = it.next();
-			if(tmp.getId().equals(carId))
-				return tmp;
-		}
-		return null;
-	}
-	
-	public boolean removeCar(String carId){
-		checkCars();
-		return cars.remove(getCar(carId));
-	}
+    public Driver(String birthdate, String occupation, String licenseDate, Collection<Car> cars, Image profilePicture, String email, String firstName, String lastName) {
+        super(email, firstName, lastName);
+        this.birthdate = birthdate;
+        this.occupation = occupation;
+        this.licenseDate = licenseDate;
+        this.cars = cars;
+        this.profilePicture = profilePicture;
+    }
 
-	public Collection<Car> getCars(){
-		checkCars();
-		return cars;
-	}
-	public void addCar(Car car) {
-		checkCars();
-		this.cars.add(car);
-	}
+    public Car getCar(String carId) {
+        Iterator<Car> it = cars.iterator();
+        while (it.hasNext()) {
+            Car tmp = it.next();
+            if (tmp.getId().equals(carId)) {
+                return tmp;
+            }
+        }
+        return null;
+    }
 
-	public Image getImage() {
-		return profilePicture;
-	}
+    public boolean removeCar(String carId) {
+        checkCars();
+        return cars.remove(getCar(carId));
+    }
 
-	public void setImage(Image image) {
-		this.profilePicture = image;
-	}
+    public Collection<Car> getCars() {
+        checkCars();
+        return cars;
+    }
 
-	public String getBirthdate() {
-		return birthdate;
-	}
+    public void addCar(Car car) {
+        checkCars();
+        this.cars.add(car);
+    }
 
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
-	}
-	
-	private void checkCars(){
-		if(cars == null)
-			cars = new ArrayList<Car>();
-	}
+    public Image getImage() {
+        return profilePicture;
+    }
+
+    public void setImage(Image image) {
+        this.profilePicture = image;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public String getLicenseDate() {
+        return licenseDate;
+    }
+
+    public Image getProfilePicture() {
+        return profilePicture;
+    }
+    
+    
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    private void checkCars() {
+        if (cars == null) {
+            cars = new ArrayList<Car>();
+        }
+    }
 }
-

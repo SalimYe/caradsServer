@@ -33,6 +33,10 @@ app.config(function ($routeProvider) {
                 controller: 'drivers',
                 templateUrl: 'views/drivers.html'
             })
+            .when('/advertisers/', {
+                controller: 'advertisers',
+                templateUrl: 'views/advertisers.html'
+            })
             .when('/home', {
                 controller: 'home',
                 templateUrl: 'views/home.html'

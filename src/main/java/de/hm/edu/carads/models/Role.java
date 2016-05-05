@@ -11,6 +11,7 @@ public class Role extends Model {
 
     public Role(String name) {
         super();
+        this.name = name;
     }
 
     public String getName() {

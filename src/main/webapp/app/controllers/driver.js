@@ -1,4 +1,6 @@
-app.controller('driver', function ($scope, $routeParams, $http) {
+app.controller('driver', function ($scope, $routeParams, $http, $timeout) {
+    
+    $scope.driver = {};
 
     var alert = function (title, content, level) {
         $scope.alert = [];

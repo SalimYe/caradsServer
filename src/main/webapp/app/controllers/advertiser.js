@@ -1,4 +1,4 @@
-app.controller('advertiser', function ($scope, $routeParams, $http) {
+app.controller('advertiser', function ($scope, $routeParams, $http, $timeout) {
 
     $scope.advertiser = {};
 
@@ -17,7 +17,6 @@ app.controller('advertiser', function ($scope, $routeParams, $http) {
         $http.post('/api/advertisers/', $scope.advertiser).
                 success(function (data, status, headers, config) {
                     alert("Werbender angelegt", "Der Werbende wurde erfolgreich registriert!", "success");
-                    $routeParams.id = data.id;
                 }).
                 error(function (data, status) {
                     if (status === 409) {
@@ -36,7 +35,7 @@ app.controller('advertiser', function ($scope, $routeParams, $http) {
         $timeout(function () {
             var fd = new FormData();
             fd.append('file', $scope.image[0]);
-            $http.post("http://localhost:8080/api/images/", fd, {
+            $http.post("./api/images/", fd, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             })

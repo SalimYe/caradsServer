@@ -34,14 +34,6 @@ see implementation details http://jersey.java.net/nonav/documentation/latest/jax
             <role-name>carads-admin</role-name>
         </auth-constraint>
     </security-constraint>
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Registration API</web-resource-name>
-            <url-pattern>/api/drivers</url-pattern>
-            <url-pattern>/api/advertisers/</url-pattern>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-    </security-constraint>
     <login-config>  
         <auth-method>FORM</auth-method>  
         <form-login-config>    
