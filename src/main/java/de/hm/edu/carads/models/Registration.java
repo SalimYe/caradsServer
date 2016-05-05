@@ -9,8 +9,8 @@ import java.util.Collection;
 public interface Registration {
     
     public String getUsername();
-    public String getPasswordHash();
+    public String getPasswordHash() throws Exception;
     public void setUsername(String username);
-    public void setPassword(String password) throws Exception;
+    public void setPassword(String password);
     
 }

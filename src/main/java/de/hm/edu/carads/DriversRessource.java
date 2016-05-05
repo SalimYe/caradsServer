@@ -66,9 +66,8 @@ public class DriversRessource {
             String passwordHash = driverRegistration.getPasswordHash();
 
             Realm realm = new Realm(username, passwordHash, "driver");
-            Driver driver = driverRegistration.getDriver();
 
-            driver = dc.addEntity(driver);
+            Driver driver = dc.addEntity(driverRegistration);
             rc.addEntity(realm);
 
             return Response.ok(gson.toJson(driver)).build();

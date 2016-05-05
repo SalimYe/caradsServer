@@ -1,8 +1,6 @@
 package de.hm.edu.carads.models;
 
 import de.hm.edu.carads.models.util.Helper;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  *
@@ -12,24 +10,19 @@ public class DriverRegistration extends Driver implements Registration {
 
     private String password;
 
-    public DriverRegistration(String password, String email, String firstName, String lastName) throws Exception {
+    public DriverRegistration(String password, String email, String firstName, String lastName) {
         super(email, firstName, lastName);
-        this.password = Helper.getShaHash(password);
+        this.password = password;
     }
 
     @Override
-    public String getPasswordHash() {
-        return password;
+    public String getPasswordHash() throws Exception {
+        return Helper.getShaHash(this.password);
     }
 
     @Override
-    public void setPassword(String password) throws Exception {
-        this.password = Helper.getShaHash(password);
-    }
-    
-
-    public Driver getDriver() {
-        return new Driver(this.getBirthdate(), this.getOccupation(), this.getLicenseDate(), this.getCars(), this.getProfilePicture(), this.getEmail(), this.firstname, this.getLastName());
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
