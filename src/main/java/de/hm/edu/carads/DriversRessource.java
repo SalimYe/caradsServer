@@ -39,6 +39,7 @@ public class DriversRessource {
     private HttpServletRequest httpServletRequest;
     private Gson gson = new Gson();
     private DriverController dc = new DriverControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
+    RealmController rc = new RealmControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -60,7 +61,6 @@ public class DriversRessource {
     public Response addDriver(String input) {
         try {
             DriverRegistration driverRegistration = gson.fromJson(input, DriverRegistration.class);
-            RealmController rc = new RealmControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 
             String username = driverRegistration.getUsername();
             String passwordHash = driverRegistration.getPasswordHash();
@@ -101,12 +101,20 @@ public class DriversRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response changeDriver(@PathParam("id") String id, String input) {
-        Driver driverData = gson.fromJson(input, Driver.class);
-        if (driverData == null) {
-            throw new WebApplicationException(400);
-        }
-
         try {
+            Driver currentDriver = getCurrentDriver();
+            Driver driverData = gson.fromJson(input, Driver.class);
+
+            if (driverData == null) {
+                throw new InvalidAttributesException();
+            }
+
+            boolean isOwnProfile = currentDriver.getId().equals(driverData.getId());
+            
+            if (!isOwnProfile) {
+                throw new WebApplicationException(401);
+            }
+
             Driver changedDriver = dc.changeEntity(id, driverData);
             return Response.ok(gson.toJson(changedDriver)).build();
         } catch (AlreadyExistsException e) {
@@ -226,15 +234,10 @@ public class DriversRessource {
         }
     }
 
-    private Driver getCurrentDriver() {
-        try {
-            Principal principal = httpServletRequest.getUserPrincipal();
-            String driverMail = principal.getName();
-            Driver driver = dc.getEntityByMail(driverMail);
-            return driver;
-        } catch (Exception e) {
-            return null;
-        }
+    private Driver getCurrentDriver() throws Exception {
+        Principal principal = httpServletRequest.getUserPrincipal();
+        String driverMail = principal.getName();
+        Driver driver = dc.getEntityByMail(driverMail);
+        return driver;
     }
-
 }

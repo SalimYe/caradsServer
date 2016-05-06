@@ -15,9 +15,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
-
 import com.google.gson.Gson;
-
 import de.hm.edu.carads.controller.AdvertiserController;
 import de.hm.edu.carads.controller.AdvertiserControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
@@ -30,10 +28,15 @@ import de.hm.edu.carads.models.AdvertiserRegistration;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Realm;
 import de.hm.edu.carads.models.comm.Fellow;
+import java.security.Principal;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 
 @Path("advertisers")
 public class AdvertiserRessource {
 
+    @Context
+    private HttpServletRequest httpServletRequest;
     private Gson gson = new Gson();
     private AdvertiserController ac = new AdvertiserControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 
@@ -99,13 +102,19 @@ public class AdvertiserRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response changeAdvertiser(@PathParam("id") String id, String input) {
-        Advertiser adv = gson.fromJson(input, Advertiser.class);
-
-        if (adv == null) {
-            throw new WebApplicationException(400);
-        }
-
         try {
+        Advertiser currentAdvertiser = getCurrentAdvertiser();
+        Advertiser adv = gson.fromJson(input, Advertiser.class);
+        
+        boolean isOwnProfile = currentAdvertiser.getId().equals(adv.getId());
+        
+        if(!isOwnProfile) {
+            throw new WebApplicationException(401);
+        }
+        
+        if (adv == null) {
+            throw new InvalidAttributesException();
+        }
             Advertiser changedAdvertiser = ac.changeEntity(id, adv);
             return Response.ok(gson.toJson(changedAdvertiser)).build();
         } catch (InvalidAttributesException e) {
@@ -237,5 +246,12 @@ public class AdvertiserRessource {
         } catch (Exception e) {
             throw new WebApplicationException(500);
         }
+    }
+    
+    private Advertiser getCurrentAdvertiser() throws Exception {
+        Principal principal = httpServletRequest.getUserPrincipal();
+        String driverMail = principal.getName();
+        Advertiser advertiser = ac.getEntityByMail(driverMail);
+        return advertiser;
     }
 }
