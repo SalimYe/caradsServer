@@ -64,10 +64,9 @@ public class AdvertiserRessource {
             String username = advertiserRegistration.getUsername();
             String passwordHash = advertiserRegistration.getPasswordHash();
 
-            Realm realm = new Realm(username, passwordHash, "advertiser");
-
-            rc.addEntity(realm);
             Advertiser advertiser = ac.addEntity(advertiserRegistration);
+            Realm realm = new Realm(username, passwordHash, "advertiser", advertiser.getId());
+            rc.addEntity(realm);
             
             return Response.ok(gson.toJson(advertiser)).build();
             

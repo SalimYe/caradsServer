@@ -2,7 +2,6 @@ package de.hm.edu.carads.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import de.hm.edu.carads.models.util.Model;
 
 /**
@@ -15,11 +14,11 @@ public class Realm extends Model {
     private String credentials;
     private Collection <Role> roles;
 
-    public Realm(String username, String credentials, String role) {
+    public Realm(String username, String credentials, String role, String roleId) {
         this.username = username;
         this.credentials = credentials;
         this.roles = new ArrayList<>();
-        this.roles.add(new Role(role));
+        this.roles.add(new Role(role, roleId));
     }
     
     public String getUsername() {
@@ -46,8 +45,7 @@ public class Realm extends Model {
         this.roles = roles;
     }
     
-    public void addRole(String role) {
-        this.roles.add(new Role(role));
+    public void addRole(String role, String roleId) {
+        this.roles.add(new Role(role, roleId));
     }
-
 }

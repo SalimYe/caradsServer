@@ -8,6 +8,6 @@ import de.hm.edu.carads.models.Realm;
  */
 public interface RealmController extends AbstractEntityController<Realm>{
     
-    
+    public Realm getRealmByUsername(String username);
     
 }

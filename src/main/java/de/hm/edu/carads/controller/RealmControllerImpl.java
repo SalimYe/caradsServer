@@ -13,4 +13,9 @@ public class RealmControllerImpl extends AbstractEntityControllerImpl<Realm> imp
         super(Realm.class, database);
     }
     
+    @Override
+    public Realm getRealmByUsername(String username) {
+        return this.makeEntityFromBasicDBObject(dbController
+				.getEntityByKeyValue(Realm.class, "username", username));
+    } 
 }
