@@ -14,7 +14,7 @@ startapp.controller('advertiser', function ($scope, $routeParams, $http, $timeou
     };
 
     $scope.registerAdvertiser = function () {
-        $http.post('/api/advertisers/', $scope.advertiser).
+        $http.post('./api/advertisers/', $scope.advertiser).
                 success(function (data, status, headers, config) {
                     alert("Werbender angelegt", "Der Werbende wurde erfolgreich registriert!", "success");
                 }).

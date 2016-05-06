@@ -27,12 +27,12 @@ public class AdvertiserRegistration extends Advertiser implements Registration {
 
     @Override
     public String getUsername() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.email;
     }
 
     @Override
     public void setUsername(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.email = username;
     }
     
 }
