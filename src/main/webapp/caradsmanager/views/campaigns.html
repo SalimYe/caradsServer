@@ -1,0 +1,38 @@
+<main>
+    <h3>Meine Kampagnen</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning" role="alert" ng-if="campaigns === undefined || campaigns.length === 0">
+                <strong>Keine Kampagnen vorhanden!</strong>
+                Klicken Sie auf &quot;+ Kampagne hinzuf&uuml;gen&quot;, um eine neue
+                Kampagne anzulegen.
+            </div>
+            <div class="row" ng-if="campaigns.length > 0">
+                <div ng-repeat="campaign in campaigns">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <a href="#/advertiser/{{advertiserId}}/campaign/{{campaign.id}}">
+                            <div class="thumb-img">
+                                <img ng-if="hasImage($index)" ng-src="../api/images/{{getProfileImageId($index)}}" alt="{{campaign.title}}" />
+                                <img ng-if="!hasImage($index)" src="./img/symbols/car_placeholder.jpg" alt="Kampagnen Symbol" />
+                            </div>
+                            </a>
+                            <div class="caption">
+                                <h3>{{campaign.title}}</h3>
+                                <div class="details">
+                                    <div>{{campaign.description}}</div>
+                                    <div class="details-fade"></div>
+                                </div>
+                                <p><a href="#/advertiser/{{advertiserId}}/campaign/{{campaign.id}}" class="btn btn-primary">Details</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-primary" href="#/advertiser/{{advertiserId}}/campaign/">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Kampagne hinzufügen
+            </a>
+        </div>
+    </div>
+</main>

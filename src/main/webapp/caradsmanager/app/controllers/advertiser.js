@@ -1,6 +1,9 @@
 app.controller('advertiser', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate, $timeout) {
 
-    $scope.advertiser = {};
+    var advertiserId = $routeParams.id;
+    if (advertiserId === undefined) {
+        $location.path('/');
+    }
 
     var alert = function (title, content, level) {
         $scope.alert = [];
@@ -13,21 +16,17 @@ app.controller('advertiser', function ($scope, $routeParams, $http, $location, $
         delete $scope.alert;
     };
 
-
-    var isNewAdvertiser = ($routeParams.id === undefined);
-
-    if (!isNewAdvertiser) {
-        $http.get('../api/advertisers/' + $routeParams.id).
+        $http.get('../api/advertisers/' + advertiserId).
                 success(function (data, status, headers, config) {
                     $scope.advertiser = data;
                 }).
                 error(function (data, status, headers, config) {
-                    $location.path('advertiser/');
+                    $location.path('/');
                 });
-    }
 
-    var updateAdvertiser = function () {
-        $http.put('../api/advertisers/' + $routeParams.id, $scope.advertiser).
+
+    $scope.updateAdvertiser = function () {
+        $http.put('../api/advertisers/' + advertiserId, $scope.advertiser).
                 success(function (data, status, headers, config) {
                     // TODO
                 }).
@@ -36,35 +35,8 @@ app.controller('advertiser', function ($scope, $routeParams, $http, $location, $
                 });
     };
 
-    var createAdvertiser = function () {
-        $http.post('../api/advertisers/', $scope.advertiser).
-                success(function (data, status, headers, config) {
-                    alert("Werbender angelegt", "Der Werbende wurde erfolgreich registriert!", "success");
-                    $routeParams.id = data.id;
-                }).
-                error(function (data, status) {
-                    if (status === 409) {
-                        alert("Speichern fehlgeschlagen", "Es ist bereits ein Werbender mit der Mail \""
-                                + $scope.advertiser.email + "\" registiert!", "danger");
-                    } else {
-                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " + 
-                                "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                                "den Administrator.", "danger");
-                    }
-
-                });
-    };
-
-    $scope.saveAdvertiser = function () {
-        if (isNewAdvertiser) {
-            createAdvertiser();
-        } else {
-            updateAdvertiser();
-        }
-    };
-
     $scope.exitAdvertiser = function () {
-        $location.path('/home/');
+        $location.path('/');
     };
 
     $scope.saveImage = function () {

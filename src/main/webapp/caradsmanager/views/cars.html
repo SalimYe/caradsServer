@@ -1,0 +1,38 @@
+<main>
+    <h3>Meine Fahrzeug</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning" role="alert" ng-if="cars === undefined || cars.length === 0">
+                <strong>Keine Fahrzeuge vorhanden!</strong>
+                Klicken Sie auf &quot;+ Fahrzeug hinzuf&uuml;gen&quot;, um ein neues
+                Fahrzeug anzulegen.
+            </div>
+            <div class="row">
+                <div ng-repeat="car in cars">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <a href="#/driver/{{driverId}}/car/{{car.id}}">
+                            <div class="thumb-img">
+                                <img ng-if="hasImage($index)" ng-src="../api/images/{{getProfileImageId($index)}}" alt="{{car.brand}} {{car.model}}" />
+                                <img ng-if="!hasImage($index)" src="./img/symbols/car_placeholder.jpg" alt="Fahrzeug Symbol" />
+                            </div>
+                            </a>
+                            <div class="caption">
+                                <h3>{{car.brand}} {{car.model}}</h3>
+                                <div class="details">
+                                    <div>{{car.description}}</div>
+                                    <div class="details-fade"></div>
+                                </div>
+                                <p><a href="#/driver/{{driverId}}/car/{{car.id}}" class="btn btn-primary">Details</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-primary" href="#/driver/{{driverId}}/car/">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Fahrzeug hinzufügen
+            </a>
+        </div>
+    </div>
+</main>

@@ -21,6 +21,10 @@ startapp.config(function ($routeProvider) {
                 controller: 'home',
                 templateUrl: 'views/home.html'
             })
+            .when('/faq', {
+                controller: 'faq',
+                templateUrl: 'views/faq.html'
+            })
             .when('/', {
                 redirectTo: '/home'
             })

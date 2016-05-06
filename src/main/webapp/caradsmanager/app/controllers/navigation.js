@@ -8,7 +8,7 @@ app.controller('navigation', function ($scope, $http) {
                         $scope.driverId = roles[i].roleId;
                     } else if (roles[i].name == 'advertiser') {
                         $scope.advertiserId = roles[i].roleId;
-                    } else if (roles[i].name == 'admin') {
+                    } else if (roles[i].name == 'carads-admin') {
                         $scope.isAdmin = true;
                     }
                 };

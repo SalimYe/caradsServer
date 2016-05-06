@@ -1,10 +1,10 @@
-app.controller('car', function ($scope, $routeParams, $http, $location, $modal, $document, $timeout, $window, $translate) {
+app.controller('campaign', function ($scope, $routeParams, $http, $location, $timeout) {
 
-    var driverId = $routeParams.driverId;
-    var carId = $routeParams.carId;
-    $scope.driverId = driverId;
+    var advertiserId = $routeParams.advertiserId;
+    var campaignId = $routeParams.campaignId;
+    $scope.advertiserId = advertiserId;
 
-    if (driverId === undefined) {
+    if (advertiserId === undefined) {
         $location.path('/');
     }
 
@@ -15,32 +15,32 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
         $scope.alert.level = level;
     };
 
-    var redirectToCarOverview = function () {
-        $location.path('driver/' + driverId + "/cars");
+    var redirectToCampaignOverview = function () {
+        $location.path('advertiser/' + advertiserId + "/campaigns");
     };
 
     $scope.deleteAlert = function () {
         delete $scope.alert;
     };
 
-    var isNewCar = ($routeParams.carId === undefined);
-    $scope.car;
-    $scope.isNewCar = isNewCar;
+    var isNewCampaign = ($routeParams.campaignId === undefined);
+    $scope.campaign;
+    $scope.isNewCampaign = isNewCampaign;
 
-    if (!isNewCar) {
-        $http.get('../api/drivers/' + driverId + '/cars/' + carId).
+    if (!isNewCampaign) {
+        $http.get('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId).
                 success(function (data, status, headers, config) {
-                    $scope.car = data;
+                    $scope.campaign = data;
                 }).
                 error(function (data, status, headers, config) {
-                    redirectToCarOverview();
+                    redirectToCampaignOverview();
                 });
     }
 
-    var updateCar = function () {
-        $http.put('../api/drivers/' + driverId + '/cars/' + carId, $scope.car).
+    var updateCampaign = function () {
+        $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
                 success(function (data, status, headers, config) {
-                    redirectToCarOverview();
+                    redirectToCampaignOverview();
                 }).
                 error(function (data, status, headers, config) {
                     alert("Update fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
@@ -49,10 +49,10 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
                 });
     };
 
-    $scope.deleteCar = function () {
-        $http.delete('../api/drivers/' + driverId + '/cars/' + carId).
+    $scope.deleteCampaign = function () {
+        $http.delete('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId).
                 success(function (data, status, headers, config) {
-                    redirectToCarOverview();
+                    redirectToCampaignOverview();
                 }).
                 error(function (data, status, headers, config) {
                     alert("Löschen fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
@@ -61,11 +61,11 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
                 });
     };
 
-    var createCar = function () {
-        console.log($scope.car);
-        $http.post('../api/drivers/' + driverId + '/cars/', $scope.car).
+    var createCampaign = function () {
+        console.log($scope.campaign);
+        $http.post('../api/advertisers/' + advertiserId + '/campaigns/', $scope.campaign).
                 success(function (data, status, headers, config) {
-                    redirectToCarOverview();
+                    redirectToCampaignOverview();
                 }).
                 error(function (data, status) {
                     alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
@@ -74,16 +74,16 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
                 });
     };
 
-    $scope.saveCar = function () {
-        if (isNewCar) {
-            createCar();
+    $scope.saveCampaign = function () {
+        if (isNewCampaign) {
+            createCampaign();
         } else {
-            updateCar();
+            updateCampaign();
         }
     };
 
-    $scope.exitCar = function () {
-        redirectToCarOverview();
+    $scope.exitCampaign = function () {
+        redirectToCampaignOverview();
     };
 
     $scope.saveImages = function () {
@@ -98,10 +98,10 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
                     })
                             .success(function (data, status) {
                                 var image = {id: data.id, isTitle: true, altText: ""};
-                                if ($scope.car.images === undefined) {
-                                    $scope.car.images = [];
+                                if ($scope.campaign.images === undefined) {
+                                    $scope.campaign.images = [];
                                 }
-                                $scope.car.images.push(image);
+                                $scope.campaign.images.push(image);
                             })
                             .error(function (data, status) {
 
@@ -113,7 +113,7 @@ app.controller('car', function ($scope, $routeParams, $http, $location, $modal, 
     };
 
     $scope.deleteImage = function (imageId) {
-        $scope.car.images = $scope.car.images.filter(function (obj) {
+        $scope.campaign.images = $scope.campaign.images.filter(function (obj) {
             return obj.id !== imageId;
         });
     };

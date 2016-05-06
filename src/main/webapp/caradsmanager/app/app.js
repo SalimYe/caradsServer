@@ -5,6 +5,10 @@ var app = angular.module('client', ['ngRoute', 'ngTable', 'pascalprecht.translat
 app.config(function ($routeProvider) {
 
     $routeProvider
+            .when('/driver/:driverId/cars/', {
+                controller: 'cars',
+                templateUrl: 'views/cars.html'
+            })
             .when('/driver/:driverId/car/', {
                 controller: 'car',
                 templateUrl: 'views/car.html'
@@ -16,6 +20,18 @@ app.config(function ($routeProvider) {
             .when('/advertiser/', {
                 controller: 'advertiser',
                 templateUrl: 'views/advertiser.html'
+            })
+            .when('/advertiser/:advertiserId/campaigns/', {
+                controller: 'campaigns',
+                templateUrl: 'views/campaigns.html'
+            })
+            .when('/advertiser/:advertiserId/campaign/', {
+                controller: 'campaign',
+                templateUrl: 'views/campaign.html'
+            })
+            .when('/advertiser/:advertiserId/campaign/:campaignId', {
+                controller: 'campaign',
+                templateUrl: 'views/campaign.html'
             })
             .when('/advertiser/:id', {
                 controller: 'advertiser',

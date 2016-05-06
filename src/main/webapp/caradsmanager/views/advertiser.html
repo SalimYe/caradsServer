@@ -1,5 +1,4 @@
 <main>
-    <h3>Werbender</h3>
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
@@ -11,14 +10,20 @@
                     <label for="company" class="required">Unternehmen</label>
                     <input type="text" class="form-control" id="company" ng-model="advertiser.company" required="">
                 </div>
-                <div class="form-group">
-                    <label for="firstname" class="required">Vorname</label>
-                    <input type="text" class="form-control" id="firstname" ng-model="advertiser.firstname" required="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstname" class="required">Vorname</label>
+                            <input type="text" class="form-control" id="firstname" ng-model="advertiser.firstname" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="lastname" class="required">Nachname</label>
+                            <input type="text" class="form-control" id="lastname" ng-model="advertiser.lastname" required="">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="lastname" class="required">Nachname</label>
-                    <input type="text" class="form-control" id="lastname" ng-model="advertiser.lastname" required="">
-                </div>                            
             </div>
             <div class="col-md-6">
                 <div class="row">
@@ -56,11 +61,7 @@
                     <label for="phone">Telefon</label>
                     <input type="text" class="form-control" id="phone" ng-model="advertiser.phone">
                 </div>
-                <div class="form-group">
-                    <label for="email" class="required">Mail</label>
-                    <input type="email" class="form-control" id="email" ng-model="advertiser.email" required="">
-                </div> 
-            </div>            
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -74,9 +75,9 @@
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     Schlie&szlig;en
                 </button>
-                <button type="submit" class="btn btn-success" ng-click="saveAdvertiser()" ng-disabled="!advertiserForm.$valid">
+                <button type="submit" class="btn btn-success" ng-click="updateAdvertiser()" ng-disabled="!advertiserForm.$valid">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    Speichern
+                    Aktualisieren
                 </button>
             </div>
         </div>
