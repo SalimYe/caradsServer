@@ -137,11 +137,20 @@ public class AdvertiserControllerTest {
 	}
 	
 	@Test
-	public void getCampaignTest() throws Exception{
+	public void getAllCampaignsTest() throws Exception{
 		AdvertiserController ac = getController();
 		Advertiser ad = ac.addEntity(makeNewAdvertiser());
 		ac.addCampaign(ad.getId(), makeNewCampaign());
 		assertEquals(1, ac.getCampaigns(ad.getId()).size());
+	}
+	
+	@Test (expected = NoContentException.class)
+	public void getSingleCampaignTest() throws Exception{
+		AdvertiserController ac = getController();
+		Advertiser ad = ac.addEntity(makeNewAdvertiser());
+		ac.addCampaign(ad.getId(), makeNewCampaign());
+		
+		ac.getCampaign(ad.getId(), "");
 	}
 	
 	@Test
@@ -271,6 +280,40 @@ public class AdvertiserControllerTest {
 		camp2.setEndDate("01.03.2000");
 		camp2 = ac.addCampaign(adv1.getId(), camp2);
 		ac.addVehicleToCampaign(adv1.getId(), camp2.getId(), "123");
+	}
+	
+	@Test
+	public void getCampaignsInTimeTest() throws Exception{
+		Advertiser ad1 = new Advertiser("franz@redbull.com", "Franz", "Kafka");
+		Advertiser ad2 = new Advertiser("joe@bmw.de", "Joe", "Norb");
+		Campaign c1 = new Campaign();
+		c1.setCampaignBudget("1000");
+		c1.setDescription("Beschreibung");
+		c1.setStartDate("01.01.2015");
+		c1.setEndDate("30.01.2015");
+		c1.setTitle("Red Bull Promo");
+		
+		Campaign c2 = new Campaign();
+		c2.setCampaignBudget("2000");
+		c2.setDescription("Beschreibung");
+		c2.setStartDate("01.02.2015");
+		c2.setEndDate("30.04.2015");
+		c2.setTitle("BMW Promo");
+		
+		Campaign c3 = new Campaign();
+		c3.setCampaignBudget("2000");
+		c3.setDescription("Beschreibung");
+		c3.setStartDate("15.01.2015");
+		c3.setEndDate("12.02.2015");
+		c3.setTitle("5er GT Promo");
+		
+		ad1 = advertiserController.addEntity(ad1);
+		ad2 = advertiserController.addEntity(ad2);
+		c1 = advertiserController.addCampaign(ad1.getId(), c1);
+		c2 = advertiserController.addCampaign(ad2.getId(), c2);
+		c3 = advertiserController.addCampaign(ad2.getId(), c3);
+		
+		
 	}
 
 	@Before

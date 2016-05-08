@@ -85,4 +85,18 @@ public class RequestControllerImpl implements RequestController {
         }
         return null;
     }
+
+	@Override
+	public Collection<Car> getAvailableCars(String start, String end) throws Exception {
+		Collection<Car> availableCars = new ArrayList<Car>();
+		
+		Iterator<Car> allCars = dc.getAllCars().iterator();
+		while(allCars.hasNext()){
+			Car car = allCars.next();
+			if(!ac.isCarOccupiedInTime(car.getId(), start, end))
+				availableCars.add(car);
+		}
+		
+		return availableCars;
+	}
 }

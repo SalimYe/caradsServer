@@ -77,8 +77,17 @@ public class Campaign extends Model{
 	}
 	
 	public boolean isCarAFellow(String carId){
-		if(carId==null)
+		Fellow fellow = getFellow(carId);
+		
+		if(fellow==null)
 			return false;
+		return true;
+		
+	}
+	
+	public Fellow getFellow(String carId){
+		if(carId==null)
+			return null;
 		if(this.fellows == null)
 			this.fellows = new ArrayList<Fellow>();
 		
@@ -86,8 +95,15 @@ public class Campaign extends Model{
 		while(it.hasNext()){
 			Fellow f = it.next();
 			if(f.getCarId().equals(carId))
-				return true;
+				return f;
 		}
+		return null;
+	}
+	
+	public boolean hasFellowAccepted(String carId){
+		Fellow fellow = getFellow(carId);
+		if(fellow!=null && fellow.getState().equals(FellowState.ACCEPTED))
+			return true;
 		return false;
 	}
 	

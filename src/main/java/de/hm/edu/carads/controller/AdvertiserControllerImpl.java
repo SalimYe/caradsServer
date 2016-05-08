@@ -21,6 +21,7 @@ import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.comm.Fellow;
 import de.hm.edu.carads.models.util.DateController;
 import de.hm.edu.carads.models.util.MetaInformation;
+import de.hm.edu.carads.models.util.TimeFrame;
 
 public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Advertiser> implements AdvertiserController{
 
@@ -137,11 +138,12 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 		return this.updateCampaign(advertiserId, campaignId, campaign);
 	}
 	
-	private boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception{
+	@Override
+	public boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception{
 		Iterator<Campaign> it = getAllCampaignsInTime(start, end).iterator();
 		while(it.hasNext()){
 			Campaign campaign = it.next();
-			if(campaign.isCarAFellow(carId))
+			if(campaign.isCarAFellow(carId) && campaign.hasFellowAccepted(carId))
 				return true;
 		}
 		return false;
@@ -149,6 +151,10 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	
 	private Collection<Campaign> getAllCampaignsInTime(String start, String end){
 		Collection<Campaign> inTimeCampaigns = new ArrayList<Campaign>();
+		TimeFrame frame = new TimeFrame();
+		frame.start = start;
+		frame.end = end;
+		
 		Iterator<Campaign> it = getAllCampaigns().iterator();
 		while(it.hasNext()){
 			Campaign c = it.next();
@@ -172,6 +178,7 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	@Override
 	public Collection<Campaign> getCarRequestingCampaigns(String carid) {		
 		Collection<Campaign> carCampaigns = new ArrayList<Campaign>();
+		
 		Iterator<Campaign> it = getAllCampaigns().iterator();
 		while(it.hasNext()){
 			Campaign c = it.next();

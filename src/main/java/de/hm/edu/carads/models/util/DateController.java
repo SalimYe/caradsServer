@@ -20,15 +20,13 @@ public class DateController {
 	}
 	
 	public static boolean isABeforeB(String a, String b){
-		if(a.isEmpty())
+		if(a==null || a.isEmpty() || b==null || b.isEmpty()){
 			a="01.01.1970";
-		if(b.isEmpty())
-			b="01.01.1970";
-		
+			b=a;
+			throw new IllegalArgumentException();
+		}		
 		Date date1 = DateController.fromStringToDate(a);
 		Date date2 = DateController.fromStringToDate(b);
-		if(date1 == null || date2 == null)
-			throw new IllegalArgumentException();
 		
 		if(date1.compareTo(date2)<0)
 			return true;
@@ -43,6 +41,20 @@ public class DateController {
 		
 		if(date1.compareTo(date2)>0)
 			return true;
+		return false;
+	}
+	
+	public static boolean isAOverlappingB(TimeFrame a, TimeFrame b){
+
+		if(isABeforeB(a.end, b.start) && isABeforeB(a.start, b.start))
+			return true;
+		if(isABeforeB(b.start, a.start) && isABeforeB(a.start, b.end))
+			return true;
+		if(isABeforeB(a.start, b.start) && isABeforeB(b.end, a.end))
+			return true;
+		if(isABeforeB(b.start, a.start) && isABeforeB(b.end, a.end))
+			return true;
+		
 		return false;
 	}
 }
