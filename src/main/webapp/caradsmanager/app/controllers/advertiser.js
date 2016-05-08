@@ -1,4 +1,4 @@
-app.controller('advertiser', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate, $timeout) {
+app.controller('advertiser', function ($scope, $routeParams, $http, $location, $modal, $timeout){
 
     var advertiserId = $routeParams.id;
     if (advertiserId === undefined) {
@@ -37,6 +37,10 @@ app.controller('advertiser', function ($scope, $routeParams, $http, $location, $
 
     $scope.exitAdvertiser = function () {
         $location.path('/');
+    };
+    
+    $scope.editDetails = function () {
+        $location.path($location.path() + '/edit');
     };
 
     $scope.saveImage = function () {

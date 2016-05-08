@@ -23,7 +23,7 @@ app.controller('advertisers', function ($scope, $routeParams, $http, $location, 
             
     $scope.getProfileImage = function (imageId) {
         if(imageId === undefined) {
-            return "./img/symbols/empty_profilepicture.jpg";
+            return "./img/symbols/company_placeholder.png";
         }
         return '../../api/images/' + imageId;
     };

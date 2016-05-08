@@ -17,10 +17,6 @@ app.config(function ($routeProvider) {
                 controller: 'car',
                 templateUrl: 'views/car.html'
             })
-            .when('/advertiser/', {
-                controller: 'advertiser',
-                templateUrl: 'views/advertiser.html'
-            })
             .when('/advertiser/:advertiserId/campaigns/', {
                 controller: 'campaigns',
                 templateUrl: 'views/campaigns.html'
@@ -37,13 +33,17 @@ app.config(function ($routeProvider) {
                 controller: 'advertiser',
                 templateUrl: 'views/advertiser.html'
             })
-            .when('/driver/', {
-                controller: 'driver',
-                templateUrl: 'views/driver.html'
+            .when('/advertiser/:id/edit', {
+                controller: 'advertiser',
+                templateUrl: 'views/advertiserEdit.html'
             })
             .when('/driver/:id', {
                 controller: 'driver',
                 templateUrl: 'views/driver.html'
+            })
+            .when('/driver/:id/edit', {
+                controller: 'driver',
+                templateUrl: 'views/driverEdit.html'
             })
             .when('/drivers/', {
                 controller: 'drivers',
