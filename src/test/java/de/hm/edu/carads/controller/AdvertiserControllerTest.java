@@ -196,7 +196,7 @@ public class AdvertiserControllerTest {
 		Advertiser ad = ac.addEntity(makeNewAdvertiser());
 		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
 		
-		c = ac.addVehicleToCampaign(ad.getId(), c.getId(), "123");
+		c = ac.requestVehicleForCampaign(ad.getId(), c.getId(), "123");
 		assertEquals(1, ac.getCampaign(ad.getId(), c.getId()).getFellows().size());
 	}
 	
@@ -206,9 +206,9 @@ public class AdvertiserControllerTest {
 		Advertiser ad = ac.addEntity(makeNewAdvertiser());
 		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
 		
-		ac.addVehicleToCampaign(ad.getId(), c.getId(), "123");
-		ac.addVehicleToCampaign(ad.getId(), c.getId(), "124");
-		ac.addVehicleToCampaign(ad.getId(), c.getId(), "125");
+		ac.requestVehicleForCampaign(ad.getId(), c.getId(), "123");
+		ac.requestVehicleForCampaign(ad.getId(), c.getId(), "124");
+		ac.requestVehicleForCampaign(ad.getId(), c.getId(), "125");
 		assertEquals(3, ac.getCampaign(ad.getId(), c.getId()).getFellows().size());
 	}
 	
@@ -218,8 +218,8 @@ public class AdvertiserControllerTest {
 		Advertiser ad = ac.addEntity(makeNewAdvertiser());
 		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
 		
-		ac.addVehicleToCampaign(ad.getId(), c.getId(), "123");
-		ac.addVehicleToCampaign(ad.getId(), c.getId(), "123");
+		ac.requestVehicleForCampaign(ad.getId(), c.getId(), "123");
+		ac.requestVehicleForCampaign(ad.getId(), c.getId(), "123");
 	}
 	
 	/*

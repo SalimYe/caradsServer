@@ -2,6 +2,7 @@ package de.hm.edu.carads.controller;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -46,7 +47,7 @@ public class RequestControllerTest {
 		Driver driver = driverController.addEntity(makeNewDriver());
 		Car car = driverController.addCar(driver.getId(), makeNewCar());
 		
-		advertiserController.addVehicleToCampaign(ad.getId(), camp.getId(), car.getId());
+		advertiserController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
 		assertEquals(1, requestController.getOfferInformation(driver.getId()).size());
 	}
 	
@@ -66,7 +67,7 @@ public class RequestControllerTest {
 		Car car = driverController.addCar(driver.getId(), makeNewCar());
 		driverController.addCar(driver.getId(), makeNewCar());
 		
-		advertiserController.addVehicleToCampaign(ad.getId(), camp.getId(), car.getId());
+		advertiserController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
 		assertEquals(1, requestController.getOfferInformation(driver.getId()).size());
 	}
 	
@@ -77,12 +78,26 @@ public class RequestControllerTest {
 		Driver driver = driverController.addEntity(makeNewDriver());
 		Car car = driverController.addCar(driver.getId(), makeNewCar());
 		
-		advertiserController.addVehicleToCampaign(ad.getId(), camp.getId(), car.getId());
+		advertiserController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
 		
-		requestController.respondToOffer(driver.getId(), car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		requestController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		ArrayList<OfferInformation> offers = (ArrayList<OfferInformation>) requestController.getOfferInformation(driver.getId());
+		assertEquals(FellowState.ACCEPTED, offers.get(0).getState());
+	}
+	
+	@Test
+	public void responseTest2() throws Exception {
+		Advertiser ad = advertiserController.addEntity(makeNewAdvertiser());
+		Campaign camp = advertiserController.addCampaign(ad.getId(), makeNewCampaign());
+		Driver driver = driverController.addEntity(makeNewDriver());
+		Car car = driverController.addCar(driver.getId(), makeNewCar());
+		
+		advertiserController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		
+		requestController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "REJECTED");
 		Iterator<OfferInformation> offers = requestController.getOfferInformation(driver.getId()).iterator();
 		OfferInformation offer = offers.next();
-		assertEquals(FellowState.ACCEPTED, offer.getState());
+		assertEquals(FellowState.REJECTED, offer.getState());
 	}
 	
 	@Test
@@ -151,11 +166,11 @@ public class RequestControllerTest {
 		assertEquals(4, requestController.getAvailableCars(ad1.getId(), c1.getId()).size());
 		
 		//Car1 wird fuer Kampagne 1 angefragt.
-		advertiserController.addVehicleToCampaign(ad1.getId(), c1.getId(), car1.getId());
+		advertiserController.requestVehicleForCampaign(ad1.getId(), c1.getId(), car1.getId());
 		//In dem Zeitraum ist das Auto fuer andere Kampagnen noch sichtbar, weil noch nicht zugesagt wurde
 		assertEquals(4, requestController.getAvailableCars(ad2.getId(), c3.getId()).size());
 		//Car1 sagt zu
-		requestController.respondToOffer(d1.getId(), car1.getId(), ad1.getId(), c1.getId(), FellowState.ACCEPTED.toString());
+		requestController.respondToOffer(car1.getId(), ad1.getId(), c1.getId(), FellowState.ACCEPTED.toString());
 		
 		//Das Auto ist nicht mehr sichtbar, weil in diesem Zeitraum schon zugesagt wurde
 		assertEquals(3, requestController.getAvailableCars(ad2.getId(), c3.getId()).size());
@@ -178,11 +193,11 @@ public class RequestControllerTest {
 		Car car = driverController.addCar(driver.getId(), makeNewCar());
 		
 		//Das Auto wird angefragt
-		advertiserController.addVehicleToCampaign(ad.getId(), c.getId(), car.getId());
+		advertiserController.requestVehicleForCampaign(ad.getId(), c.getId(), car.getId());
 		
 		//Der Fahrer sagt fuer dieses Auto zu
-		requestController.respondToOffer(driver.getId(), car.getId(), ad.getId(), c.getId(), FellowState.ACCEPTED.toString());
-		advertiserController.addVehicleToCampaign(adv2.getId(), camp2.getId(), car.getId());
+		requestController.respondToOffer(car.getId(), ad.getId(), c.getId(), FellowState.ACCEPTED.toString());
+		advertiserController.requestVehicleForCampaign(adv2.getId(), camp2.getId(), car.getId());
 	}
 	
 	private RequestController getRequestController(){

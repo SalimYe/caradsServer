@@ -126,7 +126,7 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	}
 
 	@Override
-	public Campaign addVehicleToCampaign(String advertiserId, String campaignId, String carId) throws Exception {
+	public Campaign requestVehicleForCampaign(String advertiserId, String campaignId, String carId) throws Exception {
 		Advertiser advertiser = getEntity(advertiserId);
 		Campaign campaign = advertiser.getCampaign(campaignId);
 		
