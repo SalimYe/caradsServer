@@ -154,7 +154,7 @@ public class RequestControllerTest {
 		//In dem Zeitraum ist das Auto fuer andere Kampagnen noch sichtbar, weil noch nicht zugesagt wurde
 		assertEquals(4, requestController.getAvailableCars(c3.getStartDate(), c3.getEndDate()).size());
 		//Car1 sagt zu
-		requestController.respondToOffer(d1.getId(), car1.getId(), ad1.getId(), c1.getId(), "ACCEPTED");
+		requestController.respondToOffer(d1.getId(), car1.getId(), ad1.getId(), c1.getId(), FellowState.ACCEPTED.toString());
 		
 		//Das Auto ist nicht mehr sichtbar, weil in diesem Zeitraum schon zugesagt wurde
 		assertEquals(3, requestController.getAvailableCars(c3.getStartDate(), c3.getEndDate()).size());

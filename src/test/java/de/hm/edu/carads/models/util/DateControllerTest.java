@@ -55,6 +55,24 @@ public class DateControllerTest {
 	}
 	
 	@Test
+	public void campaignOverlappingTest5(){
+		/*
+		 *			|---|	A
+		 *		|---------|	B 
+		 */
+		
+		TimeFrame a = new TimeFrame();
+		a.start = "01.05.2000";
+		a.end = "10.05.2000";
+		TimeFrame b = new TimeFrame();
+		b.start = "15.01.2000";
+		b.end = "30.08.2000";
+		
+		assertTrue(DateController.isAOverlappingB(a, b));
+		
+	}
+	
+	@Test
 	public void campaignOverlappingTest2(){
 		/*
 		 *	|--------|		A
@@ -98,13 +116,13 @@ public class DateControllerTest {
 		 */
 		
 		TimeFrame a = new TimeFrame();
-		a.start = "01.01.2000";
-		a.end = "17.01.2000";
+		a.start = "01.01.2001";
+		a.end = "17.01.2001";
 		TimeFrame b = new TimeFrame();
 		b.start = "15.01.2000";
 		b.end = "30.02.2000";
 		
-		assertFalse(DateController.isAOverlappingB(b, a));
+		assertFalse(DateController.isAOverlappingB(a, b));
 		
 	}
 }

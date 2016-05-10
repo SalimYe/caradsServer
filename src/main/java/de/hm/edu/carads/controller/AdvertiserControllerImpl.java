@@ -151,15 +151,15 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	
 	private Collection<Campaign> getAllCampaignsInTime(String start, String end){
 		Collection<Campaign> inTimeCampaigns = new ArrayList<Campaign>();
-		TimeFrame frame = new TimeFrame();
-		frame.start = start;
-		frame.end = end;
+
 		
 		Iterator<Campaign> it = getAllCampaigns().iterator();
 		while(it.hasNext()){
 			Campaign c = it.next();
-			if(DateController.isABeforeB(c.getStartDate(), end) || DateController.isAAfterB(c.getEndDate(), start))
+			if(DateController.isAOverlappingB(new TimeFrame(start, end), new TimeFrame(c.getStartDate(), c.getEndDate())))
 				inTimeCampaigns.add(c);
+//			if(DateController.isABeforeB(c.getStartDate(), end) || DateController.isAAfterB(c.getEndDate(), start))
+//				inTimeCampaigns.add(c);
 		}
 		return inTimeCampaigns;
 	}
