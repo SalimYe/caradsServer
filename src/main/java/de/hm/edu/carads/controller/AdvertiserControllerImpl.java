@@ -132,6 +132,8 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 		
 		if(isCarOccupiedInTime(carId, campaign.getStartDate(), campaign.getEndDate()))
 			throw new AlreadyExistsException();
+		if(campaign.isCarAFellow(carId))
+			throw new AlreadyExistsException();
 		if(!campaign.addFellow(carId))
 			throw new IllegalArgumentException();
 		

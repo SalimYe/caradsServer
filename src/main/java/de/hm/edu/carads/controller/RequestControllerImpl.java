@@ -87,16 +87,49 @@ public class RequestControllerImpl implements RequestController {
     }
 
 	@Override
-	public Collection<Car> getAvailableCars(String start, String end) throws Exception {
+	public Collection<Car> getAvailableCars(String advertiserId, String campaignId) throws Exception {
 		Collection<Car> availableCars = new ArrayList<Car>();
 		
-		Iterator<Car> allCars = dc.getAllCars().iterator();
-		while(allCars.hasNext()){
-			Car car = allCars.next();
-			if(!ac.isCarOccupiedInTime(car.getId(), start, end))
+		Campaign campaign = ac.getEntity(advertiserId).getCampaign(campaignId);
+		
+		Iterator<Car> allReducedCars = reduceAlreadyAskedCars(campaign, dc.getAllCars()).iterator();
+		while(allReducedCars.hasNext()){
+			Car car = allReducedCars.next();
+			if(!ac.isCarOccupiedInTime(car.getId(), campaign.getStartDate(), campaign.getEndDate()))
 				availableCars.add(car);
 		}
 		
 		return availableCars;
+	}
+	
+	/**
+	 * Diese Methode nimmt eine Kampagne und eine Liste an Fahrzeugen entgegen.
+	 * Die List wird um alle Fahrtzeuge reduziert, welche bereits fue die Kampagne
+	 * angefragt wurden. Dabei spielt es keine Rolle ob die Fahrzeuge bereits geantwortet haben. 
+	 * @param campaign
+	 * @param cars
+	 * @return reducedCarList
+	 */
+	private Collection<Car> reduceAlreadyAskedCars(Campaign campaign, Collection<Car> cars){
+		Collection<Car> reduced = new ArrayList<Car>();
+		Collection<Fellow> fellows = campaign.getFellows();
+		Iterator<Car> carIterator = cars.iterator();
+		boolean isAFellow;
+		while(carIterator.hasNext()){
+			isAFellow=false;
+			Car car = carIterator.next();
+			Iterator<Fellow> fellowIterator = fellows.iterator();
+			while(fellowIterator.hasNext()){
+				Fellow fellow = fellowIterator.next();
+				if(car.getId().equals(fellow.getCarId())){
+					isAFellow=true;
+					break;
+				}
+				
+			}
+			if(!isAFellow)
+				reduced.add(car);
+		}
+		return reduced;
 	}
 }

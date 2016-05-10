@@ -21,6 +21,7 @@ import de.hm.edu.carads.controller.AdvertiserControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
@@ -38,7 +39,8 @@ public class AdvertiserRessource {
     @Context
     private HttpServletRequest httpServletRequest;
     private Gson gson = new Gson();
-    private AdvertiserController ac = new AdvertiserControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
+    DatabaseController dbController = new DatabaseControllerImpl(DatabaseFactory.INST_PROD);
+    private AdvertiserController ac = new AdvertiserControllerImpl(dbController);
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

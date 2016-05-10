@@ -60,8 +60,6 @@ public class Campaign extends Model{
 			this.fellows = new ArrayList<Fellow>();
 		if(carId == null || carId.isEmpty())
 			return false;
-		if(isCarAFellow(carId))
-			return false;
 		
 		fellows.add(new Fellow(carId, FellowState.ASKED));
 		return true;

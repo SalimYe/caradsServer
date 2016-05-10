@@ -222,34 +222,7 @@ public class AdvertiserControllerTest {
 		ac.addVehicleToCampaign(ad.getId(), c.getId(), "123");
 	}
 	
-	@Test (expected = AlreadyExistsException.class)
-	public void addCarToSecondCampaignWithSameDateTest() throws Exception{
-		AdvertiserController ac = getController();
-		Advertiser ad = ac.addEntity(makeNewAdvertiser());
-		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());		
-		ac.addVehicleToCampaign(ad.getId(), c.getId(), "123");
-		
-		Advertiser adv1 = ac.addEntity(new Advertiser("neu@test.de", FIRSTNAME, LASTNAME));
-		Campaign camp2 = ac.addCampaign(adv1.getId(), makeNewCampaign());
-		ac.addVehicleToCampaign(adv1.getId(), camp2.getId(), "123");
-	}
-	
-	@Test (expected = AlreadyExistsException.class)
-	public void addCarToSecondCampaignWithSameDateTest2() throws Exception{
-		AdvertiserController ac = getController();
-		Advertiser ad = ac.addEntity(makeNewAdvertiser());
-		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());		
-		ac.addVehicleToCampaign(ad.getId(), c.getId(), "123");
-		
-		Advertiser adv1 = ac.addEntity(new Advertiser("neu@test.de", FIRSTNAME, LASTNAME));
-		Campaign camp2 = new Campaign();
-		camp2.setTitle("BMW Promo");
-		camp2.setStartDate("10.01.2000");
-		camp2.setEndDate("30.04.2000");
-		camp2 = ac.addCampaign(adv1.getId(), camp2);
-		ac.addVehicleToCampaign(adv1.getId(), camp2.getId(), "123");
-	}
-	
+	/*
 	@Test (expected = AlreadyExistsException.class)
 	public void addCarToSecondCampaignWithSameDateTest3() throws Exception{
 		AdvertiserController ac = getController();
@@ -281,7 +254,7 @@ public class AdvertiserControllerTest {
 		camp2 = ac.addCampaign(adv1.getId(), camp2);
 		ac.addVehicleToCampaign(adv1.getId(), camp2.getId(), "123");
 	}
-
+	*/
 	@Before
 	public void resetDB() {
 		DatabaseFactory.dropTestDB();

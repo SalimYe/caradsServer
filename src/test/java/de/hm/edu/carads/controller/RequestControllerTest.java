@@ -8,6 +8,7 @@ import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
@@ -147,21 +148,41 @@ public class RequestControllerTest {
 		car4 = driverController.addCar(d2.getId(), car4);
 		
 		//Alle Fahrzeuge werden als frei angezeigt
-		assertEquals(4, requestController.getAvailableCars(c1.getStartDate(), c1.getEndDate()).size());
+		assertEquals(4, requestController.getAvailableCars(ad1.getId(), c1.getId()).size());
 		
 		//Car1 wird fuer Kampagne 1 angefragt.
 		advertiserController.addVehicleToCampaign(ad1.getId(), c1.getId(), car1.getId());
 		//In dem Zeitraum ist das Auto fuer andere Kampagnen noch sichtbar, weil noch nicht zugesagt wurde
-		assertEquals(4, requestController.getAvailableCars(c3.getStartDate(), c3.getEndDate()).size());
+		assertEquals(4, requestController.getAvailableCars(ad2.getId(), c3.getId()).size());
 		//Car1 sagt zu
 		requestController.respondToOffer(d1.getId(), car1.getId(), ad1.getId(), c1.getId(), FellowState.ACCEPTED.toString());
 		
 		//Das Auto ist nicht mehr sichtbar, weil in diesem Zeitraum schon zugesagt wurde
-		assertEquals(3, requestController.getAvailableCars(c3.getStartDate(), c3.getEndDate()).size());
+		assertEquals(3, requestController.getAvailableCars(ad2.getId(), c3.getId()).size());
+		assertFalse(requestController.getAvailableCars(ad2.getId(), c3.getId()).contains(car1));
 		
 		//Alle Autos sind aber noch fuer eine Kampagne sichtbar, die in einem anderen Zeitraum statt findet
-		assertEquals(4, requestController.getAvailableCars(c2.getStartDate(), c2.getEndDate()).size());
+		assertEquals(4, requestController.getAvailableCars(ad2.getId(), c2.getId()).size());
 		
+	}
+	
+	@Test (expected = AlreadyExistsException.class)
+	public void addCarToSecondCampaignWithSameDateTest() throws Exception{
+		
+		Advertiser ad = advertiserController.addEntity(makeNewAdvertiser());
+		Campaign c = advertiserController.addCampaign(ad.getId(), makeNewCampaign());	
+		Advertiser adv2 = advertiserController.addEntity(new Advertiser("neu@test.de", FIRSTNAME, LASTNAME));
+		Campaign camp2 = advertiserController.addCampaign(adv2.getId(), makeNewCampaign());
+		
+		Driver driver = driverController.addEntity(makeNewDriver());
+		Car car = driverController.addCar(driver.getId(), makeNewCar());
+		
+		//Das Auto wird angefragt
+		advertiserController.addVehicleToCampaign(ad.getId(), c.getId(), car.getId());
+		
+		//Der Fahrer sagt fuer dieses Auto zu
+		requestController.respondToOffer(driver.getId(), car.getId(), ad.getId(), c.getId(), FellowState.ACCEPTED.toString());
+		advertiserController.addVehicleToCampaign(adv2.getId(), camp2.getId(), car.getId());
 	}
 	
 	private RequestController getRequestController(){
