@@ -21,45 +21,23 @@ public class DateController {
 	
 	public static boolean isABeforeB(String a, String b){
 		if(a==null || a.isEmpty() || b==null || b.isEmpty()){
-			a="01.01.1970";
-			b=a;
 			throw new IllegalArgumentException();
 		}		
 		Date date1 = DateController.fromStringToDate(a);
 		Date date2 = DateController.fromStringToDate(b);
 		
-		if(date1.compareTo(date2)<0)
+		if(date1.compareTo(date2)<=0)
 			return true;
 		return false;
 	}
 	
-	public static boolean isAAfterB(String a, String b){
-		Date date1 = DateController.fromStringToDate(a);
-		Date date2 = DateController.fromStringToDate(b);
-		if(date1 == null || date2 == null)
-			throw new IllegalArgumentException();
+	public static boolean areTimesOverlapping(TimeFrame a, TimeFrame b){
 		
-		if(date1.compareTo(date2)>0)
-			return true;
-		return false;
-	}
-	
-	public static boolean isAOverlappingB(TimeFrame a, TimeFrame b){
-
-		if(isABeforeB(a.end, b.start) && isABeforeB(a.start, b.start))
+		if(isABeforeB(a.end, b.start))
 			return false;
-		if(isABeforeB(b.start, a.start) && isABeforeB(a.start, b.end))
-			return true;
-		if(isABeforeB(a.start, b.start) && isABeforeB(b.end, a.end))
-			return true;
-		if(isABeforeB(b.start, a.start) && isABeforeB(b.end, a.end))
+		if(isABeforeB(b.end, a.start))
 			return false;
-		if(isABeforeB(a.start, b.start) && isABeforeB(a.end, b.end))
-			return true;
-		if(a.start.equals(b.start) && a.end.equals(b.end))
-			return true;
 
-		
-		return false;
+		return true;
 	}
 }
