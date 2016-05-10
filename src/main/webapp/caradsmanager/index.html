@@ -54,15 +54,15 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="#/home">Home</a></li>
-                        <li ng-if="advertiserId != undefined"><a href="#/advertiser/{{advertiserId}}">Mein Profil</a></li>
-                        <li ng-if="advertiserId != undefined"><a href="#/advertiser/{{advertiserId}}/campaigns">Meine Kampagnen</a></li>
-                        <li ng-if="driverId != undefined"><a href="#/driver/{{driverId}}">Mein Profil</a></li>
-                        <li ng-if="driverId != undefined"><a href="#/driver/{{driverId}}/cars">Meine Fahrzeuge</a></li>
-                        <li ng-if="isAdmin"><a href="#/drivers/">Fahrer &Uuml;bersicht</a></li>
-                        <li ng-if="isAdmin"><a href="#/advertisers/">Werbende &Uuml;bersicht</a></li>
+                        <li ng-if="realm.advertiserId !== undefined"><a href="#/advertiser/{{realm.advertiserId}}">Mein Profil</a></li>
+                        <li ng-if="realm.advertiserId !== undefined"><a href="#/advertiser/{{realm.advertiserId}}/campaigns">Meine Kampagnen</a></li>
+                        <li ng-if="realm.driverId !== undefined"><a href="#/driver/{{realm.driverId}}">Mein Profil</a></li>
+                        <li ng-if="realm.driverId !== undefined"><a href="#/driver/{{realm.driverId}}/cars">Meine Fahrzeuge</a></li>
+                        <li ng-if="realm.isAdmin"><a href="#/drivers/">Fahrer &Uuml;bersicht</a></li>
+                        <li ng-if="realm.isAdmin"><a href="#/advertisers/">Werbende &Uuml;bersicht</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">{{username}}</a></li>
+                        <li><a href="#">{{realm.username}}</a></li>
                     </ul>
                 </div>
             </div>

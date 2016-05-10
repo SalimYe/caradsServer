@@ -38,6 +38,10 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
     $scope.exitDriver = function () {
         $location.path('/');
     };
+    
+    $scope.editDetails = function () {
+        $location.path($location.path() + '/edit');
+    };
 
     $scope.saveImage = function () {
         $timeout(function () {
