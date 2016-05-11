@@ -1,0 +1,91 @@
+<main>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="filter-menu">
+                <h3>Filter</h3>
+                <form class="form">
+                    <div class="form-group">
+                        <label>Marke</label>
+                        <select ng-model="filterType.brand" ng-change="setFilterParamValue('brand', 'searchParams')" class="form-control">
+                            <option value="" selected="">Alle</option>
+                            <option ng-repeat="car in cars| unique:'brand' | orderBy: 'brand'">{{car.brand}}</option>
+                        </select>                                               
+                    </div>
+                    <div class="form-group">
+                        <label>Modell</label>
+                        <select ng-model="filterType.model" ng-change="setFilterParamValue('model', 'searchParams')" class="form-control">
+                            <option value="">Alle</option>
+                            <option ng-repeat="car in cars| unique:'model' | orderBy:'model'">{{car.model}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Farbe</label>
+                        <select ng-model="filterType.color" ng-change="setFilterParamValue('color', 'searchParams')" class="form-control">
+                            <option value="">Alle</option>
+                            <option ng-repeat="car in cars| unique:'color' | orderBy:'color'">{{car.color}}</option>
+                        </select>
+                    </div>
+                    <button type="reset" class="btn btn-default" ng-click="filterReset('searchParams')">
+                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        Filter Reset
+                    </button>
+                </form>
+            </div>
+            <div class="sort-menu">
+                <h3>Sortierung</h3>
+                <select class="form-control" ng-model="predicate" ng-change="order(sortSelection)">
+                    <option ng-repeat="opt in sortOptions" value="{{opt.value}}">{{opt.label}}</option>
+                </select>
+                <select ng-model="reverse" ng-change="order()" class="form-control" ng-options="opt.value as opt.label for opt in sequenceOptions">
+                </select>
+            </div>
+            <div class="carselection-menu">
+                <h3>Auswahl</h3>
+                <p>Es sind momenten <strong>{{carSelection.length}}</strong> Fahrzeuge ausgewählt.</p>
+                <button ng-if="carSelection.length > 0" type="button" ng-click="deleteCarSelection()" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                                    Auswahl löschen</button>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h3>Fahrzeug Auswahl</h3>
+            <div class="alert alert-warning" role="alert" ng-if="cars === undefined || cars.length === 0">
+                <strong>Keine Fahrzeuge vorhanden!</strong>
+                Klicken Sie auf &quot;+ Fahrzeug hinzuf&uuml;gen&quot;, um ein neues
+                Fahrzeug anzulegen.
+            </div>
+            <div class="row">
+                <div ng-repeat="car in cars">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <a href="#/driver/{{driverId}}/car/{{car.id}}">
+                                <div class="thumb-img">
+                                    <img ng-if="hasImage($index)" ng-src="../api/images/{{getProfileImageId($index)}}" alt="{{car.brand}} {{car.model}}" />
+                                    <img ng-if="!hasImage($index)" src="./img/symbols/car_placeholder.jpg" alt="Fahrzeug Symbol" />
+                                </div>
+                            </a>
+                            <div class="caption">
+                                <h3>{{car.brand}} {{car.model}}</h3>
+                                <div class="details">
+                                    <div>
+                                        <p>BJ {{car.buildYear}},
+                                            {{car.mileage}} KM, {{car.color}}<br />
+                                            {{car.description}}</p>
+                                    </div>
+                                    <div class="details-fade"></div>
+                                </div>
+                                <a href="#/driver/{{driverId}}/car/{{car.id}}" class="btn btn-default">Details</a>
+                                <button ng-if="!car.isSelected" type="button" ng-click="updateCarSelection(car.id)" class="btn btn-success">
+                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                                    Ausw&auml;len</button>
+                                <button ng-if="car.isSelected" type="button" ng-click="updateCarSelection(car.id)" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                                    Entfernen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
