@@ -257,8 +257,7 @@ public class AdvertiserRessource {
 			for(int i=0; i<fellows.length; i++){
 				ac.requestVehicleForCampaign(id, cid, fellows[i].getCarId());
 			}
-			Campaign campaign = ac.getCampaign(id, cid);
-			return Response.ok(gson.toJson(campaign)).build();
+			return Response.ok().build();
 		} catch (IllegalAccessException e) {
 			throw new WebApplicationException(404);
 		} catch (AlreadyExistsException e) {
