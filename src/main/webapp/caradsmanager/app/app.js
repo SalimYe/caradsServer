@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('client', ['ngRoute', 'ngTable', 'pascalprecht.translate', 'ui.bootstrap']);
+var app = angular.module('client', ['ngRoute', 'ngCookies', 'ngTable', 'pascalprecht.translate', 'ui.bootstrap', 'angular.filter']);
 
 app.config(function ($routeProvider) {
 
@@ -52,6 +52,10 @@ app.config(function ($routeProvider) {
             .when('/advertisers/', {
                 controller: 'advertisers',
                 templateUrl: 'views/advertisers.html'
+            })
+            .when('/driver/:driverId/availableCars/', {
+                controller: 'carSearch',
+                templateUrl: 'views/carSearch.html'
             })
             .when('/home', {
                 controller: 'home',
