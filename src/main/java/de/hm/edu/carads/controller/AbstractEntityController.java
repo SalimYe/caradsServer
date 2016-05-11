@@ -2,9 +2,6 @@ package de.hm.edu.carads.controller;
 
 import java.util.Collection;
 
-import de.hm.edu.carads.db.DatabaseController;
-
-
 public interface AbstractEntityController<E> {
 	public Collection<E> getAllEntities();
 	public E addEntity(E entity) throws Exception;

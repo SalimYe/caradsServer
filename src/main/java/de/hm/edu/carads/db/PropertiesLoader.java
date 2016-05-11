@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.ws.rs.NotFoundException;
-
 public class PropertiesLoader {
 	private static Properties properties;
 	private static PropertiesLoader pLoader = new PropertiesLoader();

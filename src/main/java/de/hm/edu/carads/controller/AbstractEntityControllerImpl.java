@@ -14,16 +14,20 @@ import com.mongodb.DBObject;
 
 import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
+import de.hm.edu.carads.db.ModelCollection;
+import de.hm.edu.carads.models.Advertiser;
+import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.Realm;
 import de.hm.edu.carads.models.util.Model;
 
 public abstract class AbstractEntityControllerImpl<E extends Model> implements AbstractEntityController<E>{
 	
 	protected DatabaseController dbController;
 	protected Gson gson;
-	private Class<E> modelClass;
+	private ModelCollection modelClass;
 	
 	
-	public AbstractEntityControllerImpl(Class<E> model, DatabaseController database){
+	public AbstractEntityControllerImpl(ModelCollection model, DatabaseController database){
 		this.dbController = database;
 		this.modelClass = model;
 		gson = new Gson();
@@ -106,9 +110,20 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 	protected E makeEntityFromBasicDBObject(BasicDBObject dbObj){
 		if(dbObj == null)
 			return null;
-		E model = (E) gson.fromJson(dbObj.toJson(), modelClass);
+		E model = (E) gson.fromJson(dbObj.toJson(), getModelClass(modelClass));
 		model.setId(dbObj.getString("_id"));
 		return model;
+	}
+	
+	private Class getModelClass(ModelCollection collection){
+		if(collection.equals(ModelCollection.ADVERTISER))
+			return Advertiser.class;
+		if(collection.equals(ModelCollection.DRIVER))
+			return Driver.class;
+		if(collection.equals(ModelCollection.REALM))
+			return Realm.class;
+		
+		return null;
 	}
 	
 	
