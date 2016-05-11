@@ -6,7 +6,7 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.Realm;
+import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.util.DateController;
 import de.hm.edu.carads.models.util.Model;
 
@@ -22,8 +22,8 @@ public class EntityValidator {
 			return isNewCarValid((Car) model);
 		else if(model instanceof Campaign)
 			return isCampaignValid((Campaign)model);
-                else if(model instanceof Realm)
-			return isRealmValid((Realm)model);
+                else if(model instanceof User)
+			return isRealmValid((User)model);
 		return false;
 	}
 	
@@ -72,7 +72,7 @@ public class EntityValidator {
 		return pattern.matcher(email).matches();
 	}
 
-    private static boolean isRealmValid(Realm realm) {
+    private static boolean isRealmValid(User realm) {
         if(isEmailValid(realm.getUsername()))
 			return true;
 		return false;

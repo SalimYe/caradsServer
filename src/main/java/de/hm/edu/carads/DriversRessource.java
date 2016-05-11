@@ -31,10 +31,11 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.DriverRegistration;
-import de.hm.edu.carads.models.Realm;
+import de.hm.edu.carads.models.User;
+import de.hm.edu.carads.models.comm.DriverRegistration;
 import de.hm.edu.carads.models.comm.OfferInformation;
 import de.hm.edu.carads.models.comm.OfferResponse;
+import de.hm.edu.carads.models.util.Helper;
 
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
@@ -76,12 +77,8 @@ public class DriversRessource {
 			DriverRegistration driverRegistration = gson.fromJson(input,
 					DriverRegistration.class);
 
-			String username = driverRegistration.getUsername();
-			String passwordHash = driverRegistration.getPasswordHash();
-
 			Driver driver = dc.addEntity(driverRegistration);
-			Realm realm = new Realm(username, passwordHash, "driver",
-					driver.getId());
+			User realm = new User(driver.getEmail(), Helper.getShaHash(driverRegistration.getPassword()), "driver", driver.getId());
 
 			rc.addEntity(realm);
 

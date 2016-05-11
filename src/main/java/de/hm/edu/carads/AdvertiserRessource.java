@@ -28,11 +28,13 @@ import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
-import de.hm.edu.carads.models.AdvertiserRegistration;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
-import de.hm.edu.carads.models.Realm;
+import de.hm.edu.carads.models.User;
+import de.hm.edu.carads.models.comm.AdvertiserRegistration;
 import de.hm.edu.carads.models.comm.Fellow;
+import de.hm.edu.carads.models.util.Helper;
+
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
@@ -75,11 +77,9 @@ public class AdvertiserRessource {
 			RealmController rc = new RealmControllerImpl(
 					new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 
-			String username = advertiserRegistration.getUsername();
-			String passwordHash = advertiserRegistration.getPasswordHash();
-
 			Advertiser advertiser = ac.addEntity(advertiserRegistration);
-			Realm realm = new Realm(username, passwordHash, "advertiser",
+			
+			User realm = new User(advertiser.getEmail(), Helper.getShaHash(advertiserRegistration.getPassword()), "advertiser",
 					advertiser.getId());
 			rc.addEntity(realm);
 

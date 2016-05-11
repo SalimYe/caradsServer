@@ -8,13 +8,13 @@ import de.hm.edu.carads.models.util.Model;
  *
  * @author florian
  */
-public class Realm extends Model {
+public class User extends Model{
 
     private String username;
     private String credentials;
     private Collection <Role> roles;
 
-    public Realm(String username, String credentials, String role, String roleId) {
+    public User(String username, String credentials, String role, String roleId) {
         this.username = username;
         this.credentials = credentials;
         this.roles = new ArrayList<>();
