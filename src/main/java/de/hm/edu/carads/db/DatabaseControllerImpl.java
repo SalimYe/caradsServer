@@ -12,48 +12,38 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
 import de.hm.edu.carads.db.util.DatabaseFactory;
-import de.hm.edu.carads.models.Advertiser;
-import de.hm.edu.carads.models.Campaign;
-import de.hm.edu.carads.models.Car;
-import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.Image;
-import de.hm.edu.carads.models.Realm;
 
 public class DatabaseControllerImpl implements DatabaseController {
 	private DB db;
-	private static final String COLLECTION_DRIVER = "driver";
-	private static final String COLLECTION_ADVERTISER = "advertiser";
-        private static final String COLLECTION_REALM = "realm";
 
 	public DatabaseControllerImpl(String environment) {
 		db = DatabaseFactory.getInstanceDB(environment);
 	}
 
 	@Override
-	public BasicDBObject addEntity(Class collectionClass, BasicDBObject entity) {
+	public BasicDBObject addEntity(ModelCollection collectionC, BasicDBObject entity) {
 		DBCollection collection = db
-				.getCollection(getCollectionName(collectionClass));
+				.getCollection(getCollectionName(collectionC));
 		collection.insert(entity);
 		return entity;
 	}
 
-	private String getCollectionName(Class c) {
-		if (c == Driver.class)
-			return COLLECTION_DRIVER;
-		else if (c == Advertiser.class)
-			return COLLECTION_ADVERTISER;
-		else if (c == Realm.class)
-			return COLLECTION_REALM;
+	private String getCollectionName(ModelCollection collection) {
+		switch(collection){
+			case ADVERTISER: 	return "advertiser";
+			case DRIVER:		return "driver";
+			case REALM:			return "realm";
+		}
 		return "";
 	}
 
 	@Override
-	public boolean existEntityByKeyValue(Class collectionClass, String key,
+	public boolean existEntityByKeyValue(ModelCollection collection, String key,
 			String value) {
-		BasicDBObject theOne = getEntityByKeyValue(collectionClass, key, value);
+		BasicDBObject theOne = getEntityByKeyValue(collection, key, value);
 		if (theOne != null) {
 			System.out.println("Collection' "
-					+ getCollectionName(collectionClass)
+					+ getCollectionName(collection)
 					+ "' enthaelt bereits: " + theOne.toString());
 			return true;
 		}
@@ -61,17 +51,19 @@ public class DatabaseControllerImpl implements DatabaseController {
 	}
 
 	@Override
-	public BasicDBObject getEntityByKeyValue(Class collectionClass, String key,
+	public BasicDBObject getEntityByKeyValue(ModelCollection collectionC, String key,
 			String value) {
-		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
+		DBCollection collection = db
+				.getCollection(getCollectionName(collectionC));
 		return (BasicDBObject) collection
 				.findOne(new BasicDBObject(key, value));
 	}
 
 	@Override
-	public BasicDBObject getEntity(Class collectionClass, String id)
+	public BasicDBObject getEntity(ModelCollection collectionC, String id)
 			throws NoContentException {
-		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
+		DBCollection collection = db
+				.getCollection(getCollectionName(collectionC));
 		BasicDBObject query = new BasicDBObject();
 		try {
 			query.put("_id", new ObjectId(id));
@@ -83,31 +75,34 @@ public class DatabaseControllerImpl implements DatabaseController {
 	}
 
 	@Override
-	public List<DBObject> getAllEntities(Class collectionClass) {
+	public List<DBObject> getAllEntities(ModelCollection collectionC) {
 		DBCollection collection = db
-				.getCollection(getCollectionName(collectionClass));
+				.getCollection(getCollectionName(collectionC));
 		List<DBObject> list = collection.find().toArray();
-		// DBCursor cursor = collection.find();
 
 		return list;
 	}
 
 	@Override
-	public BasicDBObject updateEntity(Class collectionClass, String id, BasicDBObject newEntity) throws NoContentException {
-		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
+	public BasicDBObject updateEntity(ModelCollection collectionC, String id,
+			BasicDBObject newEntity) throws NoContentException {
+		DBCollection collection = db
+				.getCollection(getCollectionName(collectionC));
 		BasicDBObject query = new BasicDBObject();
 		try {
 			query.put("_id", new ObjectId(id));
 		} catch (Exception e) {
 			throw new NoContentException("id not found");
 		}
-	
+
 		return (BasicDBObject) collection.findAndModify(query, newEntity);
 	}
 
 	@Override
-	public void deleteEntity(Class collectionClass, String id) throws NoContentException {
-		DBCollection collection = db.getCollection(getCollectionName(collectionClass));
+	public void deleteEntity(ModelCollection collectionC, String id)
+			throws NoContentException {
+		DBCollection collection = db
+				.getCollection(getCollectionName(collectionC));
 
 		BasicDBObject query = new BasicDBObject();
 		try {
@@ -120,7 +115,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 	}
 
 	@Override
-	public long getCollectionCount(Class collectionClass) {
+	public long getCollectionCount(ModelCollection collectionClass) {
 		DBCollection collection = db
 				.getCollection(getCollectionName(collectionClass));
 		return collection.count();

@@ -9,16 +9,16 @@ import com.mongodb.DBObject;
 
 public interface DatabaseController {
 		
-	public BasicDBObject getEntity(Class collectionClass, String id) throws NoContentException;
-	public BasicDBObject addEntity(Class collectionClass, BasicDBObject entity);
-	public BasicDBObject updateEntity(Class collectionClass, String id, BasicDBObject newEntity) throws NoContentException;
-	public void deleteEntity(Class collectionClass, String id) throws NoContentException;
+	public BasicDBObject getEntity(ModelCollection collection, String id) throws NoContentException;
+	public BasicDBObject addEntity(ModelCollection collection, BasicDBObject entity);
+	public BasicDBObject updateEntity(ModelCollection collection, String id, BasicDBObject newEntity) throws NoContentException;
+	public void deleteEntity(ModelCollection collection, String id) throws NoContentException;
 	
-	public long getCollectionCount(Class collectionClass);
+	public long getCollectionCount(ModelCollection collection);
 	
-	public boolean existEntityByKeyValue(Class collectionClass, String key, String value);
-	public BasicDBObject getEntityByKeyValue(Class collectionClass, String key, String value);
-	public List<DBObject> getAllEntities(Class collectionClass);
+	public boolean existEntityByKeyValue(ModelCollection collection, String key, String value);
+	public BasicDBObject getEntityByKeyValue(ModelCollection collection, String key, String value);
+	public List<DBObject> getAllEntities(ModelCollection collection);
 	
 	public String getNewId();
 }

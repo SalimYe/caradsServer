@@ -12,7 +12,9 @@ public interface AdvertiserController extends AbstractEntityController<Advertise
 	public Campaign updateCampaign(String advertiserId, String campaignId, Campaign campaign) throws Exception;
 	public Collection<Campaign> getCampaigns(String advertiserId) throws Exception;
 	
-	public Campaign addVehicleToCampaign(String advertiserId, String campaignId, String carId) throws Exception;
+	public Campaign requestVehicleForCampaign(String advertiserId, String campaignId, String carId) throws Exception;
 	public Collection<Campaign> getCarRequestingCampaigns(String carid);
 	public Advertiser getAdvertiserFromCampaign(String campaignId) throws Exception;
+	public boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception;
+	
 }

@@ -2,7 +2,6 @@ package de.hm.edu.carads.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -14,18 +13,17 @@ import com.mongodb.BasicDBObject;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
+import de.hm.edu.carads.db.ModelCollection;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
-import de.hm.edu.carads.models.Car;
-import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.comm.Fellow;
 import de.hm.edu.carads.models.util.DateController;
-import de.hm.edu.carads.models.util.MetaInformation;
+import de.hm.edu.carads.models.util.TimeFrame;
 
 public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Advertiser> implements AdvertiserController{
 
 	public AdvertiserControllerImpl(DatabaseController database) {
-		super(Advertiser.class, database);
+		super(ModelCollection.ADVERTISER, database);
 	}
 	
 	@Override
@@ -49,13 +47,13 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	}
 	
 	private boolean existAdvertiserByEmail(String email) {
-		if(dbController.existEntityByKeyValue(Advertiser.class, "email", email))
+		if(dbController.existEntityByKeyValue(ModelCollection.ADVERTISER, "email", email))
 			return true;
 		return false;
 	}	
 	
 	private Advertiser getAdvertiserByEmail(String email) {
-		return this.makeEntityFromBasicDBObject(dbController.getEntityByKeyValue(Advertiser.class, "email", email));
+		return this.makeEntityFromBasicDBObject(dbController.getEntityByKeyValue(ModelCollection.ADVERTISER, "email", email));
 	}
 
 	@Override
@@ -70,7 +68,7 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 		ad.addCampaign(campaign);
 		ad.getMetaInformation().update();
 		
-		dbController.updateEntity(Advertiser.class, ad.getId(), BasicDBObject.parse(gson.toJson(ad)));
+		dbController.updateEntity(ModelCollection.ADVERTISER, ad.getId(), BasicDBObject.parse(gson.toJson(ad)));
 		
 		return campaign;
 	}
@@ -100,7 +98,7 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 			throw new NoContentException(campaignId + " not found");
 		advertiser.getMetaInformation().update();
 		
-		dbController.updateEntity(Advertiser.class, advertiserId, BasicDBObject.parse(gson.toJson(advertiser)));
+		dbController.updateEntity(ModelCollection.ADVERTISER, advertiserId, BasicDBObject.parse(gson.toJson(advertiser)));
 	}
 
 	@Override
@@ -120,16 +118,18 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 		campaign.setId(campaignId);
 		advertiser.addCampaign(campaign);
 		
-		dbController.updateEntity(Advertiser.class, advertiserId, BasicDBObject.parse(gson.toJson(advertiser)));
+		dbController.updateEntity(ModelCollection.ADVERTISER, advertiserId, BasicDBObject.parse(gson.toJson(advertiser)));
 		return campaign;
 	}
 
 	@Override
-	public Campaign addVehicleToCampaign(String advertiserId, String campaignId, String carId) throws Exception {
+	public Campaign requestVehicleForCampaign(String advertiserId, String campaignId, String carId) throws Exception {
 		Advertiser advertiser = getEntity(advertiserId);
 		Campaign campaign = advertiser.getCampaign(campaignId);
 		
 		if(isCarOccupiedInTime(carId, campaign.getStartDate(), campaign.getEndDate()))
+			throw new AlreadyExistsException();
+		if(campaign.isCarAFellow(carId))
 			throw new AlreadyExistsException();
 		if(!campaign.addFellow(carId))
 			throw new IllegalArgumentException();
@@ -137,11 +137,12 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 		return this.updateCampaign(advertiserId, campaignId, campaign);
 	}
 	
-	private boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception{
+	@Override
+	public boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception{
 		Iterator<Campaign> it = getAllCampaignsInTime(start, end).iterator();
 		while(it.hasNext()){
 			Campaign campaign = it.next();
-			if(campaign.isCarAFellow(carId))
+			if(campaign.isCarAFellow(carId) && campaign.hasFellowAccepted(carId))
 				return true;
 		}
 		return false;
@@ -149,11 +150,15 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	
 	private Collection<Campaign> getAllCampaignsInTime(String start, String end){
 		Collection<Campaign> inTimeCampaigns = new ArrayList<Campaign>();
+
+		
 		Iterator<Campaign> it = getAllCampaigns().iterator();
 		while(it.hasNext()){
 			Campaign c = it.next();
-			if(DateController.isABeforeB(c.getStartDate(), end) || DateController.isAAfterB(c.getEndDate(), start))
+			if(DateController.areTimesOverlapping(new TimeFrame(start, end), new TimeFrame(c.getStartDate(), c.getEndDate())))
 				inTimeCampaigns.add(c);
+//			if(DateController.isABeforeB(c.getStartDate(), end) || DateController.isAAfterB(c.getEndDate(), start))
+//				inTimeCampaigns.add(c);
 		}
 		return inTimeCampaigns;
 	}
@@ -172,6 +177,7 @@ public class AdvertiserControllerImpl extends AbstractEntityControllerImpl<Adver
 	@Override
 	public Collection<Campaign> getCarRequestingCampaigns(String carid) {		
 		Collection<Campaign> carCampaigns = new ArrayList<Campaign>();
+		
 		Iterator<Campaign> it = getAllCampaigns().iterator();
 		while(it.hasNext()){
 			Campaign c = it.next();

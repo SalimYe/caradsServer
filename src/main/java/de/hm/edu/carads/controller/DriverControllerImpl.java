@@ -12,6 +12,7 @@ import com.mongodb.BasicDBObject;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
+import de.hm.edu.carads.db.ModelCollection;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 
@@ -19,7 +20,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 		implements DriverController {
 
 	public DriverControllerImpl(DatabaseController database) {
-		super(Driver.class, database);
+		super(ModelCollection.DRIVER, database);
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 
 		driver.getMetaInformation().update();
 		
-		dbController.updateEntity(Driver.class, driver.getId(),
+		dbController.updateEntity(ModelCollection.DRIVER, driver.getId(),
 				BasicDBObject.parse(gson.toJson(driver)));
 		return car;
 	}
@@ -54,7 +55,7 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 		Driver driver = getEntity(driverId);
 		driver.removeCar(carId);
 		driver.getMetaInformation().update();
-		dbController.updateEntity(Driver.class, driver.getId(),
+		dbController.updateEntity(ModelCollection.DRIVER, driver.getId(),
 				BasicDBObject.parse(gson.toJson(driver)));
 	}
 
@@ -101,19 +102,19 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 		car.setId(carId);
 		driver.addCar(car);
 		
-		dbController.updateEntity(Driver.class, driverId, BasicDBObject.parse(gson.toJson(driver)));
+		dbController.updateEntity(ModelCollection.DRIVER, driverId, BasicDBObject.parse(gson.toJson(driver)));
 		return car;
 	}
 
 	private boolean existDriverByEmail(String email) {
-		if (dbController.existEntityByKeyValue(Driver.class, "email", email))
+		if (dbController.existEntityByKeyValue(ModelCollection.DRIVER, "email", email))
 			return true;
 		return false;
 	}
 
 	private Driver getDriverByEmail(String email) {
 		return this.makeEntityFromBasicDBObject(dbController
-				.getEntityByKeyValue(Driver.class, "email", email));
+				.getEntityByKeyValue(ModelCollection.DRIVER, "email", email));
 	}
 
 	@Override
