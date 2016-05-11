@@ -248,14 +248,16 @@ public class AdvertiserRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCarToCampaign(@PathParam("id") String id,
 			@PathParam("cid") String cid, String input) {
-		Fellow f = gson.fromJson(input, Fellow.class);
-		if (f == null || f.getCarId().isEmpty()) {
+		Fellow[] fellows = gson.fromJson(input, Fellow[].class);
+		if (fellows == null || fellows.length<1) {
 			throw new WebApplicationException(400);
 		}
 
 		try {
-			Campaign campaign = ac.requestVehicleForCampaign(id, cid,
-					f.getCarId());
+			for(int i=0; i<fellows.length; i++){
+				ac.requestVehicleForCampaign(id, cid, fellows[i].getCarId());
+			}
+			Campaign campaign = ac.getCampaign(id, cid);
 			return Response.ok(gson.toJson(campaign)).build();
 		} catch (IllegalAccessException e) {
 			throw new WebApplicationException(404);
