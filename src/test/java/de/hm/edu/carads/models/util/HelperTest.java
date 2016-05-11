@@ -10,9 +10,10 @@ import static org.junit.Assert.*;
  */
 public class HelperTest {
     
-    private static final String PASSWORD = "1*äA-_ ";
-    private static final String PASSWORDHASH = "f4c1172748a9b346ebdbbb7476e65657915bf358e849eb3683b2afb248f1adfc";
+    private static final String PASSWORD = "bla";
+    private static final String PASSWORDHASH = "4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703";
     
+	
     @Test
     public void testGetShaHash() throws NoSuchAlgorithmException    {
             String passwordHash = Helper.getShaHash(PASSWORD);
