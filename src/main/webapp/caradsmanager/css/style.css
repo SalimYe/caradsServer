@@ -106,3 +106,8 @@ table.table-car tr:hover {
 table.table-car tr:first-child:hover {
     cursor: default;
 }
+
+/** Buttons */
+div.carselection-menu button.btn.btn-block {
+    text-align: left;
+}

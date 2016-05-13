@@ -74,6 +74,10 @@ app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http,
         deleteSelectedFlag($scope.filteredCars);
         updateCarSelectionCookie(campaignId);
     };
+    
+    $scope.showCampaignDetails = function () {
+        $location.path('advertiser/' + advertiserId + '/campaign/' + campaignId);
+    };
 
     var init = function () {
         $scope.sortOptions = [{'label': 'Marke', 'value': 'brand'},
@@ -118,24 +122,25 @@ app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http,
                 $location.path('/');
             });
 
-    var sendCarRequest = function (carId) {
+    $scope.sendCarRequests = function () {
+        var fellows = [];
+        
+        for(var i = 0; i < $scope.carSelection.length; i++) {
+            var carId = $scope.carSelection[i];
+            fellows[i] = {};
+            fellows[i].carId = carId;
+        }
+        
         var url = '../api/advertisers/' + advertiserId + '/campaigns/' + campaignId + '/cars';
-        var fellow = '{"carId": "' + carId + '"}';
-        $http.post(url, fellow).
+        $http.post(url, fellows).
                 success(function (data, status, headers, config) {
+                    $scope.deleteCarSelection();
+                    $scope.showCampaignDetails();
                     // TODO
                 }).
                 error(function (data, status, headers, config) {
                     // TODO
                 });
-    };
-
-    $scope.sendCarRequests = function () {
-        for (var i = 0; i < $scope.carSelection.length; i++) {
-            var carId = $scope.carSelection[i];
-            sendCarRequest(carId);
-        }
-        $scope.deleteCarSelection();
     };
 
     $scope.hasImage = function (carIndex) {
