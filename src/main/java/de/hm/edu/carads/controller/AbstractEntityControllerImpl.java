@@ -17,7 +17,7 @@ import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.ModelCollection;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.Realm;
+import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.util.Model;
 
 public abstract class AbstractEntityControllerImpl<E extends Model> implements AbstractEntityController<E>{
@@ -121,7 +121,7 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 		if(collection.equals(ModelCollection.DRIVER))
 			return Driver.class;
 		if(collection.equals(ModelCollection.REALM))
-			return Realm.class;
+			return User.class;
 		
 		return null;
 	}

@@ -10,7 +10,7 @@ import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
-import de.hm.edu.carads.models.Realm;
+import de.hm.edu.carads.models.User;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
@@ -29,7 +29,7 @@ public class RealmsRessource {
         
         Principal principal = httpServletRequest.getUserPrincipal();
         String username = principal.getName();
-        Realm realm = rc.getRealmByUsername(username);
+        User realm = rc.getRealmByUsername(username);
         realm.setCredentials(null);
         return Response.ok(gson.toJson(realm)).build();
 

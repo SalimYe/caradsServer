@@ -28,11 +28,13 @@ import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
-import de.hm.edu.carads.models.AdvertiserRegistration;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
-import de.hm.edu.carads.models.Realm;
+import de.hm.edu.carads.models.User;
+import de.hm.edu.carads.models.comm.AdvertiserRegistration;
 import de.hm.edu.carads.models.comm.Fellow;
+import de.hm.edu.carads.models.util.Helper;
+
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
@@ -75,11 +77,9 @@ public class AdvertiserRessource {
 			RealmController rc = new RealmControllerImpl(
 					new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 
-			String username = advertiserRegistration.getUsername();
-			String passwordHash = advertiserRegistration.getPasswordHash();
-
 			Advertiser advertiser = ac.addEntity(advertiserRegistration);
-			Realm realm = new Realm(username, passwordHash, "advertiser",
+			
+			User realm = new User(advertiser.getEmail(), Helper.getShaHash(advertiserRegistration.getPassword()), "advertiser",
 					advertiser.getId());
 			rc.addEntity(realm);
 
@@ -248,15 +248,16 @@ public class AdvertiserRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCarToCampaign(@PathParam("id") String id,
 			@PathParam("cid") String cid, String input) {
-		Fellow f = gson.fromJson(input, Fellow.class);
-		if (f == null || f.getCarId().isEmpty()) {
+		Fellow[] fellows = gson.fromJson(input, Fellow[].class);
+		if (fellows == null || fellows.length<1) {
 			throw new WebApplicationException(400);
 		}
 
 		try {
-			Campaign campaign = ac.requestVehicleForCampaign(id, cid,
-					f.getCarId());
-			return Response.ok(gson.toJson(campaign)).build();
+			for(int i=0; i<fellows.length; i++){
+				ac.requestVehicleForCampaign(id, cid, fellows[i].getCarId());
+			}
+			return Response.ok().build();
 		} catch (IllegalAccessException e) {
 			throw new WebApplicationException(404);
 		} catch (AlreadyExistsException e) {
