@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
+import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.ModelCollection;
@@ -19,8 +20,9 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.util.Model;
+import de.hm.edu.carads.models.util.Person;
 
-public abstract class AbstractEntityControllerImpl<E extends Model> implements AbstractEntityController<E>{
+public class AbstractEntityControllerImpl<E extends Person> implements AbstractEntityController<E>{
 	
 	protected DatabaseController dbController;
 	protected Gson gson;
@@ -54,6 +56,12 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 			throw new NoContentException("Entity not found");
 		return makeEntityFromBasicDBObject(dbObj);
 	}
+	
+	@Override
+	public E getWithSubEntityId(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
         
     @Override
     public E getEntityByMail(String mail) throws NoContentException {
@@ -64,12 +72,9 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
     }
 	
 	@Override
-	public void deleteEntity(String id) throws Exception{
+	public void deleteEntity(String id) throws NoContentException{
 		//Innerhalb von deleteEntity wird gecheckt ob das Dokument existiert		
 		dbController.deleteEntity(modelClass, id);
-		
-		if(dbController.existEntityByKeyValue(modelClass, "_id", id))
-			throw new Exception("entity not deleted");
 	}
 	
 	@Override
@@ -78,22 +83,25 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 	}
 	
 	@Override
-	public E changeEntity(String id, E entityData) throws Exception{
+	public void changeEntity(String id, E entityData) throws Exception{
 
 		if(!EntityValidator.isEntityValid((entityData)))
 			throw new InvalidAttributesException();
 		
-		try {
-			E oldEntity = getEntity(id);
-			entityData.update(oldEntity.getMetaInformation());
-			
-			//Achtung: updateEntity gibt nicht das aktualisierte Object zurück.
-			dbController.updateEntity(modelClass, id, BasicDBObject.parse(gson.toJson(entityData)));
-			BasicDBObject dbObj = dbController.getEntity(modelClass, id);
-			return makeEntityFromBasicDBObject(dbObj);
-		} catch (NoContentException e) {
-			throw new NoContentException("Entity not found");
+		try{
+			E person = getEntityByMail(entityData.getEmail());
+			if(!person.getId().equals(id))
+				throw new AlreadyExistsException();
+		}catch(NoContentException e){
+			System.out.println("Email not registred yet. Good.");
 		}
+		
+		E oldEntity = getEntity(id);
+		entityData.update(oldEntity.getMetaInformation());
+		
+		//Achtung: updateEntity gibt nicht das aktualisierte Object zurück.
+		dbController.updateEntity(modelClass, id, BasicDBObject.parse(gson.toJson(entityData)));
+
 	}
 	
 	@Override
@@ -101,8 +109,15 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 		if(!EntityValidator.isEntityValid(entity))
 			throw new InvalidAttributesException("Entity is not valid");
 		
+		try{
+			getEntityByMail(entity.getEmail());
+			throw new AlreadyExistsException();
+		}catch(NoContentException e){
+			System.out.println("Email not registred yet. Good.");
+		}
+		
+		
 		BasicDBObject dbObj = dbController.addEntity(modelClass, BasicDBObject.parse(gson.toJson(entity)));
-
 		return makeEntityFromBasicDBObject(dbObj);
 	}
 	
@@ -125,7 +140,4 @@ public abstract class AbstractEntityControllerImpl<E extends Model> implements A
 		
 		return null;
 	}
-	
-	
-
 }

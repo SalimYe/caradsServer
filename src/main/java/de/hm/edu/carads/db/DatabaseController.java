@@ -10,8 +10,9 @@ import com.mongodb.DBObject;
 public interface DatabaseController {
 		
 	public BasicDBObject getEntity(ModelCollection collection, String id) throws NoContentException;
+	public BasicDBObject getSubEntity(ModelCollection collection, String id) throws NoContentException;
 	public BasicDBObject addEntity(ModelCollection collection, BasicDBObject entity);
-	public BasicDBObject updateEntity(ModelCollection collection, String id, BasicDBObject newEntity) throws NoContentException;
+	public void updateEntity(ModelCollection collection, String id, BasicDBObject newEntity) throws NoContentException;
 	public void deleteEntity(ModelCollection collection, String id) throws NoContentException;
 	
 	public long getCollectionCount(ModelCollection collection);

@@ -3,6 +3,7 @@ package de.hm.edu.carads.controller;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.ModelCollection;
 import de.hm.edu.carads.models.User;
+import de.hm.edu.carads.models.util.Person;
 
 /**
  *
@@ -20,3 +21,4 @@ public class RealmControllerImpl extends AbstractEntityControllerImpl<User> impl
 				.getEntityByKeyValue(ModelCollection.REALM, "username", username));
     } 
 }
+

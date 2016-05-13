@@ -59,15 +59,15 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 				BasicDBObject.parse(gson.toJson(driver)));
 	}
 
-	@Override
-	public Driver addEntity(Driver entity) throws Exception {
-		if (existDriverByEmail(entity.getEmail()))
-			throw new AlreadyExistsException();
-
-		entity.getMetaInformation().makeNewMetaInformation();
-
-		return super.addEntity(entity);
-	}
+//	@Override
+//	public Driver addEntity(Driver entity) throws Exception {
+//		if (existDriverByEmail(entity.getEmail()))
+//			throw new AlreadyExistsException();
+//
+//		entity.getMetaInformation().makeNewMetaInformation();
+//
+//		return super.addEntity(entity);
+//	}
 	
 	@Override
 	public Collection<Car> getCars(String driverId) throws Exception {
@@ -75,18 +75,18 @@ public class DriverControllerImpl extends AbstractEntityControllerImpl<Driver>
 		return driver.getCars();
 	}
 
-	@Override
-	public Driver changeEntity(String id, Driver entityData) throws Exception {
-		if(!EntityValidator.isEntityValid((entityData)))
-			throw new InvalidAttributesException();
-		
-		Driver d = getDriverByEmail(entityData.getEmail());
-		if(d!=null)
-			if (!d.getId().equals(id))
-				throw new AlreadyExistsException();
-
-		return super.changeEntity(id, entityData);
-	}
+//	@Override
+//	public Driver changeEntity(String id, Driver entityData) throws Exception {
+//		if(!EntityValidator.isEntityValid((entityData)))
+//			throw new InvalidAttributesException();
+//		
+//		Driver d = getDriverByEmail(entityData.getEmail());
+//		if(d!=null)
+//			if (!d.getId().equals(id))
+//				throw new AlreadyExistsException();
+//
+//		return super.changeEntity(id, entityData);
+//	}
 	
 	@Override
 	public Car updateCar(String driverId, String carId, Car car) throws Exception{

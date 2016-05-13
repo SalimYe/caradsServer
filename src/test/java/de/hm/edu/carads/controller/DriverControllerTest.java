@@ -173,7 +173,7 @@ public class DriverControllerTest {
 		dc.changeEntity(driver.getId(), driver);
 		assertEquals(driver.getEmail(), dc.getEntity(driver.getId()).getEmail());
 	}
-
+	/*
 	@Test
 	public void changeDriverWithLessInformationTest() throws Exception {
 		DriverController dc = getDriverController();
@@ -189,7 +189,7 @@ public class DriverControllerTest {
 		newDriver = dc.changeEntity(id, newDriver);
 		assertNotEquals("Munich", newDriver.getCity());
 	}
-
+	*/
 	@Test
 	public void addCarToDriverTest() throws Exception {
 		DriverController dc = getDriverController();

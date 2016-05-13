@@ -6,6 +6,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.google.gson.Gson;
+
+import de.hm.edu.carads.controller.ModelController;
+import de.hm.edu.carads.controller.ModelControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
@@ -17,10 +20,11 @@ import javax.ws.rs.core.Context;
 
 @Path("realms")
 public class RealmsRessource {
-
+	/*
     @Context
     private HttpServletRequest httpServletRequest;
     RealmController rc = new RealmControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
+
     private Gson gson = new Gson();
     
     @GET
@@ -34,4 +38,5 @@ public class RealmsRessource {
         return Response.ok(gson.toJson(realm)).build();
 
     }
+    */
 }

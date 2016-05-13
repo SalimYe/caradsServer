@@ -7,6 +7,7 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
+import com.mongodb.client.MongoDatabase;
 
 import de.flapdoodle.embed.mongo.tests.MongodForTestsFactory;
 import de.hm.edu.carads.db.PropertiesLoader;
@@ -18,8 +19,9 @@ public class DatabaseFactory {
 	
     private static DB testDB;
     private static DB prodDB;
-
     
+    private static MongoDatabase mongoDB;
+
     public static DB getInstanceDB(String instance){
     	if(instance.equalsIgnoreCase(INST_TEST)){
     		if(testDB == null){
@@ -45,7 +47,10 @@ public class DatabaseFactory {
     	MongoClient mongoClient;
 		PropertiesLoader pLoader;
 		pLoader = PropertiesLoader.getInstance();
-		mongoClient = new MongoClient(pLoader.getPropertyString("DB_HOST"), Integer.parseInt(pLoader.getPropertyString("DB_PORT")));
+		String host = pLoader.getPropertyString("DB_HOST");
+		int port = Integer.parseInt(pLoader.getPropertyString("DB_PORT"));
+		
+		mongoClient = new MongoClient(pLoader.getPropertyString("DB_HOST"), port);
 		mongoClient.setWriteConcern(WriteConcern.ACKNOWLEDGED);
 		return mongoClient.getDB(pLoader.getPropertyString("DB_NAME"));
     }

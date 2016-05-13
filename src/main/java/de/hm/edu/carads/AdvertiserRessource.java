@@ -1,8 +1,10 @@
 package de.hm.edu.carads;
 
+import java.security.Principal;
 import java.util.Collection;
 
 import javax.naming.directory.InvalidAttributesException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,17 +14,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
+
 import com.google.gson.Gson;
-import de.hm.edu.carads.controller.AdvertiserController;
-import de.hm.edu.carads.controller.AdvertiserControllerImpl;
-import de.hm.edu.carads.controller.DriverControllerImpl;
+
+import de.hm.edu.carads.controller.ModelController;
+import de.hm.edu.carads.controller.ModelControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
-import de.hm.edu.carads.controller.RequestController;
-import de.hm.edu.carads.controller.RequestControllerImpl;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
@@ -30,14 +32,8 @@ import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
-import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.comm.AdvertiserRegistration;
-import de.hm.edu.carads.models.comm.Fellow;
-import de.hm.edu.carads.models.util.Helper;
-
-import java.security.Principal;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
+import de.hm.edu.carads.models.comm.OfferRequest;
 
 @Path("advertisers")
 public class AdvertiserRessource {
@@ -47,9 +43,7 @@ public class AdvertiserRessource {
 	private Gson gson = new Gson();
 	DatabaseController dbController = new DatabaseControllerImpl(
 			DatabaseFactory.INST_PROD);
-	private AdvertiserController ac = new AdvertiserControllerImpl(dbController);
-	private RequestController reqController = new RequestControllerImpl(
-			new DriverControllerImpl(dbController), ac);
+	private ModelController modelController = new ModelControllerImpl(dbController);
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -57,7 +51,7 @@ public class AdvertiserRessource {
 
 		Collection<Advertiser> advertiser;
 
-		advertiser = ac.getAllEntities();
+		advertiser = modelController.getAllAdvertisers();
 
 		if (advertiser.isEmpty()) {
 			return Response.noContent().build();
@@ -77,13 +71,13 @@ public class AdvertiserRessource {
 			RealmController rc = new RealmControllerImpl(
 					new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 
-			Advertiser advertiser = ac.addEntity(advertiserRegistration);
-			
-			User realm = new User(advertiser.getEmail(), Helper.getShaHash(advertiserRegistration.getPassword()), "advertiser",
-					advertiser.getId());
-			rc.addEntity(realm);
+			modelController.addAdvertiser(advertiserRegistration);
+//			String adId
+//			User realm = new User(advertiser.getEmail(), Helper.getShaHash(advertiserRegistration.getPassword()), "advertiser",
+//					advertiser.getId());
+//			rc.addEntity(realm);
 
-			return Response.ok(gson.toJson(advertiser)).build();
+			return Response.ok().build();
 
 		} catch (AlreadyExistsException e) {
 			throw new WebApplicationException(409);
@@ -99,7 +93,7 @@ public class AdvertiserRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAdvertiser(@PathParam("id") String id) {
 		try {
-			Advertiser advertiser = ac.getEntity(id);
+			Advertiser advertiser = modelController.getAdvertiser(id);
 			return Response.ok(gson.toJson(advertiser)).build();
 
 		} catch (NoContentException e) {
@@ -128,8 +122,8 @@ public class AdvertiserRessource {
 			if (adv == null) {
 				throw new InvalidAttributesException();
 			}
-			Advertiser changedAdvertiser = ac.changeEntity(id, adv);
-			return Response.ok(gson.toJson(changedAdvertiser)).build();
+			modelController.changeAdvertiser(id, adv);
+			return Response.ok().build();
 		} catch (InvalidAttributesException e) {
 			throw new WebApplicationException(400);
 		} catch (NoContentException e) {
@@ -143,7 +137,7 @@ public class AdvertiserRessource {
 	@Path("/{id}")
 	public Response deleteAdvertiser(@PathParam("id") String id) {
 		try {
-			ac.deleteEntity(id);
+			modelController.deleteAdvertiser(id);
 			return Response.ok().build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
@@ -163,7 +157,7 @@ public class AdvertiserRessource {
 		}
 
 		try {
-			Campaign addedCampaign = ac.addCampaign(id, c);
+			Campaign addedCampaign = modelController.addCampaign(id, c);
 			return Response.ok(gson.toJson(addedCampaign)).build();
 		} catch (Exception e) {
 			throw new WebApplicationException(500);
@@ -175,7 +169,7 @@ public class AdvertiserRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCampaigns(@PathParam("id") String id) {
 		try {
-			Collection<Campaign> campaigns = ac.getCampaigns(id);
+			Collection<Campaign> campaigns = modelController.getCampaigns(id);
 			if (campaigns.isEmpty()) {
 				return Response.noContent().build();
 			} else {
@@ -194,7 +188,7 @@ public class AdvertiserRessource {
 	public Response getCampaign(@PathParam("id") String id,
 			@PathParam("cid") String cid) {
 		try {
-			Campaign campaign = ac.getCampaign(id, cid);
+			Campaign campaign = modelController.getCampaign(id, cid);
 			return Response.ok(gson.toJson(campaign)).build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
@@ -208,7 +202,7 @@ public class AdvertiserRessource {
 	public Response deleteCampaign(@PathParam("id") String id,
 			@PathParam("cid") String cid) {
 		try {
-			ac.deleteCampaign(id, cid);
+			modelController.deleteCampaign(id, cid);
 			return Response.ok().build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
@@ -229,7 +223,7 @@ public class AdvertiserRessource {
 		}
 
 		try {
-			Campaign updatedCampaign = ac.updateCampaign(id, cid, c);
+			Campaign updatedCampaign = modelController.updateCampaign(id, cid, c);
 			return Response.ok(gson.toJson(updatedCampaign)).build();
 		} catch (InvalidAttributesException e) {
 			throw new WebApplicationException(400);
@@ -248,14 +242,14 @@ public class AdvertiserRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCarToCampaign(@PathParam("id") String id,
 			@PathParam("cid") String cid, String input) {
-		Fellow[] fellows = gson.fromJson(input, Fellow[].class);
+		OfferRequest[] fellows = gson.fromJson(input, OfferRequest[].class);
 		if (fellows == null || fellows.length<1) {
 			throw new WebApplicationException(400);
 		}
 
 		try {
 			for(int i=0; i<fellows.length; i++){
-				ac.requestVehicleForCampaign(id, cid, fellows[i].getCarId());
+				modelController.requestVehicleForCampaign(id, cid, fellows[i].getCarId());
 			}
 			return Response.ok().build();
 		} catch (IllegalAccessException e) {
@@ -273,7 +267,7 @@ public class AdvertiserRessource {
 	public Response getAvailableCars(@PathParam("id") String id,
 			@PathParam("cid") String cid) {
 		try {
-			Collection<Car> cars = reqController.getAvailableCars(id, cid);
+			Collection<Car> cars = modelController.getAvailableCars(id, cid);
 			if (cars.isEmpty())
 				return Response.noContent().build();
 			return Response.ok(gson.toJson(cars)).build();
@@ -286,8 +280,8 @@ public class AdvertiserRessource {
 
 	private Advertiser getCurrentAdvertiser() throws Exception {
 		Principal principal = httpServletRequest.getUserPrincipal();
-		String driverMail = principal.getName();
-		Advertiser advertiser = ac.getEntityByMail(driverMail);
+		String adMail = principal.getName();
+		Advertiser advertiser = modelController.getAdvertiserByMail(adMail);
 		return advertiser;
 	}
 }

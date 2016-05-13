@@ -21,110 +21,69 @@ public class AdvertiserControllerTest {
 	private static String FIRSTNAME = "Muster";
 	private static String LASTNAME = "Mann";
 	
-	private AdvertiserController advertiserController;
+	private ModelController modelController = new ModelControllerImpl(new DatabaseControllerImpl(
+			DatabaseFactory.INST_TEST));
 
 	@Test
 	public void addAvertiserTest() throws Exception {
-		AdvertiserController ac = getController();
+		
 
-		Advertiser advertiser = ac.addEntity(makeNewAdvertiser());
+		modelController.addAdvertiser(makeNewAdvertiser());
+		Advertiser advertiser = modelController.getAdvertiserByMail(EMAIL);
 		assertNotNull(advertiser.getId());
-		assertEquals(1, ac.getEntityCount());
-		assertEquals(LASTNAME, ac.getEntity(advertiser.getId()).getLastName());
+		assertEquals(1, modelController.getAdvertiserCount());
+		assertEquals(LASTNAME, modelController.getAdvertiser(advertiser.getId()).getLastName());
 
 	}
 
 	@Test(expected = AlreadyExistsException.class)
 	public void addAnotherAvertiserWithSameEmailTest() throws Exception {
-		AdvertiserController ac = getController();
-		ac.addEntity(makeNewAdvertiser());
-		ac.addEntity(makeNewAdvertiser());
+		modelController.addAdvertiser(makeNewAdvertiser());
+		modelController.addAdvertiser(makeNewAdvertiser());
 	}
 
 	@Test(expected = InvalidAttributesException.class)
 	public void addAvertiserWithInvalidInformation() throws Exception {
-		AdvertiserController ac = getController();
-		Advertiser ad = makeNewAdvertiser();
-		ad.setEmail("notvalid");
-		ac.addEntity(ad);
+		Advertiser ad = new Advertiser("notvalid", FIRSTNAME, LASTNAME);
+		
+		modelController.addAdvertiser(ad);
 	}
 
 	@Test
 	public void deleteAdvertiserTest() throws Exception {
-		AdvertiserController ac = getController();
-
-		Advertiser advertiser = ac.addEntity(makeNewAdvertiser());
-		assertEquals(1, ac.getEntityCount());
-		ac.deleteEntity(advertiser.getId());
-		assertEquals(0, ac.getEntityCount());
+		modelController.addAdvertiser(makeNewAdvertiser());
+		
+		assertEquals(1, modelController.getAdvertiserCount());
+		String id = modelController.getAdvertiserByMail(EMAIL).getId();
+		modelController.deleteAdvertiser(id);
+		assertEquals(0, modelController.getAdvertiserCount());
 	}
 
 	@Test(expected = NoContentException.class)
 	public void getNotExistingAdvertiserTest() throws Exception {
-		AdvertiserController ac = getController();
-		ac.getEntity("123123123");
-	}
-        
-        @Test
-	public void getAdvertiserByIdTest() throws Exception {
-		AdvertiserController ac = getController();
-
-		Advertiser advertiser = makeNewAdvertiser();
-                advertiser.setEmail(EMAILTWO);
-
-		ac.addEntity(advertiser);
-                
-                Advertiser dbAdvertiser = ac.getEntityByMail(EMAILTWO);
-		assertEquals(EMAILTWO, dbAdvertiser.getEmail());
+		modelController.getAdvertiser("123");
 	}
 
-	/*
-	@Test
-	public void updateAdvertiserTest() throws Exception {
-		AdvertiserController ac = getController();
-
-		Advertiser oldAdv = ac.addEntity(makeNewAdvertiser());
-		Advertiser newAdv = new Advertiser(EMAIL, FIRSTNAME, "Neuer");
-		ac.changeEntity(oldAdv.getId(), newAdv);
-		assertEquals(ac.getEntity(oldAdv.getId()).getLastName(), "Neuer");
-
-		Image img = new Image();
-		img.setId("aaa");
-		newAdv.setLogo(img);
-		ac.changeEntity(oldAdv.getId(), newAdv);
-
-		newAdv.setLogo(null);
-		newAdv.setCompany("BMW");
-		ac.changeEntity(oldAdv.getId(), newAdv);
-
-		assertNotNull(ac.getEntity(oldAdv.getId()).getLogo());
-		assertNotNull(ac.getEntity(oldAdv.getId()).getCompany());
-	}
-	
-	*/
 	@Test(expected = AlreadyExistsException.class)
 	public void updateAdvertiserWithSameEmailTest() throws Exception {
-		AdvertiserController ac = getController();
+		modelController.addAdvertiser(makeNewAdvertiser());
 
-		Advertiser a1, a2;
-		a1 = makeNewAdvertiser();
-		a2 = new Advertiser("bla@asd.de", "Jon", "Ron");
-		ac.addEntity(a1);
-		a2 = ac.addEntity(a2);
-		a2.setEmail(EMAIL);
+		Advertiser ad2 = new Advertiser(EMAILTWO, "Max", "Muster");
+		modelController.addAdvertiser(ad2);
+		ad2 = modelController.getAdvertiserByMail(EMAILTWO);
 		
-		ac.changeEntity(a2.getId(), a2);
-	}
+		ad2.setEmail(EMAIL);
+		modelController.changeAdvertiser(ad2.getId(), ad2);	}
 	
 	@Test
 	public void addCampaignTest() throws Exception{
-		AdvertiserController ac = getController();
-		Advertiser ad = ac.addEntity(makeNewAdvertiser());
-		Campaign c = ac.addCampaign(ad.getId(), makeNewCampaign());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		
+		Campaign c = modelController.addCampaign(ad.getId(), makeNewCampaign());
 		assertNotNull(c);
 		assertFalse(c.getId().isEmpty());
 	}
-	
+	/*
 	@Test (expected=IllegalArgumentException.class)
 	public void addCampaignTest2() throws Exception{
 		AdvertiserController ac = getController();
@@ -272,12 +231,5 @@ public class AdvertiserControllerTest {
 		c.setStartDate("01.01.2000");
 		c.setEndDate("31.01.2000");
 		return c;
-	}
-
-	private AdvertiserController getController() {
-		if(advertiserController==null)
-			advertiserController = new AdvertiserControllerImpl(new DatabaseControllerImpl(
-				DatabaseFactory.INST_TEST));
-		return advertiserController;
 	}
 }

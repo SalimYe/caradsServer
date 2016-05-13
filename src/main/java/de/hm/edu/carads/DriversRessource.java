@@ -1,30 +1,30 @@
 package de.hm.edu.carads;
 
+import java.security.Principal;
 import java.util.Collection;
+
 import javax.naming.directory.InvalidAttributesException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
+
 import com.google.gson.Gson;
 
-import de.hm.edu.carads.controller.AdvertiserControllerImpl;
-import de.hm.edu.carads.controller.DriverController;
-import de.hm.edu.carads.controller.DriverControllerImpl;
+import de.hm.edu.carads.controller.ModelController;
+import de.hm.edu.carads.controller.ModelControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
-import de.hm.edu.carads.controller.RequestController;
-import de.hm.edu.carads.controller.RequestControllerImpl;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
@@ -37,10 +37,6 @@ import de.hm.edu.carads.models.comm.OfferInformation;
 import de.hm.edu.carads.models.comm.OfferResponse;
 import de.hm.edu.carads.models.util.Helper;
 
-import java.security.Principal;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
-
 @Path("drivers")
 public class DriversRessource {
 
@@ -49,19 +45,15 @@ public class DriversRessource {
 	private Gson gson = new Gson();
 	private DatabaseController dbController = new DatabaseControllerImpl(
 			DatabaseFactory.INST_PROD);
-	private DriverController dc = new DriverControllerImpl(dbController);
-	private RequestController reqController = new RequestControllerImpl(dc,
-			new AdvertiserControllerImpl(dbController));
+	
+	private ModelController modelController = new ModelControllerImpl(dbController);
 
 	RealmController rc = new RealmControllerImpl(dbController);
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDriver(
-			@DefaultValue("0") @QueryParam("startAt") int startAt,
-			@DefaultValue("10") @QueryParam("length") int length) {
-		Collection<Driver> drivers;
-		drivers = dc.getAllEntities();
+	public Response getDrivers() {
+		Collection<Driver> drivers = modelController.getAllDrivers();
 		if (drivers.isEmpty()) {
 			return Response.noContent().build();
 		} else {
@@ -77,12 +69,14 @@ public class DriversRessource {
 			DriverRegistration driverRegistration = gson.fromJson(input,
 					DriverRegistration.class);
 
-			Driver driver = dc.addEntity(driverRegistration);
-			User realm = new User(driver.getEmail(), Helper.getShaHash(driverRegistration.getPassword()), "driver", driver.getId());
+			modelController.addDriver(driverRegistration);
+			String driverId =  modelController.getDriverByMail(driverRegistration.getEmail()).getId();
+			
+			User realm = new User(driverRegistration.getEmail(), Helper.getShaHash(driverRegistration.getPassword()), "driver", driverId);
 
 			rc.addEntity(realm);
 
-			return Response.ok(gson.toJson(driver)).build();
+			return Response.ok().build();
 
 		} catch (AlreadyExistsException e) {
 			throw new WebApplicationException(409);
@@ -98,7 +92,7 @@ public class DriversRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDriver(@PathParam("id") String id) {
 		try {
-			Driver driver = dc.getEntity(id);
+			Driver driver = modelController.getDriver(id);
 			return Response.ok(gson.toJson(driver)).build();
 
 		} catch (NoContentException e) {
@@ -128,8 +122,8 @@ public class DriversRessource {
 				throw new WebApplicationException(401);
 			}
 
-			Driver changedDriver = dc.changeEntity(id, driverData);
-			return Response.ok(gson.toJson(changedDriver)).build();
+			modelController.changeDriver(id, driverData);
+			return Response.ok().build();
 		} catch (AlreadyExistsException e) {
 			throw new WebApplicationException(409);
 		} catch (InvalidAttributesException e) {
@@ -146,7 +140,7 @@ public class DriversRessource {
 	@Path("/{id}")
 	public Response deleteDriver(@PathParam("id") String id) {
 		try {
-			dc.deleteEntity(id);
+			modelController.deleteDriver(id);
 			return Response.ok().build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
@@ -161,7 +155,7 @@ public class DriversRessource {
 	public Response getDriverCars(@PathParam("id") String driverid) {
 		try {
 			Collection<Car> cars;
-			cars = dc.getCars(driverid);
+			cars = modelController.getCars(driverid);
 			if (cars.isEmpty()) {
 				return Response.noContent().build();
 			}
@@ -177,7 +171,7 @@ public class DriversRessource {
 	@Path("/{id}/cars")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addDriverCar(@PathParam("id") String driverid, String input) {
+	public Response addCar(@PathParam("id") String driverid, String input) {
 
 		Car car;
 		car = gson.fromJson(input, Car.class);
@@ -186,7 +180,7 @@ public class DriversRessource {
 		}
 
 		try {
-			Car registredCar = dc.addCar(driverid, car);
+			Car registredCar = modelController.addCar(driverid, car);
 			return Response.ok(gson.toJson(registredCar)).build();
 		} catch (InvalidAttributesException e) {
 			throw new WebApplicationException(400);
@@ -200,10 +194,10 @@ public class DriversRessource {
 	@GET
 	@Path("/{id}/cars/{car}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDriverCar(@PathParam("id") String driverId,
+	public Response getCar(@PathParam("id") String driverId,
 			@PathParam("car") String carId) {
 		try {
-			Car car = dc.getCar(driverId, carId);
+			Car car = modelController.getCar(driverId, carId);
 			return Response.ok(gson.toJson(car)).build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
@@ -217,7 +211,7 @@ public class DriversRessource {
 	public Response deleteDriverCar(@PathParam("id") String driverId,
 			@PathParam("car") String carId) {
 		try {
-			dc.deleteCar(driverId, carId);
+			modelController.deleteCar(driverId, carId);
 			return Response.ok().build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
@@ -238,7 +232,7 @@ public class DriversRessource {
 		}
 
 		try {
-			Car newCar = dc.updateCar(driverId, carId, car);
+			Car newCar = modelController.updateCar(driverId, carId, car);
 			return Response.ok(gson.toJson(newCar)).build();
 		} catch (NoContentException e) {
 			e.printStackTrace();
@@ -255,7 +249,7 @@ public class DriversRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCarRequests(@PathParam("id") String driverId) {
 		try {
-			Collection<OfferInformation> offerInfo = reqController
+			Collection<OfferInformation> offerInfo = modelController
 					.getOfferInformation(driverId);
 			if (offerInfo.isEmpty())
 				return Response.noContent().build();
@@ -275,7 +269,7 @@ public class DriversRessource {
 		OfferResponse response = gson.fromJson(input, OfferResponse.class);
 		System.out.println(response.getResponse());
 		try {
-			reqController.respondToOffer(response.getCarId(),
+			modelController.respondToOffer(response.getCarId(),
 					response.getAdvertiserId(), response.getCampaignId(),
 					response.getResponse());
 			return Response.ok().build();
@@ -289,7 +283,7 @@ public class DriversRessource {
 	private Driver getCurrentDriver() throws Exception {
 		Principal principal = httpServletRequest.getUserPrincipal();
 		String driverMail = principal.getName();
-		Driver driver = dc.getEntityByMail(driverMail);
+		Driver driver = modelController.getDriverByMail(driverMail);
 		return driver;
 	}
 }

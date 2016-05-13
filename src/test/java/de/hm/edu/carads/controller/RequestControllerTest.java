@@ -28,7 +28,7 @@ public class RequestControllerTest {
 	private static String CARMODEL = "E-Klasse";
 	private static String CARCOLOR = "red";
 
-	private RequestController requestController;
+	//private RequestController requestController;
 	private AdvertiserController advertiserController;
 	private DriverController driverController;
 	
@@ -37,7 +37,7 @@ public class RequestControllerTest {
 		DatabaseFactory.dropTestDB();
 		advertiserController = getAdvertiserController();
 		driverController = getDriverController();
-		requestController = getRequestController();
+		//requestController = getRequestController();
 	}
 	
 	@Test
