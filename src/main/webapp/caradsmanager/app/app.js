@@ -25,9 +25,17 @@ app.config(function ($routeProvider) {
                 controller: 'campaign',
                 templateUrl: 'views/campaign.html'
             })
+            .when('/advertiser/:advertiserId/campaignEdit/:campaignId', {
+                controller: 'campaignEdit',
+                templateUrl: 'views/campaignEdit.html'
+            })
             .when('/advertiser/:advertiserId/campaign/:campaignId', {
                 controller: 'campaign',
                 templateUrl: 'views/campaign.html'
+            })
+            .when('/advertiser/:advertiserId/campaign/:campaignId/availableCars/', {
+                controller: 'carSearch',
+                templateUrl: 'views/carSearch.html'
             })
             .when('/advertiser/:id', {
                 controller: 'advertiser',
@@ -52,10 +60,6 @@ app.config(function ($routeProvider) {
             .when('/advertisers/', {
                 controller: 'advertisers',
                 templateUrl: 'views/advertisers.html'
-            })
-            .when('/driver/:driverId/availableCars/', {
-                controller: 'carSearch',
-                templateUrl: 'views/carSearch.html'
             })
             .when('/home', {
                 controller: 'home',

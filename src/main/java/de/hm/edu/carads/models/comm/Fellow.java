@@ -3,11 +3,11 @@ package de.hm.edu.carads.models.comm;
 import de.hm.edu.carads.models.util.FellowState;
 
 public class Fellow {
-	private String carid;
+	private String carId;
 	private FellowState state;
 
 	public Fellow(String carId, FellowState state) {
-		this.carid = carId;
+		this.carId = carId;
 		this.state = state;
 	}
 
@@ -20,8 +20,8 @@ public class Fellow {
 	}
 
 	public String getCarId() {
-		if (this.carid == null)
-			this.carid = "";
-		return carid;
+		if (this.carId == null)
+			this.carId = "";
+		return carId;
 	}
 }

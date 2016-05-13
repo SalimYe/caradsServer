@@ -1,5 +1,12 @@
 app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http, $location, $modal, $document, $timeout, $window, $translate, $filter) {
 
+    var advertiserId = $routeParams.advertiserId;
+    var campaignId = $routeParams.campaignId;
+    if (advertiserId === undefined ||
+            campaignId === undefined) {
+        $location.path('/');
+    }
+
     var getArrayElementByKeyValue = function (key, value, array) {
         for (var i = 0; i < array.length; i++) {
             if (array[i][key] === value) {
@@ -23,17 +30,24 @@ app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http,
             return carSelection;
         }
     };
-    
+
     var setSelectedFlag = function (cars, carSelection) {
-        for(var i = 0; i < cars.length; i++) {
+        for (var i = 0; i < cars.length; i++) {
             var car = cars[i];
             var index = carSelection.indexOf(car.id);
-            if(index > -1) {
+            if (index > -1) {
                 car.isSelected = true;
             } else {
                 car.isSelected = false;
             }
-            
+
+        }
+    };
+
+    var deleteSelectedFlag = function (cars) {
+        for (var i = 0; i < cars.length; i++) {
+            var car = cars[i];
+            car.isSelected = false;
         }
     };
 
@@ -53,9 +67,12 @@ app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http,
         }
         updateCarSelectionCookie($scope.campaignId);
     };
-    
+
     $scope.deleteCarSelection = function () {
         $scope.carSelection = [];
+        deleteSelectedFlag($scope.cars);
+        deleteSelectedFlag($scope.filteredCars);
+        updateCarSelectionCookie(campaignId);
     };
 
     var init = function () {
@@ -66,17 +83,11 @@ app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http,
             {label: 'absteigend', value: true}];
         $scope.reverse = false;
         $scope.predicate = 'brand';
-        $scope.driverId = driverId;
-        var fakeCampaignId = '894hf3p94hf39phf48';
-        $scope.campaignId = fakeCampaignId;
-        $scope.carSelection = getCarSelectionCookie($scope.campaignId);
+        $scope.campaignId = campaignId;
+        $scope.carSelection = getCarSelectionCookie(campaignId);
     };
 
     var orderBy = $filter('orderBy');
-    var driverId = $routeParams.driverId;
-    if (driverId === undefined) {
-        $location.path('/');
-    }
 
     var alert = function (title, content, level) {
         $scope.alert = [];
@@ -95,7 +106,7 @@ app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http,
         $scope.filteredCars = orderBy($scope.filteredCars, predicate, $scope.reverse);
     };
 
-    $http.get('../api/drivers/' + driverId + '/cars').
+    $http.get('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId + '/availableCars/').
             success(function (data, status, headers, config) {
                 init();
                 $scope.cars = data;
@@ -106,6 +117,26 @@ app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http,
             error(function (data, status, headers, config) {
                 $location.path('/');
             });
+
+    var sendCarRequest = function (carId) {
+        var url = '../api/advertisers/' + advertiserId + '/campaigns/' + campaignId + '/cars';
+        var fellow = '{"carId": "' + carId + '"}';
+        $http.post(url, fellow).
+                success(function (data, status, headers, config) {
+                    // TODO
+                }).
+                error(function (data, status, headers, config) {
+                    // TODO
+                });
+    };
+
+    $scope.sendCarRequests = function () {
+        for (var i = 0; i < $scope.carSelection.length; i++) {
+            var carId = $scope.carSelection[i];
+            sendCarRequest(carId);
+        }
+        $scope.deleteCarSelection();
+    };
 
     $scope.hasImage = function (carIndex) {
         if ($scope.cars[carIndex].images === undefined)
