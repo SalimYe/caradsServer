@@ -33,6 +33,10 @@ app.config(function ($routeProvider) {
                 controller: 'campaign',
                 templateUrl: 'views/campaign.html'
             })
+            .when('/advertiser/:advertiserId/campaign/:campaignId/carRequest/:carId', {
+                controller: 'campaign',
+                templateUrl: 'views/campaign.html'
+            })
             .when('/advertiser/:advertiserId/campaign/:campaignId/availableCars/', {
                 controller: 'carSearch',
                 templateUrl: 'views/carSearch.html'

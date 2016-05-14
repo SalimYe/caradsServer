@@ -16,8 +16,12 @@ app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $l
         $scope.alert.level = level;
     };
 
-    var redirectToCampaignOverview = function () {
-        $location.path('advertiser/' + advertiserId + "/campaigns");
+    var goBack = function () {
+        if($rootScope.realm.isAdvertiser) {
+            $location.path('advertiser/' + advertiserId + '/campaigns');
+        } else {
+            $location.path('home/');
+        }
     };
 
     $scope.deleteAlert = function () {
@@ -45,11 +49,11 @@ app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $l
                     $scope.cars = getCarsWithState($scope.campaign.fellows);
                 }).
                 error(function (data, status, headers, config) {
-                    redirectToCampaignOverview();
+                    goBack();
                 });
 
     $scope.exitCampaign = function () {
-        redirectToCampaignOverview();
+        goBack();
     };
     
     $scope.editCampaign = function () {

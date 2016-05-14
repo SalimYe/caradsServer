@@ -1,6 +1,45 @@
 <main>
-<h1>CarAds Client Application</h1>
-<h2>Entwicklungsversion</h2>
-<p>CarAds Client Application befindet sich noch in der Entwicklung.
-    Der Funktionsumfang kann daher sehr eingeschr&auml;kt sein und es kann zu Fehlern kommen.</p>
+    <div ng-if="realm.isDriver">
+        <h2>Hallo {{driver.firstname}}</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Fahrzeuganfragen</h3>  
+                <div class="table-responsive">
+                    <table ng-table="tableParams" class="table table-striped table-hover">
+                        <tr ng-repeat="request in $data">
+                            <td data-title="'Fahrzeug'" sortable="'car.brand'">{{request.car.brand}} {{request.car.model}}</td>
+                            <td data-title="'Kampagne'" sortable="'campaign.title'">{{request.campaign.title}}</td>
+                            <td data-title="'Unternehmen'" sortable="'advertiser.company'">{{request.advertiser.company}}</td>
+                            <td data-title="'Beginn'" sortable="'campaign.startDate'">{{request.campaign.startDate}}</td>
+                            <td data-title="'Ende'" sortable="'campaign.endDate'">{{request.campaign.endDate}}</td>
+                            <td data-title="'Status'" sortable="'state'">
+                                <span class="label label-{{getStateLabelBoostrapState(request.state)}}">{{getStateLabel(request.state)}}</span>
+                            </td>
+                            <td data-title="''" class="text-right">
+                                <span ng-if="request.state == 'ASKED'">
+                                <button class="btn btn-danger btn-xs" type="button"
+                                        ng-click="sendResponse(request.car.id, request.advertiser.id, request.campaign.id, false)">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    Absagen
+                                </button>
+                                <button class="btn btn-success btn-xs" type="button"
+                                        ng-click="sendResponse(request.car.id, request.advertiser.id, request.campaign.id, true)">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                    Zusagen
+                                </button>
+                                </span>
+                                <button class="btn btn-default btn-xs" type="button"
+                                                                           ng-click="openCampaignDetails(request.car.id, request.advertiser.id, request.campaign.id)">
+                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                    Details
+                                </button>
+                                </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="realm.isAdvertiser"></div>
 </main>

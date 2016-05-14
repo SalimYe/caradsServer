@@ -30,5 +30,26 @@ function showModal($modal, modalDescription, modalTitle, modalButtonOneText, mod
         //on dismiss()
         actionTwo();
     });
-}
-;
+};
+
+function getStateLabel(state) {
+    switch (state) {
+        case 'ASKED':
+            return 'ausstehend';
+        case 'REJECTED':
+            return 'abgelehnt';
+        case 'ACCEPTED':
+            return 'angenommen';
+    }
+};
+
+function getStateLabelBoostrapState(state) {
+    switch (state) {
+        case 'ASKED':
+            return 'default';
+        case 'REJECTED':
+            return 'danger';
+        case 'ACCEPTED':
+            return 'success';
+    }
+};
