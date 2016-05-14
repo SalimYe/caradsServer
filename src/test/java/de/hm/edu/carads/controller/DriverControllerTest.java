@@ -31,183 +31,80 @@ public class DriverControllerTest {
 	private static String CARMODEL = "E-Klasse";
 	private static String CARCOLOR = "red";
 	
-	private DriverController driverController;
+	private ModelController modelController = new ModelControllerImpl(new DatabaseControllerImpl(
+			DatabaseFactory.INST_TEST));
 
 	@Test
 	public void addDriverTest() throws Exception {
-		DriverController dc = getDriverController();
+		assertEquals(0, modelController.getDriverCount());
 
-		assertEquals(0, dc.getEntityCount());
-
-		Driver driver;
-
-		driver = dc.addEntity(makeNewDriver());
+		Driver driver = modelController.addDriver(makeNewDriver());
 		assertNotNull(driver.getId());
 		assertEquals(LASTNAME, driver.getLastName());
-		assertEquals(1, dc.getEntityCount());
-
-	}
-
-	@Test
-	public void metaInformationTest() throws Exception {
-		DriverController dc = getDriverController();
-		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_METAINFORMATION);
-		Driver driver;
-
-		driver = dc.addEntity(makeNewDriver());
-		Date timeCreated = df.parse(driver.getMetaInformation().getCreated());
-		Date timeUpdated = df.parse(driver.getMetaInformation()
-				.getLastModified());
-
-		assertTrue(timeUpdated.compareTo(timeCreated) == 0);
-
-		Thread.sleep(1000);
-		dc.addCar(driver.getId(), makeNewCar());
-		driver = dc.getEntity(driver.getId());
-		timeUpdated = df.parse(driver.getMetaInformation().getLastModified());
-
-		assertTrue(timeUpdated.compareTo(timeCreated) > 0);
-
+		assertEquals(1, modelController.getDriverCount());
 	}
 
 	@Test
 	public void getAllDriversTest() throws Exception {
-		DriverController dc = getDriverController();
-
-		Driver driver2;
-
-		dc.addEntity(makeNewDriver());
-		assertEquals(1, dc.getAllEntities().size());
-
-		driver2 = makeNewDriver();
+		Driver driver = modelController.addDriver(makeNewDriver());
+		assertEquals(1, modelController.getAllDrivers().size());
+		Driver driver2 = makeNewDriver();
 		driver2.setEmail("neu@gmx.de");
-		driver2 = dc.addEntity(driver2);
-		assertEquals(2, dc.getAllEntities().size());
-
+		driver2 = modelController.addDriver(driver2);
+		assertEquals(2, modelController.getAllDrivers().size());
 	}
         
         @Test
 	public void getDriverByIdTest() throws Exception {
-		DriverController dc = getDriverController();
-
-		Driver driver = makeNewDriver();
-                driver.setEmail(EMAILTWO);
-		dc.addEntity(driver);
-                
-                Driver dbDriver = dc.getEntityByMail(EMAILTWO);
-		assertEquals(EMAILTWO, dbDriver.getEmail());
+        Driver driver = modelController.addDriver(makeNewDriver());
+        Driver dbDriver = modelController.getDriverByMail(EMAIL);
+		assertEquals(EMAIL, dbDriver.getEmail());
 	}
 
 	@Test(expected = AlreadyExistsException.class)
 	public void addDriverWhenSameEmailExistTest() throws Exception {
-		DriverController dc = getDriverController();
-		dc.addEntity(makeNewDriver());
-		dc.addEntity(makeNewDriver());
+		modelController.addDriver(makeNewDriver());
+		modelController.addDriver(makeNewDriver());
 	}
 
 	@Test(expected = InvalidAttributesException.class)
 	public void addDriverWithInvalidDataTest() throws Exception {
-		DriverController dc = getDriverController();
-		dc.addEntity(new Driver("asd", FIRSTNAME, LASTNAME));
+		modelController.addDriver(new Driver("notvalid", FIRSTNAME, LASTNAME));
 	}
 
 	@Test
 	public void readFromDBTest() throws Exception {
-		DriverController dc = getDriverController();
-
-		Driver driver = dc.addEntity(makeNewDriver());
+		Driver driver = modelController.addDriver(makeNewDriver());
 		String id = driver.getId();
-		assertEquals(driver.getFirstName(), dc.getEntity(id).getFirstName());
-
+		assertEquals(driver.getFirstName(), modelController.getDriver(id).getFirstName());
 	}
 
 	@Test(expected = NoContentException.class)
 	public void readWrongIDTest() throws Exception {
-		DriverController dc = getDriverController();
-		dc.getEntity("1123");
-	}
-
-	@Test
-	public void changeDriverTest() throws Exception {
-		DriverController dc = getDriverController();
-
-		// Fahrer wird erstellt.
-		Driver driver = makeNewDriver();
-		driver.setBirthdate("1988");
-		driver = dc.addEntity(driver);
-
-		// Fahrer wird verändert.
-		driver.setFirstName("Benni");
-		dc.changeEntity(driver.getId(), driver);
-
-		// Daten werden aus der DB geholt und ueberprueft.
-		Driver driverNew = dc.getEntity(driver.getId());
-		assertEquals("Benni", driverNew.getFirstName());
-		assertEquals("1988", driverNew.getBirthdate());
+		modelController.getDriver("123");
 	}
 
 	@Test
 	public void changeDriverWithOtherEmailTest() throws Exception {
-		DriverController dc = getDriverController();
-
-		// Fahrer wird erstellt.
-		Driver driver = makeNewDriver();
-		driver = dc.addEntity(driver);
+		Driver driver = modelController.addDriver(makeNewDriver());
 
 		// Fahrer wird verändert.
 		driver.setEmail("bla@asd.de");
-		dc.changeEntity(driver.getId(), driver);
-		assertEquals(driver.getEmail(), dc.getEntity(driver.getId()).getEmail());
-	}
-
-	@Test
-	public void changeDriverTest2() throws Exception {
-		DriverController dc = getDriverController();
-
-		// Fahrer wird erstellt.
-		Driver driver = makeNewDriver();
-		driver = dc.addEntity(driver);
-
-		// Fahrer wird verändert.
-		driver.setCountry("Norway");
-		dc.changeEntity(driver.getId(), driver);
-		assertEquals(driver.getEmail(), dc.getEntity(driver.getId()).getEmail());
-	}
-
-	@Test
-	public void changeDriverWithLessInformationTest() throws Exception {
-		DriverController dc = getDriverController();
-
-		Driver driver = makeNewDriver();
-		driver.addCar(makeNewCar());
-		driver.setCity("Munich");
-		driver = dc.addEntity(driver);
-
-		String id = driver.getId();
-
-		Driver newDriver = makeNewDriver();
-		newDriver = dc.changeEntity(id, newDriver);
-		assertNotEquals("Munich", newDriver.getCity());
+		modelController.changeDriver(driver.getId(), driver);
+		assertEquals(driver.getEmail(), modelController.getDriver(driver.getId()).getEmail());
 	}
 
 	@Test
 	public void addCarToDriverTest() throws Exception {
-		DriverController dc = getDriverController();
-
-		Driver driver = dc.addEntity(makeNewDriver());
-		dc.addCar(driver.getId(), makeNewCar());
-		assertFalse(dc.getEntity(driver.getId()).getCars().isEmpty());
-		//Car car = dc.getCar(driver.getId());
-//		assertEquals(CARCOLOR, car.getColor());
-//		assertEquals(CARBRAND, car.getBrand());
-//		assertEquals(CARMODEL, car.getModel());
-
+		Driver driver = modelController.addDriver(makeNewDriver());
+		
+		modelController.addCar(driver.getId(), makeNewCar());
+		assertFalse(modelController.getDriver(driver.getId()).getCars().isEmpty());
 	}
 	
 	@Test
 	public void addCarsToDriverTest() throws Exception {
-		DriverController dc = getDriverController();
-		Driver driver = dc.addEntity(makeNewDriver());
+		Driver driver = modelController.addDriver(makeNewDriver());
 		
 		Car car1 = new Car();
 		car1.setBrand("BMW");
@@ -216,128 +113,108 @@ public class DriverControllerTest {
 		car2.setBrand("Ford");
 		car2.setModel("Ka");
 		
-		dc.addCar(driver.getId(), car1);
-		dc.addCar(driver.getId(), car2);
+		modelController.addCar(driver.getId(), car1);
+		modelController.addCar(driver.getId(), car2);
 		
-		assertEquals(2, dc.getEntity(driver.getId()).getCars().size());
+		assertEquals(2, modelController.getCars(driver.getId()).size());
 	}
 	
 	@Test
 	public void addCarToDriverAndGetIDTest() throws Exception {
-		DriverController dc = getDriverController();
-		Driver driver = dc.addEntity(makeNewDriver());
+		Driver driver = modelController.addDriver(makeNewDriver());
 		
 		Car car1 = new Car();
 		car1.setBrand("BMW");
 		car1.setModel("1er");
 		
-		Car addedCar = dc.addCar(driver.getId(), car1);
+		Car addedCar = modelController.addCar(driver.getId(), car1);
 		assertFalse(addedCar.getId().isEmpty());
 	}
 	
 	@Test
 	public void addCarToDriverAndGetIDTest2() throws Exception {
-		DriverController dc = getDriverController();
-		Driver driver = dc.addEntity(makeNewDriver());
+		Driver driver = modelController.addDriver(makeNewDriver());
 		
-		Car addedCar1 = dc.addCar(driver.getId(), makeNewCar());
-		Car addedCar2 = dc.addCar(driver.getId(), makeNewCar());
+		//Gleiches Auto geht
+		Car addedCar1 = modelController.addCar(driver.getId(), makeNewCar());
+		Car addedCar2 = modelController.addCar(driver.getId(), makeNewCar());
 		
 		assertNotEquals(addedCar1.getId(), addedCar2.getId());
 	}
 	
 	@Test
 	public void getSpecificCarTest() throws Exception {
-		DriverController dc = getDriverController();
-		Driver driver = dc.addEntity(makeNewDriver());
+		Driver driver = modelController.addDriver(makeNewDriver());
+		String id = modelController.addCar(driver.getId(), makeNewCar()).getId();
 		
-
-		String id = dc.addCar(driver.getId(), makeNewCar()).getId();
-		
-		Car car = dc.getCar(driver.getId(), id);
+		Car car = modelController.getCar(driver.getId(), id);
 		assertEquals(CARBRAND, car.getBrand());
 	}
 
 	@Test
 	public void deleteDriverTest() throws Exception {
-		DriverController dc = getDriverController();
-
-		Driver driver = dc.addEntity(makeNewDriver());
-		assertEquals(1, dc.getEntityCount());
-		dc.deleteEntity(driver.getId());
-		assertEquals(0, dc.getEntityCount());
+		Driver driver = modelController.addDriver(makeNewDriver());
+		assertEquals(1, modelController.getDriverCount());
+		modelController.deleteDriver(driver.getId());
+		assertEquals(0, modelController.getDriverCount());
 	}
 
 	@Test(expected = NoContentException.class)
 	public void deleteCarFailureTest() throws Exception {
-		DriverController dc = getDriverController();
+		Driver d = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(d.getId(), makeNewCar());
+		assertNotNull(modelController.getCar(d.getId(), car.getId()));
 
-		Driver d = dc.addEntity(makeNewDriver());
-		Car car = dc.addCar(d.getId(), makeNewCar());
-		assertNotNull(dc.getCar(d.getId(), car.getId()));
-
-		dc.deleteCar(d.getId(), car.getId());
-		dc.getCar(d.getId(), car.getId());
+		modelController.deleteCar(d.getId(), car.getId());
+		modelController.getCar(d.getId(), car.getId());
 	}
 	
 	@Test
 	public void updateCarTest() throws Exception{
-		DriverController dc = getDriverController();
-		Driver d = dc.addEntity(makeNewDriver());
-		Car car = dc.addCar(d.getId(), makeNewCar());
+		Driver d = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(d.getId(), makeNewCar());
 		String id = car.getId();
 		Car newCar = new Car();
 		newCar.setBrand("Daihatsu");
 		newCar.setModel("Cuore");
 		
-		dc.updateCar(d.getId(), id, newCar);
+		modelController.updateCar(d.getId(), id, newCar);
 		
-		Car updated = dc.getCar(d.getId(), id);
+		Car updated = modelController.getCar(d.getId(), id);
 		assertEquals("Cuore", updated.getModel());
 	}
 	
 	@Test (expected = NoContentException.class)
 	public void updateNotExistingCar() throws Exception{
-		DriverController dc = getDriverController();
-		Driver d = dc.addEntity(makeNewDriver());
+		Driver d = modelController.addDriver(makeNewDriver());
 		
 		Car newCar = new Car();
 		newCar.setBrand("Daihatsu");
 		newCar.setModel("Cuore");
 		
-		dc.updateCar(d.getId(), "11234123", newCar);
+		modelController.updateCar(d.getId(), "11234123", newCar);
 	}
 	
 	@Test (expected = InvalidAttributesException.class)
 	public void updateCarWithInvalidInformation() throws Exception{
-		DriverController dc = getDriverController();
-		Driver d = dc.addEntity(makeNewDriver());
-		Car car = dc.addCar(d.getId(), makeNewCar());
+		Driver d = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(d.getId(), makeNewCar());
 		Car newCar = new Car();
 		newCar.setBrand("Daihatsu");
 		
-		dc.updateCar(d.getId(), car.getId(), newCar);
+		modelController.updateCar(d.getId(), car.getId(), newCar);
 	}
 
 	@Test(expected = AlreadyExistsException.class)
 	public void updateDriverWithSameEmailTest() throws Exception {
-		DriverController dc = getDriverController();
-
 		Driver driver1, driver2;
 		driver1 = makeNewDriver();
 		driver2 = new Driver("othe@this.de", "Joe", "Don");
-		dc.addEntity(driver1);
-		driver2 = dc.addEntity(driver2);
-		driver2.setEmail(EMAIL);
+		Driver d = modelController.addDriver(driver1);
+		Driver d2 = modelController.addDriver(driver2);
+		d2.setEmail(EMAIL);
 
-		dc.changeEntity(driver2.getId(), driver2);
-	}
-
-	private DriverController getDriverController() {
-		if(driverController == null)
-			driverController = new DriverControllerImpl(new DatabaseControllerImpl(
-				DatabaseFactory.INST_TEST));
-		return driverController;
+		modelController.changeDriver(d2.getId(), d2);
 	}
 
 	private Driver makeNewDriver() {

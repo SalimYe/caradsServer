@@ -1,0 +1,163 @@
+2016-05-14 16:50:05 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:05 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:05 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1d7e6bfe0e7d8e1945
+2016-05-14 16:50:05 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:05 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:05 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1d7e6bfe0e7d8e1947
+2016-05-14 16:50:05 INFO  ModelControllerImpl:316 - Campaign 57373b1d7e6bfe0e7d8e1948 removed
+2016-05-14 16:50:05 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:05 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:05 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:05 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:05 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1d7e6bfe0e7d8e194a
+2016-05-14 16:50:05 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:05 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:05 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1d7e6bfe0e7d8e194c
+2016-05-14 16:50:05 INFO  ModelControllerImpl:340 - Campaign 57373b1d7e6bfe0e7d8e194d updated
+2016-05-14 16:50:05 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:05 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:05 INFO  AbstractEntityControllerImpl:78 - Entity 57373b1d7e6bfe0e7d8e194e deleted
+2016-05-14 16:50:05 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:05 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1d7e6bfe0e7d8e194f
+2016-05-14 16:50:06 INFO  ModelControllerImpl:365 - Campaign 57373b1e7e6bfe0e7d8e1950 made an offer to 123
+2016-05-14 16:50:06 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e1950 updated
+2016-05-14 16:50:06 INFO  ModelControllerImpl:365 - Campaign 57373b1e7e6bfe0e7d8e1950 made an offer to 124
+2016-05-14 16:50:06 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e1950 updated
+2016-05-14 16:50:06 INFO  ModelControllerImpl:365 - Campaign 57373b1e7e6bfe0e7d8e1950 made an offer to 125
+2016-05-14 16:50:06 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e1950 updated
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e1951
+2016-05-14 16:50:06 INFO  ModelControllerImpl:365 - Campaign 57373b1e7e6bfe0e7d8e1952 made an offer to 123
+2016-05-14 16:50:06 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e1952 updated
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e1953
+2016-05-14 16:50:06 INFO  ModelControllerImpl:365 - Campaign 57373b1e7e6bfe0e7d8e1954 made an offer to 123
+2016-05-14 16:50:06 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e1954 updated
+2016-05-14 16:50:06 INFO  ModelControllerImpl:249 - 123 responded with ACCEPTED to campaign Fiat Promo (57373b1e7e6bfe0e7d8e1954)
+2016-05-14 16:50:06 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e1954 updated
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail neu@test.de
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e1955
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e1957
+2016-05-14 16:50:06 ERROR ModelControllerImpl:298 - Campaign  not valid
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e1959
+2016-05-14 16:50:06 INFO  ModelControllerImpl:365 - Campaign 57373b1e7e6bfe0e7d8e195a made an offer to 123
+2016-05-14 16:50:06 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e195a updated
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail flosch@bosch.de
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:97 - Mail already exists. Can not save this entity
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 ERROR ModelControllerImpl:276 - Campaign not valid
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e195e
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:119 - Mail already exists. Can not save this entity
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e1961
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:365 - Campaign 57373b1e7e6bfe0e7d8e1962 made an offer to 57373b1e7e6bfe0e7d8e1964
+2016-05-14 16:50:06 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e1962 updated
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e1965
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:365 - Campaign 57373b1e7e6bfe0e7d8e1966 made an offer to 57373b1e7e6bfe0e7d8e1968
+2016-05-14 16:50:06 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e1966 updated
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail franz@redbull.com
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail joe@bmw.de
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e196b
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e196c
+2016-05-14 16:50:06 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1e7e6bfe0e7d8e196c
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail flo@hm.edu
+2016-05-14 16:50:06 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:06 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 INFO  ModelControllerImpl:365 - Campaign 57373b1e7e6bfe0e7d8e196d made an offer to 57373b1f7e6bfe0e7d8e1972
+2016-05-14 16:50:07 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e196d updated
+2016-05-14 16:50:07 INFO  ModelControllerImpl:249 - 57373b1f7e6bfe0e7d8e1972 responded with ACCEPTED to campaign Red Bull Promo (57373b1e7e6bfe0e7d8e196d)
+2016-05-14 16:50:07 INFO  ModelControllerImpl:340 - Campaign 57373b1e7e6bfe0e7d8e196d updated
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1f7e6bfe0e7d8e1976
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 INFO  ModelControllerImpl:365 - Campaign 57373b1f7e6bfe0e7d8e1977 made an offer to 57373b1f7e6bfe0e7d8e1979
+2016-05-14 16:50:07 INFO  ModelControllerImpl:340 - Campaign 57373b1f7e6bfe0e7d8e1977 updated
+2016-05-14 16:50:07 INFO  ModelControllerImpl:249 - 57373b1f7e6bfe0e7d8e1979 responded with ACCEPTED to campaign Red Bull Icerace (57373b1f7e6bfe0e7d8e1977)
+2016-05-14 16:50:07 INFO  ModelControllerImpl:340 - Campaign 57373b1f7e6bfe0e7d8e1977 updated
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 INFO  ModelControllerImpl:287 - saving Campaign for 57373b1f7e6bfe0e7d8e197a
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@mustermann.com
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 INFO  ModelControllerImpl:365 - Campaign 57373b1f7e6bfe0e7d8e197b made an offer to 57373b1f7e6bfe0e7d8e197d
+2016-05-14 16:50:07 INFO  ModelControllerImpl:340 - Campaign 57373b1f7e6bfe0e7d8e197b updated
+2016-05-14 16:50:07 INFO  ModelControllerImpl:249 - 57373b1f7e6bfe0e7d8e197d responded with REJECTED to campaign Red Bull Icerace (57373b1f7e6bfe0e7d8e197b)
+2016-05-14 16:50:07 INFO  ModelControllerImpl:340 - Campaign 57373b1f7e6bfe0e7d8e197b updated
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail bla@asd.de
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:101 - Email not registred yet. Saving changed Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 INFO  ModelControllerImpl:191 - Updating car 57373b1f7e6bfe0e7d8e1987 for driver 57373b1f7e6bfe0e7d8e1986
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:78 - Entity 57373b1f7e6bfe0e7d8e1988 deleted
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 INFO  ModelControllerImpl:169 - Deleting car 57373b1f7e6bfe0e7d8e198a
+2016-05-14 16:50:07 ERROR ModelControllerImpl:132 - Car 57373b1f7e6bfe0e7d8e198a not found
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:119 - Mail already exists. Can not save this entity
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail neu@gmx.de
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:07 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:07 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:08 ERROR ModelControllerImpl:177 - Car invalid
+2016-05-14 16:50:08 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:08 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:08 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail othe@this.de
+2016-05-14 16:50:08 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:08 ERROR AbstractEntityControllerImpl:97 - Mail already exists. Can not save this entity
+2016-05-14 16:50:08 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:08 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:08 ERROR AbstractEntityControllerImpl:67 - Entity not found with e-mail muster.mann@hm.edu
+2016-05-14 16:50:08 INFO  AbstractEntityControllerImpl:122 - Email not registred yet. Saving Entity.
+2016-05-14 16:50:08 ERROR ModelControllerImpl:183 - Could not find Car in Driver 57373b207e6bfe0e7d8e199a

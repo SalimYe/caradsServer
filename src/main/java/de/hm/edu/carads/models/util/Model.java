@@ -30,7 +30,6 @@ public abstract class Model {
 	}
 	
 	public void renewMetaInformation(){
-		//meta = new MetaInformation();
 		meta.makeNewMetaInformation();
 	}
 }
