@@ -21,7 +21,6 @@ import de.hm.edu.carads.models.util.FellowState;
 
 public class RequestControllerTest {
 	private static String EMAIL = "muster.mann@mustermann.com";
-    private static String EMAIL2 = "flosch@bosch.de";
 	private static String FIRSTNAME = "Muster";
 	private static String LASTNAME = "Mann";
 	private static String CARBRAND = "Mercedes";

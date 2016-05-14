@@ -8,6 +8,8 @@ import java.util.List;
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.core.NoContentException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -18,7 +20,6 @@ import de.hm.edu.carads.db.ModelCollection;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.User;
-import de.hm.edu.carads.models.util.Model;
 import de.hm.edu.carads.models.util.Person;
 
 public class AbstractEntityControllerImpl<E extends Person> implements AbstractEntityController<E>{
@@ -26,6 +27,7 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 	protected DatabaseController dbController;
 	protected Gson gson;
 	private ModelCollection modelClass;
+	final static Logger logger = Logger.getLogger(AbstractEntityControllerImpl.class);
 	
 	
 	public AbstractEntityControllerImpl(ModelCollection model, DatabaseController database){
@@ -51,22 +53,21 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 	@Override
 	public E getEntity(String id) throws NoContentException{
 		BasicDBObject dbObj = dbController.getEntity(modelClass, id);
-		if(dbObj == null)
+		if(dbObj == null){
+			logger.error("Entity not found with id "+id);
 			throw new NoContentException("Entity not found");
+		}
 		return makeEntityFromBasicDBObject(dbObj);
 	}
 	
-	@Override
-	public E getWithSubEntityId(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-        
     @Override
     public E getEntityByMail(String mail) throws NoContentException {
     	BasicDBObject dbObj = dbController.getEntityByKeyValue(modelClass, "email", mail);
-        if(dbObj == null)
+        if(dbObj == null){
+        	logger.error("Entity not found with e-mail "+mail);
         	throw new NoContentException("Entity not found");
+        }
+        	
 		return makeEntityFromBasicDBObject(dbObj);
     }
 	
@@ -74,6 +75,7 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 	public void deleteEntity(String id) throws NoContentException{
 		//Innerhalb von deleteEntity wird gecheckt ob das Dokument existiert		
 		dbController.deleteEntity(modelClass, id);
+		logger.info("Entity "+id+" deleted");
 	}
 	
 	@Override
@@ -84,15 +86,19 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 	@Override
 	public void changeEntity(String id, E entityData) throws Exception{
 
-		if(!EntityValidator.isEntityValid((entityData)))
+		if(!EntityValidator.isEntityValid((entityData))){
+			logger.error("Invalid Attributes for changed Entity");
 			throw new InvalidAttributesException();
+		}
 		
 		try{
 			E person = getEntityByMail(entityData.getEmail());
-			if(!person.getId().equals(id))
+			if(!person.getId().equals(id)){
+				logger.error("Mail already exists. Can not save this entity");
 				throw new AlreadyExistsException();
+			}
 		}catch(NoContentException e){
-			System.out.println("Email not registred yet. Good.");
+			logger.info("Email not registred yet. Saving changed Entity.");
 		}
 		
 		E oldEntity = getEntity(id);
@@ -110,11 +116,11 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		
 		try{
 			getEntityByMail(entity.getEmail());
+			logger.error("Mail already exists. Can not save this entity");
 			throw new AlreadyExistsException();
 		}catch(NoContentException e){
-			System.out.println("Email not registred yet. Good.");
+			logger.info("Email not registred yet. Saving Entity.");
 		}
-		
 		
 		BasicDBObject dbObj = dbController.addEntity(modelClass, BasicDBObject.parse(gson.toJson(entity)));
 		return makeEntityFromBasicDBObject(dbObj);

@@ -3,15 +3,14 @@ package de.hm.edu.carads.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.NoContentException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.controller.util.AbstractEntityController;
@@ -29,11 +28,17 @@ import de.hm.edu.carads.models.util.DateController;
 import de.hm.edu.carads.models.util.FellowState;
 import de.hm.edu.carads.models.util.TimeFrame;
 
+/**
+ * 
+ * @author Benjamin Keckes
+ *
+ */
 public class ModelControllerImpl implements ModelController {
 	protected DatabaseController dbController;
 	protected Gson gson;
 	private AbstractEntityController<Driver> driverController;
 	private AbstractEntityController<Advertiser> advertiserController;
+	final static Logger logger = Logger.getLogger(ModelControllerImpl.class);
 	
 	public ModelControllerImpl(DatabaseController dbController){
 		this.dbController = dbController;
@@ -123,21 +128,23 @@ public class ModelControllerImpl implements ModelController {
 	public Car getCar(String driverId, String carId) throws Exception {
 		Driver driver = driverController.getEntity(driverId);
 		Car car = driver.getCar(carId);
-		if(car==null)
+		if(car==null){
+			logger.error("Car "+carId+" not found");
 			throw new NoContentException("not found");
+		}
 		return car;
 	}
 
 	@Override
 	public Collection<Car> getCars(String driverId) throws Exception {
 		Driver driver = driverController.getEntity(driverId);
-		
 		return driver.getCars();
 	}
 
 	@Override
 	public Car addCar(String driverId, Car car) throws Exception {
 		if (!EntityValidator.isEntityValid(car)) {
+			logger.error("Car not valid");
 			throw new InvalidAttributesException();
 		}
 
@@ -159,6 +166,7 @@ public class ModelControllerImpl implements ModelController {
 		Driver driver = driverController.getEntity(driverId);
 		driver.removeCar(carId);
 		driver.getMetaInformation().update();
+		logger.info("Deleting car "+carId);
 		driverController.changeEntity(driverId, driver);
 	}
 
@@ -166,17 +174,21 @@ public class ModelControllerImpl implements ModelController {
 	public Car updateCar(String driverId, String carId, Car car)
 			throws Exception {
 		if (!EntityValidator.isEntityValid(car)) {
+			logger.error("Car invalid");
 			throw new InvalidAttributesException();
 		}
 		Driver driver = driverController.getEntity(driverId);
 		Car oldCar = driver.getCar(carId);
-		if(!driver.removeCar(carId))
+		if(!driver.removeCar(carId)){
+			logger.error("Could not find Car in Driver "+driverId);
 			throw new NoContentException("Could not find Car in Driver "+driverId);
-		
+		}
+			
 		car.update(oldCar.getMetaInformation());
 		car.setId(carId);
 		driver.addCar(car);
 		
+		logger.info("Updating car " +carId+" for driver "+driverId);
 		driverController.changeEntity(driverId, driver);
 		
 		return car;
@@ -234,6 +246,7 @@ public class ModelControllerImpl implements ModelController {
 			updatedFellows.add(fellow);
 		}
 		campaign.setFellows(updatedFellows);
+		logger.info(carId+" responded with "+respond+ " to campaign "+campaign.getTitle()+" ("+campaignId+")");
 		this.updateCampaign(advertiserId, campaignId, campaign);
 	}
 
@@ -259,8 +272,11 @@ public class ModelControllerImpl implements ModelController {
 	@Override
 	public Campaign addCampaign(String advertiserId, Campaign campaign)
 			throws Exception {
-		if(!EntityValidator.isEntityValid(campaign))
+		if(!EntityValidator.isEntityValid(campaign)){
+			logger.error("Campaign not valid");
 			throw new IllegalArgumentException();
+		}
+			
 		
 		Advertiser ad = advertiserController.getEntity(advertiserId);
 		
@@ -268,7 +284,7 @@ public class ModelControllerImpl implements ModelController {
 		campaign.renewMetaInformation();
 		ad.addCampaign(campaign);
 		ad.getMetaInformation().update();
-		
+		logger.info("saving Campaign for "+advertiserId);
 		advertiserController.changeEntity(advertiserId, ad);
 		return campaign;
 	}
@@ -278,8 +294,11 @@ public class ModelControllerImpl implements ModelController {
 			throws Exception {
 		Advertiser advertiser = advertiserController.getEntity(advertiserId);
 		Campaign c = advertiser.getCampaign(campaignId);
-		if(c==null)
+		if(c==null){
+			logger.error("Campaign "+ campaignId +" not valid");
 			throw new NoContentException(campaignId + " not found");
+		}
+			
 		
 		return c;
 	}
@@ -288,18 +307,24 @@ public class ModelControllerImpl implements ModelController {
 	public void deleteCampaign(String advertiserId, String campaignId)
 			throws Exception {
 		Advertiser advertiser = advertiserController.getEntity(advertiserId);
-		if(!advertiser.removeCampaign(campaignId))
+		if(!advertiser.removeCampaign(campaignId)){
+			logger.error("Campaign "+campaignId+" not found");
 			throw new NoContentException(campaignId + " not found");
+		}
+			
 		advertiser.getMetaInformation().update();
-		
+		logger.info("Campaign "+campaignId+" removed");
 		advertiserController.changeEntity(advertiserId, advertiser);
 	}
 
 	@Override
 	public Campaign updateCampaign(String advertiserId, String campaignId,
 			Campaign campaign) throws Exception {
-		if(!EntityValidator.isEntityValid(campaign))
+		if(!EntityValidator.isEntityValid(campaign)){
+			logger.error("Campaign invalid");
 			throw new InvalidAttributesException();
+		}
+			
 		
 		Advertiser advertiser = advertiserController.getEntity(advertiserId);
 		Campaign oldC = advertiser.getCampaign(campaignId);
@@ -312,7 +337,7 @@ public class ModelControllerImpl implements ModelController {
 		campaign.update(oldC.getMetaInformation());
 		campaign.setId(campaignId);
 		advertiser.addCampaign(campaign);
-		
+		logger.info("Campaign "+campaignId+" updated");
 		advertiserController.changeEntity(advertiserId, advertiser);
 		return campaign;
 	}
@@ -337,6 +362,7 @@ public class ModelControllerImpl implements ModelController {
 		if(!campaign.addFellow(carId))
 			throw new IllegalArgumentException();
 		
+		logger.info("Campaign "+campaignId+" made an offer to "+carId);
 		return this.updateCampaign(advertiserId, campaignId, campaign);
 	}
 
@@ -366,6 +392,7 @@ public class ModelControllerImpl implements ModelController {
 			if(ad.containsCampaign(campaignId))
 				return ad;
 		}
+		logger.error("No Advertiser for Campaign "+campaignId+" found");
 		throw new NotFoundException();
 	}
 

@@ -20,7 +20,7 @@ import javax.ws.rs.core.Context;
 
 @Path("realms")
 public class RealmsRessource {
-	/*
+	
     @Context
     private HttpServletRequest httpServletRequest;
     RealmController rc = new RealmControllerImpl(new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
@@ -38,5 +38,5 @@ public class RealmsRessource {
         return Response.ok(gson.toJson(realm)).build();
 
     }
-    */
+    
 }
