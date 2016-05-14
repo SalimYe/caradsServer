@@ -1,8 +1,10 @@
-package de.hm.edu.carads.controller;
+package de.hm.edu.carads.controller.util;
 
 import java.util.Collection;
 
 import javax.ws.rs.core.NoContentException;
+
+import de.hm.edu.carads.models.User;
 
 public interface AbstractEntityController<E> {
 	public Collection<E> getAllEntities();

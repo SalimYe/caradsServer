@@ -12,7 +12,7 @@ import de.hm.edu.carads.models.comm.OfferInformation;
 
 public interface ModelController {
 	public Collection<Driver> getAllDrivers();
-	public void addDriver(Driver driver) throws Exception;
+	public Driver addDriver(Driver driver) throws Exception;
 	public Driver getDriver(String id) throws Exception;
 	public Driver getDriverByMail(String mail)throws Exception;
 	public void deleteDriver(String id) throws NoContentException;

@@ -74,7 +74,7 @@ public class DriversRessource {
 			
 			User realm = new User(driverRegistration.getEmail(), Helper.getShaHash(driverRegistration.getPassword()), "driver", driverId);
 
-			rc.addEntity(realm);
+			rc.addUser(realm);
 
 			return Response.ok().build();
 

@@ -1,4 +1,4 @@
-package de.hm.edu.carads.controller;
+package de.hm.edu.carads.controller.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +13,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
-import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.ModelCollection;
 import de.hm.edu.carads.models.Advertiser;

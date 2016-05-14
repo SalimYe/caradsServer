@@ -14,6 +14,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.controller.util.AbstractEntityController;
+import de.hm.edu.carads.controller.util.AbstractEntityControllerImpl;
 import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.ModelCollection;
@@ -51,8 +53,8 @@ public class ModelControllerImpl implements ModelController {
 	}
 
 	@Override
-	public void addDriver(Driver driver) throws Exception {
-		driverController.addEntity(driver);
+	public Driver addDriver(Driver driver) throws Exception {
+		return driverController.addEntity(driver);
 	}
 
 	@Override
@@ -121,6 +123,8 @@ public class ModelControllerImpl implements ModelController {
 	public Car getCar(String driverId, String carId) throws Exception {
 		Driver driver = driverController.getEntity(driverId);
 		Car car = driver.getCar(carId);
+		if(car==null)
+			throw new NoContentException("not found");
 		return car;
 	}
 
@@ -161,6 +165,9 @@ public class ModelControllerImpl implements ModelController {
 	@Override
 	public Car updateCar(String driverId, String carId, Car car)
 			throws Exception {
+		if (!EntityValidator.isEntityValid(car)) {
+			throw new InvalidAttributesException();
+		}
 		Driver driver = driverController.getEntity(driverId);
 		Car oldCar = driver.getCar(carId);
 		if(!driver.removeCar(carId))
