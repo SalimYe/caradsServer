@@ -53,6 +53,8 @@ public class Driver extends Person {
     }
 
     public void addCar(Car car) {
+    	if(car.getId()==null || car.getId().isEmpty())
+    		throw new IllegalArgumentException();
         checkCars();
         this.cars.add(car);
     }
@@ -81,8 +83,6 @@ public class Driver extends Person {
         return profilePicture;
     }
     
-    
-
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
@@ -91,5 +91,9 @@ public class Driver extends Person {
         if (cars == null) {
             cars = new ArrayList<Car>();
         }
+    }
+    
+    public void deleteSomeInformation(){
+    	cars = null;
     }
 }

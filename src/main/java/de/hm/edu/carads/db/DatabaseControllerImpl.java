@@ -4,17 +4,21 @@ import java.util.List;
 
 import javax.ws.rs.core.NoContentException;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoDatabase;
 
 import de.hm.edu.carads.db.util.DatabaseFactory;
 
 public class DatabaseControllerImpl implements DatabaseController {
 	private DB db;
+	private MongoDatabase mongoDB;
 
 	public DatabaseControllerImpl(String environment) {
 		db = DatabaseFactory.getInstanceDB(environment);
@@ -22,8 +26,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 
 	@Override
 	public BasicDBObject addEntity(ModelCollection collectionC, BasicDBObject entity) {
-		DBCollection collection = db
-				.getCollection(getCollectionName(collectionC));
+		DBCollection collection = db.getCollection(getCollectionName(collectionC));
 		collection.insert(entity);
 		return entity;
 	}
@@ -73,18 +76,30 @@ public class DatabaseControllerImpl implements DatabaseController {
 
 		return (BasicDBObject) collection.findOne(query);
 	}
-
+	
 	@Override
-	public List<DBObject> getAllEntities(ModelCollection collectionC) {
+	public BasicDBObject getSubEntity(ModelCollection collectionC, String id)
+			throws NoContentException {
 		DBCollection collection = db
 				.getCollection(getCollectionName(collectionC));
-		List<DBObject> list = collection.find().toArray();
-
-		return list;
+		BasicDBObject query = new BasicDBObject();
+		try {
+			query.put("_id", new ObjectId(id));
+		} catch (Exception e) {
+			throw new NoContentException("id not found");
+		}
+		return (BasicDBObject) collection.findOne(query);
+		//TODO so nicht.
 	}
 
 	@Override
-	public BasicDBObject updateEntity(ModelCollection collectionC, String id,
+	public List<DBObject> getAllEntities(ModelCollection collectionC) {
+		DBCollection collection = db.getCollection(getCollectionName(collectionC));
+		return collection.find().toArray();
+	}
+
+	@Override
+	public void updateEntity(ModelCollection collectionC, String id,
 			BasicDBObject newEntity) throws NoContentException {
 		DBCollection collection = db
 				.getCollection(getCollectionName(collectionC));
@@ -94,8 +109,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 		} catch (Exception e) {
 			throw new NoContentException("id not found");
 		}
-
-		return (BasicDBObject) collection.findAndModify(query, newEntity);
+		collection.findAndModify(query, newEntity);
 	}
 
 	@Override
@@ -125,5 +139,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 	public String getNewId() {
 		return new ObjectId().toString();
 	}
+
+	
 
 }
