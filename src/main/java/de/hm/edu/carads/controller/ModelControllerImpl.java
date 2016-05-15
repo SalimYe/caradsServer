@@ -154,6 +154,7 @@ public class ModelControllerImpl implements ModelController {
 
 		car.setId(dbController.getNewId());
 		car.renewMetaInformation();
+		car.cleanBeforeSaving();
 		driver.addCar(car);
 
 		driver.getMetaInformation().update();
