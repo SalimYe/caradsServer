@@ -22,7 +22,6 @@ app.controller('home', function ($scope, $rootScope, $translate, ngTableParams, 
         $http.get('../api/drivers/' + driverId + '/requests').
                     success(function (data, status, headers, config) {
                         $scope.carRequests = data;
-                        console.log(data);
                         $scope.fillTable($scope.carRequests);
                         $scope.tableLoaded = true;
                     }).

@@ -21,9 +21,9 @@ app.config(function ($routeProvider) {
                 controller: 'campaigns',
                 templateUrl: 'views/campaigns.html'
             })
-            .when('/advertiser/:advertiserId/campaign/', {
-                controller: 'campaign',
-                templateUrl: 'views/campaign.html'
+            .when('/advertiser/:advertiserId/campaignEdit/', {
+                controller: 'campaignEdit',
+                templateUrl: 'views/campaignEdit.html'
             })
             .when('/advertiser/:advertiserId/campaignEdit/:campaignId', {
                 controller: 'campaignEdit',

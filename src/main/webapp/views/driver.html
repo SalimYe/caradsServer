@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label for="password" class="required">Passwort Wiederholung</label>
                     <input type="password" class="form-control" id="password" ng-model="passwordConfirm"
-                           required="" compare-to="driver.password">
+                           required="" compare-to="driver.password" oninvalid="this.setCustomValidity('Bitte hier das zuvor gewählte Passwort erneut eintragen!')">
                 </div>
             </div>
             <div class="col-md-6">
@@ -105,7 +105,7 @@
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     Abbrechen
                 </a>
-                <button type="submit" class="btn btn-success" ng-click="registerDriver()" ng-disabled="!driverForm.$valid">
+                <button type="submit" class="btn btn-success" ng-click="registerDriver()">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     Registrieren
                 </button>

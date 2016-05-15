@@ -12,7 +12,7 @@ function showModal($modal, modalDescription, modalTitle, modalButtonOneText, mod
     var opts = {
         backdrop: 'static',
         keyboard: false,
-        templateUrl: 'views/modalContent.html',
+        templateUrl: 'views/modal.html',
         controller: 'ModalController',
         resolve: {} // empty storage
     };

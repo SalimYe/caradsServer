@@ -4,10 +4,6 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     var campaignId = $routeParams.campaignId;
     $scope.advertiserId = advertiserId;
 
-    if (advertiserId === undefined) {
-        $location.path('/');
-    }
-
     var alert = function (title, content, level) {
         $scope.alert = [];
         $scope.alert.title = title;

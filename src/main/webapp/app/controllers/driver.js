@@ -1,5 +1,5 @@
-startapp.controller('driver', function ($scope, $routeParams, $http, $timeout) {
-    
+startapp.controller('driver', function ($scope, $routeParams, $http, $timeout, $modal) {
+
     $scope.driver = {};
 
     var alert = function (title, content, level) {
@@ -14,21 +14,23 @@ startapp.controller('driver', function ($scope, $routeParams, $http, $timeout) {
     };
 
     $scope.registerDriver = function () {
-        $http.post('./api/drivers/', $scope.driver).
-                success(function (data, status, headers, config) {
-                    alert("Fahrer angelegt", "Der Fahrer wurde erfolgreich registriert!", "success");
-                }).
-                error(function (data, status) {
-                    if (status === 409) {
-                        alert("Speichern fehlgeschlagen", "Es ist bereits ein Fahrer mit der Mail \""
-                                + $scope.driver.email + "\" registiert!", "danger");
-                    } else {
-                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                                "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                                "den Administrator.", "danger");
-                    }
+        if ($scope.driverForm.$valid) {
+            $http.post('./api/drivers/', $scope.driver).
+                    success(function (data, status, headers, config) {
+                        alert("Fahrer angelegt", "Der Fahrer wurde erfolgreich registriert!", "success");
+                    }).
+                    error(function (data, status) {
+                        if (status === 409) {
+                            alert("Speichern fehlgeschlagen", "Es ist bereits ein Fahrer mit der Mail \""
+                                    + $scope.driver.email + "\" registiert!", "danger");
+                        } else {
+                            alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
+                                    "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
+                                    "den Administrator.", "danger");
+                        }
 
-                });
+                    });
+        }
     };
 
     $scope.saveImage = function () {
