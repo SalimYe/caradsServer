@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.core.NoContentException;
@@ -215,6 +216,16 @@ public class DriverControllerTest {
 		d2.setEmail(EMAIL);
 
 		modelController.changeDriver(d2.getId(), d2);
+	}
+	
+	@Test
+	public void getDriverInfoInCarTest() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		
+		Iterator<Car> cars = modelController.getCars(driver.getId()).iterator(); 
+		Car checkCar = cars.next();
+		assertEquals(driver.getId(), checkCar.getDriverId());
 	}
 
 	private Driver makeNewDriver() {

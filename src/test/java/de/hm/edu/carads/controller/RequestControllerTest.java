@@ -16,7 +16,9 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.comm.Fellow;
 import de.hm.edu.carads.models.comm.OfferInformation;
+import de.hm.edu.carads.models.comm.OfferRequest;
 import de.hm.edu.carads.models.util.FellowState;
 
 public class RequestControllerTest {
@@ -43,7 +45,32 @@ public class RequestControllerTest {
 		Car car = modelController.addCar(driver.getId(), makeNewCar());
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
-		assertEquals(1, modelController.getOfferInformation(driver.getId()).size());
+		
+		Collection<OfferInformation> info = modelController.getOfferInformation(driver.getId());
+		//Fahrer sieht nur ein Angebot an ihn.
+		assertEquals(1, info.size());
+		
+		OfferInformation offerInfo = info.iterator().next();
+		
+		//Der Status ist "asked".
+		assertEquals(FellowState.ASKED, offerInfo.getState());
+		
+		//Antwort des Fahrers:
+		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		
+		//Nochmal Angebote checken
+		info = modelController.getOfferInformation(driver.getId());
+		assertEquals(1, info.size());
+		offerInfo = info.iterator().next();
+		
+		//Der Status ist "ACCEPTED".
+		assertEquals(FellowState.ACCEPTED, offerInfo.getState());
+		
+		Campaign campaign = modelController.getCampaign(ad.getId(), camp.getId());
+		Fellow fellow = campaign.getFellow(car.getId());
+		
+		//Auch der Werbende sieht "ACCEPTED".
+		assertEquals(FellowState.ACCEPTED, fellow.getState());
 	}
 	
 	@Test

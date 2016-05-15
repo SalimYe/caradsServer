@@ -10,7 +10,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-.log
+*.log
 
 # Eclipse Core
 .project

@@ -13,6 +13,10 @@ public class Car extends Model{
 	private String description;
 	private Collection<Image> images;
 	
+	//nur fuer die Ausgabe
+	private String driverId;
+	private String driverZip;
+	
 	public Car(){
 		super();
 	}
@@ -35,4 +39,19 @@ public class Car extends Model{
 	public void setColor(String color) {
 		this.color = color;
 	}
+	
+	public void cleanBeforeSaving(){
+		this.driverId=null;
+		this.driverZip=null;
+	}
+	public void setDriverInformation(String driverId, String driverZip){
+		this.driverId = driverId;
+		this.driverZip=driverZip;
+	}
+
+	public String getDriverId() {
+		return driverId;
+	}
+	
+	
 }

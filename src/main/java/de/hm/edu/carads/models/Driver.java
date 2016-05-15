@@ -32,7 +32,7 @@ public class Driver extends Person {
     }
 
     public Car getCar(String carId) {
-        Iterator<Car> it = cars.iterator();
+        Iterator<Car> it = getCars().iterator();
         while (it.hasNext()) {
             Car tmp = it.next();
             if (tmp.getId().equals(carId)) {
@@ -48,8 +48,19 @@ public class Driver extends Person {
     }
 
     public Collection<Car> getCars() {
-        checkCars();
-        return cars;
+    	checkCars();
+		return enrichCars();
+    }
+    
+    private Collection<Car> enrichCars(){
+    	Collection<Car> enrichedCars = new ArrayList<Car>();
+    	Iterator<Car> it = cars.iterator();
+        while (it.hasNext()) {
+            Car tmp = it.next();
+            tmp.setDriverInformation(this.getId(), zip);
+            enrichedCars.add(tmp);
+        }
+    	return enrichedCars;
     }
 
     public void addCar(Car car) {
