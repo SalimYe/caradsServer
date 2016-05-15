@@ -27,7 +27,7 @@ public class Advertiser extends Person{
 	/**
 	 * Eine Sammlung der Kampagnen, die zu diesem Werbenden gehoeren.
 	 */
-	private Collection<Campaign> campaigns = new ArrayList<Campaign>();;
+	private Collection<Campaign> campaigns;
 	
 	/**
 	 * Der Konstruktor empfaengt die wichtigsten Attribute.
@@ -60,6 +60,8 @@ public class Advertiser extends Person{
 	 * @param campaign
 	 */
 	public void addCampaign(Campaign campaign) {
+		if(campaigns==null)
+			campaigns = new ArrayList<Campaign>();
 		this.campaigns.add(campaign);
 	}
 	
@@ -69,6 +71,8 @@ public class Advertiser extends Person{
 	 * @return campaign
 	 */
 	public Campaign getCampaign(String id){
+		if(campaigns==null)
+			campaigns = new ArrayList<Campaign>();
 		Iterator<Campaign> it = campaigns.iterator();
 		
 		while(it.hasNext()){
@@ -96,6 +100,8 @@ public class Advertiser extends Person{
 	 * @return true if element was removed
 	 */
 	public boolean removeCampaign(String id){
+		if(campaigns==null)
+			campaigns = new ArrayList<Campaign>();
 		return campaigns.remove(this.getCampaign(id));
 	}
 	
@@ -113,6 +119,8 @@ public class Advertiser extends Person{
 	 * @return campaigns
 	 */
 	public Collection<Campaign> getCampaigns(){ 
+		if(campaigns==null)
+			campaigns = new ArrayList<Campaign>();
 		return this.campaigns;
 	}
 }

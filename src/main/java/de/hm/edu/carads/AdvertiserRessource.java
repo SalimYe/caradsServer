@@ -32,9 +32,11 @@ import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
+import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.comm.AdvertiserRegistration;
 import de.hm.edu.carads.models.comm.EnrichedCampaign;
 import de.hm.edu.carads.models.comm.OfferRequest;
+import de.hm.edu.carads.models.util.Helper;
 
 @Path("advertisers")
 public class AdvertiserRessource {
@@ -73,10 +75,12 @@ public class AdvertiserRessource {
 					new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
 
 			modelController.addAdvertiser(advertiserRegistration);
-//			String adId
-//			User realm = new User(advertiser.getEmail(), Helper.getShaHash(advertiserRegistration.getPassword()), "advertiser",
-//					advertiser.getId());
-//			rc.addEntity(realm);
+			
+			String adId =  modelController.getAdvertiserByMail(advertiserRegistration.getEmail()).getId();
+			
+			User realm = new User(advertiserRegistration.getEmail(), Helper.getShaHash(advertiserRegistration.getPassword()), "advertiser", adId);
+
+			rc.addUser(realm);
 
 			return Response.ok().build();
 

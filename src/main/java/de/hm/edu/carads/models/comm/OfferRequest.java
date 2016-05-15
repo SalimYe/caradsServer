@@ -9,13 +9,13 @@ public class OfferRequest {
 	/**
 	 * Id eines Fahrzeugs.
 	 */
-	private String carid;
+	private String carId;
 	
 	/**
 	 * Rueckgabe der FahrzeugID.
 	 * @return carid
 	 */
 	public String getCarId(){
-		return this.carid;
+		return this.carId;
 	}
 }
