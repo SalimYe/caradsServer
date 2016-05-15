@@ -26,7 +26,7 @@ app.controller('home', function ($scope, $rootScope, $translate, ngTableParams, 
                         $scope.tableLoaded = true;
                     }).
                     error(function (data, status, headers, config) {
-                        $location.path('/');
+                        // TODO
                     });
     }
     
