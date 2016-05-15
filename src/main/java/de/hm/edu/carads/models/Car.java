@@ -48,4 +48,10 @@ public class Car extends Model{
 		this.driverId = driverId;
 		this.driverZip=driverZip;
 	}
+
+	public String getDriverId() {
+		return driverId;
+	}
+	
+	
 }
