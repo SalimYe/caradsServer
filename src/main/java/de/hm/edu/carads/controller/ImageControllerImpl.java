@@ -21,6 +21,11 @@ import org.glassfish.jersey.uri.PathPattern;
 import de.hm.edu.carads.db.PropertiesLoader;
 import de.hm.edu.carads.models.Image;
 
+/**
+ * Diese Klasse behandelt das Speichern und Lesen von Bildern auf dem Server.
+ * @author BK
+ *
+ */
 public class ImageControllerImpl implements ImageController {
 
 	private static final String UPLOAD_PATH = System.getProperty("user.home") + PropertiesLoader.getInstance().getPropertyString("IMG_DIR");

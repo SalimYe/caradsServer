@@ -12,9 +12,8 @@ public class DriverRegistration extends Driver{
 		super(email, firstName, lastName);
 		this.password = password;
 	}
-
+    
     public String getPassword(){
     	return password;
     }
-	
 }
