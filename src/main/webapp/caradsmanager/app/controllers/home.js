@@ -16,7 +16,7 @@ app.controller('home', function ($scope, $rootScope, $translate, ngTableParams, 
 
             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
         }
-    })};
+    });};
     
     if($rootScope.realm.isDriver) {
         $http.get('../api/drivers/' + driverId + '/requests').

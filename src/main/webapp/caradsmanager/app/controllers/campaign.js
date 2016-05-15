@@ -1,4 +1,4 @@
-app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $location, $timeout) {
+app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $location, $timeout, $filter, ngTableParams) {
 
     var advertiserId = $routeParams.advertiserId;
     var campaignId = $routeParams.campaignId;
@@ -17,7 +17,7 @@ app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $l
     };
 
     var goBack = function () {
-        if($rootScope.realm.isAdvertiser) {
+        if ($rootScope.realm.isAdvertiser) {
             $location.path('advertiser/' + advertiserId + '/campaigns');
         } else {
             $location.path('home/');
@@ -27,41 +27,61 @@ app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $l
     $scope.deleteAlert = function () {
         delete $scope.alert;
     };
-    
-    var getCarsWithState = function (fellows) {
-        var cars = [];
-        if (fellows === undefined ||
-                fellows.length === 0) {
-                return cars;
-        }
-        for(var i = 0; i < fellows.length; i++) {
-            var fellow = fellows[i];
-            var car = cars[i] = [];
-            car.id = fellow.carId;
-            car.state = fellow.state;
-        }
-        return cars;        
-    };
 
-        $http.get('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId).
-                success(function (data, status, headers, config) {
-                    $scope.campaign = data;
-                    $scope.cars = getCarsWithState($scope.campaign.fellows);
-                }).
-                error(function (data, status, headers, config) {
-                    goBack();
-                });
+    $http.get('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId).
+            success(function (data, status, headers, config) {
+                $scope.campaign = data;
+                console.log(data);
+                $scope.fellows = $scope.campaign.enrichedFellows;
+                $scope.fillTable($scope.fellows);
+                $scope.tableLoaded = true;
+            }).
+            error(function (data, status, headers, config) {
+                goBack();
+            });
 
     $scope.exitCampaign = function () {
         goBack();
     };
-    
+
     $scope.editCampaign = function () {
         $location.path('advertiser/' + advertiserId + '/campaignEdit/' + campaignId);
     };
-    
+
     $scope.showAvailableCars = function () {
         $location.path('advertiser/' + advertiserId + '/campaign/' + campaignId + '/availableCars/');
     };
 
+    $scope.fillTable = function (data) {
+        $scope.tableParams = new ngTableParams({
+            page: 1, // show first page
+            count: 10          // count per page
+        }, {
+            total: data.length, // length of data
+            getData: function ($defer, params) {
+                // use build-in angular filter
+                var orderedData = params.sorting() ?
+                        $filter('orderBy')(data, params.orderBy()) :
+                        data;
+
+                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            }
+        });
+    };
+
+    $scope.getStateLabel = function (state) {
+        return getStateLabel(state);
+    };
+
+    $scope.getStateLabelBoostrapState = function (state) {
+        return getStateLabelBoostrapState(state);
+    };
+    
+    $scope.openCarDetails = function (driverId, carId) {
+        $location.path('driver/' + driverId + '/car/' + carId);
+    };
+    
+    $scope.openDriverDetails = function (driverId, carId) {
+        $location.path('driver/' + driverId);
+    };
 });

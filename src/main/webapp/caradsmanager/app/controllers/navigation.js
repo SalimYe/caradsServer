@@ -1,7 +1,7 @@
-app.controller('navigation', function ($rootScope, $scope, $http, $cookieStore) {
+app.controller('navigation', function ($rootScope, $scope, $http, $location) {
 
     $rootScope.realm = [];
-
+    
     var getProfilDetails = function () {
         if ($rootScope.realm.isDriver) {
             $http.get('../api/drivers/' + $rootScope.realm.driverId).
@@ -14,7 +14,7 @@ app.controller('navigation', function ($rootScope, $scope, $http, $cookieStore) 
         }
 
         if ($rootScope.realm.isAdvertiser) {
-            $http.get('../api/drivers/' + $rootScope.realm.advertiserId).
+            $http.get('../api/advertisers/' + $rootScope.realm.advertiserId).
                     success(function (data, status, headers, config) {
                         $rootScope.advertiser = data;
                     }).

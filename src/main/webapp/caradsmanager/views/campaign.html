@@ -1,59 +1,71 @@
 <main>
-    <h3>Kampagne</h3>         
+    <h2>Kampagne</h2>         
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
     </div>
-        <div class="row">
-            <div class="col-md-3">
-                <h4>{{campaign.title}}</h4>
-                <p><strong>Budget:</strong> {{campaign.campaignBudget}}<br />
+    <div class="row">
+        <div class="col-md-3">
+            <h4>{{campaign.title}}</h4>
+            <p><strong>Budget:</strong> {{campaign.campaignBudget}}<br />
                 <strong>Datum Start:</strong> {{campaign.startDate}}<br />
                 <strong>Datum Ende:</strong> {{campaign.endDate}}</p>
-            </div>
-            <div class="col-md-4">
-                <h4>Kurzbeschreibung</h4>
-                <p>{{campaign.description}}</p>
+        </div>
+        <div class="col-md-4">
+            <h4>Kurzbeschreibung</h4>
+            <p>{{campaign.description}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Fotos</h4>
+            <div class="elementImage multi" ng-repeat="image in campaign.images">
+                <img ng-src="../api/images/{{image.id}}" />
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Fotos</h4>
-                <div class="elementImage multi" ng-repeat="image in campaign.images">
-                    <img ng-src="../api/images/{{image.id}}" />
-                </div>
-            </div>
-        </div>
-        <div class="row" ng-if="realm.isAdvertiser || realm.isAdmin">
-            <div class="col-md-12">
-                <h2>Fahrzeug Anfragen</h2>
-                <table class="table table-striped">
-                    <tr>
-                        <th>Id</th>
-                        <th>Status</th>
-                    </tr>
-                    <tr ng-repeat="car in cars">
-                        <td>{{car.id}}</td>
-                        <td>{{car.state}}</td>
+    </div>
+    <div class="row" ng-if="realm.isAdvertiser || realm.isAdmin">
+        <div class="col-md-12">
+            <h3>Fahrzeug Anfragen</h3>
+            <div class="table-responsive">
+                <table ng-table="tableParams" class="table table-striped table-hover">
+                    <tr ng-repeat="request in $data">
+                        <td data-title="'Fahrzeug'" sortable="'car.brand'">{{request.car.brand}} {{request.car.model}}</td>
+                        <td data-title="'Status'" sortable="'state'">
+                            <span class="label label-{{getStateLabelBoostrapState(request.state)}}">{{getStateLabel(request.state)}}</span>
+                        </td>
+                        <td data-title="''" class="text-right">
+                            <button ng-disabled="request.state != 'ACCEPTED'" class="btn btn-default btn-xs" type="button"
+                                    ng-click="openDriverDetails(request.car.driverId, request.car.id)">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                Fahrer Details
+                            </button>
+                            <button class="btn btn-default btn-xs" type="button"
+                                    ng-click="openCarDetails(request.car.driverId, request.car.id)">
+                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                Fahrzeug Details
+                            </button>
+                        </td>
                     </tr>
                 </table>
-                <button type="submit" class="btn btn-default" ng-click="showAvailableCars()">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Fahrzeuge hinzuf&uuml;gen
-                </button>
             </div>
+            <button type="submit" class="btn btn-default" ng-click="showAvailableCars()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Fahrzeuge hinzuf&uuml;gen
+            </button>
         </div>
-        <hr />
-        <div class="row">
-            <div class="col-md-12">
-                <button ng-if="realm.isAdvertiser" type="submit" class="btn btn-default" ng-click="editCampaign()">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    Kampagne bearbeiten
-                </button>
-                <button type="submit" class="btn btn-default" ng-click="exitCampaign()">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Schlie&szlig;en
-                </button>
-            </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <button ng-if="realm.isAdvertiser" type="submit" class="btn btn-default" ng-click="editCampaign()">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                Kampagne bearbeiten
+            </button>
+            <button type="submit" class="btn btn-default" ng-click="exitCampaign()">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Schlie&szlig;en
+            </button>
         </div>
+    </div>
 </main>

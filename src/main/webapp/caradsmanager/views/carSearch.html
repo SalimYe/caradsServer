@@ -58,9 +58,15 @@
         <div class="col-md-9">
             <h3>Fahrzeug Auswahl</h3>
             <div class="alert alert-warning" role="alert" ng-if="cars === undefined || cars.length === 0">
-                <strong>Keine Fahrzeuge vorhanden!</strong>
-                Klicken Sie auf &quot;+ Fahrzeug hinzuf&uuml;gen&quot;, um ein neues
-                Fahrzeug anzulegen.
+                <p><strong>Keine Fahrzeuge verfügbar!</strong></p>
+                <p>Daf&uuml;r kann es mehrere Gr&uuml;de geben:</p>
+                <ul>
+                    <li>F&uuml;r den Zeitraum dieser Kampagne sind keine
+                        verf&uuml;gbaren Fahrzeuge vorhanden, da diese bereits von
+                        anderen Kampagnen gebucht wurden.</li>
+                    <li>Sie haben bereits alle für den Zeitraum der Kampagne
+                        verf&uuml;gbaren Fahrzeuge angefragt.</li>
+                </ul>
             </div>
             <div class="row">
                 <div ng-repeat="car in cars">

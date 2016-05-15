@@ -17,6 +17,10 @@ app.config(function ($routeProvider) {
                 controller: 'car',
                 templateUrl: 'views/car.html'
             })
+            .when('/driver/:driverId/carEdit/:carId', {
+                controller: 'carEdit',
+                templateUrl: 'views/carEdit.html'
+            })
             .when('/advertiser/:advertiserId/campaigns/', {
                 controller: 'campaigns',
                 templateUrl: 'views/campaigns.html'
