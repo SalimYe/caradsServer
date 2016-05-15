@@ -8,6 +8,7 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.comm.EnrichedCampaign;
 import de.hm.edu.carads.models.comm.OfferInformation;
 
 public interface ModelController {
@@ -36,6 +37,7 @@ public interface ModelController {
 	
 	public Campaign addCampaign(String advertiserId, Campaign campaign) throws Exception;
 	public Campaign getCampaign(String advertiserId, String campaignId) throws Exception;
+	public EnrichedCampaign getEnrichedCampaign(String advertiserId, String campaignId) throws Exception;
 	public void deleteCampaign(String advertiserId, String campaignId) throws Exception;
 	public Campaign updateCampaign(String advertiserId, String campaignId, Campaign campaign) throws Exception;
 	public Collection<Campaign> getCampaigns(String advertiserId) throws Exception;

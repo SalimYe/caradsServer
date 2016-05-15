@@ -22,6 +22,8 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
+import de.hm.edu.carads.models.comm.EnrichedCampaign;
+import de.hm.edu.carads.models.comm.EnrichedFellow;
 import de.hm.edu.carads.models.comm.Fellow;
 import de.hm.edu.carads.models.comm.OfferInformation;
 import de.hm.edu.carads.models.util.DateController;
@@ -489,5 +491,37 @@ public class ModelControllerImpl implements ModelController {
 				reduced.add(car);
 		}
 		return reduced;
+	}
+
+	@Override
+	public EnrichedCampaign getEnrichedCampaign(String advertiserId,
+			String campaignId) throws Exception {
+		Campaign campaign = this.getCampaign(advertiserId, campaignId);
+		EnrichedCampaign enrichedCampaign = new EnrichedCampaign(campaign, getEnrichedFellows(campaign.getFellows()));
+		return enrichedCampaign;
+	}
+	
+	private Collection<EnrichedFellow> getEnrichedFellows(Collection<Fellow> fellows) throws Exception{
+		Collection<EnrichedFellow> enrichedFellows = new ArrayList<EnrichedFellow>();
+		Iterator<Fellow> fellowIt = fellows.iterator();
+		
+		Collection<Car> allCars = getAllCars();
+		while(fellowIt.hasNext()){
+			Fellow f = fellowIt.next();
+			Car c = getOneCarFromCarCollection(allCars, f.getCarId());
+			if(c!=null)
+				enrichedFellows.add(new EnrichedFellow(f.getState(), c));
+		}
+		return enrichedFellows;
+	}
+	
+	private Car getOneCarFromCarCollection(Collection<Car> cars, String carId){
+		Iterator<Car> it = cars.iterator();
+		while(it.hasNext()){
+			Car c = it.next();
+			if(c.getId().equals(carId))
+				return c;
+		}
+		return null;
 	}
 }

@@ -33,6 +33,7 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.comm.AdvertiserRegistration;
+import de.hm.edu.carads.models.comm.EnrichedCampaign;
 import de.hm.edu.carads.models.comm.OfferRequest;
 
 @Path("advertisers")
@@ -188,7 +189,7 @@ public class AdvertiserRessource {
 	public Response getCampaign(@PathParam("id") String id,
 			@PathParam("cid") String cid) {
 		try {
-			Campaign campaign = modelController.getCampaign(id, cid);
+			EnrichedCampaign campaign = modelController.getEnrichedCampaign(id, cid);
 			return Response.ok(gson.toJson(campaign)).build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
