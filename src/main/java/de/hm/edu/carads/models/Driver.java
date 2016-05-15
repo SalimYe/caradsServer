@@ -32,7 +32,7 @@ public class Driver extends Person {
     /**
      * Sammlung der Fahrzeuge des Fahrers.
      */
-    private Collection<Car> cars = new ArrayList<Car>();
+    private Collection<Car> cars;
     
     /**
      * Profilbild.
@@ -95,6 +95,8 @@ public class Driver extends Person {
      * @return true if removed successfully
      */
     public boolean removeCar(String carId) {
+    	if(cars==null)
+    		this.cars= new ArrayList<Car>();
         return cars.remove(getCar(carId));
     }
 
@@ -131,6 +133,8 @@ public class Driver extends Person {
     public void addCar(Car car) {
     	if(car.getId()==null || car.getId().isEmpty())
     		throw new IllegalArgumentException();
+    	if(cars==null)
+    		this.cars= new ArrayList<Car>();
         this.cars.add(car);
     }
     
