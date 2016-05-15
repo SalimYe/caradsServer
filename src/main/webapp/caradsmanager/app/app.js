@@ -9,13 +9,13 @@ app.config(function ($routeProvider) {
                 controller: 'cars',
                 templateUrl: 'views/cars.html'
             })
-            .when('/driver/:driverId/car/', {
-                controller: 'car',
-                templateUrl: 'views/car.html'
-            })
             .when('/driver/:driverId/car/:carId', {
                 controller: 'car',
                 templateUrl: 'views/car.html'
+            })
+            .when('/driver/:driverId/carEdit/', {
+                controller: 'carEdit',
+                templateUrl: 'views/carEdit.html'
             })
             .when('/driver/:driverId/carEdit/:carId', {
                 controller: 'carEdit',
