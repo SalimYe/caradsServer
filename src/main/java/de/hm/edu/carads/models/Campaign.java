@@ -8,14 +8,47 @@ import de.hm.edu.carads.models.comm.Fellow;
 import de.hm.edu.carads.models.util.FellowState;
 import de.hm.edu.carads.models.util.Model;
 
+/**
+ * Die Klasse repraesentiert eine Kampagne.
+ * @author BK
+ *
+ */
 public class Campaign extends Model{
 
+	/**
+	 * Titel der Kampagne.
+	 */
 	private String title;
+	
+	/**
+	 * Beschreibung.
+	 */
 	private String description;
+	
+	/**
+	 * Budget der Kampagne.
+	 */
 	private String campaignBudget;
+	
+	/**
+	 * Datum des Kampagnenanfangs.
+	 */
 	private String startDate="";
+	
+	/**
+	 * Datum des Kampagnenendes.
+	 */
 	private String endDate="";
+	
+	/**
+	 * Sammlung von Bildern, welche die Kampagne beschreiben und
+	 * Informationen zu den Klebefolien beinhalten.
+	 */
 	private Collection<Image> images;
+	
+	/**
+	 * Sammlung der Autos, welche fuer die Kampagne angefragt wurden.
+	 */
 	private Collection<Fellow> fellows;
 	
 	
@@ -55,6 +88,12 @@ public class Campaign extends Model{
 	public void setImages(Collection<Image> images) {
 		this.images = images;
 	}
+	
+	/**
+	 * Eine neue Anfrage an ein Fahrzeug.
+	 * @param carId
+	 * @return true if all Information was given.
+	 */
 	public boolean addFellow(String carId){
 		if(this.fellows == null)
 			this.fellows = new ArrayList<Fellow>();
@@ -65,15 +104,29 @@ public class Campaign extends Model{
 		return true;
 	}
 	
+	/**
+	 * Gibt die Sammlung der angefragten Fahrzeuge zurueck.
+	 * @return Fellow Collection
+	 */
 	public Collection<Fellow> getFellows(){
 		if(this.fellows == null)
 			this.fellows = new ArrayList<Fellow>();
 		return this.fellows;
 	}
+	
+	/**
+	 * Die Sammlung der angefragten Fahrzeuge wird durch eine andere ersetzt.
+	 * @param fellows
+	 */
 	public void setFellows(Collection<Fellow> fellows){
 		this.fellows = fellows;
 	}
 	
+	/**
+	 * Wahrheitswert darueber ob ein Fahrzeug bereits fuer diese Kampagne angefragt wurde.
+	 * @param carId
+	 * @return already asked
+	 */
 	public boolean isCarAFellow(String carId){
 		Fellow fellow = getFellow(carId);
 		
@@ -83,6 +136,11 @@ public class Campaign extends Model{
 		
 	}
 	
+	/**
+	 * Gibt eine Anfragestatus an ein Fahrzeug anhand der FahrzeugID zurueck.
+	 * @param carId
+	 * @return Anfragestatus
+	 */
 	public Fellow getFellow(String carId){
 		if(carId==null)
 			return null;
@@ -98,6 +156,11 @@ public class Campaign extends Model{
 		return null;
 	}
 	
+	/**
+	 * Wahrheitswert ob ein spezielles Fahrzeug bereits fuer die Kampagne zugesagt hat. 
+	 * @param carId
+	 * @return true if accepted
+	 */
 	public boolean hasFellowAccepted(String carId){
 		Fellow fellow = getFellow(carId);
 		if(fellow!=null && fellow.getState().equals(FellowState.ACCEPTED))

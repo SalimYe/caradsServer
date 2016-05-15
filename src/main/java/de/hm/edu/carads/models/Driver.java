@@ -7,14 +7,44 @@ import java.util.Iterator;
 import de.hm.edu.carads.models.util.MetaInformation;
 import de.hm.edu.carads.models.util.Person;
 
+/**
+ * Diese Klasse repreasentiert einen Fahrer. Die Klasse Person wird erweitert.
+ * @author BK
+ *
+ */
 public class Driver extends Person {
 
+	/**
+	 * Geburtsdatum als String.
+	 */
     private String birthdate;
+    
+    /**
+     * Beruf.
+     */
     private String occupation;
+    
+    /**
+     * Ausstellungsdatum des Fuehrerscheins.
+     */
     private String licenseDate;
-    private Collection<Car> cars;
+    
+    /**
+     * Sammlung der Fahrzeuge des Fahrers.
+     */
+    private Collection<Car> cars = new ArrayList<Car>();
+    
+    /**
+     * Profilbild.
+     */
     private Image profilePicture;
 
+    /**
+     * Konstruktor mit den wichtigsten Informationen.
+     * @param email
+     * @param firstName
+     * @param lastName
+     */
     public Driver(String email, String firstName, String lastName) {
         super(email, firstName, lastName);
         this.meta = new MetaInformation();
@@ -22,6 +52,17 @@ public class Driver extends Person {
         this.profilePicture = null;
     }
 
+    /**
+     * Ausfuehrlicher Konstruktor.
+     * @param birthdate
+     * @param occupation
+     * @param licenseDate
+     * @param cars
+     * @param profilePicture
+     * @param email
+     * @param firstName
+     * @param lastName
+     
     public Driver(String birthdate, String occupation, String licenseDate, Collection<Car> cars, Image profilePicture, String email, String firstName, String lastName) {
         super(email, firstName, lastName);
         this.birthdate = birthdate;
@@ -30,7 +71,13 @@ public class Driver extends Person {
         this.cars = cars;
         this.profilePicture = profilePicture;
     }
-
+	*/
+    
+    /**
+     * Ein spezielles Fahrzeug des Fahreres wird zurueck gegeben. 
+     * @param carId
+     * @return Fahrzeug
+     */
     public Car getCar(String carId) {
         Iterator<Car> it = getCars().iterator();
         while (it.hasNext()) {
@@ -42,18 +89,32 @@ public class Driver extends Person {
         return null;
     }
 
+    /**
+     * Ein spezielles Fahrzeug wird entfernt.
+     * @param carId
+     * @return true if removed successfully
+     */
     public boolean removeCar(String carId) {
-        checkCars();
         return cars.remove(getCar(carId));
     }
 
+    /**
+     * Alles Fahrzeuge werden zurueck gegeben.
+     * @return
+     */
     public Collection<Car> getCars() {
-    	checkCars();
 		return enrichCars();
     }
     
+    /**
+     * Diese Methode wird vor der Rueckgabe an den Benutzer aufgerufen.
+     * Die Informationen (ID und PLZ) des Fahreres werden innerhalb der Fahrzeugobjekte gespeichert.
+     * @return
+     */
     private Collection<Car> enrichCars(){
     	Collection<Car> enrichedCars = new ArrayList<Car>();
+    	if(cars==null)
+    		return enrichedCars;
     	Iterator<Car> it = cars.iterator();
         while (it.hasNext()) {
             Car tmp = it.next();
@@ -63,13 +124,16 @@ public class Driver extends Person {
     	return enrichedCars;
     }
 
+    /**
+     * Ein Fahrzeug wird zu der Sammlung hinzugefuegt.
+     * @param car
+     */
     public void addCar(Car car) {
     	if(car.getId()==null || car.getId().isEmpty())
     		throw new IllegalArgumentException();
-        checkCars();
         this.cars.add(car);
     }
-
+    
     public Image getImage() {
         return profilePicture;
     }
@@ -97,13 +161,11 @@ public class Driver extends Person {
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
-
-    private void checkCars() {
-        if (cars == null) {
-            cars = new ArrayList<Car>();
-        }
-    }
     
+    /**
+     * Die Sammlung der Autos wird auf null gesetzt um weniger Informationen
+     * an den Benutzer auszugeben.
+     */
     public void deleteSomeInformation(){
     	cars = null;
     }

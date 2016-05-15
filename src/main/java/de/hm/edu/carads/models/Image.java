@@ -1,9 +1,25 @@
 package de.hm.edu.carads.models;
 
+/**
+ * Diese Klasse repreasentiert ein Bild.
+ * @author BK
+ *
+ */
 public class Image{
 	
+	/**
+	 * Eindeutige ID des Bildes.
+	 */
 	private String id;
+	
+	/**
+	 * Alternativtext.
+	 */
 	private String altText;
+	
+	/**
+	 * Wahrheitswert darueber ob das Bild als Titelbild verwendet werden soll.
+	 */
 	private boolean isTitle;
 	
 	public String getAltText() {
