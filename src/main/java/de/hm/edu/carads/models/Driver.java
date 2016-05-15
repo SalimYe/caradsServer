@@ -116,7 +116,7 @@ public class Driver extends Person {
     private Collection<Car> enrichCars(){
     	Collection<Car> enrichedCars = new ArrayList<Car>();
     	if(cars==null)
-    		return enrichedCars;
+    		this.cars= new ArrayList<Car>();
     	Iterator<Car> it = cars.iterator();
         while (it.hasNext()) {
             Car tmp = it.next();
