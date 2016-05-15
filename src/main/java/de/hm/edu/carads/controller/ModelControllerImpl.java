@@ -298,7 +298,6 @@ public class ModelControllerImpl implements ModelController {
 			logger.error("Campaign "+ campaignId +" not valid");
 			throw new NoContentException(campaignId + " not found");
 		}
-			
 		
 		return c;
 	}
@@ -355,13 +354,19 @@ public class ModelControllerImpl implements ModelController {
 		Advertiser advertiser = advertiserController.getEntity(advertiserId);
 		Campaign campaign = advertiser.getCampaign(campaignId);
 		
-		if(isCarOccupiedInTime(carId, campaign.getStartDate(), campaign.getEndDate()))
+		if(isCarOccupiedInTime(carId, campaign.getStartDate(), campaign.getEndDate())){
+			logger.error("Cant make request. Car "+carId+" is already in another Campaign at this time");
 			throw new AlreadyExistsException();
-		if(campaign.isCarAFellow(carId))
+		}
+		if(campaign.isCarAFellow(carId)){
+			logger.error("Cant make request. Car "+carId+" was requested for this campaign already");
 			throw new AlreadyExistsException();
-		if(!campaign.addFellow(carId))
+		}
+		if(!campaign.addFellow(carId)){
+			logger.error("Car information was wrong");
 			throw new IllegalArgumentException();
-		
+		}
+			
 		logger.info("Campaign "+campaignId+" made an offer to "+carId);
 		return this.updateCampaign(advertiserId, campaignId, campaign);
 	}
