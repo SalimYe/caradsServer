@@ -228,6 +228,26 @@ public class AdvertiserControllerTest {
 		
 		modelController.requestVehicleForCampaign(adv1.getId(), camp2.getId(), "123");
 	}
+	
+	@Test
+	public void changeCampaignAndKeepFellowsTest() throws Exception{
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		Campaign campaign = modelController.addCampaign(ad.getId(), makeNewCampaign());
+		
+		modelController.requestVehicleForCampaign(ad.getId(), campaign.getId(), "111");
+		modelController.requestVehicleForCampaign(ad.getId(), campaign.getId(), "222");
+				
+		campaign = modelController.getCampaign(ad.getId(), campaign.getId());
+		assertEquals(2, campaign.getFellows().size());
+		
+		//Aenderung der Kampagne
+		campaign.setCampaignBudget("230");
+		
+		modelController.updateCampaign(ad.getId(), campaign.getId(), campaign);
+		
+		campaign = modelController.getCampaign(ad.getId(), campaign.getId());
+		assertEquals(2, campaign.getFellows().size());
+	}
 	/*
 	@Test (expected = AlreadyExistsException.class)
 	public void addCarToSecondCampaignWithSameDateTest4() throws Exception{
