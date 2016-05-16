@@ -51,27 +51,11 @@ public class Driver extends Person {
         this.cars = new ArrayList<>();
         this.profilePicture = null;
     }
-
-    /**
-     * Ausfuehrlicher Konstruktor.
-     * @param birthdate
-     * @param occupation
-     * @param licenseDate
-     * @param cars
-     * @param profilePicture
-     * @param email
-     * @param firstName
-     * @param lastName
-     
-    public Driver(String birthdate, String occupation, String licenseDate, Collection<Car> cars, Image profilePicture, String email, String firstName, String lastName) {
-        super(email, firstName, lastName);
-        this.birthdate = birthdate;
-        this.occupation = occupation;
-        this.licenseDate = licenseDate;
-        this.cars = cars;
-        this.profilePicture = profilePicture;
+    
+    private void checkCars(){
+    	if(this.cars==null)
+    		this.cars = new ArrayList<Car>();
     }
-	*/
     
     /**
      * Ein spezielles Fahrzeug des Fahreres wird zurueck gegeben. 
@@ -95,8 +79,7 @@ public class Driver extends Person {
      * @return true if removed successfully
      */
     public boolean removeCar(String carId) {
-    	if(cars==null)
-    		this.cars= new ArrayList<Car>();
+    	checkCars();
         return cars.remove(getCar(carId));
     }
 
@@ -115,8 +98,7 @@ public class Driver extends Person {
      */
     private Collection<Car> enrichCars(){
     	Collection<Car> enrichedCars = new ArrayList<Car>();
-    	if(cars==null)
-    		this.cars= new ArrayList<Car>();
+    	checkCars();
     	Iterator<Car> it = cars.iterator();
         while (it.hasNext()) {
             Car tmp = it.next();
@@ -133,8 +115,7 @@ public class Driver extends Person {
     public void addCar(Car car) {
     	if(car.getId()==null || car.getId().isEmpty())
     		throw new IllegalArgumentException();
-    	if(cars==null)
-    		this.cars= new ArrayList<Car>();
+    	checkCars();
         this.cars.add(car);
     }
     

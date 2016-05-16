@@ -127,7 +127,7 @@ public class AdvertiserRessource {
 			if (adv == null) {
 				throw new InvalidAttributesException();
 			}
-			modelController.changeAdvertiser(id, adv);
+			modelController.updateAdvertiser(id, adv);
 			return Response.ok().build();
 		} catch (InvalidAttributesException e) {
 			throw new WebApplicationException(400);

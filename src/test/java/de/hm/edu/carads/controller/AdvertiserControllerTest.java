@@ -71,7 +71,7 @@ public class AdvertiserControllerTest {
 		Advertiser ad2 =modelController.addAdvertiser(new Advertiser(EMAILTWO, "Max", "Muster"));
 		ad2.setEmail(EMAIL);
 		
-		modelController.changeAdvertiser(ad2.getId(), ad2);	}
+		modelController.updateAdvertiser(ad2.getId(), ad2);	}
 	
 	@Test
 	public void addCampaignTest() throws Exception{
@@ -241,9 +241,13 @@ public class AdvertiserControllerTest {
 		assertEquals(2, campaign.getFellows().size());
 		
 		//Aenderung der Kampagne
-		campaign.setCampaignBudget("230");
+		Campaign updatedCampaign = new Campaign();
+		updatedCampaign.setCampaignBudget("230");
+		updatedCampaign.setTitle(campaign.getTitle());
+		updatedCampaign.setStartDate(campaign.getStartDate());
+		updatedCampaign.setEndDate(campaign.getEndDate());
 		
-		modelController.updateCampaign(ad.getId(), campaign.getId(), campaign);
+		modelController.updateCampaign(ad.getId(), campaign.getId(), updatedCampaign);
 		
 		campaign = modelController.getCampaign(ad.getId(), campaign.getId());
 		assertEquals(2, campaign.getFellows().size());

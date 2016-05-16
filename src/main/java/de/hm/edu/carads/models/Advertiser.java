@@ -55,13 +55,16 @@ public class Advertiser extends Person{
 		this.logo = logo;
 	}
 	
+	private void checkCampaigns(){
+		if(this.campaigns==null)
+			this.campaigns = new ArrayList<Campaign>();
+	}
 	/**
 	 * Eine neue Kampagne zu diesem Werbenden hinzugefuegt.
 	 * @param campaign
 	 */
 	public void addCampaign(Campaign campaign) {
-		if(campaigns==null)
-			campaigns = new ArrayList<Campaign>();
+		checkCampaigns();
 		this.campaigns.add(campaign);
 	}
 	
@@ -71,8 +74,7 @@ public class Advertiser extends Person{
 	 * @return campaign
 	 */
 	public Campaign getCampaign(String id){
-		if(campaigns==null)
-			campaigns = new ArrayList<Campaign>();
+		checkCampaigns();
 		Iterator<Campaign> it = campaigns.iterator();
 		
 		while(it.hasNext()){
@@ -100,8 +102,7 @@ public class Advertiser extends Person{
 	 * @return true if element was removed
 	 */
 	public boolean removeCampaign(String id){
-		if(campaigns==null)
-			campaigns = new ArrayList<Campaign>();
+		checkCampaigns();
 		return campaigns.remove(this.getCampaign(id));
 	}
 	
@@ -119,8 +120,7 @@ public class Advertiser extends Person{
 	 * @return campaigns
 	 */
 	public Collection<Campaign> getCampaigns(){ 
-		if(campaigns==null)
-			campaigns = new ArrayList<Campaign>();
+		checkCampaigns();
 		return this.campaigns;
 	}
 }

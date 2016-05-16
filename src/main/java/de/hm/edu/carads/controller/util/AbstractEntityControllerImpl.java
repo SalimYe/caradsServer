@@ -64,7 +64,7 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
     public E getEntityByMail(String mail) throws NoContentException {
     	BasicDBObject dbObj = dbController.getEntityByKeyValue(modelClass, "email", mail);
         if(dbObj == null){
-        	logger.error("Entity not found with e-mail "+mail);
+        	logger.info("Entity not found with e-mail "+mail);
         	throw new NoContentException("Entity not found");
         }
         	
@@ -121,7 +121,6 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		}catch(NoContentException e){
 			logger.info("Email not registred yet. Saving Entity.");
 		}
-		
 		BasicDBObject dbObj = dbController.addEntity(modelClass, BasicDBObject.parse(gson.toJson(entity)));
 		return makeEntityFromBasicDBObject(dbObj);
 	}

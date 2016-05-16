@@ -89,14 +89,17 @@ public class Campaign extends Model{
 		this.images = images;
 	}
 	
+	private void checkFellows(){
+		if(this.fellows == null)
+			this.fellows = new ArrayList<Fellow>();
+	}
 	/**
 	 * Eine neue Anfrage an ein Fahrzeug.
 	 * @param carId
 	 * @return true if all Information was given.
 	 */
 	public boolean addFellow(String carId){
-		if(this.fellows == null)
-			this.fellows = new ArrayList<Fellow>();
+		checkFellows();
 		if(carId == null || carId.isEmpty())
 			return false;
 		
@@ -109,8 +112,7 @@ public class Campaign extends Model{
 	 * @return Fellow Collection
 	 */
 	public Collection<Fellow> getFellows(){
-		if(this.fellows == null)
-			this.fellows = new ArrayList<Fellow>();
+		checkFellows();
 		return this.fellows;
 	}
 	
@@ -144,8 +146,7 @@ public class Campaign extends Model{
 	public Fellow getFellow(String carId){
 		if(carId==null)
 			return null;
-		if(this.fellows == null)
-			this.fellows = new ArrayList<Fellow>();
+		checkFellows();
 		
 		Iterator<Fellow> it = fellows.iterator();
 		while(it.hasNext()){

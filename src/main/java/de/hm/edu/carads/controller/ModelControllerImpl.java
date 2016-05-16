@@ -80,7 +80,7 @@ public class ModelControllerImpl implements ModelController {
 	}
 
 	@Override
-	public void changeDriver(String id, Driver updatedDriver)
+	public void updateDriver(String id, Driver updatedDriver)
 			throws Exception {
 		driverController.changeEntity(id, updatedDriver);
 	}
@@ -116,7 +116,7 @@ public class ModelControllerImpl implements ModelController {
 	}
 
 	@Override
-	public void changeAdvertiser(String id, Advertiser updatedAdvertiser)
+	public void updateAdvertiser(String id, Advertiser updatedAdvertiser)
 			throws Exception {
 		advertiserController.changeEntity(id, updatedAdvertiser);
 	}
@@ -335,9 +335,12 @@ public class ModelControllerImpl implements ModelController {
 
 	
 		advertiser.removeCampaign(campaignId);
-		//campaign.setFellows(oldC.getFellows());
 		campaign.update(oldC.getMetaInformation());
 		campaign.setId(campaignId);
+		
+		if(campaign.getFellows().isEmpty())
+			campaign.setFellows(oldC.getFellows());
+		
 		advertiser.addCampaign(campaign);
 		logger.info("Campaign "+campaignId+" updated");
 		advertiserController.changeEntity(advertiserId, advertiser);

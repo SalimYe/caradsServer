@@ -91,7 +91,7 @@ public class DriverControllerTest {
 
 		// Fahrer wird verändert.
 		driver.setEmail("bla@asd.de");
-		modelController.changeDriver(driver.getId(), driver);
+		modelController.updateDriver(driver.getId(), driver);
 		assertEquals(driver.getEmail(), modelController.getDriver(driver.getId()).getEmail());
 	}
 
@@ -215,7 +215,7 @@ public class DriverControllerTest {
 		Driver d2 = modelController.addDriver(driver2);
 		d2.setEmail(EMAIL);
 
-		modelController.changeDriver(d2.getId(), d2);
+		modelController.updateDriver(d2.getId(), d2);
 	}
 	
 	@Test

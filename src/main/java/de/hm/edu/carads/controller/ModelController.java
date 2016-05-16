@@ -17,7 +17,7 @@ public interface ModelController {
 	public Driver getDriver(String id) throws Exception;
 	public Driver getDriverByMail(String mail)throws Exception;
 	public void deleteDriver(String id) throws NoContentException;
-	public void changeDriver(String id, Driver updatedDriver) throws Exception;
+	public void updateDriver(String id, Driver updatedDriver) throws Exception;
 	public long getDriverCount();
 	
 	public Collection<Advertiser> getAllAdvertisers();
@@ -25,7 +25,7 @@ public interface ModelController {
 	public Advertiser getAdvertiser(String id) throws Exception;
 	public Advertiser getAdvertiserByMail(String mail)throws Exception;
 	public void deleteAdvertiser(String id) throws NoContentException;
-	public void changeAdvertiser(String id, Advertiser updatedAdvertiser) throws Exception;
+	public void updateAdvertiser(String id, Advertiser updatedAdvertiser) throws Exception;
 	public long getAdvertiserCount();
 	
 	public Car getCar(String driverId, String carId) throws Exception;

@@ -122,7 +122,7 @@ public class DriversRessource {
 				throw new WebApplicationException(401);
 			}
 
-			modelController.changeDriver(id, driverData);
+			modelController.updateDriver(id, driverData);
 			return Response.ok().build();
 		} catch (AlreadyExistsException e) {
 			throw new WebApplicationException(409);
