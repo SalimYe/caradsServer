@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
-import de.hm.edu.carads.controller.exceptions.HasRelationException;
+import de.hm.edu.carads.controller.exceptions.HasConstraintException;
 import de.hm.edu.carads.controller.util.AbstractEntityController;
 import de.hm.edu.carads.controller.util.AbstractEntityControllerImpl;
 import de.hm.edu.carads.controller.util.EntityValidator;
@@ -52,11 +52,6 @@ public class ModelControllerImpl implements ModelController {
 		driverController = new AbstractEntityControllerImpl<Driver>(ModelCollection.DRIVER, dbController);
 		advertiserController = new AbstractEntityControllerImpl<Advertiser>(ModelCollection.ADVERTISER, dbController);
 	}
-	
-	private Driver filterDriver(Driver driver){
-		driver.deleteSomeInformation();
-		return driver;
-	}
 
 	@Override
 	public Collection<Driver> getAllDrivers() {
@@ -78,8 +73,22 @@ public class ModelControllerImpl implements ModelController {
 		return driverController.getEntityByMail(mail);
 	}
 
+	
+	/**
+	 * Diese Methode loescht einen Fahrer. Davor werden alle
+	 * Fahrzeuge des Fahrers ueberprueft ob noch bestehende Kampagnen
+	 * damit zusammenhängen. Falls kein Fahrzeug in einer laufenden oder
+	 * zukuenfigen Kampagne steckt, kann der Fahrer geloescht werden.
+	 * @param id
+	 * @throws Exception
+	 */
 	@Override
-	public void deleteDriver(String id) throws NoContentException {
+	public void deleteDriver(String id) throws Exception {
+		Iterator<Car> carIterator = getDriver(id).getCars().iterator();
+		while(carIterator.hasNext()){
+			if(isCarBooked(carIterator.next().getId()))
+				throw new HasConstraintException();
+		}
 		driverController.deleteEntity(id);
 	}
 
@@ -115,7 +124,12 @@ public class ModelControllerImpl implements ModelController {
 	}
 
 	@Override
-	public void deleteAdvertiser(String id) throws NoContentException {
+	public void deleteAdvertiser(String id) throws Exception {
+		Iterator<Campaign> it = advertiserController.getEntity(id).getCampaigns().iterator();
+		while(it.hasNext()){
+			if(hasCampaignBookedFellows(it.next()))
+				throw new HasConstraintException();
+		}
 		advertiserController.deleteEntity(id);
 	}
 
@@ -172,7 +186,7 @@ public class ModelControllerImpl implements ModelController {
 	public void deleteCar(String driverId, String carId) throws Exception {
 		
 		if(isCarBooked(carId))
-			throw new HasRelationException();
+			throw new HasConstraintException();
 		
 		Driver driver = driverController.getEntity(driverId);
 		driver.removeCar(carId);
@@ -331,7 +345,12 @@ public class ModelControllerImpl implements ModelController {
 	public void deleteCampaign(String advertiserId, String campaignId)
 			throws Exception {
 		Advertiser advertiser = advertiserController.getEntity(advertiserId);
-		if(!advertiser.removeCampaign(campaignId)){
+		Campaign campaign = advertiser.getCampaign(campaignId);
+		
+		if(hasCampaignBookedFellows(campaign))
+			throw new HasConstraintException();
+		
+		if(!advertiser.removeCampaign(campaign)){
 			logger.error("Campaign "+campaignId+" not found");
 			throw new NoContentException(campaignId + " not found");
 		}
@@ -339,6 +358,15 @@ public class ModelControllerImpl implements ModelController {
 		advertiser.getMetaInformation().update();
 		logger.info("Campaign "+campaignId+" removed");
 		advertiserController.changeEntity(advertiserId, advertiser);
+	}
+	
+	private boolean hasCampaignBookedFellows(Campaign campaign){
+		Iterator<Fellow> fellowIterator = campaign.getFellows().iterator();
+		while(fellowIterator.hasNext()){
+			if(fellowIterator.next().getState().equals(FellowState.ACCEPTED))
+				return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -356,7 +384,7 @@ public class ModelControllerImpl implements ModelController {
 			throw new NoContentException(campaignId + " not found");
 
 	
-		advertiser.removeCampaign(campaignId);
+		advertiser.removeCampaign(oldC);
 		campaign.update(oldC.getMetaInformation());
 		campaign.setId(campaignId);
 		

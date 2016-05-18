@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
+import com.mongodb.util.JSON;
 import com.mongodb.DBObject;
 
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
@@ -34,6 +35,7 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		this.dbController = database;
 		this.modelClass = model;
 		gson = new Gson();
+		
 	}
 	
 	@Override
@@ -105,7 +107,7 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		entityData.update(oldEntity.getMetaInformation());
 		
 		//Achtung: updateEntity gibt nicht das aktualisierte Object zurück.
-		dbController.updateEntity(modelClass, id, BasicDBObject.parse(gson.toJson(entityData)));
+		dbController.updateEntity(modelClass, id, (BasicDBObject) JSON.parse(gson.toJson(entityData)));
 
 	}
 	
@@ -121,7 +123,7 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		}catch(NoContentException e){
 			logger.info("Email not registred yet. Saving Entity.");
 		}
-		BasicDBObject dbObj = dbController.addEntity(modelClass, BasicDBObject.parse(gson.toJson(entity)));
+		BasicDBObject dbObj = dbController.addEntity(modelClass, (BasicDBObject) JSON.parse(gson.toJson(entity)));
 		return makeEntityFromBasicDBObject(dbObj);
 	}
 	
@@ -129,7 +131,8 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 	protected E makeEntityFromBasicDBObject(BasicDBObject dbObj){
 		if(dbObj == null)
 			return null;
-		E model = (E) gson.fromJson(dbObj.toJson(), getModelClass(modelClass));
+		
+		E model = (E) gson.fromJson(JSON.serialize(dbObj), getModelClass(modelClass));
 		model.setId(dbObj.getString("_id"));
 		return model;
 	}

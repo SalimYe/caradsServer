@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
-import de.hm.edu.carads.controller.exceptions.HasRelationException;
+import de.hm.edu.carads.controller.exceptions.HasConstraintException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
@@ -204,7 +204,7 @@ public class RequestControllerTest {
 	}	
 	
 	@Test
-	(expected = HasRelationException.class)
+	(expected = HasConstraintException.class)
 	public void deleteBookedCarTest() throws Exception{
 		Driver driver = modelController.addDriver(makeNewDriver());
 		Car car = modelController.addCar(driver.getId(), makeNewCar());
@@ -218,7 +218,7 @@ public class RequestControllerTest {
 	}
 	
 	@Test
-	(expected = HasRelationException.class)
+	(expected = HasConstraintException.class)
 	public void deleteBookedCarTest5() throws Exception{
 		Driver driver = modelController.addDriver(makeNewDriver());
 		Car car = modelController.addCar(driver.getId(), makeNewCar());
@@ -276,6 +276,60 @@ public class RequestControllerTest {
 		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
 		
 		modelController.deleteCar(driver.getId(), car.getId());
+	}
+	
+	@Test
+	(expected = HasConstraintException.class)
+	public void deleteDriverWithBookedCarTest() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		Campaign c = new Campaign();
+		c.setTitle("test");
+		c.setStartDate("18.05.2016");
+		c.setEndDate("31.06.2016");
+		Campaign camp = modelController.addCampaign(ad.getId(), c);
+		
+		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		
+		modelController.deleteDriver(driver.getId());
+	}
+	
+	@Test
+	(expected = HasConstraintException.class)
+	public void deleteCampaignWithAcceptedFellowsTest() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		Campaign c = new Campaign();
+		c.setTitle("test");
+		c.setStartDate("18.05.2016");
+		c.setEndDate("31.06.2016");
+		Campaign camp = modelController.addCampaign(ad.getId(), c);
+		
+		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		
+		modelController.deleteCampaign(ad.getId(), camp.getId());
+	}
+	
+	@Test
+	(expected = HasConstraintException.class)
+	public void deleteAdvertiserWithAcceptedFellowsInCampaignTest() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		Campaign c = new Campaign();
+		c.setTitle("test");
+		c.setStartDate("18.05.2016");
+		c.setEndDate("31.06.2016");
+		Campaign camp = modelController.addCampaign(ad.getId(), c);
+		
+		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		
+		modelController.deleteAdvertiser(ad.getId());
 	}
 	
 	private Campaign makeNewCampaign(){

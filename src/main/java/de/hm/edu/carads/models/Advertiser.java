@@ -101,9 +101,9 @@ public class Advertiser extends Person{
 	 * @param id
 	 * @return true if element was removed
 	 */
-	public boolean removeCampaign(String id){
+	public boolean removeCampaign(Campaign campaign){
 		checkCampaigns();
-		return campaigns.remove(this.getCampaign(id));
+		return campaigns.remove(campaign);
 	}
 	
 	/**
