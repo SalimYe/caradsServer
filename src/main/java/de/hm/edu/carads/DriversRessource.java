@@ -26,6 +26,7 @@ import de.hm.edu.carads.controller.ModelControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.controller.exceptions.HasRelationException;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
@@ -213,6 +214,8 @@ public class DriversRessource {
 		try {
 			modelController.deleteCar(driverId, carId);
 			return Response.ok().build();
+		} catch(HasRelationException e){
+			throw new WebApplicationException(406);
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
 		} catch (Exception e) {

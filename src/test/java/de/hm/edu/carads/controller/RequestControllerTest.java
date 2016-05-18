@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.controller.exceptions.HasRelationException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
@@ -202,12 +203,87 @@ public class RequestControllerTest {
 		
 	}	
 	
+	@Test
+	(expected = HasRelationException.class)
+	public void deleteBookedCarTest() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		Campaign camp = modelController.addCampaign(ad.getId(), makeNewCampaign());
+		
+		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		
+		modelController.deleteCar(driver.getId(), car.getId());
+	}
+	
+	@Test
+	(expected = HasRelationException.class)
+	public void deleteBookedCarTest5() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		Campaign c = new Campaign();
+		c.setTitle("test");
+		c.setStartDate("18.05.2016");
+		c.setEndDate("31.06.2016");
+		Campaign camp = modelController.addCampaign(ad.getId(), c);
+		
+		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		
+		modelController.deleteCar(driver.getId(), car.getId());
+	}
+	
+	@Test
+	public void deleteBookedCarTest2() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		Campaign camp = modelController.addCampaign(ad.getId(), makeNewCampaign());
+		
+		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		
+		modelController.deleteCar(driver.getId(), car.getId());
+	}
+	
+	@Test
+	public void deleteBookedCarTest3() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		Campaign camp = modelController.addCampaign(ad.getId(), makeNewCampaign());
+		
+		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "REJECTED");
+		
+		modelController.deleteCar(driver.getId(), car.getId());
+	}
+	
+	@Test
+	public void deleteBookedCarTest4() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		
+		Campaign c = new Campaign();
+		c.setTitle("test");
+		c.setStartDate("01.01.2016");
+		c.setEndDate("31.01.2016");
+		Campaign camp = modelController.addCampaign(ad.getId(), c);
+		
+		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		
+		modelController.deleteCar(driver.getId(), car.getId());
+	}
+	
 	private Campaign makeNewCampaign(){
 		Campaign c = new Campaign();
 		c.setTitle("Red Bull Icerace");
 		c.setCampaignBudget("10000 Euro");
-		c.setStartDate("01.01.2000");
-		c.setEndDate("31.01.2000");
+		c.setStartDate("01.01.2017");
+		c.setEndDate("31.01.2017");
 		return c;
 	}
 	

@@ -227,6 +227,8 @@ public class DriverControllerTest {
 		Car checkCar = cars.next();
 		assertEquals(driver.getId(), checkCar.getDriverId());
 	}
+	
+	
 
 	private Driver makeNewDriver() {
 		Driver driver = new Driver(EMAIL, FIRSTNAME, LASTNAME);

@@ -1,6 +1,9 @@
 package de.hm.edu.carads.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -13,6 +16,7 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.controller.exceptions.HasRelationException;
 import de.hm.edu.carads.controller.util.AbstractEntityController;
 import de.hm.edu.carads.controller.util.AbstractEntityControllerImpl;
 import de.hm.edu.carads.controller.util.EntityValidator;
@@ -166,11 +170,29 @@ public class ModelControllerImpl implements ModelController {
 
 	@Override
 	public void deleteCar(String driverId, String carId) throws Exception {
+		
+		if(isCarBooked(carId))
+			throw new HasRelationException();
+		
 		Driver driver = driverController.getEntity(driverId);
 		driver.removeCar(carId);
 		driver.getMetaInformation().update();
 		logger.info("Deleting car "+carId);
 		driverController.changeEntity(driverId, driver);
+	}
+	
+	/**
+	 * Wahrheitswert ueber folgende Bedingungen:
+	 * Das Fahrzeug ist momentan von keiner laufenden Kampagne gebucht.
+	 * Das Fahrzeug ist fuer keine in der Zukunft liegenden Kampagne gebucht.
+	 * @param carId
+	 * @return true when booked
+	 */
+	private boolean isCarBooked(String carId) throws Exception{
+		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_METAINFORMATION);
+		String now = df.format(Calendar.getInstance().getTime());
+		
+		return isCarOccupiedInTime(carId, now, "31.12.2099");
 	}
 
 	@Override
