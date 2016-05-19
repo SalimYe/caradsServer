@@ -35,17 +35,44 @@ import de.hm.edu.carads.models.util.FellowState;
 import de.hm.edu.carads.models.util.TimeFrame;
 
 /**
+ * Diese Klasserepräsentiert die Logik der Applikation. Es werden Methoden
+ * zum Anlegen, Bearbeiten und Löschen für Fahrer, Fahrzeuge, Werbende und Kampagnen angeboten.
+ * Weitere Methoden, die der Logik der Applikation dienen werden hier abgebildet.
  * 
  * @author Benjamin Keckes
  *
  */
 public class ModelControllerImpl implements ModelController {
+	/**
+	 * Schnittstelle zur Datenbank.
+	 */
 	protected DatabaseController dbController;
+	
+	/**
+	 * Dieses Objekt ist für das Parsen der JSON Strukturen zuständig.
+	 */
 	protected Gson gson;
+	
+	/**
+	 * Hierueber werden Fahrer und Fahrzeuge verwaltet.
+	 */
 	private AbstractEntityController<Driver> driverController;
+	
+	/**
+	 * Hierueber werden Werbende und Kampagnen verwaltet.
+	 * 
+	 */
 	private AbstractEntityController<Advertiser> advertiserController;
+	
+	/**
+	 * Der Logger.
+	 */
 	final static Logger logger = Logger.getLogger(ModelControllerImpl.class);
 	
+	/**
+	 * Der Konstruktor mit dem DatenbankController als Parameter.
+	 * @param dbController
+	 */
 	public ModelControllerImpl(DatabaseController dbController){
 		this.dbController = dbController;
 		this.gson = new Gson();
@@ -123,14 +150,21 @@ public class ModelControllerImpl implements ModelController {
 		return advertiserController.getEntityByMail(mail);
 	}
 
+	/**
+	 * Diese Methode loescht einen Werbenden. Zuvor wird ueberprueft ob
+	 * die zugehoerigen Kampagnen geloescht werden koennen. Wenn ja, wird der
+	 * Werbende geloescht, ansonsten bleibt er bestehen.
+	 * @param driverId
+	 * @throws Exception
+	 */
 	@Override
-	public void deleteAdvertiser(String id) throws Exception {
-		Iterator<Campaign> it = advertiserController.getEntity(id).getCampaigns().iterator();
+	public void deleteAdvertiser(String driverId) throws Exception {
+		Iterator<Campaign> it = advertiserController.getEntity(driverId).getCampaigns().iterator();
 		while(it.hasNext()){
 			if(hasCampaignBookedFellows(it.next()))
 				throw new HasConstraintException();
 		}
-		advertiserController.deleteEntity(id);
+		advertiserController.deleteEntity(driverId);
 	}
 
 	@Override
@@ -144,6 +178,12 @@ public class ModelControllerImpl implements ModelController {
 		return advertiserController.getEntityCount();
 	}
 
+	/**
+	 * Das Fahrzeug mit der carId des Fahrers mit der driverId wird angezeigt.
+	 * @param driverId, carId
+	 * @return Fahrzeug.
+	 * @throws Exception
+	 */
 	@Override
 	public Car getCar(String driverId, String carId) throws Exception {
 		Driver driver = driverController.getEntity(driverId);
@@ -155,12 +195,24 @@ public class ModelControllerImpl implements ModelController {
 		return car;
 	}
 
+	/**
+	 * Alle Fahrzeuge des Fahrers mit der driverId werden als Sammlung 
+	 * zurueck gegeben.
+	 * @param driverId
+	 * @return Collection<Car>
+	 * @throws Exception
+	 */
 	@Override
 	public Collection<Car> getCars(String driverId) throws Exception {
 		Driver driver = driverController.getEntity(driverId);
 		return driver.getCars();
 	}
 
+	/**
+	 * Ein Auto wird dem Fahrer mit der driverId hinzugefuegt. Davor werden
+	 * alle Daten auf Gueltigkeit geprüft. Die Fahrerinformationen werden anschließend
+	 * erneuert und in die Datenbank geschrieben.
+	 */
 	@Override
 	public Car addCar(String driverId, Car car) throws Exception {
 		if (!EntityValidator.isEntityValid(car)) {
@@ -182,6 +234,11 @@ public class ModelControllerImpl implements ModelController {
 		return car;
 	}
 
+	/**
+	 * Wenn das Auto nicht an Kampagnen teilnimmt, wird es geloescht.
+	 * @param driverId, carId
+	 * @throws Exception
+	 */
 	@Override
 	public void deleteCar(String driverId, String carId) throws Exception {
 		
@@ -205,10 +262,17 @@ public class ModelControllerImpl implements ModelController {
 	private boolean isCarBooked(String carId) throws Exception{
 		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_METAINFORMATION);
 		String now = df.format(Calendar.getInstance().getTime());
-		
-		return isCarOccupiedInTime(carId, now, "31.12.2099");
+		return isCarOccupiedInTime(carId, now, "31.12.2199");
 	}
 
+	/**
+	 * Das Fahrzeug mit der carId des Fahrers mit der driverId wird geaendert.
+	 * Alle Daten aus dem car Parameter werden dafuer verwendet. Alte Informationen 
+	 * werden ueberschrieben.
+	 * @param driverId, carId, car
+	 * @return geandertes Fahrzeug
+	 * @throws Exception
+	 */
 	@Override
 	public Car updateCar(String driverId, String carId, Car car)
 			throws Exception {
@@ -233,6 +297,11 @@ public class ModelControllerImpl implements ModelController {
 		return car;
 	}
 
+	/**
+	 * Alle Fahrzeuge von allen Fahrern werden zurueck gegeben.
+	 * @return Sammlung aller Fahrzeuge
+	 * @throws Exception
+	 */
 	@Override
 	public Collection<Car> getAllCars() throws Exception {
 		Collection<Car> allCars = new ArrayList<Car>();
@@ -244,6 +313,16 @@ public class ModelControllerImpl implements ModelController {
 		return allCars;
 	}
 
+	/**
+	 * Diese Methode gibt alle Angebote an den Fahrer mit der driverId zurueck.
+	 * Der Fahrer erhaehlt so Informationen ueber das angefragte Fahrzeug, welche Kampagne
+	 * daran interessiert ist und von welchem Werbenden das Angebot stammt.
+	 * Es werden auch abgelehnte und vergangene Campagnen angezeigt.
+	 * 
+	 * @param driverId
+	 * @return Sammlung aller Angebote
+	 * @throws Exception
+	 */
 	@Override
 	public Collection<OfferInformation> getOfferInformation(String driverId)
 			throws Exception {
@@ -271,6 +350,13 @@ public class ModelControllerImpl implements ModelController {
 		return offers;
 	}
 
+	/**
+	 * Diese Methode dient als Antwort des Fahrers an einen Werbenden.
+	 * Er gibt Antwort mit welchem Auto er an welcher Kampagne teilnehmen möchte 
+	 * oder nicht.
+	 * @param carId, advertiserId, campaignId, response
+	 * @throws Exception
+	 */
 	@Override
 	public void respondToOffer(String carId, String advertiserId,
 			String campaignId, String respond) throws Exception {
@@ -289,6 +375,14 @@ public class ModelControllerImpl implements ModelController {
 		this.updateCampaign(advertiserId, campaignId, campaign);
 	}
 
+	/**
+	 * Es werden alle Fahrzeuge zurueck gegeben, welche fuer diese Kampagne zur Verfügung stehen.
+	 * Dabei werden nur Fahrzeuge angezeigt die in diesem Zeitraum noch frei sind und nicht bereits 
+	 * fuer diese Kampagne gebucht wurden.
+	 * @param advertiserId, campaignId
+	 * @return Sammlung aller Fahrzeuge die angefragt werden koennen
+	 * @throws Exception
+	 */
 	@Override
 	public Collection<Car> getAvailableCars(String advertiserId,
 			String campaignId) throws Exception {
@@ -308,6 +402,12 @@ public class ModelControllerImpl implements ModelController {
 		return availableCars;
 	}
 
+	/**
+	 * Eine neue Kampagne wird zum Werbenden hinzugefuegt, falls sie
+	 * gueltige Angaben hat.
+	 * @param advertiserId, campaign
+	 * @throws Exception
+	 */
 	@Override
 	public Campaign addCampaign(String advertiserId, Campaign campaign)
 			throws Exception {
@@ -341,6 +441,12 @@ public class ModelControllerImpl implements ModelController {
 		return c;
 	}
 
+	/**
+	 * Eine Kampagne wird geloescht. Es wird davor ueberprueft ob die
+	 * Kampagne Fahrzeuge angefragt hat und diese bereits zugesagt haben.
+	 * @param advertiserId, campaignId
+	 * @throws Exception
+	 */
 	@Override
 	public void deleteCampaign(String advertiserId, String campaignId)
 			throws Exception {
@@ -360,6 +466,12 @@ public class ModelControllerImpl implements ModelController {
 		advertiserController.changeEntity(advertiserId, advertiser);
 	}
 	
+	/**
+	 * Diese Methode ueberprueft ob die Kampagne bereits Fahrzeuge
+	 * besitzt, bei denen der Fahrer das Angebot angenommen hat.
+	 * @param campaign
+	 * @return Wahrheitswert
+	 */
 	private boolean hasCampaignBookedFellows(Campaign campaign){
 		Iterator<Fellow> fellowIterator = campaign.getFellows().iterator();
 		while(fellowIterator.hasNext()){
@@ -369,6 +481,12 @@ public class ModelControllerImpl implements ModelController {
 		return false;
 	}
 
+	/**
+	 * Eine Kampagne wird geaendert. Die neuen Daten muessen aber valide sein.
+	 * @param advertiserId, campaignId, campaign
+	 * @return geanderte Kampagne
+	 * @throws Exception
+	 */
 	@Override
 	public Campaign updateCampaign(String advertiserId, String campaignId,
 			Campaign campaign) throws Exception {
@@ -404,6 +522,15 @@ public class ModelControllerImpl implements ModelController {
 		return advertiser.getCampaigns();
 	}
 
+	/**
+	 * Diese Methode dient zur Anfrage von Fahrzeugen fuer eine Kampagne.
+	 * Es wird ueberprueft ob das Auto in dem Zeitraum der Kampagne bereits in einer
+	 * anderen Kampagne gebucht wurde, oder ob dieses Fahrzeug bereits fuer diese
+	 * Kampagne angefragt wurde.
+	 * @param advertiserId, campaignId, carId
+	 * @return Kampagne mit angefragten Fahrzeugen
+	 * @throws Exception
+	 */
 	@Override
 	public Campaign requestVehicleForCampaign(String advertiserId,
 			String campaignId, String carId) throws Exception {
@@ -427,6 +554,11 @@ public class ModelControllerImpl implements ModelController {
 		return this.updateCampaign(advertiserId, campaignId, campaign);
 	}
 
+	/**
+	 * Diese Methode gibt alle Kampagnen zurueck die das Auto angefragt haben.
+	 * @param carId
+	 * @return Sammlung der anfragenden Kampagnen.
+	 */
 	@Override
 	public Collection<Campaign> getCarRequestingCampaigns(String carid) {
 		Collection<Campaign> carCampaigns = new ArrayList<Campaign>();
@@ -444,6 +576,12 @@ public class ModelControllerImpl implements ModelController {
 		return carCampaigns;
 	}
 
+	/**
+	 * Diese Methode zeigt den Ersteller der Kampagne
+	 * @param campaignId
+	 * @return Werbender der diese Kampagne erstellt hat
+	 * @throws Exception
+	 */
 	@Override
 	public Advertiser getAdvertiserFromCampaign(String campaignId)
 			throws Exception {
@@ -457,6 +595,13 @@ public class ModelControllerImpl implements ModelController {
 		throw new NotFoundException();
 	}
 
+	/**
+	 * Es wird ueberprueft ob das Fahrzeug in angegebenen Zeitraum bereits
+	 * angefragt wurde und ob es da schon zugeseagt hat.
+	 * @param carId, start, end
+	 * @return Wahrheitswert ob Fahrzeug nicht mehr Verfuegbar ist
+	 * @throws Exception
+	 */
 	@Override
 	public boolean isCarOccupiedInTime(String carId, String start, String end)
 			throws Exception {
@@ -469,6 +614,12 @@ public class ModelControllerImpl implements ModelController {
 		return false;
 	}
 	
+	/**
+	 * Gibt alle Kampagnen in diesem Zeitraum zurueck. Es reicht auch schon eine Ueberschneidung.
+	 * @param start
+	 * @param end
+	 * @return Sammlung der Kampagnen die diesen Zeitraum ueberschneiden.
+	 */
 	private Collection<Campaign> getAllCampaignsInTime(String start, String end){
 		Collection<Campaign> inTimeCampaigns = new ArrayList<Campaign>();
 		Iterator<Campaign> it = getAllCampaigns().iterator();
@@ -480,7 +631,10 @@ public class ModelControllerImpl implements ModelController {
 		return inTimeCampaigns;
 	}
 	
-	
+	/**
+	 * Gibt alle Kampagnen von allen Werbenden zurueck.
+	 * @return Sammlung aller Kampagnen
+	 */
 	private Collection<Campaign> getAllCampaigns(){
 		Collection<Campaign> allCampaigns = new ArrayList<Campaign>();
 		
@@ -491,6 +645,12 @@ public class ModelControllerImpl implements ModelController {
 		return allCampaigns;
 	}
 	
+	/**
+	 * Gibt des Status eines Fahrzeugs innerhalb einer Kampagne zurueck.
+	 * @param carid
+	 * @param campaign
+	 * @return Anfragestatus
+	 */
 	private FellowState getStateFromCampaign(String carid, Campaign campaign) {
 
 		Iterator<Fellow> fellowIterator = campaign.getFellows().iterator();
@@ -547,6 +707,10 @@ public class ModelControllerImpl implements ModelController {
 		return reduced;
 	}
 
+	/**
+	 * Diese Methode dient zur Ausgabe an die API und erweitert
+	 * alle angefragten Fahrzeuge mit den benötigten Daten rund um das Fahrzeug.
+	 */
 	@Override
 	public EnrichedCampaign getEnrichedCampaign(String advertiserId,
 			String campaignId) throws Exception {
@@ -555,6 +719,12 @@ public class ModelControllerImpl implements ModelController {
 		return enrichedCampaign;
 	}
 	
+	/**
+	 * Diese Methode erweitert alle Fahrzeuginformationen einer Sammlung von Angefragten Fahrzeugen.
+	 * @param fellows
+	 * @return Sammlung erweiterter Fahrzeuginformationen
+	 * @throws Exception
+	 */
 	private Collection<EnrichedFellow> getEnrichedFellows(Collection<Fellow> fellows) throws Exception{
 		Collection<EnrichedFellow> enrichedFellows = new ArrayList<EnrichedFellow>();
 		Iterator<Fellow> fellowIt = fellows.iterator();
@@ -569,6 +739,13 @@ public class ModelControllerImpl implements ModelController {
 		return enrichedFellows;
 	}
 	
+	/**
+	 * Gibt ein spezielles Fahrzeug aus einer Liste zurueck. Falls kein Fahrzeug der Liste
+	 * die carId hat, wird null zurueck gegeben.
+	 * @param cars
+	 * @param carId
+	 * @return Fahrzeug mit carId
+	 */
 	private Car getOneCarFromCarCollection(Collection<Car> cars, String carId){
 		Iterator<Car> it = cars.iterator();
 		while(it.hasNext()){
