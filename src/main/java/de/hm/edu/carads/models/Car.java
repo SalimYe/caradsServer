@@ -57,6 +57,18 @@ public class Car extends Model{
 	 */
 	private String driverZip;
 	
+	/**
+	 * Nur fuer die Rueckgabe zum Benutzer. Wird nicht in der DB gespeichert.:
+	 * Beruf des Fahrers.
+	 */
+	private String driverOccupation;
+	
+	/**
+	 * Nur fuer die Rueckgabe zum Benutzer. Wird nicht in der DB gespeichert.:
+	 * Ausstelldatum des Fuehrerscheins des Fahrers.
+	 */
+	private String driverLicenseDate;
+	
 	public Car(){
 		super();
 	}
@@ -95,9 +107,11 @@ public class Car extends Model{
 	 * @param driverId
 	 * @param driverZip
 	 */
-	public void setDriverInformation(String driverId, String driverZip){
+	public void setDriverInformation(String driverId, String driverZip, String occupation, String licenseDate){
 		this.driverId = driverId;
 		this.driverZip=driverZip;
+		this.driverOccupation=occupation;
+		this.driverLicenseDate=licenseDate;
 	}
 
 	public String getDriverId() {
