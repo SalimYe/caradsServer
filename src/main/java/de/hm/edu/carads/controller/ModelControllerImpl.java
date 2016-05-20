@@ -353,7 +353,7 @@ public class ModelControllerImpl implements ModelController {
 	/**
 	 * Diese Methode dient als Antwort des Fahrers an einen Werbenden.
 	 * Er gibt Antwort mit welchem Auto er an welcher Kampagne teilnehmen möchte 
-	 * oder nicht.
+	 * oder nicht. Andere Anfragen mit ueberlappenden Zeitraeumen werden automatisch abgesagt.
 	 * @param carId, advertiserId, campaignId, response
 	 * @throws Exception
 	 */
@@ -361,19 +361,75 @@ public class ModelControllerImpl implements ModelController {
 	public void respondToOffer(String carId, String advertiserId,
 			String campaignId, String respond) throws Exception {
 		Campaign campaign = this.getCampaign(advertiserId, campaignId);
+		updateFellowSate(carId, advertiserId, campaign, getFellowState(respond));
+		
+		rejectAllOverlappingCampaigns(carId, campaign);
+		
+	}
+	
+	/**
+	 * Diese Methode erteilt allen Kampagnen fuer dieses Fahrzeug eine absage, wenn der
+	 * Kampagnen-Zeitraum ueberlappt. 
+	 * @param carId
+	 * @param campaign
+	 * @throws Exception
+	 */
+	private void rejectAllOverlappingCampaigns(String carId, Campaign campaign) throws Exception{
+		
+		Iterator<Campaign> it = getAllCampaignsInTime(campaign.getStartDate(), campaign.getEndDate()).iterator();
+		while(it.hasNext()){
+			Campaign c = it.next();
+			if(!c.getId().equals(campaign.getId())){
+				if(checkCarStateInCampaign(carId, c, FellowState.ASKED)){
+					String advertiserId = getAdvertiserFromCampaign(c.getId()).getId();
+					updateFellowSate(carId, advertiserId, c, FellowState.REJECTED);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Der Status eines Fahrzeugs innerhalb der Kampagne wird ueberprueft.
+	 * @param carId
+	 * @param campaign
+	 * @param state
+	 * @return true wenn state uebereinstimmt
+	 */
+	private boolean checkCarStateInCampaign(String carId, Campaign campaign, FellowState state){
+		Fellow fellow = campaign.getFellow(carId);
+		if(fellow!=null){
+			if(fellow.getState().equals(state))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Diese Methode aendert den Status eines Fahrzeugs innerhalb einer speziellen Kampagne.
+	 * @param carId
+	 * @param advertiserId
+	 * @param campaign
+	 * @param respond
+	 * @return geaenderte Kampagne
+	 * @throws Exception
+	 */
+	private Campaign updateFellowSate(String carId, String advertiserId, Campaign campaign, FellowState respond) throws Exception{
 		Iterator<Fellow> fellowIterator = campaign.getFellows().iterator();
 		Collection<Fellow> updatedFellows = new ArrayList<Fellow>();
 		while (fellowIterator.hasNext()) {
 			Fellow fellow = fellowIterator.next();
 			if (fellow.getCarId().equals(carId)) {
-				fellow.setState(getFellowState(respond));
+				fellow.setState(respond);
 			}
 			updatedFellows.add(fellow);
 		}
 		campaign.setFellows(updatedFellows);
-		logger.info(carId+" responded with "+respond+ " to campaign "+campaign.getTitle()+" ("+campaignId+")");
-		this.updateCampaign(advertiserId, campaignId, campaign);
+		logger.info(carId+" responded with "+respond+ " to campaign "+campaign.getTitle()+" ("+campaign.getId()+")");
+		this.updateCampaign(advertiserId, campaign.getId(), campaign);
+		return campaign;
 	}
+	
+	
 
 	/**
 	 * Es werden alle Fahrzeuge zurueck gegeben, welche fuer diese Kampagne zur Verfügung stehen.

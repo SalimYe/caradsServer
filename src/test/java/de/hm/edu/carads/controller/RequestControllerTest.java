@@ -332,6 +332,41 @@ public class RequestControllerTest {
 		modelController.deleteAdvertiser(ad.getId());
 	}
 	
+	@Test
+	public void automaticallyRejectAllCampaignsWithOverlappingDateTest() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		
+		Campaign c = new Campaign();
+		c.setTitle("Kampagne1");
+		c.setStartDate("18.05.2016");
+		c.setEndDate("31.06.2016");
+		Campaign camp = modelController.addCampaign(ad.getId(), c);
+		
+		Campaign c2 = new Campaign();
+		c2.setTitle("Kampagne2");
+		c2.setStartDate("20.05.2016");
+		c2.setEndDate("01.07.2016");
+		Campaign camp2 = modelController.addCampaign(ad.getId(), c2);
+		
+		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
+		modelController.requestVehicleForCampaign(ad.getId(), camp2.getId(), car.getId());
+		
+		//Der Fahrer sieht beide Angebote
+		assertEquals(2, modelController.getOfferInformation(driver.getId()).size());
+		
+		//Der Fahrer sagt fuer die erste Kampagne zu. Die andere Kampagne soll automatisch
+		//abgelehnt werden, da sich die Zeitraeume ueberlappen.
+		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
+		
+		//Der Status fuer das Auto bei der Kampagne2 ist auf rejected.
+		assertEquals(FellowState.REJECTED, modelController.getCampaign(ad.getId(), camp2.getId()).getFellow(car.getId()).getState());
+		
+		//Der Status fuer das Auto bei der Kampagne1 ist auf ACCEPTED.
+		assertEquals(FellowState.ACCEPTED, modelController.getCampaign(ad.getId(), camp.getId()).getFellow(car.getId()).getState());
+	}
+	
 	private Campaign makeNewCampaign(){
 		Campaign c = new Campaign();
 		c.setTitle("Red Bull Icerace");
