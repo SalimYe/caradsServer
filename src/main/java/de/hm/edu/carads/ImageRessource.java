@@ -55,7 +55,6 @@ public class ImageRessource {
 	@Path("/{id}")
 	@Produces({ "image/png", "image/jpg" })
 	public Response get(@PathParam("id") String id){
-		
 		try{
 			byte[] imageData = ic.getImage(id);
 		    return Response.ok(imageData).build();

@@ -28,8 +28,17 @@ import de.hm.edu.carads.models.Image;
  */
 public class ImageControllerImpl implements ImageController {
 
+	/**
+	 * Der Pfad fuer alle Bilder die auf den Server geladen werden koennen.
+	 * Der Ordner wird zusammengestellt aus dem Homeverzeichnis des Serverbenutzers
+	 * und des Pfades, welcher in der Konfiguration angegeben ist.
+	 */
 	private static final String UPLOAD_PATH = System.getProperty("user.home") + PropertiesLoader.getInstance().getPropertyString("IMG_DIR");
-	public static final String[] VALID_DATATYPES = new String[] { "jpg", "png" };
+	
+	/**
+	 * Alle erlaubten Bild-Datentypen.
+	 */
+	public static final String[] VALID_DATATYPES = new String[] { "JPG", "JPEG", "PNG" };
 
 	@Override
 	public Image saveImage(InputStream input, String datatype) throws Exception {
@@ -57,6 +66,11 @@ public class ImageControllerImpl implements ImageController {
 		return imageData;
 	}
 	
+	/**
+	 * Falls der Ordner noch nicht besteht wird er 
+	 * mit dieser Methode erstellt.
+	 * @param dir
+	 */
 	private void createDirIfNotExist(String dir){
 		File path = new File(dir);
 		if(!path.exists()){
@@ -80,8 +94,13 @@ public class ImageControllerImpl implements ImageController {
 
 	}
 
+	/**
+	 * Der Datentyp der Datei wird mit den erlaubten Datentypen abgeglichen. 
+	 * @param type
+	 * @return true wenn Datentyp erlaub ist
+	 */
 	private boolean isDatatypeValid(String type) {
-		return Arrays.asList(VALID_DATATYPES).contains(type);
+		return Arrays.asList(VALID_DATATYPES).contains(type.toUpperCase());
 	}
 
 	@Override
