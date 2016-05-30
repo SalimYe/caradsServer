@@ -58,16 +58,26 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="city">Stadt</label>
-                    <input type="text" class="form-control" id="city" ng-model="driver.city">
+                    <label for="street" class="required">Stra&szlig;e und Hausnummer</label>
+                    <input type="text" class="form-control" id="street" ng-model="driver.address.street" required="">
                 </div>  
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="zip" class="required">PLZ</label>
+                            <input type="text" class="form-control" id="zip" ng-model="driver.address.zip" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="city" class="required">Stadt</label>
+                            <input type="text" class="form-control" id="city" ng-model="driver.address.city" required="">
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label for="zip">PLZ</label>
-                    <input type="text" class="form-control" id="zip" ng-model="driver.zip">
-                </div>  
-                <div class="form-group">
-                    <label for="country">Land</label>
-                    <input type="text" class="form-control" id="country" ng-model="driver.country">
+                    <label for="country" class="required">Land</label>
+                    <input type="text" class="form-control" id="country" ng-model="driver.address.country" required="">
                 </div>
             </div>
             <div class="col-md-6">
@@ -76,12 +86,12 @@
                     <input type="text" class="form-control" id="occupation" ng-model="driver.occupation">
                 </div>  
                 <div class="form-group">
-                    <label for="birthdate">Geburtsdatum</label>
-                    <input type="text" class="form-control" id="birthdate" ng-model="driver.birthdate">
+                    <label for="birthdate" class="required">Geburtsdatum</label>
+                    <input type="text" class="form-control" id="birthdate" ng-model="driver.birthdate" required="">
                 </div>  
                 <div class="form-group">
-                    <label for="licenseDate">F&uuml;hrerschein seit</label>
-                    <input type="text" class="form-control" id="licenseDate" ng-model="driver.licenseDate">
+                    <label for="licenseDate" class="required">F&uuml;hrerschein seit</label>
+                    <input type="text" class="form-control" id="licenseDate" ng-model="driver.licenseDate" required="">
                 </div>
             </div>
         </div>

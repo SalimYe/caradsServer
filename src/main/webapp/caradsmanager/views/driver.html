@@ -12,8 +12,9 @@
                     <p><strong>Mail:</strong> {{driver.email}}<br />
                         <strong>Mobil:</strong> {{driver.phone}}</p>
                     <h4>Anschrift</h4>
-                    <p>{{driver.city}} {{driver.zip}}<br />
-                        {{driver.country}}</p>
+                    <p>{{driver.address.street}}<br />
+                        {{driver.address.city}} {{driver.address.zip}}<br />
+                        {{driver.address.country}}</p>
                 </div>
                 <div class="col-md-6">
                     <h4>Sonstiges</h4>
@@ -31,8 +32,8 @@
         </div>
         <div class="col-md-4">
             <div class="elementImage">
-                <img ng-if="driver.image.id !== undefined" ng-src="../api/images/{{advertiser.logo.id}}" alt="{{advertiser.company}} Logo"/>
-                <img ng-if="driver.image.id === undefined" src="./img/symbols/empty_profilepicture.jpg" alt="Logo Symbol" />
+                <img ng-if="driver.profilePicture.id !== undefined" ng-src="../api/images/{{driver.profilePicture.id}}" alt="{{driver.firstname}} {{driver.lastname}} Profilbild"/>
+                <img ng-if="driver.profilePicture.id === undefined" src="./img/symbols/empty_profilepicture.jpg" alt="Profilbild Symbol" />
             </div>
         </div>
     </div>
