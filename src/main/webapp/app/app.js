@@ -1,6 +1,6 @@
 'use strict';
 
-var startapp = angular.module('startapp', ['ngRoute', 'ngTable', 'pascalprecht.translate', 'ui.bootstrap']);
+var startapp = angular.module('startapp', ['ngRoute', 'ngTable', 'pascalprecht.translate', 'ui.bootstrap', 'ngAnimate']);
 
 startapp.config(function ($routeProvider) {
 
@@ -75,4 +75,31 @@ startapp.config(function ($translateProvider) {
             .determinePreferredLanguage()
             .fallbackLanguage('en');
 
+});
+
+// datepickerPopup fix
+startapp.directive('datepickerPopup', function (){
+  return {
+    restrict: 'EAC',
+    require: 'ngModel',
+    link: function(scope, element, attr, controller) {
+      //remove the default formatter from the input directive to prevent conflict
+      controller.$formatters.shift();
+    }
+  };
+});
+ 
+startapp.run(function(datepickerConfig, datepickerPopupConfig, timepickerConfig) {  
+    datepickerConfig.startingDay = 1;
+    datepickerConfig.showWeeks = false;
+ 
+    datepickerPopupConfig.currentText = 'Heute';
+    datepickerPopupConfig.clearText = 'Löschen';
+    datepickerPopupConfig.closeText = 'Schließen';
+   
+    timepickerConfig.hourStep = 1;
+    timepickerConfig.minuteStep = 15;
+ 
+    timepickerConfig.showMeridian = true;
+   
 });

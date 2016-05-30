@@ -52,4 +52,21 @@ startapp.controller('advertiser', function ($scope, $routeParams, $http, $timeou
     $scope.deleteImage = function () {
         delete $scope.advertiser.logo;
     };
+    
+    $scope.datePicker = (function () {
+        var method = {};
+        method.instances = [];
+ 
+        method.open = function ($event, instance) {
+            $event.preventDefault();
+            $event.stopPropagation();
+ 
+            method.instances[instance] = true;
+        };
+ 
+        var formats = ['MM/dd/yyyy', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        method.format = formats[3];
+ 
+        return method;
+    }());
 });
