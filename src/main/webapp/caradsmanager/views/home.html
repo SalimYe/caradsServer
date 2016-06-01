@@ -1,4 +1,40 @@
 <main>
+    <div class="row" ng-if="realm.isAdvertiser">
+        <div class="col-md-6">
+            <div class="thumbnail home">
+                <a href="#/advertiser/{{realm.advertiserId}}/campaigns/">
+                <div class="thumb-img">
+                <img src="./img/symbols/campaign.jpg" alt="&Uuml;bersicht aller Kampagnen">
+                </div>
+                </a>
+                <div class="caption">
+                    <h3>Kampagnen &Uuml;bersicht</h3>
+                    <p>Registriere Dich noch heute kostenlos als Fahrer und verdiene mit
+                        Deinem Auto Geld.</p>
+                    <div class="text-center"> 
+                    <p><a href="#/advertiser/{{realm.advertiserId}}/campaigns/" class="btn btn-primary">Kampagnen &Uuml;bersicht</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="thumbnail home">
+                <a href="#/advertiser/{{realm.advertiserId}}/campaignEdit/">
+                <div class="thumb-img">
+                <img src="./img/symbols/addCampaign.jpg" alt="Neue Kampagnen anlagen">
+                </div>
+                </a>
+                <div class="caption">
+                    <h3>Neue Kampagnen</h3>
+                    <p>Werbefl&auml;chen gesucht? CarAds bietet für jeden Werbenden die passenden Fahrzeuge in jeder
+                       Stadt deutschlandweit.</p>
+                    <div class="text-center"> 
+                    <p><a href="#/advertiser/{{realm.advertiserId}}/campaignEdit/" class="btn btn-primary">Neue Kampagnen</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div ng-if="realm.isDriver">
         <h2>Hallo {{driver.firstname}}</h2>
         <div class="row">

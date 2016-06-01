@@ -24,10 +24,18 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button ng-if="realm.isAdvertiser" type="submit" class="btn btn-default" ng-click="editCampaign()">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                Kampagne bearbeiten
+            </button>
+        </div>
+    </div>
     <div class="row" ng-if="realm.isAdvertiser || realm.isAdmin">
         <div class="col-md-12">
             <h3>Fahrzeug Anfragen</h3>
-            <div class="table-responsive">
+            <div class="table-responsive" ng-if="fellows.length > 0">
                 <table ng-table="tableParams" class="table table-striped table-hover">
                     <tr ng-repeat="request in $data">
                         <td data-title="'Fahrzeug'" sortable="'car.brand'">{{request.car.brand}} {{request.car.model}}</td>
@@ -49,6 +57,11 @@
                     </tr>
                 </table>
             </div>
+            <div class="alert alert-warning" role="alert" ng-if="fellows === undefined || fellows.length === 0">
+                <p><strong>Keine Fahrzeuge vorhanden!</strong></p>
+                <p>Klicken Sie auf den Button <i>Fahrzeuge hinzuf&uuml;gen</i>, um f&uuml;r die aktuelle
+                    Kampagne Fahrzeuge auszuw&auml;hlen!</p>
+            </div>
             <button type="submit" class="btn btn-default" ng-click="showAvailableCars()">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 Fahrzeuge hinzuf&uuml;gen
@@ -58,10 +71,6 @@
     <hr />
     <div class="row">
         <div class="col-md-12">
-            <button ng-if="realm.isAdvertiser" type="submit" class="btn btn-default" ng-click="editCampaign()">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                Kampagne bearbeiten
-            </button>
             <button type="submit" class="btn btn-default" ng-click="exitCampaign()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 Schlie&szlig;en

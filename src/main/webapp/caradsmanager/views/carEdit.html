@@ -28,8 +28,12 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="buildYear" class="required" >Erstzulassung</label>
-                    <input type="text" class="form-control" id="buildYear" ng-model="car.buildYear" required="">
+                    <label for="buildYear" class="required">Erstzulassung</label>
+                    <p class="input-group">
+                        <input type="text" class="form-control" id="buildYear" ng-model="car.buildYear" datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.options" is-open="datePicker.instances['event1']" required="">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'event1')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </p>
                 </div>            
                 <div class="form-group">
                     <label for="mileage" class="required" >Kilometerstand</label>

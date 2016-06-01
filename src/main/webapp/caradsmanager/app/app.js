@@ -50,7 +50,7 @@ app.config(function ($routeProvider) {
                 templateUrl: 'views/advertiser.html'
             })
             .when('/advertiser/:id/edit', {
-                controller: 'advertiser',
+                controller: 'advertiserEdit',
                 templateUrl: 'views/advertiserEdit.html'
             })
             .when('/driver/:id', {
@@ -123,4 +123,31 @@ app.config(function ($translateProvider) {
             .determinePreferredLanguage()
             .fallbackLanguage('en');
 
+});
+
+// datepickerPopup fix
+app.directive('datepickerPopup', function (){
+  return {
+    restrict: 'EAC',
+    require: 'ngModel',
+    link: function(scope, element, attr, controller) {
+      //remove the default formatter from the input directive to prevent conflict
+      controller.$formatters.shift();
+    }
+  };
+});
+ 
+app.run(function(datepickerConfig, datepickerPopupConfig, timepickerConfig) {  
+    datepickerConfig.startingDay = 1;
+    datepickerConfig.showWeeks = false;
+ 
+    datepickerPopupConfig.currentText = 'Heute';
+    datepickerPopupConfig.clearText = 'Löschen';
+    datepickerPopupConfig.closeText = 'Schließen';
+   
+    timepickerConfig.hourStep = 1;
+    timepickerConfig.minuteStep = 15;
+ 
+    timepickerConfig.showMeridian = true;
+   
 });
