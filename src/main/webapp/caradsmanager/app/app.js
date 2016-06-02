@@ -69,6 +69,10 @@ app.config(function ($routeProvider) {
                 controller: 'advertisers',
                 templateUrl: 'views/advertisers.html'
             })
+            .when('/carRequests/', {
+                controller: 'carRequests',
+                templateUrl: 'views/carRequests.html'
+            })
             .when('/home', {
                 controller: 'home',
                 templateUrl: 'views/home.html'

@@ -9,8 +9,8 @@
                 </a>
                 <div class="caption">
                     <h3>Kampagnen &Uuml;bersicht</h3>
-                    <p>Registriere Dich noch heute kostenlos als Fahrer und verdiene mit
-                        Deinem Auto Geld.</p>
+                    <p>Verwalten Sie Ihre aktuellen Kampagnen und informieren Sie sich &uuml;ber den
+                        aktuellen Status gesendeter Buchungsanfragen.</p>
                     <div class="text-center"> 
                     <p><a href="#/advertiser/{{realm.advertiserId}}/campaigns/" class="btn btn-primary">Kampagnen &Uuml;bersicht</a></p>
                     </div>
@@ -26,8 +26,8 @@
                 </a>
                 <div class="caption">
                     <h3>Neue Kampagnen</h3>
-                    <p>Werbefl&auml;chen gesucht? CarAds bietet für jeden Werbenden die passenden Fahrzeuge in jeder
-                       Stadt deutschlandweit.</p>
+                    <p>Erstellen Sie eine neue Kampagne und fragen Sie zu dieser Fahrzeuge an. W&auml;len Sie
+                     dazu passende Fahrzeuge anhand von Filtern aus.</p>
                     <div class="text-center"> 
                     <p><a href="#/advertiser/{{realm.advertiserId}}/campaignEdit/" class="btn btn-primary">Neue Kampagnen</a></p>
                     </div>
@@ -35,47 +35,40 @@
             </div>
         </div>
     </div>
-    <div ng-if="realm.isDriver">
-        <h2>Hallo {{driver.firstname}}</h2>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Fahrzeuganfragen</h3>  
-                <div class="table-responsive">
-                    <table ng-table="tableParams" class="table table-striped table-hover">
-                        <tr ng-repeat="request in $data">
-                            <td data-title="'Fahrzeug'" sortable="'car.brand'">{{request.car.brand}} {{request.car.model}}</td>
-                            <td data-title="'Kampagne'" sortable="'campaign.title'">{{request.campaign.title}}</td>
-                            <td data-title="'Unternehmen'" sortable="'advertiser.company'">{{request.advertiser.company}}</td>
-                            <td data-title="'Beginn'" sortable="'campaign.startDate'">{{request.campaign.startDate}}</td>
-                            <td data-title="'Ende'" sortable="'campaign.endDate'">{{request.campaign.endDate}}</td>
-                            <td data-title="'Status'" sortable="'state'">
-                                <span class="label label-{{getStateLabelBoostrapState(request.state)}}">{{getStateLabel(request.state)}}</span>
-                            </td>
-                            <td data-title="''" class="text-right">
-                                <span ng-if="request.state == 'ASKED'">
-                                <button class="btn btn-danger btn-xs" type="button"
-                                        ng-click="sendResponse(request.car.id, request.advertiser.id, request.campaign.id, false)">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    Absagen
-                                </button>
-                                <button class="btn btn-success btn-xs" type="button"
-                                        ng-click="sendResponse(request.car.id, request.advertiser.id, request.campaign.id, true)">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                    Zusagen
-                                </button>
-                                </span>
-                                <button class="btn btn-default btn-xs" type="button"
-                                                                           ng-click="openCampaignDetails(request.car.id, request.advertiser.id, request.campaign.id)">
-                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                    Details
-                                </button>
-                                </td>
-                        </tr>
-                    </table>
+    <div class="row" ng-if="realm.isDriver">
+        <div class="col-md-6">
+            <div class="thumbnail home">
+                <a href="#/driver/{{realm.driverId}}/cars/">
+                <div class="thumb-img">
+                <img src="./img/symbols/cars.jpg" alt="&Uuml;bersicht aller Kampagnen">
+                </div>
+                </a>
+                <div class="caption">
+                    <h3>Meine Fahrzeuge</h3>
+                    <p>Verwalte Deine aktuell im Poral hinterlegten Fahrzeuge. Füge Informationen und Fotos zu
+                        bestehenden Fahrzeugen hinzu oder lege ein neues Fahrzeug an.</p>
+                    <div class="text-center"> 
+                    <p><a href="#/driver/{{realm.driverId}}/cars/" class="btn btn-primary">Meine Fahrzeuge anzeigen</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="thumbnail home">
+                <a href="#/carRequests/">
+                <div class="thumb-img">
+                <img src="./img/symbols/carRequests.jpg" alt="Neue Kampagnen anlagen">
+                </div>
+                </a>
+                <div class="caption">
+                    <h3>Fahrzeug Anfragen</h3>
+                    <p>Schau nach, ob aktuelle Buchungsanfragen f&uuml;r Deine Fahrzeuge vorhanden sind.
+                     Sag Dir ein Kampagne zu, bestätige die Anfrage für Dein Fahrzeug!</p>
+                    <div class="text-center"> 
+                    <p><a href="#/carRequests/" class="btn btn-primary">Fahrzeug Anfragen ansehen</a></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div ng-if="realm.isAdvertiser"></div>
 </main>
