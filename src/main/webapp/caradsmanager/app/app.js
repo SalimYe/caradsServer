@@ -73,6 +73,10 @@ app.config(function ($routeProvider) {
                 controller: 'carRequests',
                 templateUrl: 'views/carRequests.html'
             })
+            .when('/faq/', {
+                controller: 'faq',
+                templateUrl: 'views/faq.html'
+            })
             .when('/home', {
                 controller: 'home',
                 templateUrl: 'views/home.html'
@@ -130,28 +134,28 @@ app.config(function ($translateProvider) {
 });
 
 // datepickerPopup fix
-app.directive('datepickerPopup', function (){
-  return {
-    restrict: 'EAC',
-    require: 'ngModel',
-    link: function(scope, element, attr, controller) {
-      //remove the default formatter from the input directive to prevent conflict
-      controller.$formatters.shift();
-    }
-  };
+app.directive('datepickerPopup', function () {
+    return {
+        restrict: 'EAC',
+        require: 'ngModel',
+        link: function (scope, element, attr, controller) {
+            //remove the default formatter from the input directive to prevent conflict
+            controller.$formatters.shift();
+        }
+    };
 });
- 
-app.run(function(datepickerConfig, datepickerPopupConfig, timepickerConfig) {  
+
+app.run(function (datepickerConfig, datepickerPopupConfig, timepickerConfig) {
     datepickerConfig.startingDay = 1;
     datepickerConfig.showWeeks = false;
- 
+
     datepickerPopupConfig.currentText = 'Heute';
     datepickerPopupConfig.clearText = 'Löschen';
     datepickerPopupConfig.closeText = 'Schließen';
-   
+
     timepickerConfig.hourStep = 1;
     timepickerConfig.minuteStep = 15;
- 
+
     timepickerConfig.showMeridian = true;
-   
+
 });

@@ -120,3 +120,9 @@ table.table-car tr:first-child:hover {
 div.carselection-menu button.btn.btn-block {
     text-align: left;
 }
+
+/** FAQs */
+
+div.selectedItem {
+    background-color: #fcf8e3;
+}

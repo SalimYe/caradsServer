@@ -1,8 +1,8 @@
-startapp.controller('faq', function ($scope, $routeParams, $http, $location) {
+app.controller('faq', function ($scope, $routeParams, $http, $location) {
 
     $scope.isOpen = [];
 
-    $http.get('./data/faq.json').
+    $http.get('../../data/faq.json').
             success(function (data, status, headers, config) {
                 $scope.faqs = data;
             });

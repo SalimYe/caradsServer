@@ -110,3 +110,9 @@ table.table-car tr:hover {
 table.table-car tr:first-child:hover {
     cursor: default;
 }
+
+/** FAQs */
+
+div.selectedItem {
+    background-color: #fcf8e3;
+}
