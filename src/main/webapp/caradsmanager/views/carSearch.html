@@ -72,7 +72,7 @@
                 <div ng-repeat="car in cars">
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
-                            <a href="#/driver/{{driverId}}/car/{{car.id}}">
+                            <a href="#/driver/{{car.driverId}}/car/{{car.id}}">
                                 <div class="thumb-img">
                                     <img ng-if="hasImage($index)" ng-src="../api/images/{{getProfileImageId($index)}}" alt="{{car.brand}} {{car.model}}" />
                                     <img ng-if="!hasImage($index)" src="./img/symbols/car_placeholder.jpg" alt="Fahrzeug Symbol" />
@@ -88,7 +88,7 @@
                                     </div>
                                     <div class="details-fade"></div>
                                 </div>
-                                <a href="#/driver/{{driverId}}/car/{{car.id}}" class="btn btn-default">Details</a>
+                                <a href="#/driver/{{car.driverId}}/car/{{car.id}}" class="btn btn-default">Details</a>
                                 <button ng-if="!car.isSelected" type="button" ng-click="updateCarSelection(car.id)" class="btn btn-success">
                                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                                     Ausw&auml;len</button>
