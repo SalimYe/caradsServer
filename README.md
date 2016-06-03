@@ -1,1 +1,1 @@
-# Die Server Applikation fuer das Projekt carAds
+# Die Client-Server Applikation fuer das Projekt carAds
