@@ -12,7 +12,7 @@ public abstract class Person extends Model{
 	protected String lastname;
 	protected String email;
 	protected String phone;
-	protected Adress adress;
+	protected Adress address;
 	protected String description;
 	
 	public Person(String email, String firstName, String lastName){
@@ -20,7 +20,7 @@ public abstract class Person extends Model{
 		this.email = email;
 		this.firstname = firstName;
 		this.lastname = lastName;
-		this.adress = new Adress();
+		this.address = new Adress();
 	}
 
 	public String getEmail() {
@@ -54,27 +54,27 @@ public abstract class Person extends Model{
 	}
 
 	public String getCity() {
-		return adress.getCity();
+		return address.getCity();
 	}
 
 	public void setCity(String city) {
-		this.adress.setCity(city);
+		this.address.setCity(city);
 	}
 
 	public String getZip() {
-		return adress.getZip();
+		return address.getZip();
 	}
 
 	public void setZip(String zip) {
-		this.adress.setZip(zip);
+		this.address.setZip(zip);
 	}
 
 	public String getCountry() {
-		return adress.getCountry();
+		return address.getCountry();
 	}
 
 	public void setCountry(String country) {
-		this.adress.setCountry(country);
+		this.address.setCountry(country);
 	}
 
 	public String getPhone() {
