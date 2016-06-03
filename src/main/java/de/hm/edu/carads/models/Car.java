@@ -28,7 +28,7 @@ public class Car extends Model{
 	/**
 	 * Baujahr.
 	 */
-	private int buildYear;
+	private String buildYear;
 	
 	/**
 	 * Laufleistung.
