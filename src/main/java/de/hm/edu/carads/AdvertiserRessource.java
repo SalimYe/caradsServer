@@ -26,6 +26,7 @@ import de.hm.edu.carads.controller.ApplicationControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
+import de.hm.edu.carads.controller.exceptions.HasConstraintException;
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
@@ -33,10 +34,10 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.User;
-import de.hm.edu.carads.models.comm.EnrichedCampaign;
 import de.hm.edu.carads.models.comm.OfferRequest;
 import de.hm.edu.carads.models.util.Helper;
 import de.hm.edu.carads.transaction.AdvertiserRegistration;
+import de.hm.edu.carads.transaction.EnrichedCampaign;
 
 @Path("advertisers")
 public class AdvertiserRessource {
@@ -212,7 +213,9 @@ public class AdvertiserRessource {
 			return Response.ok().build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
-		} catch (Exception e) {
+		} catch(HasConstraintException e){
+			throw new WebApplicationException(406);
+		}catch (Exception e) {
 			throw new WebApplicationException(500);
 		}
 	}

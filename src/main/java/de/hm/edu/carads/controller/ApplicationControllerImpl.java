@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -26,13 +27,13 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.comm.EnrichedCampaign;
 import de.hm.edu.carads.models.comm.EnrichedFellow;
 import de.hm.edu.carads.models.comm.Fellow;
 import de.hm.edu.carads.models.comm.OfferInformation;
 import de.hm.edu.carads.models.util.DateController;
 import de.hm.edu.carads.models.util.FellowState;
 import de.hm.edu.carads.models.util.TimeFrame;
+import de.hm.edu.carads.transaction.EnrichedCampaign;
 
 /**
  * Diese Klasserepräsentiert die Logik der Applikation. Es werden Methoden
@@ -242,8 +243,10 @@ public class ApplicationControllerImpl implements ApplicationController {
 	@Override
 	public void deleteCar(String driverId, String carId) throws Exception {
 		
-		if(isCarBooked(carId))
+		if(isCarBooked(carId)){
+			logger.info("Car cloud not be deleted. It is still booked in a campaign.");
 			throw new HasConstraintException();
+		}
 		
 		Driver driver = driverController.getEntity(driverId);
 		driver.removeCar(carId);
@@ -260,8 +263,9 @@ public class ApplicationControllerImpl implements ApplicationController {
 	 * @return true when booked
 	 */
 	private boolean isCarBooked(String carId) throws Exception{
-		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_METAINFORMATION);
+		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_CAMPAIGNTIME);
 		String now = df.format(Calendar.getInstance().getTime());
+		
 		return isCarOccupiedInTime(carId, now, "31.12.2199");
 	}
 
@@ -477,11 +481,20 @@ public class ApplicationControllerImpl implements ApplicationController {
 		
 		campaign.setId(dbController.getNewId());
 		campaign.renewMetaInformation();
+		//campaign.setStartDate(rewriteDate(campaign.getStartDate()));
+		//campaign.setEndDate(rewriteDate(campaign.getEndDate()));
+		
 		ad.addCampaign(campaign);
 		ad.getMetaInformation().update();
 		logger.info("saving Campaign for "+advertiserId);
 		advertiserController.changeEntity(advertiserId, ad);
 		return campaign;
+	}
+	
+	private String rewriteDate(String date){
+		Date temp = DateController.fromStringToDate(date);
+		String plainDate = temp.getDay()+"."+temp.getMonth()+"."+temp.getYear();
+		return plainDate;
 	}
 
 	@Override
@@ -768,8 +781,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 	 * alle angefragten Fahrzeuge mit den benötigten Daten rund um das Fahrzeug.
 	 */
 	@Override
-	public EnrichedCampaign getEnrichedCampaign(String advertiserId,
-			String campaignId) throws Exception {
+	public EnrichedCampaign getEnrichedCampaign(String advertiserId, String campaignId) throws Exception {
 		Campaign campaign = this.getCampaign(advertiserId, campaignId);
 		EnrichedCampaign enrichedCampaign = new EnrichedCampaign(campaign, getEnrichedFellows(campaign.getFellows()));
 		return enrichedCampaign;

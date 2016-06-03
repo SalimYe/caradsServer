@@ -1,6 +1,6 @@
 package de.hm.edu.carads.models.util;
 
-public class Adress {
+public class Address {
 	private String country;
 	private String city;
 	private String zip;

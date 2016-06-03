@@ -167,7 +167,6 @@ public class Campaign extends Model{
 		if(fellow!=null && fellow.getState().equals(FellowState.ACCEPTED))
 			return true;
 		return false;
-	}
-	
+	}	
 	
 }

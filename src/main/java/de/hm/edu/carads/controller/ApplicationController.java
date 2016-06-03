@@ -8,8 +8,8 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.comm.EnrichedCampaign;
 import de.hm.edu.carads.models.comm.OfferInformation;
+import de.hm.edu.carads.transaction.EnrichedCampaign;
 
 public interface ApplicationController {
 	public Collection<Driver> getAllDrivers();
