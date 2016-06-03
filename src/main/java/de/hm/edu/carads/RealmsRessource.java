@@ -7,8 +7,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.google.gson.Gson;
 
-import de.hm.edu.carads.controller.ModelController;
-import de.hm.edu.carads.controller.ModelControllerImpl;
+import de.hm.edu.carads.controller.ApplicationController;
+import de.hm.edu.carads.controller.ApplicationControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.db.DatabaseControllerImpl;

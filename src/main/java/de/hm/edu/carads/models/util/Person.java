@@ -4,14 +4,15 @@ package de.hm.edu.carads.models.util;
 
 public abstract class Person extends Model{
 
-	
+	/**
+	 * Titel der Person
+	 */
+	protected String title;
 	protected String firstname;
 	protected String lastname;
 	protected String email;
 	protected String phone;
-	protected String country;
-	protected String city;
-	protected String zip;
+	protected Adress adress;
 	protected String description;
 	
 	public Person(String email, String firstName, String lastName){
@@ -19,6 +20,7 @@ public abstract class Person extends Model{
 		this.email = email;
 		this.firstname = firstName;
 		this.lastname = lastName;
+		this.adress = new Adress();
 	}
 
 	public String getEmail() {
@@ -52,27 +54,27 @@ public abstract class Person extends Model{
 	}
 
 	public String getCity() {
-		return city;
+		return adress.getCity();
 	}
 
 	public void setCity(String city) {
-		this.city = city;
+		this.adress.setCity(city);
 	}
 
 	public String getZip() {
-		return zip;
+		return adress.getZip();
 	}
 
 	public void setZip(String zip) {
-		this.zip = zip;
+		this.adress.setZip(zip);
 	}
 
 	public String getCountry() {
-		return country;
+		return adress.getCountry();
 	}
 
 	public void setCountry(String country) {
-		this.country = country;
+		this.adress.setCountry(country);
 	}
 
 	public String getPhone() {

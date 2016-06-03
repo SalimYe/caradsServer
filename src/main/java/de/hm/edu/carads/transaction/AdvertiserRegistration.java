@@ -1,4 +1,4 @@
-package de.hm.edu.carads.models.comm;
+package de.hm.edu.carads.transaction;
 
 import de.hm.edu.carads.models.Advertiser;
 

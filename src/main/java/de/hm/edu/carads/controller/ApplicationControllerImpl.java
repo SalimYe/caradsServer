@@ -42,7 +42,7 @@ import de.hm.edu.carads.models.util.TimeFrame;
  * @author Benjamin Keckes
  *
  */
-public class ModelControllerImpl implements ModelController {
+public class ApplicationControllerImpl implements ApplicationController {
 	/**
 	 * Schnittstelle zur Datenbank.
 	 */
@@ -67,13 +67,13 @@ public class ModelControllerImpl implements ModelController {
 	/**
 	 * Der Logger.
 	 */
-	final static Logger logger = Logger.getLogger(ModelControllerImpl.class);
+	final static Logger logger = Logger.getLogger(ApplicationControllerImpl.class);
 	
 	/**
 	 * Der Konstruktor mit dem DatenbankController als Parameter.
 	 * @param dbController
 	 */
-	public ModelControllerImpl(DatabaseController dbController){
+	public ApplicationControllerImpl(DatabaseController dbController){
 		this.dbController = dbController;
 		this.gson = new Gson();
 		driverController = new AbstractEntityControllerImpl<Driver>(ModelCollection.DRIVER, dbController);

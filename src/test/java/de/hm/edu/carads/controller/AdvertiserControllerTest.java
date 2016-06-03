@@ -21,7 +21,7 @@ public class AdvertiserControllerTest {
 	private static String FIRSTNAME = "Muster";
 	private static String LASTNAME = "Mann";
 	
-	private ModelController modelController = new ModelControllerImpl(new DatabaseControllerImpl(
+	private ApplicationController modelController = new ApplicationControllerImpl(new DatabaseControllerImpl(
 			DatabaseFactory.INST_TEST));
 
 	@Test

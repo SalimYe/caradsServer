@@ -11,7 +11,7 @@ import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.comm.EnrichedCampaign;
 import de.hm.edu.carads.models.comm.OfferInformation;
 
-public interface ModelController {
+public interface ApplicationController {
 	public Collection<Driver> getAllDrivers();
 	public Driver addDriver(Driver driver) throws Exception;
 	public Driver getDriver(String id) throws Exception;

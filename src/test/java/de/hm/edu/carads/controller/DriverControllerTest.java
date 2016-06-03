@@ -32,7 +32,7 @@ public class DriverControllerTest {
 	private static String CARMODEL = "E-Klasse";
 	private static String CARCOLOR = "red";
 	
-	private ModelController modelController = new ModelControllerImpl(new DatabaseControllerImpl(
+	private ApplicationController modelController = new ApplicationControllerImpl(new DatabaseControllerImpl(
 			DatabaseFactory.INST_TEST));
 
 	@Test

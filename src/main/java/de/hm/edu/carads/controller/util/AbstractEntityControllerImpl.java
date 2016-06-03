@@ -118,11 +118,12 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		
 		try{
 			getEntityByMail(entity.getEmail());
-			logger.error("Mail already exists. Can not save this entity");
+			logger.error("Mail (" + entity.getEmail() + " already exists. Can not save this entity");
 			throw new AlreadyExistsException();
 		}catch(NoContentException e){
 			logger.info("Email not registred yet. Saving Entity.");
 		}
+		entity.renewMetaInformation();
 		BasicDBObject dbObj = dbController.addEntity(modelClass, (BasicDBObject) JSON.parse(gson.toJson(entity)));
 		return makeEntityFromBasicDBObject(dbObj);
 	}

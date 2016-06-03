@@ -21,8 +21,8 @@ import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 
-import de.hm.edu.carads.controller.ModelController;
-import de.hm.edu.carads.controller.ModelControllerImpl;
+import de.hm.edu.carads.controller.ApplicationController;
+import de.hm.edu.carads.controller.ApplicationControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
@@ -33,10 +33,10 @@ import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.User;
-import de.hm.edu.carads.models.comm.DriverRegistration;
 import de.hm.edu.carads.models.comm.OfferInformation;
 import de.hm.edu.carads.models.comm.OfferResponse;
 import de.hm.edu.carads.models.util.Helper;
+import de.hm.edu.carads.transaction.DriverRegistration;
 
 @Path("drivers")
 public class DriversRessource {
@@ -47,7 +47,7 @@ public class DriversRessource {
 	private DatabaseController dbController = new DatabaseControllerImpl(
 			DatabaseFactory.INST_PROD);
 	
-	private ModelController modelController = new ModelControllerImpl(dbController);
+	private ApplicationController modelController = new ApplicationControllerImpl(dbController);
 
 	RealmController rc = new RealmControllerImpl(dbController);
 
@@ -67,17 +67,20 @@ public class DriversRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addDriver(String input) {
 		try {
-			DriverRegistration driverRegistration = gson.fromJson(input,
-					DriverRegistration.class);
+			DriverRegistration newDriver = gson.fromJson(input, DriverRegistration.class);
 
-			modelController.addDriver(driverRegistration);
-			String driverId =  modelController.getDriverByMail(driverRegistration.getEmail()).getId();
+			Driver driver = modelController.addDriver(newDriver);
+			try{
+				User realm = new User(newDriver.getEmail(), Helper.getShaHash(newDriver.getPassword()), "driver", driver.getId());
+				rc.addUser(realm);
+			}catch(NullPointerException e){
+				//Password konnte nicht gelesen werden / Wurde nicht angegeben.
+				//Fahrer wird wieder geloescht.
+				modelController.deleteDriver(driver.getId());
+				throw new InvalidAttributesException();
+			}
 			
-			User realm = new User(driverRegistration.getEmail(), Helper.getShaHash(driverRegistration.getPassword()), "driver", driverId);
-
-			rc.addUser(realm);
-
-			return Response.ok().build();
+			return Response.ok(gson.toJson(driver)).build();
 
 		} catch (AlreadyExistsException e) {
 			throw new WebApplicationException(409);

@@ -30,6 +30,8 @@ public abstract class Model {
 	}
 	
 	public void renewMetaInformation(){
+		if(this.meta==null)
+			this.meta = new MetaInformation();
 		meta.makeNewMetaInformation();
 	}
 }

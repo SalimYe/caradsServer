@@ -21,8 +21,8 @@ import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 
-import de.hm.edu.carads.controller.ModelController;
-import de.hm.edu.carads.controller.ModelControllerImpl;
+import de.hm.edu.carads.controller.ApplicationController;
+import de.hm.edu.carads.controller.ApplicationControllerImpl;
 import de.hm.edu.carads.controller.RealmController;
 import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
@@ -33,10 +33,10 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.User;
-import de.hm.edu.carads.models.comm.AdvertiserRegistration;
 import de.hm.edu.carads.models.comm.EnrichedCampaign;
 import de.hm.edu.carads.models.comm.OfferRequest;
 import de.hm.edu.carads.models.util.Helper;
+import de.hm.edu.carads.transaction.AdvertiserRegistration;
 
 @Path("advertisers")
 public class AdvertiserRessource {
@@ -44,10 +44,10 @@ public class AdvertiserRessource {
 	@Context
 	private HttpServletRequest httpServletRequest;
 	private Gson gson = new Gson();
-	DatabaseController dbController = new DatabaseControllerImpl(
-			DatabaseFactory.INST_PROD);
-	private ModelController modelController = new ModelControllerImpl(dbController);
-
+	private DatabaseController dbController = new DatabaseControllerImpl(DatabaseFactory.INST_PROD);
+	private ApplicationController modelController = new ApplicationControllerImpl(dbController);
+	private RealmController rc = new RealmControllerImpl(dbController);
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAdvertiser() {
@@ -69,20 +69,21 @@ public class AdvertiserRessource {
 	public Response addAdvertiser(String input) {
 
 		try {
-			AdvertiserRegistration advertiserRegistration = gson.fromJson(
-					input, AdvertiserRegistration.class);
-			RealmController rc = new RealmControllerImpl(
-					new DatabaseControllerImpl(DatabaseFactory.INST_PROD));
-
-			modelController.addAdvertiser(advertiserRegistration);
+			AdvertiserRegistration advertiserRegistration = gson.fromJson(input, AdvertiserRegistration.class);
 			
-			String adId =  modelController.getAdvertiserByMail(advertiserRegistration.getEmail()).getId();
+			Advertiser advertiser = modelController.addAdvertiser(advertiserRegistration);
 			
-			User realm = new User(advertiserRegistration.getEmail(), Helper.getShaHash(advertiserRegistration.getPassword()), "advertiser", adId);
-
-			rc.addUser(realm);
-
-			return Response.ok().build();
+			try{
+				User realm = new User(advertiserRegistration.getEmail(), Helper.getShaHash(advertiserRegistration.getPassword()), "advertiser", advertiser.getId());
+				rc.addUser(realm);
+			}catch (NullPointerException e){
+				//Password konnte nicht gelesen werden / Wurde nicht angegeben.
+				//Werbender wird wieder geloescht.
+				modelController.deleteAdvertiser(advertiser.getId());
+				throw new InvalidAttributesException();
+			}
+			
+			return Response.ok(gson.toJson(advertiser)).build();
 
 		} catch (AlreadyExistsException e) {
 			throw new WebApplicationException(409);

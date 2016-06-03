@@ -14,6 +14,7 @@ import de.hm.edu.carads.models.util.Person;
  */
 public class Driver extends Person {
 
+	
 	/**
 	 * Geburtsdatum als String.
 	 */
@@ -102,7 +103,7 @@ public class Driver extends Person {
     	Iterator<Car> it = cars.iterator();
         while (it.hasNext()) {
             Car tmp = it.next();
-            tmp.setDriverInformation(this.getId(), zip, occupation, licenseDate);
+            tmp.setDriverInformation(this.getId(), this.getZip(), occupation, licenseDate);
             enrichedCars.add(tmp);
         }
     	return enrichedCars;
