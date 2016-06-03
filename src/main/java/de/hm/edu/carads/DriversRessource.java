@@ -148,6 +148,8 @@ public class DriversRessource {
 			return Response.ok().build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
+		} catch (HasConstraintException e){
+			throw new WebApplicationException(406);
 		} catch (Exception e) {
 			throw new WebApplicationException(500);
 		}

@@ -155,17 +155,19 @@ public class ApplicationControllerImpl implements ApplicationController {
 	 * Diese Methode loescht einen Werbenden. Zuvor wird ueberprueft ob
 	 * die zugehoerigen Kampagnen geloescht werden koennen. Wenn ja, wird der
 	 * Werbende geloescht, ansonsten bleibt er bestehen.
-	 * @param driverId
+	 * @param advertiserId
 	 * @throws Exception
 	 */
 	@Override
-	public void deleteAdvertiser(String driverId) throws Exception {
-		Iterator<Campaign> it = advertiserController.getEntity(driverId).getCampaigns().iterator();
+	public void deleteAdvertiser(String advertiserId) throws Exception {
+		Iterator<Campaign> it = advertiserController.getEntity(advertiserId).getCampaigns().iterator();
 		while(it.hasNext()){
-			if(hasCampaignBookedFellows(it.next()))
+			if(hasCampaignBookedFellows(it.next())){
+				logger.info("Advertiser" + advertiserId + " could not removed");
 				throw new HasConstraintException();
+			}
 		}
-		advertiserController.deleteEntity(driverId);
+		advertiserController.deleteEntity(advertiserId);
 	}
 
 	@Override
@@ -544,8 +546,10 @@ public class ApplicationControllerImpl implements ApplicationController {
 	private boolean hasCampaignBookedFellows(Campaign campaign){
 		Iterator<Fellow> fellowIterator = campaign.getFellows().iterator();
 		while(fellowIterator.hasNext()){
-			if(fellowIterator.next().getState().equals(FellowState.ACCEPTED))
+			if(fellowIterator.next().getState().equals(FellowState.ACCEPTED)){
+				logger.info("Campaign "+ campaign.getId() +" has constraints");
 				return true;
+			}
 		}
 		return false;
 	}
