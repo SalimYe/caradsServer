@@ -76,6 +76,7 @@ public class DriversRessource {
 			}catch(NullPointerException e){
 				//Password konnte nicht gelesen werden / Wurde nicht angegeben.
 				//Fahrer wird wieder geloescht.
+				System.err.println("Password missing");
 				modelController.deleteDriver(driver.getId());
 				throw new InvalidAttributesException();
 			}
@@ -134,6 +135,8 @@ public class DriversRessource {
 			throw new WebApplicationException(400);
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
+		} catch (NullPointerException e){
+			throw new WebApplicationException(401);
 		} catch (Exception e) {
 			System.out.println("woo");
 			throw new WebApplicationException(500);
