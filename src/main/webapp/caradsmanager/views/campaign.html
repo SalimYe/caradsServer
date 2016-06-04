@@ -8,8 +8,8 @@
         <div class="col-md-3">
             <h4>{{campaign.title}}</h4>
             <p><strong>Verg&uuml;tung pro Fahrzeug:</strong> {{campaign.campaignBudget}}<br />
-                <strong>Datum Start:</strong> {{campaign.startDate}}<br />
-                <strong>Datum Ende:</strong> {{campaign.endDate}}</p>
+                <strong>Datum Start:</strong> {{campaign.startDate | date:'dd.MM.yyyy'}}<br />
+                <strong>Datum Ende:</strong> {{campaign.endDate | date:'dd.MM.yyyy'}}</p>
         </div>
         <div class="col-md-4">
             <h4>Kurzbeschreibung</h4>

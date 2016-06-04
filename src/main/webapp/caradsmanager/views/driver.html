@@ -19,8 +19,8 @@
                 <div class="col-md-6">
                     <h4>Sonstiges</h4>
                     <p><strong>Beruf:</strong> {{driver.occupation}}<br />
-                        <strong>Geburtsdatum:</strong> {{driver.birthdate}}<br />
-                        <strong>F&uuml;hrerschein seit:</strong> {{driver.licenseDate}}</p>
+                        <strong>Geburtsdatum:</strong> {{driver.birthdate | date:'dd.MM.yyyy'}}<br />
+                        <strong>F&uuml;hrerschein seit:</strong> {{driver.licenseDate | date:'dd.MM.yyyy'}}</p>
                 </div>
             </div>
             <div class="row">

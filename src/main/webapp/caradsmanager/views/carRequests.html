@@ -8,8 +8,8 @@
                         <td data-title="'Fahrzeug'" sortable="'car.brand'">{{request.car.brand}} {{request.car.model}}</td>
                         <td data-title="'Kampagne'" sortable="'campaign.title'">{{request.campaign.title}}</td>
                         <td data-title="'Unternehmen'" sortable="'advertiser.company'">{{request.advertiser.company}}</td>
-                        <td data-title="'Beginn'" sortable="'campaign.startDate'">{{request.campaign.startDate}}</td>
-                        <td data-title="'Ende'" sortable="'campaign.endDate'">{{request.campaign.endDate}}</td>
+                        <td data-title="'Beginn'" sortable="'campaign.startDate'">{{request.campaign.startDate | date:'dd.MM.yyyy'}}</td>
+                        <td data-title="'Ende'" sortable="'campaign.endDate'">{{request.campaign.endDate | date:'dd.MM.yyyy'}}</td>
                         <td data-title="'Status'" sortable="'state'">
                             <span class="label label-{{getStateLabelBoostrapState(request.state)}}">{{getStateLabel(request.state)}}</span>
                         </td>

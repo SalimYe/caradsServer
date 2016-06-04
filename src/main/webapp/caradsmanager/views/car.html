@@ -7,7 +7,7 @@
                     <strong>Farbe:</strong> {{car.color}}</p>
             </div>
             <div class="col-md-2">
-                    <p><strong>Erstzulassung:</strong> {{car.buildYear}}<br />
+                    <p><strong>Erstzulassung:</strong> {{car.buildYear | date:'dd.MM.yyyy'}}<br />
                     <strong>Kilometerstand:</strong> {{car.mileage}}</p>
             </div>
             <div class="col-md-4">
