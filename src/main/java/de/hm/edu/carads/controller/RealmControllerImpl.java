@@ -46,7 +46,7 @@ public class RealmControllerImpl implements RealmController {
 			return null;
 		Gson gson = new Gson();
 
-		User user = gson.fromJson(JSON.serialize(dbObj), User.class);
+		User user = (User) gson.fromJson(JSON.serialize(dbObj), User.class);
 		user.setId(dbObj.getString("_id"));
 		return user;		
 	}

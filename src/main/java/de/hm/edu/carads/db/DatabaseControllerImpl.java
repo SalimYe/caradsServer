@@ -65,8 +65,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 	@Override
 	public BasicDBObject getEntity(ModelCollection collectionC, String id)
 			throws NoContentException {
-		DBCollection collection = db
-				.getCollection(getCollectionName(collectionC));
+		DBCollection collection = db.getCollection(getCollectionName(collectionC));
 		BasicDBObject query = new BasicDBObject();
 		try {
 			query.put("_id", new ObjectId(id));

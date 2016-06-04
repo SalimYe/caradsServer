@@ -297,25 +297,7 @@ public class DriversRessource {
 		}
 	}
 	
-	@PUT
-	@Path("/{id}/auth")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response changeCredidentials(@PathParam("id") String driverId, String input) {
-		
-		Credidentials credidentials = gson.fromJson(input, Credidentials.class);
-		try{
-			rc.changeCredidentials(driverId, credidentials);
-			return Response.ok().build();
-		} catch(NoContentException e){
-			throw new WebApplicationException(404);
-		} catch(IllegalArgumentException e){
-			throw new WebApplicationException(401);
-		} catch(Exception e){
-			throw new WebApplicationException(500);
-		}
-		
-	}
+	
 
 	private Driver getCurrentDriver() throws Exception {
 		Principal principal = httpServletRequest.getUserPrincipal();

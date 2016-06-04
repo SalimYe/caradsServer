@@ -12,12 +12,12 @@ import de.hm.edu.carads.models.util.Role;
 public class User extends Model{
 
     private String username;
-    private String password_hased;
+    private String credentials;
     private Collection <Role> roles;
 
     public User(String username, String credentials, String role, String roleId) {
         this.username = username;
-        this.password_hased = credentials;
+        this.credentials = credentials;
         this.roles = new ArrayList<>();
         this.roles.add(new Role(role, roleId));
     }
@@ -27,7 +27,7 @@ public class User extends Model{
     }
 
     public String getPassword() {
-        return password_hased;
+        return credentials;
     }
 
     public Collection<Role> getRoles() {
@@ -39,7 +39,7 @@ public class User extends Model{
     }
 
     public void setPassword(String credentials) {
-        this.password_hased = credentials;
+        this.credentials = credentials;
     }
 
     public void setRoles(Collection<Role> roles) {
