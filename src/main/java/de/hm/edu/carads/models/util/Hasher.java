@@ -8,7 +8,7 @@ import org.apache.commons.codec.binary.Hex;
  *
  * @author florian
  */
-public class Helper {
+public class Hasher {
     
     public static String getShaHash(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");

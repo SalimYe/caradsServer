@@ -35,7 +35,7 @@ import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.comm.OfferRequest;
-import de.hm.edu.carads.models.util.Helper;
+import de.hm.edu.carads.models.util.Hasher;
 import de.hm.edu.carads.transaction.AdvertiserRegistration;
 import de.hm.edu.carads.transaction.EnrichedCampaign;
 
@@ -75,7 +75,7 @@ public class AdvertiserRessource {
 			Advertiser advertiser = modelController.addAdvertiser(advertiserRegistration);
 			
 			try{
-				User realm = new User(advertiserRegistration.getEmail(), Helper.getShaHash(advertiserRegistration.getPassword()), "advertiser", advertiser.getId());
+				User realm = new User(advertiserRegistration.getEmail(), advertiserRegistration.getPassword(), "advertiser", advertiser.getId());
 				rc.addUser(realm);
 			}catch (NullPointerException e){
 				//Password konnte nicht gelesen werden / Wurde nicht angegeben.
@@ -126,10 +126,13 @@ public class AdvertiserRessource {
 				throw new WebApplicationException(401);
 			}
 
-			if (adv == null) {
-				throw new InvalidAttributesException();
-			}
 			modelController.updateAdvertiser(id, adv);
+			
+			//Wurde die Email geaendert? Wenn ja muss auch Realm geaendert werden
+			if(!currentAdvertiser.getEmail().equals(adv.getEmail())){
+				rc.changeUsername(id, adv.getEmail());
+			}
+			
 			return Response.ok().build();
 		} catch (InvalidAttributesException e) {
 			throw new WebApplicationException(400);

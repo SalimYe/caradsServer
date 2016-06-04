@@ -16,7 +16,7 @@ public class HelperTest {
 	
     @Test
     public void testGetShaHash() throws NoSuchAlgorithmException    {
-            String passwordHash = Helper.getShaHash(PASSWORD);
+            String passwordHash = Hasher.getShaHash(PASSWORD);
             assertEquals(PASSWORDHASH, passwordHash);
             
     }

@@ -35,7 +35,8 @@ import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.comm.OfferInformation;
 import de.hm.edu.carads.models.comm.OfferResponse;
-import de.hm.edu.carads.models.util.Helper;
+import de.hm.edu.carads.models.util.Hasher;
+import de.hm.edu.carads.transaction.Credidentials;
 import de.hm.edu.carads.transaction.DriverRegistration;
 
 @Path("drivers")
@@ -71,7 +72,7 @@ public class DriversRessource {
 
 			Driver driver = modelController.addDriver(newDriver);
 			try{
-				User realm = new User(newDriver.getEmail(), Helper.getShaHash(newDriver.getPassword()), "driver", driver.getId());
+				User realm = new User(newDriver.getEmail(), newDriver.getPassword(), "driver", driver.getId());
 				rc.addUser(realm);
 			}catch(NullPointerException e){
 				//Password konnte nicht gelesen werden / Wurde nicht angegeben.
@@ -128,6 +129,11 @@ public class DriversRessource {
 			}
 
 			modelController.updateDriver(id, driverData);
+			
+			//Wurde die Email geaendert? Wenn ja muss auch Realm geaendert werden
+			if(!currentDriver.getEmail().equals(driverData.getEmail())){
+				rc.changeUsername(id, driverData.getEmail());
+			}
 			return Response.ok().build();
 		} catch (AlreadyExistsException e) {
 			throw new WebApplicationException(409);
@@ -278,7 +284,7 @@ public class DriversRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response respond(@PathParam("id") String driverId, String input) {
 		OfferResponse response = gson.fromJson(input, OfferResponse.class);
-		System.out.println(response.getResponse());
+		//System.out.println(response.getResponse());
 		try {
 			modelController.respondToOffer(response.getCarId(),
 					response.getAdvertiserId(), response.getCampaignId(),
@@ -289,6 +295,26 @@ public class DriversRessource {
 		} catch (Exception e) {
 			throw new WebApplicationException(500);
 		}
+	}
+	
+	@PUT
+	@Path("/{id}/auth")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response changeCredidentials(@PathParam("id") String driverId, String input) {
+		
+		Credidentials credidentials = gson.fromJson(input, Credidentials.class);
+		try{
+			rc.changeCredidentials(driverId, credidentials);
+			return Response.ok().build();
+		} catch(NoContentException e){
+			throw new WebApplicationException(404);
+		} catch(IllegalArgumentException e){
+			throw new WebApplicationException(401);
+		} catch(Exception e){
+			throw new WebApplicationException(500);
+		}
+		
 	}
 
 	private Driver getCurrentDriver() throws Exception {
