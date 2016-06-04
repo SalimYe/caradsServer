@@ -10,6 +10,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.ApplicationController;
@@ -21,6 +23,7 @@ import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.transaction.Credidentials;
 
+import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 
@@ -59,10 +62,11 @@ public class RealmsRessource {
     
     @GET
     @Path("/logout")
-    public Response logout(){
+    public Response logout(@Context UriInfo uriInfo){
     	try {
 			httpServletRequest.logout();
-			return Response.ok().build();
+			URI uri = uriInfo.getBaseUriBuilder().path("../").build();
+			return Response.seeOther(uri).build();
 		} catch (ServletException e) {
 			throw new WebApplicationException(500);
 		}
