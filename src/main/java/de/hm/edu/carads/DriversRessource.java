@@ -228,6 +228,8 @@ public class DriversRessource {
 		try {
 			modelController.deleteCar(driverId, carId);
 			return Response.ok().build();
+		} catch(InvalidAttributesException e){
+			throw new WebApplicationException(400);
 		} catch(HasConstraintException e){
 			throw new WebApplicationException(406);
 		} catch (NoContentException e) {

@@ -2,6 +2,8 @@ package de.hm.edu.carads.controller.util;
 
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
@@ -18,7 +20,7 @@ import de.hm.edu.carads.models.util.Model;
  *
  */
 public class EntityValidator {
-	
+	final static Logger logger = Logger.getLogger(EntityValidator.class);
 	/**
 	 * Eine Objekt wird empfangen und auf Gueltigkeit geprueft. Dabei wird an dieser
 	 * Stelle lediglich die Klasse des Objektes ueberprueft und an eine weitere
@@ -48,6 +50,7 @@ public class EntityValidator {
 	private static boolean isNotEmpty(String str){
 		if(str!=null && !str.isEmpty())
 			return true;
+		logger.error("Entity is empty");
 		return false;
 	}
 	
