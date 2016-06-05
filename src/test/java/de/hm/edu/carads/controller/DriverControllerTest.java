@@ -110,10 +110,11 @@ public class DriverControllerTest {
 		Car car1 = new Car();
 		car1.setBrand("BMW");
 		car1.setModel("1er");
+		car1.setColor("red");
 		Car car2 = new Car();
 		car2.setBrand("Ford");
 		car2.setModel("Ka");
-		
+		car2.setColor("red");
 		modelController.addCar(driver.getId(), car1);
 		modelController.addCar(driver.getId(), car2);
 		
@@ -127,7 +128,7 @@ public class DriverControllerTest {
 		Car car1 = new Car();
 		car1.setBrand("BMW");
 		car1.setModel("1er");
-		
+		car1.setColor("red");
 		Car addedCar = modelController.addCar(driver.getId(), car1);
 		assertFalse(addedCar.getId().isEmpty());
 	}
@@ -178,7 +179,7 @@ public class DriverControllerTest {
 		Car newCar = new Car();
 		newCar.setBrand("Daihatsu");
 		newCar.setModel("Cuore");
-		
+		newCar.setColor("red");
 		modelController.updateCar(d.getId(), id, newCar);
 		
 		Car updated = modelController.getCar(d.getId(), id);
@@ -192,7 +193,7 @@ public class DriverControllerTest {
 		Car newCar = new Car();
 		newCar.setBrand("Daihatsu");
 		newCar.setModel("Cuore");
-		
+		newCar.setColor("red");
 		modelController.updateCar(d.getId(), "11234123", newCar);
 	}
 	

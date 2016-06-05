@@ -134,6 +134,7 @@ public class AdvertiserControllerTest {
 		newCampaign.setName("BMW Promo");
 		newCampaign.setStartDate("01.12.2016");
 		newCampaign.setEndDate("02.02.2017");
+		newCampaign.setCampaignBudget("1000");
 		
 		modelController.updateCampaign(ad.getId(), c.getId(), newCampaign);
 		
@@ -150,6 +151,7 @@ public class AdvertiserControllerTest {
 		newCampaign.setName("BMW Promo");
 		newCampaign.setStartDate("01.12.2016");
 		newCampaign.setEndDate("02.02.2017");
+		newCampaign.setCampaignBudget("123");
 		modelController.updateCampaign(ad.getId(), "123123", newCampaign);
 	}
 	
@@ -219,6 +221,7 @@ public class AdvertiserControllerTest {
 		camp1.setName("Fiat Promo");
 		camp1.setStartDate("30.01.2000");
 		camp1.setEndDate("01.03.2000");
+		camp1.setCampaignBudget("123123");
 		camp1 = modelController.addCampaign(ad.getId(), camp1);
 		modelController.requestVehicleForCampaign(ad.getId(), camp1.getId(), "123");
 		
@@ -236,6 +239,7 @@ public class AdvertiserControllerTest {
 		camp2.setName("BMW Promo");
 		camp2.setStartDate("30.01.2000");
 		camp2.setEndDate("01.03.2000");
+		camp2.setCampaignBudget("2");
 		camp2 = modelController.addCampaign(adv1.getId(), camp2);
 		
 		modelController.requestVehicleForCampaign(adv1.getId(), camp2.getId(), "123");
@@ -303,6 +307,7 @@ public class AdvertiserControllerTest {
 		c.setCampaignBudget("10000 Euro");
 		c.setStartDate("01.01.2000");
 		c.setEndDate("31.01.2000");
+		c.setCampaignBudget("1000");
 		return c;
 	}
 }

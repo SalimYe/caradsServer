@@ -49,7 +49,7 @@ public class EntityValidator {
 	private static boolean isNotEmpty(String str){
 		if(str!=null && !str.isEmpty())
 			return true;
-		logger.error("Entity is empty");
+		logger.error("Attribute is empty");
 		return false;
 	}
 	
@@ -105,11 +105,11 @@ public class EntityValidator {
 	 * @return Wahrheitswert ueber die Gueltigkeit
 	 */
 	private static boolean isNewCarValid(Car car){
-		if(car.getBrand() == null || car.getBrand().isEmpty())
-			return false;
-		if(car.getModel() == null || car.getModel().isEmpty())
-			return false;
-		return true;
+		if(isNotEmpty(car.getBrand()) &&
+				isNotEmpty(car.getModel())&&
+				isNotEmpty(car.getColor()))
+			return true;
+		return false;
 	}
 	
 	/**
@@ -118,12 +118,13 @@ public class EntityValidator {
 	 * @return Wahrheitswert ueber die Gueltigkeit
 	 */
 	private static boolean isCampaignValid(Campaign campaign){
-		if(campaign.getName() == null)
-			return false;
-		if(!campaign.getStartDate().isEmpty() && !campaign.getEndDate().isEmpty())
-			if(!DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
-				return false;
-		return true;
+		if(isNotEmpty(campaign.getName()) &&
+				isNotEmpty(campaign.getStartDate()) &&
+				isNotEmpty(campaign.getEndDate()) &&
+				isNotEmpty(campaign.getCampaignBudget()))
+			if(DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
+				return true;
+		return false;
 	}
 	
 	/**

@@ -89,7 +89,7 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 	public void changeEntity(String id, E entityData) throws Exception{
 
 		if(!EntityValidator.isEntityValid((entityData))){
-			logger.error("Invalid Attributes for changed Entity: " + entityData.getId());
+			logger.error("Can not save: Invalid Attributes for Entity: " + entityData.getId());
 			throw new InvalidAttributesException();
 		}
 		

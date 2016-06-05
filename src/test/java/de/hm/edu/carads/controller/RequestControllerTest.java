@@ -238,6 +238,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
+		c.setCampaignBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -281,6 +282,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("01.01.2016");
 		c.setEndDate("31.01.2016");
+		c.setCampaignBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -299,6 +301,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
+		c.setCampaignBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -317,6 +320,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
+		c.setCampaignBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -335,6 +339,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
+		c.setCampaignBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -353,12 +358,14 @@ public class RequestControllerTest {
 		c.setName("Kampagne1");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
+		c.setCampaignBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		Campaign c2 = new Campaign();
 		c2.setName("Kampagne2");
 		c2.setStartDate("20.05.2016");
 		c2.setEndDate("01.07.2016");
+		c2.setCampaignBudget("2");
 		Campaign camp2 = modelController.addCampaign(ad.getId(), c2);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());

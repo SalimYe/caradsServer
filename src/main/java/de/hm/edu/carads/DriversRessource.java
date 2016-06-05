@@ -35,8 +35,6 @@ import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.comm.OfferInformation;
 import de.hm.edu.carads.models.comm.OfferResponse;
-import de.hm.edu.carads.models.util.Hasher;
-import de.hm.edu.carads.transaction.Credidentials;
 import de.hm.edu.carads.transaction.DriverRegistration;
 
 @Path("drivers")
