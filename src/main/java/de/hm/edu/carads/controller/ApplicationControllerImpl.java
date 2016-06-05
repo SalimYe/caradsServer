@@ -251,6 +251,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 		}
 		
 		Driver driver = driverController.getEntity(driverId);
+		logger.info("going to remove car from " + driver.getId());
 		driver.removeCar(carId);
 		driver.getMetaInformation().update();
 		logger.info("Deleting car "+carId);
