@@ -1,13 +1,40 @@
-package de.hm.edu.carads.models.comm;
+package de.hm.edu.carads.transaction;
 
-import de.hm.edu.carads.models.util.FellowState;
-
+/**
+ * Diese Klasse repreasentiert eine Antwort an eine Buchungsanfrage (Fahrer an Werbenden).
+ * 
+ * @author BK
+ *
+ */
 public class OfferResponse {
+	
+	/**
+	 * Die FahrzeugID des Fahrzeugs, fuer welches die Anfrage gestellt wurde.
+	 */
 	private String carId;
+	
+	/**
+	 * Die ID des Werbenden.
+	 */
 	private String advertiserId;
+	
+	/**
+	 * Die ID der Kampagne.
+	 */
 	private String campaignId;
+	
+	/**
+	 * Die tatsaechliche Antwort.
+	 */
 	private String response;
 
+	/**
+	 * Der Konstruktor mit allen Attributen.
+	 * @param carId
+	 * @param advertiserId
+	 * @param campaignId
+	 * @param response
+	 */
 	public OfferResponse(String carId, String advertiserId, String campaignId,
 			String response) {
 		this.carId = carId;

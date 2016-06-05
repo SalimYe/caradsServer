@@ -8,17 +8,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.UUID;
-
 import javax.imageio.ImageIO;
 
-import org.glassfish.jersey.uri.PathPattern;
-
-import de.hm.edu.carads.db.PropertiesLoader;
+import de.hm.edu.carads.db.util.PropertieController;
 import de.hm.edu.carads.models.Image;
 
 /**
@@ -33,30 +27,35 @@ public class ImageControllerImpl implements ImageController {
 	 * Der Ordner wird zusammengestellt aus dem Homeverzeichnis des Serverbenutzers
 	 * und des Pfades, welcher in der Konfiguration angegeben ist.
 	 */
-	private static final String UPLOAD_PATH = System.getProperty("user.home") + PropertiesLoader.getInstance().getPropertyString("IMG_DIR");
+	private static final String UPLOAD_PATH = System.getProperty("user.home") + PropertieController.getInstance().getPropertyString("IMG_DIR");
 	
+	private static final String IMG_MAX_SIZE = PropertieController.getInstance().getPropertyString("IMG_MAX_SIZE");
 	/**
 	 * Alle erlaubten Bild-Datentypen.
 	 */
 	public static final String[] VALID_DATATYPES = new String[] { "JPG", "JPEG", "PNG" };
 
+	/**
+	 * Diese Methode speichert ein Bild auf dem Server. Es werden nur JPG und PNG Datein erlaubt.
+	 * @param InputStream des Bildes
+	 * @param Datentyp der Datei
+	 */
 	@Override
 	public Image saveImage(InputStream input, String datatype) throws Exception {
 
 		Image imageData = new Image();
 
 		int read = 0;
-		byte[] bytes = new byte[1024];
+		byte[] bytes = new byte[this.parseAndCheckImgSize(IMG_MAX_SIZE)];
 
 		if (!isDatatypeValid(datatype))
 			throw new IllegalArgumentException("wrong datatype");
 
+		//Die ID wird zufaellig generiert.
 		imageData.setId(UUID.randomUUID() + "." + datatype);
 
-		
 		createDirIfNotExist(UPLOAD_PATH);
-		OutputStream out = new FileOutputStream(new File(UPLOAD_PATH
-				+ imageData.getId()));
+		OutputStream out = new FileOutputStream(new File(UPLOAD_PATH + imageData.getId()));
 		while ((read = input.read(bytes)) != -1) {
 			out.write(bytes, 0, read);
 		}
@@ -78,6 +77,10 @@ public class ImageControllerImpl implements ImageController {
 		}
 	}
 
+	/**
+	 * Das Bild wird aus dem Filesystem geladen und zurueck gegeben.
+	 * @param ID des Bildes
+	 */
 	@Override
 	public byte[] getImage(String id) throws Exception {
 		BufferedImage img = null;
@@ -103,6 +106,9 @@ public class ImageControllerImpl implements ImageController {
 		return Arrays.asList(VALID_DATATYPES).contains(type.toUpperCase());
 	}
 
+	/**
+	 * Das Bild mit der ID wird vom Filesystem geloescht.
+	 */
 	@Override
 	public void deleteImage(String id) throws Exception {
 		File file = new File(UPLOAD_PATH + id);
@@ -113,6 +119,20 @@ public class ImageControllerImpl implements ImageController {
 		if (!file.delete())
 			throw new Exception("Delete operation failed");
 
+	}
+	
+	/**
+	 * Die maximale Gruesse eines Bildes wird nochmals auf Gueltigkeit ueberprueft.
+	 * Falls die Groesse nicht gueltig ist wird ein Default (1024) zurueck gegeben.
+	 * @param size
+	 * @return maximale Bildgroesse
+	 */
+	private int parseAndCheckImgSize(String size){
+		int imgSize = Integer.parseInt(size);
+		if(imgSize>50 && imgSize <= 4096){
+			return imgSize;
+		}
+		return 1024;
 	}
 
 }

@@ -17,10 +17,10 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.comm.Fellow;
-import de.hm.edu.carads.models.comm.OfferInformation;
-import de.hm.edu.carads.models.comm.OfferRequest;
+import de.hm.edu.carads.models.util.Fellow;
 import de.hm.edu.carads.models.util.FellowState;
+import de.hm.edu.carads.transaction.OfferInformation;
+import de.hm.edu.carads.transaction.OfferRequest;
 
 public class RequestControllerTest {
 	private static String EMAIL = "muster.mann@mustermann.com";

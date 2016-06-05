@@ -33,9 +33,9 @@ import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.User;
-import de.hm.edu.carads.models.comm.OfferInformation;
-import de.hm.edu.carads.models.comm.OfferResponse;
 import de.hm.edu.carads.transaction.DriverRegistration;
+import de.hm.edu.carads.transaction.OfferInformation;
+import de.hm.edu.carads.transaction.OfferResponse;
 
 @Path("drivers")
 public class DriversRessource {

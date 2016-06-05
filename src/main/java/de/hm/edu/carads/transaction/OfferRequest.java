@@ -1,4 +1,4 @@
-package de.hm.edu.carads.models.comm;
+package de.hm.edu.carads.transaction;
 
 /**
  * Diese Klasse repräsentiert lediglich die Anfrage an ein Fahrzeug.

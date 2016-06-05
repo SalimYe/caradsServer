@@ -3,7 +3,6 @@ package de.hm.edu.carads.transaction;
 import java.util.Collection;
 
 import de.hm.edu.carads.models.Campaign;
-import de.hm.edu.carads.models.comm.EnrichedFellow;
 
 public class EnrichedCampaign extends Campaign{
 	

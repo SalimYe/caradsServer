@@ -10,7 +10,6 @@ import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoDatabase;
 
 import de.flapdoodle.embed.mongo.tests.MongodForTestsFactory;
-import de.hm.edu.carads.db.PropertiesLoader;
 
 
 public class DatabaseFactory {
@@ -45,8 +44,8 @@ public class DatabaseFactory {
     
     private static DB createNewProductiveMongoDB() throws Exception{
     	MongoClient mongoClient;
-		PropertiesLoader pLoader;
-		pLoader = PropertiesLoader.getInstance();
+		PropertieController pLoader;
+		pLoader = PropertieController.getInstance();
 		String host = pLoader.getPropertyString("DB_HOST");
 		int port = Integer.parseInt(pLoader.getPropertyString("DB_PORT"));
 		

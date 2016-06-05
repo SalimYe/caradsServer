@@ -9,6 +9,11 @@ import org.apache.log4j.Logger;
 
 import de.hm.edu.carads.models.util.TimeFrame;
 
+/**
+ * Diese Klasse wird zur Berechnung von Zeiten und fuer das Formatieren und Parsen von Zeiten verwendet.
+ * @author BK
+ *
+ */
 public class DateController {
 	public static final String DATE_FORMAT_METAINFORMATION = "dd.MM.yyyy HH:mm:ss"; 
 	public static final String DATE_FORMAT_CAMPAIGNTIME = "yyyy-MM-dd";
@@ -16,6 +21,11 @@ public class DateController {
 	
 	final static Logger logger = Logger.getLogger(DateController.class);
 	
+	/**
+	 * Ein String wird in ein Date konvertiert.
+	 * @param date
+	 * @return Date
+	 */
 	public static Date fromStringToDate(String date){
 		DateFormat df = new SimpleDateFormat(DATE_FORMAT_CAMPAIGNTIME);
 		try {
@@ -38,8 +48,12 @@ public class DateController {
 		return null;
 	}
 	
-	
-	
+	/**
+	 * Zwei Zeiten als String werden erst konvertiert und dann miteinander verglichen.
+	 * @param Zeit A
+	 * @param Zeit B
+	 * @return true wenn A vor B
+	 */
 	public static boolean isABeforeB(String a, String b){
 		if(a==null || a.isEmpty() || b==null || b.isEmpty()){
 			throw new IllegalArgumentException();
@@ -52,6 +66,13 @@ public class DateController {
 		return false;
 	}
 	
+	/**
+	 * Zwei Zeitraeume werden miteinander verglichen und es wird ueberprueft
+	 * ob sie sich ueberschneiden.
+	 * @param a
+	 * @param b
+	 * @return true wenn Zeitraeme ueberschneiden.
+	 */
 	public static boolean areTimesOverlapping(TimeFrame a, TimeFrame b){
 		
 		if(isABeforeB(a.end, b.start))

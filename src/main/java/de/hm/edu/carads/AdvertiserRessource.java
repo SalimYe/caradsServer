@@ -34,10 +34,10 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.User;
-import de.hm.edu.carads.models.comm.OfferRequest;
 import de.hm.edu.carads.models.util.Hasher;
 import de.hm.edu.carads.transaction.AdvertiserRegistration;
 import de.hm.edu.carads.transaction.EnrichedCampaign;
+import de.hm.edu.carads.transaction.OfferRequest;
 
 @Path("advertisers")
 public class AdvertiserRessource {
@@ -222,7 +222,9 @@ public class AdvertiserRessource {
 			throw new WebApplicationException(404);
 		} catch(HasConstraintException e){
 			throw new WebApplicationException(406);
-		}catch (Exception e) {
+		} catch (InvalidAttributesException e) {
+			throw new WebApplicationException(400);
+		} catch (Exception e) {
 			throw new WebApplicationException(500);
 		}
 	}

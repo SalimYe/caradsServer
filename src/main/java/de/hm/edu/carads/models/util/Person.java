@@ -1,20 +1,54 @@
 package de.hm.edu.carads.models.util;
 
 
-
+/**
+ * Eine Person hat diverse Attribute. Diese werden innerhalb dieser abstrakten Klasse gesammelt.
+ * @author BK
+ *
+ */
 public abstract class Person extends Model{
 
 	/**
 	 * Titel der Person
 	 */
 	protected String title;
+	
+	/**
+	 * Vorname.
+	 */
 	protected String firstname;
+	
+	/**
+	 * Nachname.
+	 */
 	protected String lastname;
+	
+	/**
+	 * E-Mail Adresse.
+	 */
 	protected String email;
+	
+	/**
+	 * Telefonnummer.
+	 */
 	protected String phone;
+	
+	/**
+	 * Adresse.
+	 */
 	protected Address address;
+	
+	/**
+	 * Beschreibung.
+	 */
 	protected String description;
 	
+	/**
+	 * Konstruktor mit drei Attributen.
+	 * @param email
+	 * @param firstName
+	 * @param lastName
+	 */
 	public Person(String email, String firstName, String lastName){
 		super();
 		this.email = email;
@@ -31,12 +65,11 @@ public abstract class Person extends Model{
 		this.description = description;
 	}
 
-
-
 	public Address getAddress(){
 		checkAdress();
 		return address;
 	}
+	
 	public String getEmail() {
 		return email;
 	}

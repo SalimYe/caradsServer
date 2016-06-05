@@ -23,14 +23,40 @@ import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.util.Person;
 
+/**
+ * Diese Klasse repreasentiert die Steuerungsinstanz fuer die Entitaeten Werbender, Fahrer und Realm.
+ * 
+ * @author BK
+ *
+ * @param <E>
+ */
 public class AbstractEntityControllerImpl<E extends Person> implements AbstractEntityController<E>{
 	
+	/**
+	 * Die Verbindung zur Datenbank.
+	 */
 	protected DatabaseController dbController;
+	
+	/**
+	 * Der Konverter fuer JSON Objekte.
+	 */
 	protected Gson gson;
+	
+	/**
+	 * Die tastaechliche Klasse der Entitaet.
+	 */
 	private ModelCollection modelClass;
+	
+	/**
+	 * Logger.
+	 */
 	final static Logger logger = Logger.getLogger(AbstractEntityControllerImpl.class);
 	
-	
+	/**
+	 * Der Konstruktor empfaengt die Collection und die Datenbankschnittstelle.
+	 * @param model
+	 * @param database
+	 */
 	public AbstractEntityControllerImpl(ModelCollection model, DatabaseController database){
 		this.dbController = database;
 		this.modelClass = model;
@@ -38,6 +64,9 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		
 	}
 	
+	/**
+	 * Alle Entitaeten werden zurueck gegeben.
+	 */
 	@Override
 	public Collection<E> getAllEntities(){
 		List<DBObject> entities = dbController.getAllEntities(modelClass);
@@ -52,6 +81,9 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		return smallList;
 	}
 	
+	/**
+	 * Ein Objekt wird anhand der ID zurzeck gegeben.
+	 */
 	@Override
 	public E getEntity(String id) throws NoContentException{
 		BasicDBObject dbObj = dbController.getEntity(modelClass, id);
@@ -62,6 +94,9 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		return makeEntityFromBasicDBObject(dbObj);
 	}
 	
+	/**
+	 * Ein Objekt wird anhand der E-Mail(eindeutig) zurueck gegbeen.
+	 */
     @Override
     public E getEntityByMail(String mail) throws NoContentException {
     	BasicDBObject dbObj = dbController.getEntityByKeyValue(modelClass, "email", mail);
@@ -73,6 +108,9 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		return makeEntityFromBasicDBObject(dbObj);
     }
 	
+    /**
+     * Eine Entitaet wird mittels der ID geloescht.
+     */
 	@Override
 	public void deleteEntity(String id) throws NoContentException{
 		//Innerhalb von deleteEntity wird gecheckt ob das Dokument existiert		
@@ -80,11 +118,19 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		logger.info("Entity "+id+" deleted");
 	}
 	
+	/**
+	 * Die Anhzahl aller enthaltenen Entitaeten wird zurueck gegeben.
+	 */
 	@Override
 	public long getEntityCount() {
 		return dbController.getCollectionCount(modelClass);
 	}
 	
+	/**
+	 * Eine Entitaet wird ueberschrieben.
+	 * @param id der Entitaet
+	 * @param entityData das neue Objekt.
+	 */
 	@Override
 	public void changeEntity(String id, E entityData) throws Exception{
 
@@ -111,6 +157,10 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 
 	}
 	
+	/**
+	 * Eine neue Entitaet wird hinzugefuegt.
+	 * @param entity
+	 */
 	@Override
 	public E addEntity(E entity) throws Exception{
 		if(!EntityValidator.isEntityValid(entity))
@@ -128,7 +178,11 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		return makeEntityFromBasicDBObject(dbObj);
 	}
 	
-	
+	/**
+	 * Aus dem Datenbankobjekt wird das tastaechliche Model generiert.
+	 * @param dbObj
+	 * @return
+	 */
 	protected E makeEntityFromBasicDBObject(BasicDBObject dbObj){
 		if(dbObj == null)
 			return null;
@@ -138,6 +192,11 @@ public class AbstractEntityControllerImpl<E extends Person> implements AbstractE
 		return model;
 	}
 	
+	/**
+	 * Diese Hilfsmethode gibt die tastaechlichen Klassen aus einer ModellCollection zurueck.
+	 * @param collection
+	 * @return Repreasentant der Collection
+	 */
 	private Class getModelClass(ModelCollection collection){
 		if(collection.equals(ModelCollection.ADVERTISER))
 			return Advertiser.class;
