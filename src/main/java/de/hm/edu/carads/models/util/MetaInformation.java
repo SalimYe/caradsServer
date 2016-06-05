@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import de.hm.edu.carads.controller.util.DateController;
+
 public class MetaInformation{
 	private String created;
 	private String lastModified;

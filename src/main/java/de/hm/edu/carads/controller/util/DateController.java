@@ -1,4 +1,4 @@
-package de.hm.edu.carads.models.util;
+package de.hm.edu.carads.controller.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import de.hm.edu.carads.controller.util.AbstractEntityControllerImpl;
+import de.hm.edu.carads.models.util.TimeFrame;
 
 public class DateController {
 	public static final String DATE_FORMAT_METAINFORMATION = "dd.MM.yyyy HH:mm:ss"; 
@@ -23,7 +23,7 @@ public class DateController {
 		} catch (ParseException e) {
 			System.err.println("Clould not parse " + date + " with Format: "+DATE_FORMAT_CAMPAIGNTIME);
 			System.err.println("trying next with Format: "+DATE_FORMAT_CAMPAIGNTIME_ALTERNATIVE);
-			logger.info("First Parsing failed. Trying next");
+			//logger.info("First Parsing failed. Trying next");
 		}
 		
 		//second try

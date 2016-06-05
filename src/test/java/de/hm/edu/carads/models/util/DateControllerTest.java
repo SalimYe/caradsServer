@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import de.hm.edu.carads.controller.util.DateController;
 import de.hm.edu.carads.models.Campaign;
 
 public class DateControllerTest {
