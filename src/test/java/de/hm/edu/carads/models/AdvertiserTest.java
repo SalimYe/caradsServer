@@ -15,14 +15,14 @@ public class AdvertiserTest {
 		c1.setDescription("Beschreibung");
 		c1.setStartDate("01.01.2015");
 		c1.setEndDate("30.01.2015");
-		c1.setTitle("Red Bull Promo");
+		c1.setName("Red Bull Promo");
 		
 		Campaign c2 = new Campaign();
 		c2.setCampaignBudget("2000");
 		c2.setDescription("Beschreibung");
 		c2.setStartDate("01.02.2015");
 		c2.setEndDate("30.04.2015");
-		c2.setTitle("BMW Promo");
+		c2.setName("BMW Promo");
 	}
 
 }

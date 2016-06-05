@@ -430,7 +430,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 			updatedFellows.add(fellow);
 		}
 		campaign.setFellows(updatedFellows);
-		logger.info(carId+" responded with "+respond+ " to campaign "+campaign.getTitle()+" ("+campaign.getId()+")");
+		logger.info(carId+" responded with "+respond+ " to campaign "+campaign.getName()+" ("+campaign.getId()+")");
 		this.updateCampaign(advertiserId, campaign.getId(), campaign);
 		return campaign;
 	}

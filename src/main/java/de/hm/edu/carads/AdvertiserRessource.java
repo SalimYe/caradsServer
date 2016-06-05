@@ -171,6 +171,8 @@ public class AdvertiserRessource {
 		try {
 			Campaign addedCampaign = modelController.addCampaign(id, c);
 			return Response.ok(gson.toJson(addedCampaign)).build();
+		} catch(IllegalArgumentException e){
+			throw new WebApplicationException(400);
 		} catch (Exception e) {
 			throw new WebApplicationException(500);
 		}

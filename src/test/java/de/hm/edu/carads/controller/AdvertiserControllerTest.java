@@ -86,7 +86,7 @@ public class AdvertiserControllerTest {
 	public void addCampaignTest2() throws Exception{
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
 		Campaign c = new Campaign();
-		c.setTitle("BMW Promo");
+		c.setName("BMW Promo");
 		
 		//Start und Ende passen nicht
 		c.setStartDate("20.01.2015");
@@ -125,14 +125,14 @@ public class AdvertiserControllerTest {
 		Campaign c = modelController.addCampaign(ad.getId(), makeNewCampaign());
 		
 		Campaign newCampaign = new Campaign();
-		newCampaign.setTitle("BMW Promo");
+		newCampaign.setName("BMW Promo");
 		newCampaign.setStartDate("01.12.2016");
 		newCampaign.setEndDate("02.02.2017");
 		
 		modelController.updateCampaign(ad.getId(), c.getId(), newCampaign);
 		
 		assertEquals(1, modelController.getCampaigns(ad.getId()).size());
-		assertEquals("BMW Promo", modelController.getCampaign(ad.getId(), c.getId()).getTitle());
+		assertEquals("BMW Promo", modelController.getCampaign(ad.getId(), c.getId()).getName());
 	}
 	
 	@Test (expected = NoContentException.class)
@@ -141,7 +141,7 @@ public class AdvertiserControllerTest {
 		Campaign c = modelController.addCampaign(ad.getId(), makeNewCampaign());
 		
 		Campaign newCampaign = new Campaign();
-		newCampaign.setTitle("BMW Promo");
+		newCampaign.setName("BMW Promo");
 		newCampaign.setStartDate("01.12.2016");
 		newCampaign.setEndDate("02.02.2017");
 		modelController.updateCampaign(ad.getId(), "123123", newCampaign);
@@ -184,7 +184,7 @@ public class AdvertiserControllerTest {
 	public void addCarToSecondCampaignWithSameDateTest() throws Exception{
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
 		Campaign camp1 = new Campaign();
-		camp1.setTitle("Fiat Promo");
+		camp1.setName("Fiat Promo");
 		camp1.setStartDate("30.01.2000");
 		camp1.setEndDate("01.03.2000");
 		camp1 = modelController.addCampaign(ad.getId(), camp1);
@@ -193,7 +193,7 @@ public class AdvertiserControllerTest {
 		
 		Advertiser adv1 = modelController.addAdvertiser(new Advertiser("neu@test.de", FIRSTNAME, LASTNAME));
 		Campaign camp2 = new Campaign();
-		camp2.setTitle("BMW Promo");
+		camp2.setName("BMW Promo");
 		camp2.setStartDate("30.01.2000");
 		camp2.setEndDate("01.03.2000");
 		camp2 = modelController.addCampaign(adv1.getId(), camp2);
@@ -210,7 +210,7 @@ public class AdvertiserControllerTest {
 	public void addCarToSecondCampaignWithSameDateTest2() throws Exception{
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
 		Campaign camp1 = new Campaign();
-		camp1.setTitle("Fiat Promo");
+		camp1.setName("Fiat Promo");
 		camp1.setStartDate("30.01.2000");
 		camp1.setEndDate("01.03.2000");
 		camp1 = modelController.addCampaign(ad.getId(), camp1);
@@ -221,7 +221,7 @@ public class AdvertiserControllerTest {
 		
 		Advertiser adv1 = modelController.addAdvertiser(new Advertiser("neu@test.de", FIRSTNAME, LASTNAME));
 		Campaign camp2 = new Campaign();
-		camp2.setTitle("BMW Promo");
+		camp2.setName("BMW Promo");
 		camp2.setStartDate("30.01.2000");
 		camp2.setEndDate("01.03.2000");
 		camp2 = modelController.addCampaign(adv1.getId(), camp2);
@@ -243,7 +243,7 @@ public class AdvertiserControllerTest {
 		//Aenderung der Kampagne
 		Campaign updatedCampaign = new Campaign();
 		updatedCampaign.setCampaignBudget("230");
-		updatedCampaign.setTitle(campaign.getTitle());
+		updatedCampaign.setName(campaign.getName());
 		updatedCampaign.setStartDate(campaign.getStartDate());
 		updatedCampaign.setEndDate(campaign.getEndDate());
 		
@@ -281,7 +281,7 @@ public class AdvertiserControllerTest {
 	
 	private Campaign makeNewCampaign(){
 		Campaign c = new Campaign();
-		c.setTitle("Red Bull Icerace");
+		c.setName("Red Bull Icerace");
 		c.setCampaignBudget("10000 Euro");
 		c.setStartDate("01.01.2000");
 		c.setEndDate("31.01.2000");

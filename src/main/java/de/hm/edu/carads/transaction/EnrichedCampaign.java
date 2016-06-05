@@ -12,7 +12,7 @@ public class EnrichedCampaign extends Campaign{
 	public EnrichedCampaign(Campaign campaign, Collection<EnrichedFellow> eFellows){
 	
 		this.setId(campaign.getId());
-		this.setTitle(campaign.getTitle());
+		this.setName(campaign.getName());
 		this.setStartDate(campaign.getStartDate());
 		this.setEndDate(campaign.getEndDate());
 		this.setImages(campaign.getImages());

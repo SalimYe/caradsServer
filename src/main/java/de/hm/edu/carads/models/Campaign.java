@@ -18,7 +18,7 @@ public class Campaign extends Model{
 	/**
 	 * Titel der Kampagne.
 	 */
-	private String title;
+	private String name;
 	
 	/**
 	 * Beschreibung.
@@ -29,6 +29,11 @@ public class Campaign extends Model{
 	 * Budget der Kampagne.
 	 */
 	private String campaignBudget;
+	
+	/**
+	 * Budget fuer ein Auto / Tag.
+	 */
+	private String carBudget;
 	
 	/**
 	 * Datum des Kampagnenanfangs.
@@ -52,11 +57,11 @@ public class Campaign extends Model{
 	private Collection<Fellow> fellows;
 	
 	
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
-	public void setTitle(String name) {
-		this.title = name;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getDescription() {
 		return description;

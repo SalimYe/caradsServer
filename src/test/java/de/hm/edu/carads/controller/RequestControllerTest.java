@@ -131,21 +131,21 @@ public class RequestControllerTest {
 		c1.setDescription("Beschreibung");
 		c1.setStartDate("01.01.2015");
 		c1.setEndDate("30.01.2015");
-		c1.setTitle("Red Bull Promo");
+		c1.setName("Red Bull Promo");
 		
 		Campaign c2 = new Campaign();
 		c2.setCampaignBudget("2000");
 		c2.setDescription("Beschreibung");
 		c2.setStartDate("01.02.2015");
 		c2.setEndDate("30.04.2015");
-		c2.setTitle("BMW Promo");
+		c2.setName("BMW Promo");
 		
 		Campaign c3 = new Campaign();
 		c3.setCampaignBudget("2000");
 		c3.setDescription("Beschreibung");
 		c3.setStartDate("15.01.2015");
 		c3.setEndDate("12.02.2015");
-		c3.setTitle("5er GT Promo");
+		c3.setName("5er GT Promo");
 		
 		Driver d1 = new Driver("flo@hm.edu", "Florian", "Mustermann");
 		d1.setZip("80335");
@@ -224,7 +224,7 @@ public class RequestControllerTest {
 		Car car = modelController.addCar(driver.getId(), makeNewCar());
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
 		Campaign c = new Campaign();
-		c.setTitle("test");
+		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
@@ -267,7 +267,7 @@ public class RequestControllerTest {
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
 		
 		Campaign c = new Campaign();
-		c.setTitle("test");
+		c.setName("test");
 		c.setStartDate("01.01.2016");
 		c.setEndDate("31.01.2016");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
@@ -285,7 +285,7 @@ public class RequestControllerTest {
 		Car car = modelController.addCar(driver.getId(), makeNewCar());
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
 		Campaign c = new Campaign();
-		c.setTitle("test");
+		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
@@ -303,7 +303,7 @@ public class RequestControllerTest {
 		Car car = modelController.addCar(driver.getId(), makeNewCar());
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
 		Campaign c = new Campaign();
-		c.setTitle("test");
+		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
@@ -321,7 +321,7 @@ public class RequestControllerTest {
 		Car car = modelController.addCar(driver.getId(), makeNewCar());
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
 		Campaign c = new Campaign();
-		c.setTitle("test");
+		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
@@ -339,13 +339,13 @@ public class RequestControllerTest {
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
 		
 		Campaign c = new Campaign();
-		c.setTitle("Kampagne1");
+		c.setName("Kampagne1");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		Campaign c2 = new Campaign();
-		c2.setTitle("Kampagne2");
+		c2.setName("Kampagne2");
 		c2.setStartDate("20.05.2016");
 		c2.setEndDate("01.07.2016");
 		Campaign camp2 = modelController.addCampaign(ad.getId(), c2);
@@ -369,7 +369,7 @@ public class RequestControllerTest {
 	
 	private Campaign makeNewCampaign(){
 		Campaign c = new Campaign();
-		c.setTitle("Red Bull Icerace");
+		c.setName("Red Bull Icerace");
 		c.setCampaignBudget("10000 Euro");
 		c.setStartDate("01.01.2017");
 		c.setEndDate("31.01.2017");
