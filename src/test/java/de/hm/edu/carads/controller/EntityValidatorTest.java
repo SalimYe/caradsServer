@@ -22,30 +22,65 @@ public class EntityValidatorTest {
 	@Test
 	public void testNormalNewDriver() {
 		Driver driver = new Driver(EMAIL, FIRSTNAME, LASTNAME);
+		driver.setBirthdate("2000");
+		driver.setZip("80333");
+		driver.setCity("Munich");
+		driver.setDescription("Ich bin ein Student");
+		driver.setPhone("089-123");
+		driver.setOccupation("Student");
+		driver.setLicenseDate("01.01.2000");
 		assertTrue(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver() {
 		Driver driver = new Driver("", FIRSTNAME, LASTNAME);
+		driver.setBirthdate("2000");
+		driver.setZip("80333");
+		driver.setCity("Munich");
+		driver.setDescription("Ich bin ein Student");
+		driver.setPhone("089-123");
+		driver.setOccupation("Student");
+		driver.setLicenseDate("01.01.2000");
 		assertFalse(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver2() {
 		Driver driver = new Driver("name", FIRSTNAME, LASTNAME);
+		driver.setBirthdate("2000");
+		driver.setZip("80333");
+		driver.setCity("Munich");
+		driver.setDescription("Ich bin ein Student");
+		driver.setPhone("089-123");
+		driver.setOccupation("Student");
+		driver.setLicenseDate("01.01.2000");
 		assertFalse(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver3() {
 		Driver driver = new Driver("asd@", FIRSTNAME, LASTNAME);
+		driver.setBirthdate("2000");
+		driver.setZip("80333");
+		driver.setCity("Munich");
+		driver.setDescription("Ich bin ein Student");
+		driver.setPhone("089-123");
+		driver.setOccupation("Student");
+		driver.setLicenseDate("01.01.2000");
 		assertFalse(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testInvalidEmailFromDriver4() {
 		Driver driver = new Driver("asd@d", FIRSTNAME, LASTNAME);
+		driver.setBirthdate("2000");
+		driver.setZip("80333");
+		driver.setCity("Munich");
+		driver.setDescription("Ich bin ein Student");
+		driver.setPhone("089-123");
+		driver.setOccupation("Student");
+		driver.setLicenseDate("01.01.2000");
 		assertFalse(EntityValidator.isEntityValid(driver));
 	}
 
@@ -58,13 +93,26 @@ public class EntityValidatorTest {
 	@Test
 	public void testValidEmailFromDriver() {
 		Driver driver = new Driver("asd@dd.de", FIRSTNAME, LASTNAME);
+		driver.setBirthdate("2000");
+		driver.setZip("80333");
+		driver.setCity("Munich");
+		driver.setDescription("Ich bin ein Student");
+		driver.setPhone("089-123");
+		driver.setOccupation("Student");
+		driver.setLicenseDate("01.01.2000");
 		assertTrue(EntityValidator.isEntityValid(driver));
 	}
 
 	@Test
 	public void testValidAdvertiser() {
-		Advertiser newAdv = new Advertiser(EMAIL, FIRSTNAME, "Neuer");
-		assertTrue(EntityValidator.isEntityValid(newAdv));
+		Advertiser ad1 = new Advertiser(EMAIL, FIRSTNAME, "Neuer");
+		ad1.setCity("Muenchen");
+		ad1.setCountry("Deutschland");
+		ad1.setZip("80338");
+		ad1.setStreet("Lothstr. 14");
+		ad1.setPhone("089-1234");
+		ad1.setCompany("HM");
+		assertTrue(EntityValidator.isEntityValid(ad1));
 	}
 	
 	@Test

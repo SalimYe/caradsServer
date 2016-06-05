@@ -125,7 +125,13 @@ public class RequestControllerTest {
 	@Test
 	public void availableCarsTest() throws Exception {
 		Advertiser ad1 = new Advertiser("franz@redbull.com", "Franz", "Kafka");
-		Advertiser ad2 = new Advertiser("joe@bmw.de", "Joe", "Norb");
+		ad1.setCity("Muenchen");
+		ad1.setCountry("Deutschland");
+		ad1.setZip("80338");
+		ad1.setStreet("Lothstr. 14");
+		ad1.setPhone("089-1234");
+		ad1.setCompany("HM");
+		Advertiser ad2 = makeNewAdvertiser();
 		Campaign c1 = new Campaign();
 		c1.setCampaignBudget("1000");
 		c1.setDescription("Beschreibung");
@@ -148,8 +154,13 @@ public class RequestControllerTest {
 		c3.setName("5er GT Promo");
 		
 		Driver d1 = new Driver("flo@hm.edu", "Florian", "Mustermann");
-		d1.setZip("80335");
+		d1.setBirthdate("2000");
+		d1.setZip("80333");
 		d1.setCity("Munich");
+		d1.setDescription("Ich bin ein Student");
+		d1.setPhone("089-123");
+		d1.setOccupation("Student");
+		d1.setLicenseDate("01.01.2000");
 		
 		Driver d2 = makeNewDriver();
 		
@@ -378,6 +389,12 @@ public class RequestControllerTest {
 	
 	private Advertiser makeNewAdvertiser() {
 		Advertiser adv = new Advertiser(EMAIL, FIRSTNAME, LASTNAME);
+		adv.setCity("Muenchen");
+		adv.setCountry("Deutschland");
+		adv.setZip("80338");
+		adv.setStreet("Lothstr. 14");
+		adv.setPhone("089-1234");
+		adv.setCompany("HM");
 		return adv;
 	}
 	
@@ -386,6 +403,10 @@ public class RequestControllerTest {
 		driver.setBirthdate("2000");
 		driver.setZip("80333");
 		driver.setCity("Munich");
+		driver.setDescription("Ich bin ein Student");
+		driver.setPhone("089-123");
+		driver.setOccupation("Student");
+		driver.setLicenseDate("01.01.2000");
 		return driver;
 	}
 

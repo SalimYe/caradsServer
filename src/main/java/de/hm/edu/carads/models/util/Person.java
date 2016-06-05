@@ -23,6 +23,20 @@ public abstract class Person extends Model{
 		this.address = new Address();
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+	public Address getAddress(){
+		checkAdress();
+		return address;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -71,6 +85,16 @@ public abstract class Person extends Model{
 	public void setZip(String zip) {
 		checkAdress();
 		this.address.setZip(zip);
+	}
+	
+	public void setStreet(String street){
+		checkAdress();
+		this.address.setStreet(street);
+	}
+	
+	public String getStreet(){
+		checkAdress();
+		return this.address.getStreet();
 	}
 
 	public String getCountry() {

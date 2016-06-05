@@ -211,6 +211,13 @@ public class DriverControllerTest {
 		Driver driver1, driver2;
 		driver1 = makeNewDriver();
 		driver2 = new Driver("othe@this.de", "Joe", "Don");
+		driver2.setBirthdate("2000");
+		driver2.setZip("80333");
+		driver2.setCity("Munich");
+		driver2.setDescription("Ich bin ein Student");
+		driver2.setPhone("089-123");
+		driver2.setOccupation("Student");
+		driver2.setLicenseDate("01.01.2000");
 		Driver d = modelController.addDriver(driver1);
 		Driver d2 = modelController.addDriver(driver2);
 		d2.setEmail(EMAIL);
@@ -233,6 +240,12 @@ public class DriverControllerTest {
 	private Driver makeNewDriver() {
 		Driver driver = new Driver(EMAIL, FIRSTNAME, LASTNAME);
 		driver.setBirthdate("2000");
+		driver.setZip("80333");
+		driver.setCity("Munich");
+		driver.setDescription("Ich bin ein Student");
+		driver.setPhone("089-123");
+		driver.setOccupation("Student");
+		driver.setLicenseDate("01.01.2000");
 		return driver;
 	}
 

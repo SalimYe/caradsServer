@@ -136,7 +136,15 @@ public class Driver extends Person {
         return occupation;
     }
 
-    public String getLicenseDate() {
+    public void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
+
+	public void setLicenseDate(String licenseDate) {
+		this.licenseDate = licenseDate;
+	}
+
+	public String getLicenseDate() {
         return licenseDate;
     }
 

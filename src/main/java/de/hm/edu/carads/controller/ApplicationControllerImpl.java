@@ -483,8 +483,6 @@ public class ApplicationControllerImpl implements ApplicationController {
 		
 		campaign.setId(dbController.getNewId());
 		campaign.renewMetaInformation();
-		//campaign.setStartDate(rewriteDate(campaign.getStartDate()));
-		//campaign.setEndDate(rewriteDate(campaign.getEndDate()));
 		
 		ad.addCampaign(campaign);
 		ad.getMetaInformation().update();
@@ -492,13 +490,13 @@ public class ApplicationControllerImpl implements ApplicationController {
 		advertiserController.changeEntity(advertiserId, ad);
 		return campaign;
 	}
-	
-	private String rewriteDate(String date){
-		Date temp = DateController.fromStringToDate(date);
-		String plainDate = temp.getDay()+"."+temp.getMonth()+"."+temp.getYear();
-		return plainDate;
-	}
 
+	/**
+	 * Eine Kampagne eines Werbenden wird aus der Datenbank gelesen.
+	 * @param advertiserId, campaignId
+	 * @return Kampagne mit der campaginId
+	 * @throws Exception
+	 */
 	@Override
 	public Campaign getCampaign(String advertiserId, String campaignId)
 			throws Exception {

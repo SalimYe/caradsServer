@@ -67,8 +67,14 @@ public class AdvertiserControllerTest {
 	@Test(expected = AlreadyExistsException.class)
 	public void updateAdvertiserWithSameEmailTest() throws Exception {
 		modelController.addAdvertiser(makeNewAdvertiser());
-
-		Advertiser ad2 =modelController.addAdvertiser(new Advertiser(EMAILTWO, "Max", "Muster"));
+		Advertiser adv = new Advertiser(EMAILTWO, "Max", "Muster");
+		adv.setCity("Muenchen");
+		adv.setCountry("Deutschland");
+		adv.setZip("80338");
+		adv.setStreet("Lothstr. 14");
+		adv.setPhone("089-1234");
+		adv.setCompany("HM");
+		Advertiser ad2 =modelController.addAdvertiser(adv);
 		ad2.setEmail(EMAIL);
 		
 		modelController.updateAdvertiser(ad2.getId(), ad2);	}
@@ -218,8 +224,14 @@ public class AdvertiserControllerTest {
 		
 		//Zusagen
 		modelController.respondToOffer("123", ad.getId(), camp1.getId(), "ACCEPTED");
-		
-		Advertiser adv1 = modelController.addAdvertiser(new Advertiser("neu@test.de", FIRSTNAME, LASTNAME));
+		Advertiser adv = new Advertiser("neu@test.de", FIRSTNAME, LASTNAME);
+		adv.setCity("Muenchen");
+		adv.setCountry("Deutschland");
+		adv.setZip("80338");
+		adv.setStreet("Lothstr. 14");
+		adv.setPhone("089-1234");
+		adv.setCompany("HM");
+		Advertiser adv1 = modelController.addAdvertiser(adv);
 		Campaign camp2 = new Campaign();
 		camp2.setName("BMW Promo");
 		camp2.setStartDate("30.01.2000");
@@ -276,6 +288,12 @@ public class AdvertiserControllerTest {
 
 	private Advertiser makeNewAdvertiser() {
 		Advertiser adv = new Advertiser(EMAIL, FIRSTNAME, LASTNAME);
+		adv.setCity("Muenchen");
+		adv.setCountry("Deutschland");
+		adv.setZip("80338");
+		adv.setStreet("Lothstr. 14");
+		adv.setPhone("089-1234");
+		adv.setCompany("HM");
 		return adv;
 	}
 	
