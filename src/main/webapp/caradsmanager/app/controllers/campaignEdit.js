@@ -34,6 +34,7 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     }
 
     var updateCampaign = function () {
+        if ($scope.campaignForm.$valid) {
         $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
                 success(function (data, status, headers, config) {
                     redirectToCampaignView();
@@ -43,6 +44,7 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
                             "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
                             "den Administrator.", "danger");
                 });
+            }
     };
 
     $scope.deleteCampaign = function () {
