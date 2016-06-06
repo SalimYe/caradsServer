@@ -25,6 +25,13 @@
                             <option ng-repeat="car in cars| unique:'color' | orderBy:'color'">{{car.color}}</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label>PLZ</label>
+                        <select ng-model="filterType.driverZip" ng-change="setFilterParamValue('driverZip', 'searchParams')" class="form-control">
+                            <option value="">Alle</option>
+                            <option ng-repeat="car in cars| unique:'driverZip' | orderBy:'driverZip'">{{car.driverZip}}</option>
+                        </select>
+                    </div>
                     <button type="reset" class="btn btn-default btn-block" ng-click="filterReset('searchParams')">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                         Filter Reset
@@ -82,8 +89,8 @@
                                 <h3>{{car.brand}} {{car.model}}</h3>
                                 <div class="details">
                                     <div>
-                                        <p>BJ {{car.buildYear | date:'dd.MM.yyyy'}},
-                                            {{car.mileage}} KM, {{car.color}}<br />
+                                        <p>BJ {{car.buildYear| date:'dd.MM.yyyy'}},
+                                            {{car.mileage}}&nbsp;KM, {{car.color}}, PLZ&nbsp;{{car.driverZip}},
                                             {{car.description}}</p>
                                     </div>
                                     <div class="details-fade"></div>

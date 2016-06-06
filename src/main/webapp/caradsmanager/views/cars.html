@@ -20,7 +20,9 @@
                             <div class="caption">
                                 <h3>{{car.brand}} {{car.model}}</h3>
                                 <div class="details">
-                                    <div>{{car.description}}</div>
+                                    <p>BJ {{car.buildYear | date:'dd.MM.yyyy'}},
+                                            {{car.mileage}} KM, {{car.color}}<br />
+                                            {{car.description}}</p>
                                     <div class="details-fade"></div>
                                 </div>
                                 <p><a href="#/driver/{{driverId}}/car/{{car.id}}" class="btn btn-primary">Details</a></p>
