@@ -77,6 +77,10 @@ app.config(function ($routeProvider) {
                 controller: 'faq',
                 templateUrl: 'views/faq.html'
             })
+            .when('/accountSettings/', {
+                controller: 'accountSettings',
+                templateUrl: 'views/accountSettings.html'
+            })
             .when('/home', {
                 controller: 'home',
                 templateUrl: 'views/home.html'
