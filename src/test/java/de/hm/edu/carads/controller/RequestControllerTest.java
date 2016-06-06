@@ -133,21 +133,21 @@ public class RequestControllerTest {
 		ad1.setCompany("HM");
 		Advertiser ad2 = makeNewAdvertiser();
 		Campaign c1 = new Campaign();
-		c1.setCampaignBudget("1000");
+		c1.setCarBudget("1000");
 		c1.setDescription("Beschreibung");
 		c1.setStartDate("01.01.2015");
 		c1.setEndDate("30.01.2015");
 		c1.setName("Red Bull Promo");
 		
 		Campaign c2 = new Campaign();
-		c2.setCampaignBudget("2000");
+		c2.setCarBudget("2000");
 		c2.setDescription("Beschreibung");
 		c2.setStartDate("01.02.2015");
 		c2.setEndDate("30.04.2015");
 		c2.setName("BMW Promo");
 		
 		Campaign c3 = new Campaign();
-		c3.setCampaignBudget("2000");
+		c3.setCarBudget("2000");
 		c3.setDescription("Beschreibung");
 		c3.setStartDate("15.01.2015");
 		c3.setEndDate("12.02.2015");
@@ -238,7 +238,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
-		c.setCampaignBudget("2");
+		c.setCarBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -282,7 +282,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("01.01.2016");
 		c.setEndDate("31.01.2016");
-		c.setCampaignBudget("2");
+		c.setCarBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -301,7 +301,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
-		c.setCampaignBudget("2");
+		c.setCarBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -320,7 +320,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
-		c.setCampaignBudget("2");
+		c.setCarBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -339,7 +339,7 @@ public class RequestControllerTest {
 		c.setName("test");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
-		c.setCampaignBudget("2");
+		c.setCarBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -358,14 +358,14 @@ public class RequestControllerTest {
 		c.setName("Kampagne1");
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
-		c.setCampaignBudget("2");
+		c.setCarBudget("2");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		Campaign c2 = new Campaign();
 		c2.setName("Kampagne2");
 		c2.setStartDate("20.05.2016");
 		c2.setEndDate("01.07.2016");
-		c2.setCampaignBudget("2");
+		c2.setCarBudget("2");
 		Campaign camp2 = modelController.addCampaign(ad.getId(), c2);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -388,7 +388,7 @@ public class RequestControllerTest {
 	private Campaign makeNewCampaign(){
 		Campaign c = new Campaign();
 		c.setName("Red Bull Icerace");
-		c.setCampaignBudget("10000 Euro");
+		c.setCarBudget("10000 Euro");
 		c.setStartDate("01.01.2017");
 		c.setEndDate("31.01.2017");
 		return c;

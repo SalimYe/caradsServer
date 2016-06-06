@@ -121,7 +121,7 @@ public class EntityValidator {
 		if(isNotEmpty(campaign.getName()) &&
 				isNotEmpty(campaign.getStartDate()) &&
 				isNotEmpty(campaign.getEndDate()) &&
-				isNotEmpty(campaign.getCampaignBudget()))
+				isNotEmpty(campaign.getCarBudget()))
 			if(DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
 				return true;
 		return false;

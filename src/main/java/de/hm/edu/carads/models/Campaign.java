@@ -72,8 +72,14 @@ public class Campaign extends Model{
 	public String getCampaignBudget() {
 		return campaignBudget;
 	}
+        public String getCarBudget() {
+            return carBudget;
+        }
 	public void setCampaignBudget(String campaignBudget) {
 		this.campaignBudget = campaignBudget;
+	}
+        public void setCarBudget(String carBudget) {
+		this.carBudget = carBudget;
 	}
 	public String getStartDate() {
 		return startDate;
