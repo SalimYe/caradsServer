@@ -1,4 +1,4 @@
-app.controller('carRequests', function ($scope, $rootScope, $translate, ngTableParams, $filter, $location, $http) {
+app.controller('carRequests', function ($scope, $rootScope, $translate, ngTableParams, $filter, $location, $http, $modal) {
     
     var driverId = $rootScope.realm.driverId;
     
@@ -35,6 +35,18 @@ app.controller('carRequests', function ($scope, $rootScope, $translate, ngTableP
                  + campaignId + '/carRequest/' + carId);
     };
     
+    var sendResponse = function (response) {
+        var url = '../api/drivers/' + $rootScope.realm.driverId + '/response';
+        
+        $http.put(url, response).
+                    success(function (data, status, headers, config) {
+                        $location.path('/');
+                    }).
+                    error(function (data, status, headers, config) {
+                        $location.path('/');
+                    });
+    };
+    
     $scope.sendResponse = function (carId, advertiserId, campaignId, commitment) {
         
         var response = {};
@@ -48,15 +60,16 @@ app.controller('carRequests', function ($scope, $rootScope, $translate, ngTableP
             response.response = 'REJECTED';
         }
         
-        var url = '../api/drivers/' + $rootScope.realm.driverId + '/response';
+        var actionOne = function () {
+            
+        };
         
-        $http.put(url, response).
-                    success(function (data, status, headers, config) {
-                        $location.path('/');
-                    }).
-                    error(function (data, status, headers, config) {
-                        $location.path('/');
-                    });
+        var actionTwo = function () {
+            sendResponse(response);
+        };
+        
+        showModal($modal, "Bist Du sicher, dass Du verbindlich auf das Angebot antworten willst?", "Anwort senden", "Abbrechen", "Senden", actionOne, actionTwo, angular);
+        
     };
     
     $scope.getStateLabel = function (state) {

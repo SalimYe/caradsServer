@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <p>{{item.title}}</p>
+    <h4 class="modal-title">{{item.title}}</h4>
 </div>
 <div class="modal-body">
     <p>
@@ -7,6 +7,6 @@
     </p>
 </div>
 <div class="modal-footer">
-    <button class="modal-button mod-btn-ok" ng-click="ok()">{{item.btnL1}}</button>
-    <button class="modal-button mod-btn-cancel" ng-click="cancel()">{{item.btnL2}}</button>
+    <button class="btn btn-default" ng-click="actionOne()">{{item.buttonOne}}</button>
+    <button class="btn btn-primary" ng-click="actionTwo()">{{item.buttonTwo}}</button>
 </div>
