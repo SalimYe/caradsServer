@@ -270,7 +270,6 @@ public class ApplicationControllerImpl implements ApplicationController {
 	private boolean isCarBooked(String carId) throws Exception{
 		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_CAMPAIGNTIME);
 		String now = df.format(Calendar.getInstance().getTime());
-		logger.info("Looking for Campaigns from " +now);
 		return isCarOccupiedInTime(carId, now, "2199-12-31");
 	}
 
@@ -696,7 +695,6 @@ public class ApplicationControllerImpl implements ApplicationController {
 		Collection<Campaign> inTimeCampaigns = new ArrayList<Campaign>();
 		Iterator<Campaign> it = getAllCampaigns().iterator();
 		while(it.hasNext()){
-			logger.info("is occupied between " + start + " and " + end );
 			Campaign c = it.next();
 			if(DateController.areTimesOverlapping(new TimeFrame(start, end), new TimeFrame(c.getStartDate(), c.getEndDate())))
 				inTimeCampaigns.add(c);
