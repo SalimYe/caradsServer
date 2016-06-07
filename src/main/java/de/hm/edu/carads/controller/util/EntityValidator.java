@@ -91,8 +91,6 @@ public class EntityValidator {
 				isNotEmpty(driver.getLastName()) &&
 				isNotEmpty(driver.getFirstName()) &&
 				isNotEmpty(driver.getOccupation()) &&
-				isNotEmpty(driver.getPhone()) &&
-				isNotEmpty(driver.getDescription()) &&
 				isNotEmpty(driver.getLicenseDate()))
 			return true;
 

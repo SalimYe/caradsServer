@@ -248,9 +248,9 @@ public class ApplicationControllerImpl implements ApplicationController {
 			logger.info("Car cloud not be deleted. It is still booked in a campaign.");
 			throw new HasConstraintException();
 		}
-		
+		logger.info("going to remove car from " + driverId);
 		Driver driver = driverController.getEntity(driverId);
-		logger.info("going to remove car from " + driver.getId());
+		logger.info("going to remove car from2 " + driver.getId());
 		driver.removeCar(carId);
 		driver.getMetaInformation().update();
 		logger.info("Deleting car "+carId);

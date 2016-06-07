@@ -221,8 +221,7 @@ public class DriversRessource {
 
 	@DELETE
 	@Path("/{id}/cars/{car}")
-	public Response deleteDriverCar(@PathParam("id") String driverId,
-			@PathParam("car") String carId) {
+	public Response deleteDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId) {
 		try {
 			modelController.deleteCar(driverId, carId);
 			return Response.ok().build();
