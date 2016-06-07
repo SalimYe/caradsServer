@@ -248,13 +248,16 @@ public class ApplicationControllerImpl implements ApplicationController {
 			logger.info("Car cloud not be deleted. It is still booked in a campaign.");
 			throw new HasConstraintException();
 		}
-		logger.info("going to remove car from " + driverId);
 		Driver driver = driverController.getEntity(driverId);
-		logger.info("going to remove car from2 " + driver.getId());
-		driver.removeCar(carId);
-		driver.getMetaInformation().update();
-		logger.info("Deleting car "+carId);
-		driverController.changeEntity(driverId, driver);
+		logger.info("remove car from " + driver.getId());
+		if(driver.removeCar(carId)){
+			driver.getMetaInformation().update();
+			driverController.changeEntity(driverId, driver);
+			logger.info("car removed");
+		}
+		else
+			throw new NoContentException("driver not found");
+		
 	}
 	
 	/**
@@ -675,10 +678,11 @@ public class ApplicationControllerImpl implements ApplicationController {
 	@Override
 	public boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception {
 		Iterator<Campaign> it = this.getAllCampaignsInTime(start, end).iterator();
-		
+		logger.info("is occupied between " + start + " and " + end );
 		while(it.hasNext()){
+			logger.info("campaign");
 			Campaign campaign = it.next();
-			if(campaign.isCarAFellow(carId) && campaign.hasFellowAccepted(carId))
+			if(campaign.hasFellowAccepted(carId))
 				return true;
 		}
 		return false;

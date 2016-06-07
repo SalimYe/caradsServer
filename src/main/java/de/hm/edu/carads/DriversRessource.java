@@ -52,8 +52,6 @@ public class DriversRessource {
 
 	RealmController rc = new RealmControllerImpl(dbController);
 	
-	final static Logger logger = Logger.getLogger(DriversRessource.class);
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDrivers() {
@@ -227,7 +225,6 @@ public class DriversRessource {
 	@Path("/{id}/cars/{car}")
 	public Response deleteDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId) {
 		try {
-			logger.info("deleting "+carId + " from " + driverId);
 			modelController.deleteCar(driverId, carId);
 			return Response.ok().build();
 		} catch(InvalidAttributesException e){
@@ -236,6 +233,8 @@ public class DriversRessource {
 			throw new WebApplicationException(406);
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
+		} catch (NullPointerException e){
+			throw new WebApplicationException(409);
 		} catch (Exception e) {
 			throw new WebApplicationException(500);
 		}
