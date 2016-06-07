@@ -248,13 +248,16 @@ public class ApplicationControllerImpl implements ApplicationController {
 			logger.info("Car cloud not be deleted. It is still booked in a campaign.");
 			throw new HasConstraintException();
 		}
-		
 		Driver driver = driverController.getEntity(driverId);
-		logger.info("going to remove car from " + driver.getId());
-		driver.removeCar(carId);
-		driver.getMetaInformation().update();
-		logger.info("Deleting car "+carId);
-		driverController.changeEntity(driverId, driver);
+		logger.info("remove car from " + driver.getId());
+		if(driver.removeCar(carId)){
+			driver.getMetaInformation().update();
+			driverController.changeEntity(driverId, driver);
+			logger.info("car removed");
+		}
+		else
+			throw new NoContentException("driver not found");
+		
 	}
 	
 	/**
@@ -267,8 +270,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 	private boolean isCarBooked(String carId) throws Exception{
 		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_CAMPAIGNTIME);
 		String now = df.format(Calendar.getInstance().getTime());
-		
-		return isCarOccupiedInTime(carId, now, "31.12.2199");
+		return isCarOccupiedInTime(carId, now, "2199-12-31");
 	}
 
 	/**
@@ -364,8 +366,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 	 * @throws Exception
 	 */
 	@Override
-	public void respondToOffer(String carId, String advertiserId,
-			String campaignId, String respond) throws Exception {
+	public void respondToOffer(String carId, String advertiserId, String campaignId, String respond) throws Exception {
 		Campaign campaign = this.getCampaign(advertiserId, campaignId);
 		updateFellowSate(carId, advertiserId, campaign, getFellowState(respond));
 		
@@ -503,7 +504,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 		Advertiser advertiser = advertiserController.getEntity(advertiserId);
 		Campaign c = advertiser.getCampaign(campaignId);
 		if(c==null){
-			logger.error("Campaign "+ campaignId +" not valid");
+			logger.error("Campaign "+ campaignId +" not found");
 			throw new NoContentException(campaignId + " not found");
 		}
 		
@@ -674,12 +675,11 @@ public class ApplicationControllerImpl implements ApplicationController {
 	 * @throws Exception
 	 */
 	@Override
-	public boolean isCarOccupiedInTime(String carId, String start, String end)
-			throws Exception {
+	public boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception {
 		Iterator<Campaign> it = this.getAllCampaignsInTime(start, end).iterator();
 		while(it.hasNext()){
 			Campaign campaign = it.next();
-			if(campaign.isCarAFellow(carId) && campaign.hasFellowAccepted(carId))
+			if(campaign.hasFellowAccepted(carId))
 				return true;
 		}
 		return false;
@@ -734,14 +734,14 @@ public class ApplicationControllerImpl implements ApplicationController {
 		return null;
 	}
 	
-	private FellowState getFellowState(String state) {
+	private FellowState getFellowState(String state) throws InvalidAttributesException {
 		if (state.equals(FellowState.ACCEPTED.toString())) {
 			return FellowState.ACCEPTED;
 		} else if (state.equals(FellowState.ASKED.toString())) {
 			return FellowState.ASKED;
 		} else if (state.equals(FellowState.REJECTED.toString()))
-			;
-		return FellowState.REJECTED;
+			return FellowState.REJECTED;
+		throw new InvalidAttributesException();
 	}
 	
 	/**

@@ -19,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.ApplicationController;
@@ -49,7 +51,7 @@ public class DriversRessource {
 	private ApplicationController modelController = new ApplicationControllerImpl(dbController);
 
 	RealmController rc = new RealmControllerImpl(dbController);
-
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDrivers() {
@@ -221,8 +223,7 @@ public class DriversRessource {
 
 	@DELETE
 	@Path("/{id}/cars/{car}")
-	public Response deleteDriverCar(@PathParam("id") String driverId,
-			@PathParam("car") String carId) {
+	public Response deleteDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId) {
 		try {
 			modelController.deleteCar(driverId, carId);
 			return Response.ok().build();
@@ -290,6 +291,8 @@ public class DriversRessource {
 					response.getAdvertiserId(), response.getCampaignId(),
 					response.getResponse());
 			return Response.ok().build();
+		} catch (InvalidAttributesException e){
+			throw new WebApplicationException(400);
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
 		} catch (Exception e) {

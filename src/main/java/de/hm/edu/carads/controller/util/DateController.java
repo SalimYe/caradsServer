@@ -74,7 +74,6 @@ public class DateController {
 	 * @return true wenn Zeitraeme ueberschneiden.
 	 */
 	public static boolean areTimesOverlapping(TimeFrame a, TimeFrame b){
-		
 		if(isABeforeB(a.end, b.start))
 			return false;
 		if(isABeforeB(b.end, a.start))
