@@ -14,11 +14,11 @@
                             <a href="#/advertiser/{{advertiserId}}/campaign/{{campaign.id}}">
                             <div class="thumb-img">
                                 <img ng-if="hasImage($index)" ng-src="../api/images/{{getProfileImageId($index)}}" alt="{{campaign.title}}" />
-                                <img ng-if="!hasImage($index)" src="./img/symbols/car_placeholder.jpg" alt="Kampagnen Symbol" />
+                                <img ng-if="!hasImage($index)" src="./img/symbols/campaign_placeholder.jpg" alt="Kampagnen Symbol" />
                             </div>
                             </a>
                             <div class="caption">
-                                <h3>{{campaign.title}}</h3>
+                                <h3>{{campaign.name}}</h3>
                                 <div class="details">
                                     <div>{{campaign.description}}</div>
                                     <div class="details-fade"></div>

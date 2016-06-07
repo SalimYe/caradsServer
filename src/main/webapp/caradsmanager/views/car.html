@@ -11,7 +11,7 @@
                         <td>{{car.color}}</td>
                     </tr>
                     <tr>
-                        <th>Erstzulassung:</th>
+                        <th>Baujahr:</th>
                         <td>{{car.buildYear| date:'dd.MM.yyyy'}}</td>
                         <th>Kilometerstand:</th>
                         <td>{{car.mileage}} km</td>
@@ -34,11 +34,11 @@
     <hr />
     <div class="row">
         <div class="col-md-12">
-            <button type="submit" class="btn btn-primary" onclick="history.back()">
+            <button type="submit" class="btn btn-default" onclick="history.back()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 Schlie&szlig;en
             </button>
-            <button ng-if="realm.isDriver" type="submit" class="btn btn-success" ng-click="editCar()">
+            <button ng-if="realm.isDriver" type="submit" class="btn btn-primary" ng-click="editCar()">
                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                 Bearbeiten
             </button>

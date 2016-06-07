@@ -6,7 +6,7 @@
                 <table ng-table="tableParams" class="table table-striped table-hover">
                     <tr ng-repeat="request in $data">
                         <td data-title="'Fahrzeug'" sortable="'car.brand'">{{request.car.brand}} {{request.car.model}}</td>
-                        <td data-title="'Kampagne'" sortable="'campaign.title'">{{request.campaign.title}}</td>
+                        <td data-title="'Kampagne'" sortable="'campaign.title'">{{request.campaign.name}}</td>
                         <td data-title="'Unternehmen'" sortable="'advertiser.company'">{{request.advertiser.company}}</td>
                         <td data-title="'Beginn'" sortable="'campaign.startDate'">{{request.campaign.startDate | date:'dd.MM.yyyy'}}</td>
                         <td data-title="'Ende'" sortable="'campaign.endDate'">{{request.campaign.endDate | date:'dd.MM.yyyy'}}</td>
@@ -35,7 +35,6 @@
                     </tr>
                 </table>
             </div>
-            <button ng-click="test()">test</button>
         </div>
     </div>
 </main>

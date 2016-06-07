@@ -13,6 +13,17 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="title" class="required">Titel</label>
+                            <select type="text" class="form-control" id="title" ng-model="advertiser.title" required="">
+                                <option>Herr</option>
+                                <option>Frau</option>
+                            </select>
+                        </div> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label for="firstname" class="required">Vorname</label>
                             <input type="text" class="form-control" id="firstname" ng-model="advertiser.firstname" required="">
                         </div>
@@ -68,8 +79,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="phone">Telefon</label>
-                    <input type="text" class="form-control" id="phone" ng-model="advertiser.phone">
+                    <label for="phone" class="required">Telefon</label>
+                    <input type="text" class="form-control" id="phone" ng-model="advertiser.phone" required="">
                 </div>
                 <div class="form-group">
                     <label for="birthdate" class="required">Geburtsdatum</label>

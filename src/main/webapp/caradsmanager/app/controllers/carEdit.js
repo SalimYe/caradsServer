@@ -4,6 +4,9 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
     var carId = $routeParams.carId;
     $scope.driverId = driverId;
 
+    $scope.colorRange = ["schwarz", "rot", "grün", "blau", "silbern",
+        "gelb", "weiß"];
+
     if (driverId === undefined) {
         $location.path('/');
     }
@@ -80,10 +83,6 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
         } else {
             updateCar();
         }
-    };
-
-    $scope.exitCar = function () {
-        redirectToCarOverview();
     };
 
     $scope.saveImages = function () {

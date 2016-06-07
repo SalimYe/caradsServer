@@ -1,4 +1,4 @@
-app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http, $location, $modal, $document, $timeout, $window, $translate, $filter) {
+app.controller('carSearch', function ($scope, $cookieStore, $route, $routeParams, $http, $location, $modal, $document, $timeout, $window, $translate, $filter, $modal) {
 
     var advertiserId = $routeParams.advertiserId;
     var campaignId = $routeParams.campaignId;
@@ -135,8 +135,9 @@ app.controller('carSearch', function ($scope, $cookieStore, $routeParams, $http,
         $http.post(url, fellows).
                 success(function (data, status, headers, config) {
                     $scope.deleteCarSelection();
-                    $scope.showCampaignDetails();
-                    // TODO
+                    showModal($modal, "An die ausgewählten Fahrzeuge wurden Anfragen verschickt!\n\
+                        Der Status einzelner Anfragen ist innerhalb der Detailansicht einer Kampagne\n\
+                        einsehbar.", "Anfragen verschickt", "Zurück zur Kampagnen", "weitere Fahrzeuge auswählen", $scope.showCampaignDetails(), $route.reload(), angular);
                 }).
                 error(function (data, status, headers, config) {
                     // TODO

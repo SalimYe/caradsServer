@@ -60,9 +60,9 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     };
 
     var createCampaign = function () {
-        console.log($scope.campaign);
         $http.post('../api/advertisers/' + advertiserId + '/campaigns/', $scope.campaign).
                 success(function (data, status, headers, config) {
+                    campaignId = data.id;
                     redirectToCampaignView();
                 }).
                 error(function (data, status) {

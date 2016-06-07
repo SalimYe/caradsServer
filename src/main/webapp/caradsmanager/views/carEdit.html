@@ -23,12 +23,15 @@
                 </div>
                 <div class="form-group">
                     <label for="color" class="required">Farbe</label>
-                    <input type="text" class="form-control" id="color" ng-model="car.color" required="">
+                    <select class="form-control" id="color" ng-model="car.color" required="">
+                        <option ng-repeat="color in colorRange | orderBy: color">{{color}}</option>
+                        <option>sonstiges</option>
+                    </select>
                 </div> 
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="buildYear" class="required">Erstzulassung</label>
+                    <label for="buildYear" class="required">Baujahr</label>
                     <p class="input-group">
                         <input type="text" class="form-control" id="buildYear" ng-model="car.buildYear" datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.options" is-open="datePicker.instances['event1']" required="">
                         <span class="input-group-btn">
@@ -44,8 +47,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="description">Fahrzeugbeschreibung</label>
-                    <textarea type="text" class="form-control" id="description" ng-model="car.description"></textarea>
+                    <label for="description" class="required">Fahrzeugbeschreibung</label>
+                    <textarea type="text" class="form-control" id="description" ng-model="car.description" required=""></textarea>
                 </div>
             </div>
         </div>
@@ -74,7 +77,7 @@
         <hr />
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" class="btn btn-primary" ng-click="exitCar()">
+                <button type="submit" class="btn btn-default" onclick="history.back()">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     Schlie&szlig;en
                 </button>

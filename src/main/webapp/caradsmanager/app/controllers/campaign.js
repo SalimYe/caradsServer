@@ -1,4 +1,4 @@
-app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $location, $timeout, $filter, ngTableParams) {
+app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $location, $filter, ngTableParams) {
 
     var advertiserId = $routeParams.advertiserId;
     var campaignId = $routeParams.campaignId;
@@ -16,14 +16,6 @@ app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $l
         $scope.alert.level = level;
     };
 
-    var goBack = function () {
-        if ($rootScope.realm.isAdvertiser) {
-            $location.path('advertiser/' + advertiserId + '/campaigns');
-        } else {
-            $location.path('home/');
-        }
-    };
-
     $scope.deleteAlert = function () {
         delete $scope.alert;
     };
@@ -31,18 +23,17 @@ app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $l
     $http.get('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId).
             success(function (data, status, headers, config) {
                 $scope.campaign = data;
-                console.log(data);
                 $scope.fellows = $scope.campaign.enrichedFellows;
-                $scope.fillTable($scope.fellows);
-                $scope.tableLoaded = true;
+                if ($scope.fellows !== undefined) {
+                    $scope.fillTable($scope.fellows);
+                    $scope.tableLoaded = true;
+                }
             }).
             error(function (data, status, headers, config) {
-                goBack();
+                alert("Fehler", "Die Daten der Kampagene konnten aus technischen\n\
+                    Gründen nicht abgerufen werden.", "danger");
             });
 
-    $scope.exitCampaign = function () {
-        goBack();
-    };
 
     $scope.editCampaign = function () {
         $location.path('advertiser/' + advertiserId + '/campaignEdit/' + campaignId);
@@ -76,11 +67,11 @@ app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $l
     $scope.getStateLabelBoostrapState = function (state) {
         return getStateLabelBoostrapState(state);
     };
-    
+
     $scope.openCarDetails = function (driverId, carId) {
         $location.path('driver/' + driverId + '/car/' + carId);
     };
-    
+
     $scope.openDriverDetails = function (driverId, carId) {
         $location.path('driver/' + driverId);
     };

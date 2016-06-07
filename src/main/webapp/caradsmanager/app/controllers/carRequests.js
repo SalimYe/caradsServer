@@ -1,6 +1,17 @@
-app.controller('carRequests', function ($scope, $rootScope, $translate, ngTableParams, $filter, $location, $http, $modal) {
+app.controller('carRequests', function ($scope, $route, $rootScope, ngTableParams, $filter, $location, $http, $modal) {
     
     var driverId = $rootScope.realm.driverId;
+    
+    var alert = function (title, content, level) {
+        $scope.alert = [];
+        $scope.alert.title = title;
+        $scope.alert.content = content;
+        $scope.alert.level = level;
+    };
+
+    $scope.deleteAlert = function () {
+        delete $scope.alert;
+    };
     
     $scope.fillTable = function (data) {
         $scope.tableParams = new ngTableParams({
@@ -26,7 +37,8 @@ app.controller('carRequests', function ($scope, $rootScope, $translate, ngTableP
                         $scope.tableLoaded = true;
                     }).
                     error(function (data, status, headers, config) {
-                        // TODO
+                        alert("Fehler", "Fahrzeug Anfragen konnten aufgrund technischer Probleme\n\
+                            nicht geladen werden.", "danger");
                     });
     }
     
@@ -40,10 +52,11 @@ app.controller('carRequests', function ($scope, $rootScope, $translate, ngTableP
         
         $http.put(url, response).
                     success(function (data, status, headers, config) {
-                        $location.path('/');
+                        $route.reload();
                     }).
                     error(function (data, status, headers, config) {
-                        $location.path('/');
+                        alert("Fehler", "Fahrzeug Anfragen konnten aufgrund technischer Probleme\n\
+                            nicht beantwortet werden.", "danger");
                     });
     };
     
