@@ -265,11 +265,10 @@ public class ApplicationControllerImpl implements ApplicationController {
 	 * @return true when booked
 	 */
 	private boolean isCarBooked(String carId) throws Exception{
-		logger.info("generating time");
 		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_CAMPAIGNTIME);
 		String now = df.format(Calendar.getInstance().getTime());
-		logger.info("logging time " +now);
-		return isCarOccupiedInTime(carId, now, "31.12.2199");
+		logger.info("Looking for Campaigns from " +now);
+		return isCarOccupiedInTime(carId, now, "2199-12-31");
 	}
 
 	/**
