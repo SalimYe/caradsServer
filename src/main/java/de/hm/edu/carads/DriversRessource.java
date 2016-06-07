@@ -233,8 +233,6 @@ public class DriversRessource {
 			throw new WebApplicationException(406);
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
-		} catch (NullPointerException e){
-			throw new WebApplicationException(409);
 		} catch (Exception e) {
 			throw new WebApplicationException(500);
 		}

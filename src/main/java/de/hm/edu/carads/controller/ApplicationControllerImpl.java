@@ -678,9 +678,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 	@Override
 	public boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception {
 		Iterator<Campaign> it = this.getAllCampaignsInTime(start, end).iterator();
-		logger.info("is occupied between " + start + " and " + end );
 		while(it.hasNext()){
-			logger.info("campaign");
 			Campaign campaign = it.next();
 			if(campaign.hasFellowAccepted(carId))
 				return true;
@@ -698,6 +696,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 		Collection<Campaign> inTimeCampaigns = new ArrayList<Campaign>();
 		Iterator<Campaign> it = getAllCampaigns().iterator();
 		while(it.hasNext()){
+			logger.info("is occupied between " + start + " and " + end );
 			Campaign c = it.next();
 			if(DateController.areTimesOverlapping(new TimeFrame(start, end), new TimeFrame(c.getStartDate(), c.getEndDate())))
 				inTimeCampaigns.add(c);
