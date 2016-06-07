@@ -503,7 +503,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 		Advertiser advertiser = advertiserController.getEntity(advertiserId);
 		Campaign c = advertiser.getCampaign(campaignId);
 		if(c==null){
-			logger.error("Campaign "+ campaignId +" not valid");
+			logger.error("Campaign "+ campaignId +" not found");
 			throw new NoContentException(campaignId + " not found");
 		}
 		

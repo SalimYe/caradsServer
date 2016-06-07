@@ -16,6 +16,7 @@ public class EnrichedCampaign extends Campaign{
 		this.setEndDate(campaign.getEndDate());
 		this.setImages(campaign.getImages());
 		this.setCampaignBudget(campaign.getCampaignBudget());
+		this.setCarBudget(campaign.getCarBudget());
 		this.setDescription(campaign.getDescription());
 		
 		//Fellows ausblenden
