@@ -265,9 +265,10 @@ public class ApplicationControllerImpl implements ApplicationController {
 	 * @return true when booked
 	 */
 	private boolean isCarBooked(String carId) throws Exception{
+		logger.info("generating time");
 		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_CAMPAIGNTIME);
 		String now = df.format(Calendar.getInstance().getTime());
-		
+		logger.info("logging time " +now);
 		return isCarOccupiedInTime(carId, now, "31.12.2199");
 	}
 
@@ -673,9 +674,9 @@ public class ApplicationControllerImpl implements ApplicationController {
 	 * @throws Exception
 	 */
 	@Override
-	public boolean isCarOccupiedInTime(String carId, String start, String end)
-			throws Exception {
+	public boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception {
 		Iterator<Campaign> it = this.getAllCampaignsInTime(start, end).iterator();
+		
 		while(it.hasNext()){
 			Campaign campaign = it.next();
 			if(campaign.isCarAFellow(carId) && campaign.hasFellowAccepted(carId))
