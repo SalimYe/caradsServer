@@ -290,6 +290,8 @@ public class DriversRessource {
 					response.getAdvertiserId(), response.getCampaignId(),
 					response.getResponse());
 			return Response.ok().build();
+		} catch (InvalidAttributesException e){
+			throw new WebApplicationException(400);
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
 		} catch (Exception e) {

@@ -364,8 +364,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 	 * @throws Exception
 	 */
 	@Override
-	public void respondToOffer(String carId, String advertiserId,
-			String campaignId, String respond) throws Exception {
+	public void respondToOffer(String carId, String advertiserId, String campaignId, String respond) throws Exception {
 		Campaign campaign = this.getCampaign(advertiserId, campaignId);
 		updateFellowSate(carId, advertiserId, campaign, getFellowState(respond));
 		
@@ -734,14 +733,14 @@ public class ApplicationControllerImpl implements ApplicationController {
 		return null;
 	}
 	
-	private FellowState getFellowState(String state) {
+	private FellowState getFellowState(String state) throws InvalidAttributesException {
 		if (state.equals(FellowState.ACCEPTED.toString())) {
 			return FellowState.ACCEPTED;
 		} else if (state.equals(FellowState.ASKED.toString())) {
 			return FellowState.ASKED;
 		} else if (state.equals(FellowState.REJECTED.toString()))
-			;
-		return FellowState.REJECTED;
+			return FellowState.REJECTED;
+		throw new InvalidAttributesException();
 	}
 	
 	/**
