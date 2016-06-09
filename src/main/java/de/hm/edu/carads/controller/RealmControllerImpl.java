@@ -28,7 +28,7 @@ public class RealmControllerImpl implements RealmController {
     }
     
 	@Override
-	public User getUser(String username) {
+	public User getUser(String username) throws NoContentException {
 		BasicDBObject dbObj = dbController.getEntityByKeyValue(ModelCollection.REALM, "username", username);
 		
 		return makeUser(dbObj);
@@ -38,12 +38,16 @@ public class RealmControllerImpl implements RealmController {
 	public void addUser(User user) throws Exception {
 		//Passwort muss noch gehasht werden
 		user.setPassword(Hasher.getShaHash(user.getPassword()));
-		dbController.addEntity(ModelCollection.REALM, (BasicDBObject) JSON.parse(gson.toJson(user)));
+		
+		//Die Id wird hier heraus genommen um nur einmal in der DB zu erscheinen (unter _id)
+		String userId = user.getId();
+		user.setId(null);
+		dbController.addEntity(ModelCollection.REALM, (BasicDBObject) JSON.parse(gson.toJson(user)), userId);
 	}
 	
-	private User makeUser(BasicDBObject dbObj){
+	private User makeUser(BasicDBObject dbObj) throws NoContentException{
 		if(dbObj == null)
-			return null;
+			throw new NoContentException("no entitiy to convert");
 		Gson gson = new Gson();
 
 		User user = (User) gson.fromJson(JSON.serialize(dbObj), User.class);
@@ -52,7 +56,7 @@ public class RealmControllerImpl implements RealmController {
 	}
 
 	@Override
-	public void changeCredidentials(String id, Credidentials credidentials) throws Exception{
+	public void changeCredentials(String id, Credidentials credidentials) throws Exception{
 		User user = makeUser(dbController.getEntity(ModelCollection.REALM, id));
 		
 		if(user.getPassword().equals(Hasher.getShaHash(credidentials.getOldPassword()))){
@@ -65,14 +69,15 @@ public class RealmControllerImpl implements RealmController {
 
 	@Override
 	public void changeUsername(String id, String username) throws Exception {
-		User user = makeUser(dbController.getEntity(ModelCollection.REALM, id));
+		User user = getUserById(id);
 		
 		user.setUsername(username);
 		dbController.updateEntity(ModelCollection.REALM, id, (BasicDBObject) JSON.parse(gson.toJson(user)));
 	}
-	
-	
-	
-    
+
+	@Override
+	public User getUserById(String id) throws Exception {
+		return makeUser(dbController.getEntity(ModelCollection.REALM, id));
+	}     
 }
 

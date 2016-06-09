@@ -73,7 +73,7 @@ public class RealmsRessource {
 	}
 
 	@PUT
-	@Path("/{id}/credidentials")
+	@Path("/{id}/password")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response changeCredidentials(@PathParam("id") String driverId,
@@ -81,13 +81,17 @@ public class RealmsRessource {
 
 		Credidentials credidentials = gson.fromJson(input, Credidentials.class);
 		try {
-			rc.changeCredidentials(driverId, credidentials);
+			rc.changeCredentials(driverId, credidentials);
 			return Response.ok().build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
 		} catch (IllegalArgumentException e) {
 			throw new WebApplicationException(401);
-		} catch (Exception e) {
+		} catch(NoSuchAlgorithmException e){
+			throw new WebApplicationException(406);
+		}
+		
+		catch (Exception e) {
 			throw new WebApplicationException(500);
 		}
 

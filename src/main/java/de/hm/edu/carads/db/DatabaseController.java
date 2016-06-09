@@ -11,6 +11,7 @@ public interface DatabaseController {
 		
 	public BasicDBObject getEntity(ModelCollection collection, String id) throws NoContentException;
 	public BasicDBObject addEntity(ModelCollection collection, BasicDBObject entity);
+	public BasicDBObject addEntity(ModelCollection collection, BasicDBObject entity, String id);
 	public void updateEntity(ModelCollection collection, String id, BasicDBObject newEntity) throws NoContentException;
 	public void deleteEntity(ModelCollection collection, String id) throws NoContentException;
 	

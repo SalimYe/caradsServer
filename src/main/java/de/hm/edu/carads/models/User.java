@@ -13,13 +13,14 @@ public class User extends Model{
 
     private String username;
     private String credentials;
-    private Collection <Role> roles;
+    private Collection <String> roles;
 
     public User(String username, String credentials, String role, String roleId) {
+    	this.id = roleId;
         this.username = username;
         this.credentials = credentials;
         this.roles = new ArrayList<>();
-        this.roles.add(new Role(role, roleId));
+        this.roles.add(role);
     }
     
     public String getUsername() {
@@ -30,7 +31,7 @@ public class User extends Model{
         return credentials;
     }
 
-    public Collection<Role> getRoles() {
+    public Collection<String> getRoles() {
         return roles;
     }
 
@@ -40,13 +41,5 @@ public class User extends Model{
 
     public void setPassword(String credentials) {
         this.credentials = credentials;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
-    }
-    
-    public void addRole(String role, String roleId) {
-        this.roles.add(new Role(role, roleId));
     }
 }

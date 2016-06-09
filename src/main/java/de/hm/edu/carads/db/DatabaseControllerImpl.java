@@ -40,7 +40,8 @@ public class DatabaseControllerImpl implements DatabaseController {
 
 	/**
 	 * Eine neue Entität wird in die Datenbank geschrieben. Dabei wird anhand den Parametern
-	 * entschieden in welche Collection geschrieben wird.
+	 * entschieden in welche Collection geschrieben wird. Eine eindeutige ID wird hierbei automatisch
+	 * generiert.
 	 * @param collectionC Die Ziel-Collection
 	 * @param entity Das Objekt welches hinzugefuegt werden soll.
 	 * @return das Objekt wird wieder zurzueck gegeben.
@@ -50,6 +51,14 @@ public class DatabaseControllerImpl implements DatabaseController {
 		DBCollection collection = db.getCollection(getCollectionName(collectionC));
 		collection.insert(entity);
 		return entity;
+	}
+	
+	@Override
+	public BasicDBObject addEntity(ModelCollection collectionC, BasicDBObject entity, String id) {
+		DBCollection collection = db.getCollection(getCollectionName(collectionC));
+		entity.put("_id", new ObjectId(id));
+		collection.insert(entity);
+		return null;
 	}
 
 	/**
@@ -190,5 +199,7 @@ public class DatabaseControllerImpl implements DatabaseController {
 	public String getNewId() {
 		return new ObjectId().toString();
 	}
+
+	
 	
 }
