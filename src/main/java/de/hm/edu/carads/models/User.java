@@ -7,20 +7,20 @@ import de.hm.edu.carads.models.util.Role;
 
 /**
  *
- * @author florian
+ * @author florian, BK
  */
 public class User extends Model{
 
     private String username;
     private String credentials;
-    private Collection <String> roles;
+    private Collection <Role> roles;
 
     public User(String username, String credentials, String role, String roleId) {
     	this.id = roleId;
         this.username = username;
         this.credentials = credentials;
         this.roles = new ArrayList<>();
-        this.roles.add(role);
+        this.roles.add(new Role(role, roleId));
     }
     
     public String getUsername() {
@@ -31,7 +31,7 @@ public class User extends Model{
         return credentials;
     }
 
-    public Collection<String> getRoles() {
+    public Collection<Role> getRoles() {
         return roles;
     }
 
@@ -41,5 +41,18 @@ public class User extends Model{
 
     public void setPassword(String credentials) {
         this.credentials = credentials;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+    
+    public void addRole(String role, String roleId) {
+        this.roles.add(new Role(role, roleId));
+    }
+    
+    public void clearBeforeSaving(){
+    	this.id=null;
+    	this.meta=null;
     }
 }

@@ -41,7 +41,8 @@ public class RealmControllerImpl implements RealmController {
 		
 		//Die Id wird hier heraus genommen um nur einmal in der DB zu erscheinen (unter _id)
 		String userId = user.getId();
-		user.setId(null);
+		user.clearBeforeSaving();
+		
 		dbController.addEntity(ModelCollection.REALM, (BasicDBObject) JSON.parse(gson.toJson(user)), userId);
 	}
 	
