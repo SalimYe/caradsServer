@@ -47,8 +47,9 @@ public class RealmControllerTest {
 	@Test
 	public void getUserByIdTest() throws Exception{
 		User user = makeNewUser();
+		String userId = user.getId();
 		rc.addUser(user);
-		User fromDB = rc.getUserById(user.getId());
+		User fromDB = rc.getUserById(userId);
 		assertEquals(USER_NAME, fromDB.getUsername());
 	}
 	
