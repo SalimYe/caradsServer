@@ -30,7 +30,7 @@ import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.transaction.Credidentials;
 
 @Path("realms")
-public class RealmsRessource {
+public class RealmsAPI {
 
 	@Context
 	private HttpServletRequest httpServletRequest;
@@ -76,7 +76,7 @@ public class RealmsRessource {
 	@Path("/{id}/password")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response changeCredidentials(@PathParam("id") String driverId,
+	public Response changePassword(@PathParam("id") String driverId,
 			String input) {
 
 		Credidentials credidentials = gson.fromJson(input, Credidentials.class);

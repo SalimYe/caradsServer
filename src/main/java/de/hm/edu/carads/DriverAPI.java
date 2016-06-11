@@ -39,19 +39,50 @@ import de.hm.edu.carads.transaction.DriverRegistration;
 import de.hm.edu.carads.transaction.OfferInformation;
 import de.hm.edu.carads.transaction.OfferResponse;
 
+/**
+ * Die REST-Schnittstelle für die Bereitstellung aller benötigten Methoden
+ * nach Außen.
+ * Parameter werden immer als JSON erwartet.
+ * Rückgabewerte sind ebenfalls immer JSON-Dateien.
+ * @author BK
+ *
+ */
 @Path("drivers")
-public class DriversRessource {
+public class DriverAPI {
 
+	/**
+	 * Dieses Objekt enthält Informationen aus dem Servlet.
+	 */
 	@Context
 	private HttpServletRequest httpServletRequest;
+	
+	/**
+	 * Dieses Objekt wird zum Parsen von JSON-Dateien in Java-Objekte verwendet.
+	 * Zusätzlich können Java-Objekte als JSON-Datein formatiert werden.
+	 */
 	private Gson gson = new Gson();
+	
+	/**
+	 * Die Schnittstelle zur Datenbank.
+	 */
 	private DatabaseController dbController = new DatabaseControllerImpl(
 			DatabaseFactory.INST_PROD);
 	
+	/**
+	 * Die Schnittstelle zur Geschäftslogik.
+	 */
 	private ApplicationController modelController = new ApplicationControllerImpl(dbController);
 
+	/**
+	 * Die Schnittstelle zur Authentifizierung.
+	 */
 	RealmController rc = new RealmControllerImpl(dbController);
 	
+	/**
+	 * Gibt alle Fahrer zurueck.
+	 * @return 204 wenn keine Fahrer vorhanden<br>
+	 *  200 wenn Fahrer vorhanden.
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDrivers() {
@@ -63,6 +94,14 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Registrierung eines neuen Fahrers.
+	 * @param Fahrer als JSON
+	 * @return 200 wenn Fahrer angelegt wurde<br>
+	 *  409 wenn die E-Mail Adresse bereits vergeben ist<br>
+	 *  400 wenn Informationen invalide sind<br>
+	 *  500 bei Serverfehler<br>
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -93,6 +132,14 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Gibt einen speziellen Fahrer anhand der ID zurzueck.
+	 * 
+	 * @param id
+	 * @return 200 wenn Fahrer gefunden<br>
+	 *  404 wenn Fahrer nicht gefunden<br>
+	 *  500 bei Serverfehler
+	 */
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -108,6 +155,17 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Ändert einen vorhandenen Fahrer.
+	 * 
+	 * @param id
+	 * @param Fahrerinformationen
+	 * @return 200 wenn geändert<br>
+	 *  401 wenn verboten<br>
+	 *  404 wenn Fahrer nicht gefunden<br>
+	 *  409 wenn neue E-Mail schon vergeben<br>
+	 *  500 bei Serverfehler<br>
+	 */
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -149,6 +207,15 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Löscht Fahrer.
+	 * 
+	 * @param id
+	 * @return 200 wenn gelöscht<br>
+	 * 404 wenn Faher nicht gefunden<br>
+	 * 406 wenn Fahrer noch Abhängigkeiten hat und nicht gelöscht werden darf<br>
+	 * 500 bei Serverfehler
+	 */
 	@DELETE
 	@Path("/{id}")
 	public Response deleteDriver(@PathParam("id") String id) {
@@ -164,6 +231,15 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Gibt alle Fahrzeuge eines Fahrers zurück.
+	 * 
+	 * @param driverid
+	 * @return 200 wenn Fahrzeuge vorhanden<br>
+	 * 204 wenn keine Fahrzeuge vorhanden<br>
+	 * 404 wenn Fahrer nicht gefunden<br>
+	 * 500 bei Serverfehler
+	 */
 	@GET
 	@Path("/{id}/cars")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -182,6 +258,15 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Fügt einem Fahrer ein neues Auto hinzu.
+	 * @param driverid
+	 * @param Car
+	 * @return 200 wenn Auto hinzugefügt<br>
+	 * 400 wenn Angaben invalide<br>
+	 * 404 Fahrer nicht gefunden<br>
+	 * 500 Serverfehler
+	 */
 	@POST
 	@Path("/{id}/cars")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -206,6 +291,15 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Gibt ein speziellen Fahrzeug zurück.
+	 * 
+	 * @param driverId
+	 * @param carId
+	 * @return 200 wenn Fahrzeug gefunden<br>
+	 * 404 wenn Fahrzeug oder Fahrer nicht gefunden<br>
+	 * 500 Serverfehler
+	 */
 	@GET
 	@Path("/{id}/cars/{car}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -221,14 +315,21 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Löscht ein Fahrzeug eines Fahrers.
+	 * @param driverId
+	 * @param carId
+	 * @return 200 gelöscht<br>
+	 * 404 Fahrer oder Fahrzeug nicht gefunden<br>
+	 * 406 Hat Abhängigkeiten. Ist in einer Kampagne angemeldet<br>
+	 * 500 Serverfehler
+	 */
 	@DELETE
 	@Path("/{id}/cars/{car}")
 	public Response deleteDriverCar(@PathParam("id") String driverId, @PathParam("car") String carId) {
 		try {
 			modelController.deleteCar(driverId, carId);
 			return Response.ok().build();
-		} catch(InvalidAttributesException e){
-			throw new WebApplicationException(400);
 		} catch(HasConstraintException e){
 			throw new WebApplicationException(406);
 		} catch (NoContentException e) {
@@ -238,6 +339,16 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Ändert ein Fahrzeug.
+	 * @param driverId
+	 * @param carId
+	 * @param Car
+	 * @return 200 geändert.<br>
+	 * 400 invalide Angaben<br>
+	 * 404 Fahrer oder Fahrzeug nicht gefunden<br>
+	 * 500 Serverfehler
+	 */
 	@PUT
 	@Path("/{id}/cars/{car}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -262,6 +373,15 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Zeigt alle Anfragen an eines Fahrers an.
+	 * 
+	 * @param driverId
+	 * @return 200 Fahrzeug wurden angefragt<br>
+	 * 204 keine Anfragen<br>
+	 * 404 Fahrer nicht gefunden<br>
+	 * 500 Serverfehler
+	 */
 	@GET
 	@Path("/{id}/requests")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -279,6 +399,16 @@ public class DriversRessource {
 		}
 	}
 
+	/**
+	 * Eine Antwort auf eine Anfrage.
+	 * 
+	 * @param driverId
+	 * @param OfferResponse
+	 * @return 200 Antwort entgegengenommen<br>
+	 * 400 invalide Antwort<br>
+	 * 404 Adressat oder Quelle nicht gefunden<br>
+	 * 500 Serverfehler
+	 */
 	@PUT
 	@Path("/{id}/response")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -300,8 +430,11 @@ public class DriversRessource {
 		}
 	}
 	
-	
-
+	/**
+	 * Gibt den aktuell angemeldeten Fahrer zurück.
+	 * @return Fahrer
+	 * @throws Exception
+	 */
 	private Driver getCurrentDriver() throws Exception {
 		Principal principal = httpServletRequest.getUserPrincipal();
 		String driverMail = principal.getName();

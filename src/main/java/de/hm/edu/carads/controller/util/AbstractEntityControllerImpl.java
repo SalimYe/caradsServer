@@ -24,7 +24,7 @@ import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.util.Person;
 
 /**
- * Diese Klasse repreasentiert die Steuerungsinstanz fuer die Entitaeten Werbender, Fahrer und Realm.
+ * Diese Klasse repreasentiert die Steuerungsinstanz fuer die Entitaeten Werbender, Fahrer.
  * 
  * @author BK
  *

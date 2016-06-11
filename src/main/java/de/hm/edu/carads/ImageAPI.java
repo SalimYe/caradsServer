@@ -25,7 +25,7 @@ import de.hm.edu.carads.controller.ImageControllerImpl;
 import de.hm.edu.carads.models.Image;
 
 @Path("images")
-public class ImageRessource {
+public class ImageAPI {
 
 	private Gson gson = new Gson();
 	private ImageController ic = new ImageControllerImpl();
@@ -34,7 +34,7 @@ public class ImageRessource {
 	@POST
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response uploadPdfFile(  @FormDataParam("file") InputStream fileInputStream,
+	public Response uploadFile(  @FormDataParam("file") InputStream fileInputStream,
 	                                @FormDataParam("file") FormDataContentDisposition fileMetaData) throws Exception
 	{
 	    String dataType = fileMetaData.getFileName().split("\\.")[1];

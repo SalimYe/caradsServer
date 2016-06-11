@@ -40,7 +40,7 @@ import de.hm.edu.carads.transaction.EnrichedCampaign;
 import de.hm.edu.carads.transaction.OfferRequest;
 
 @Path("advertisers")
-public class AdvertiserRessource {
+public class AdvertiserAPI {
 
 	@Context
 	private HttpServletRequest httpServletRequest;
