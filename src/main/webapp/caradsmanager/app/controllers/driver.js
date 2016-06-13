@@ -42,6 +42,20 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
     $scope.editDetails = function () {
         $location.path($location.path() + '/edit');
     };
+    
+    var logout = function () {
+        $http.get('../api/realms/logout');
+    };
+    
+    $scope.deleteDriver = function () {
+        $http.delete('../api/drivers/' + driverId).
+                success(function (data, status, headers, config) {
+                    logout();
+                }).
+                error(function (data, status, headers, config) {
+                    alert("Löschen fehlgeschlagen", "Fahrer konnte nicht gelöscht werden.", "danger");
+                });
+    };
 
     $scope.saveImage = function () {
         $timeout(function () {

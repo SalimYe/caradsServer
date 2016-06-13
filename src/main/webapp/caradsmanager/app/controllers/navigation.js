@@ -46,8 +46,4 @@ app.controller('navigation', function ($rootScope, $scope, $http, $location, $tr
                 // TODO
             });
 
-    $scope.logout = function () {
-        // TODO
-    };
-
 });

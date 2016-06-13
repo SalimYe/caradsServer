@@ -17,12 +17,12 @@ app.controller('advertiserEdit', function ($scope, $routeParams, $http, $locatio
     };
 
         $http.get('../api/advertisers/' + advertiserId).
-                success(function (data, status, headers, config) {
-                    $scope.advertiser = data;
-                }).
-                error(function (data, status, headers, config) {
-                    $location.path('/');
-                });
+            success(function (data, status, headers, config) {
+                $scope.advertiser = data;
+            }).
+            error(function (data, status, headers, config) {
+                $location.path('/');
+            });
 
 
     $scope.updateAdvertiser = function () {
@@ -59,6 +59,20 @@ app.controller('advertiserEdit', function ($scope, $routeParams, $http, $locatio
 
                     });
         }, 200);
+    };
+    
+    var logout = function () {
+        $http.get('../api/realms/logout');
+    };
+    
+    $scope.deleteAdvertiser = function () {
+        $http.delete('../api/advertisers/' + advertiserId).
+                success(function (data, status, headers, config) {
+                    logout();
+                }).
+                error(function (data, status, headers, config) {
+                    alert("Löschen fehlgeschlagen", "Werbender konnte nicht gelöscht werden.", "danger");
+                });
     };
 
     $scope.deleteImage = function () {
