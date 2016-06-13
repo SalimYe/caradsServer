@@ -1,4 +1,4 @@
-app.controller('campaignEdit', function ($scope, $routeParams, $http, $location, $timeout) {
+app.controller('campaignEdit', function ($scope, $routeParams, $http, $location, $timeout, $translate) {
 
     var advertiserId = $routeParams.advertiserId;
     var campaignId = $routeParams.campaignId;

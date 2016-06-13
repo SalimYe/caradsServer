@@ -1,5 +1,5 @@
 <main>
-    <h2>Kampagne</h2>         
+    <h2>{{"heading.campaign"| translate}}</h2>         
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
@@ -7,18 +7,18 @@
     <div class="row">
         <div class="col-md-3">
             <h4>{{campaign.title}}</h4>
-            <p><strong>Verg&uuml;tung pro Fahrzeug:</strong> {{campaign.carBudget}}<br />
-                <strong>Datum Start:</strong> {{campaign.startDate | date:'dd.MM.yyyy'}}<br />
-                <strong>Datum Ende:</strong> {{campaign.endDate | date:'dd.MM.yyyy'}}</p>
+            <p><strong>{{"label.carBudget"| translate}}:</strong> {{campaign.carBudget}}<br />
+                <strong>{{"label.startDate"| translate}}:</strong> {{campaign.startDate | date:'dd.MM.yyyy'}}<br />
+                <strong>{{"label.endDate"| translate}}:</strong> {{campaign.endDate | date:'dd.MM.yyyy'}}</p>
         </div>
         <div class="col-md-4">
-            <h4>Kurzbeschreibung</h4>
+            <h4>{{"label.description"| translate}}</h4>
             <p>{{campaign.description}}</p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h4>Fotos</h4>
+            <h4>{{"label.images"| translate}}</h4>
             <div class="elementImage multi" ng-repeat="image in campaign.images">
                 <img ng-src="../api/images/{{image.id}}" />
             </div>
@@ -28,13 +28,13 @@
         <div class="col-md-12">
             <button ng-if="realm.isAdvertiser" type="submit" class="btn btn-primary" ng-click="editCampaign()">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                Kampagne bearbeiten
+                {{"button.editCampaign"| translate}}
             </button>
         </div>
     </div>
     <div class="row" ng-if="realm.isAdvertiser || realm.isAdmin">
         <div class="col-md-12">
-            <h3>Fahrzeug Anfragen</h3>
+            <h3>{{"label.carRequests"| translate}}</h3>
             <div class="table-responsive" ng-if="fellows.length > 0">
                 <table ng-table="tableParams" class="table table-striped table-hover">
                     <tr ng-repeat="request in $data">
@@ -46,25 +46,24 @@
                             <button ng-disabled="request.state != 'ACCEPTED'" class="btn btn-default btn-xs" type="button"
                                     ng-click="openDriverDetails(request.car.driverId, request.car.id)">
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                Fahrer Details
+                                {{"button.driverDetails"| translate}}
                             </button>
                             <button class="btn btn-default btn-xs" type="button"
                                     ng-click="openCarDetails(request.car.driverId, request.car.id)">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                Fahrzeug Details
+                                {{"button.carDetails"| translate}}
                             </button>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="alert alert-warning" role="alert" ng-if="fellows === undefined || fellows.length === 0">
-                <p><strong>Keine Fahrzeuge vorhanden!</strong></p>
-                <p>Klicken Sie auf den Button <i>Fahrzeuge hinzuf&uuml;gen</i>, um f&uuml;r die aktuelle
-                    Kampagne Fahrzeuge auszuw&auml;hlen!</p>
+                <p><strong>{{"alert.noCars"| translate}}</strong></p>
+                <p>{{"alert.noCarsText"| translate}}</p>
             </div>
             <button type="submit" class="btn btn-primary" ng-click="showAvailableCars()">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                Fahrzeuge hinzuf&uuml;gen
+                {{"button.addCars"| translate}}
             </button>
         </div>
     </div>
@@ -73,7 +72,7 @@
         <div class="col-md-12">
             <a ng-if="realm.isAdvertiser" type="submit" class="btn btn-default" href="#/advertiser/{{realm.advertiserId}}/campaigns/">
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                Kampagnen Übersicht
+                {{"heading.campaignOverview"| translate}}
             </a>
             <button ng-if="realm.isDriver || realm.isAdmin" type="submit" class="btn btn-default" onclick="history.back()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>

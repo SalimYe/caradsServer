@@ -1,11 +1,10 @@
 <main>
-    <h3>Meine Fahrzeuge</h3>
+    <h3>{{"heading.myCars"| translate}}</h3>
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-warning" role="alert" ng-if="cars === undefined || cars.length === 0">
-                <strong>Keine Fahrzeuge vorhanden!</strong>
-                Klicken Sie auf &quot;+ Fahrzeug hinzuf&uuml;gen&quot;, um ein neues
-                Fahrzeug anzulegen.
+                <strong>{{"alert.noCars"| translate}}</strong>
+                {{"alert.noCarsText"| translate}}
             </div>
             <div class="row">
                 <div ng-repeat="car in cars | orderBy: 'car.brand'">
@@ -20,12 +19,14 @@
                             <div class="caption">
                                 <h3>{{car.brand}} {{car.model}}</h3>
                                 <div class="details">
-                                    <p>BJ {{car.buildYear | date:'dd.MM.yyyy'}},
-                                            {{car.mileage}} KM, {{car.color}}<br />
+                                    <p>{{"car.buildYearShort"| translate}}&nbsp;{{car.buildYear | date:'dd.MM.yyyy'}},
+                                            {{car.mileage}}&nbsp;{{"car.milageShort"| translate}}, {{car.color}}<br />
                                             {{car.description}}</p>
                                     <div class="details-fade"></div>
                                 </div>
-                                <p><a href="#/driver/{{driverId}}/car/{{car.id}}" class="btn btn-default">Details</a></p>
+                                <p><a href="#/driver/{{driverId}}/car/{{car.id}}" class="btn btn-default">
+                                        {{"label.details"| translate}}
+                                    </a></p>
                             </div>
                         </div>
                     </div>
@@ -33,7 +34,7 @@
             </div>
             <a class="btn btn-primary" href="#/driver/{{driverId}}/carEdit/">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                Fahrzeug hinzufügen
+                {{"button.addCar"| translate}}
             </a>
         </div>
     </div>

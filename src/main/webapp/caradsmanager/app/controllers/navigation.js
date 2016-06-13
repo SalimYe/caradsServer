@@ -1,4 +1,4 @@
-app.controller('navigation', function ($rootScope, $scope, $http, $location) {
+app.controller('navigation', function ($rootScope, $scope, $http, $location, $translate) {
 
     $rootScope.realm = [];
     

@@ -1,5 +1,5 @@
 <main>
-    <h3>Fahrer Registrierung</h3>
+    <h3>{{"heading.registrationDriver" | translate}}</h3>
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
@@ -10,10 +10,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="title" class="required">Titel</label>
+                            <label for="title" class="required">{{"label.title" | translate}}</label>
                             <select type="text" class="form-control" id="title" ng-model="driver.title" required="">
-                                <option>Herr</option>
-                                <option>Frau</option>
+                                <option>{{"label.mr" | translate}}</option>
+                                <option>{{"label.mrs" | translate}}</option>
                             </select>
                         </div> 
                     </div>
@@ -21,31 +21,31 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="firstname" class="required">Vorname</label>
+                            <label for="firstname" class="required">{{"label.firstname" | translate}}</label>
                             <input type="text" class="form-control" id="firstname" ng-model="driver.firstname" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="lastname" class="required">Nachname</label>
+                            <label for="lastname" class="required">{{"label.lastname" | translate}}</label>
                             <input type="text" class="form-control" id="lastname" ng-model="driver.lastname" required="">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email" class="required">Mail</label>
+                    <label for="email" class="required">{{"label.mail" | translate}}</label>
                     <input type="email" class="form-control" id="email" ng-model="driver.email" required="">
                 </div>  
                 <div class="form-group">
-                    <label for="phone" class="required">Telefonnummer</label>
+                    <label for="phone" class="required">{{"label.phone" | translate}}</label>
                     <input type="text" class="form-control" id="phone" ng-model="driver.phone" required="">
                 </div>
                 <div class="form-group">
-                    <label for="password" class="required">Passwort</label>
+                    <label for="password" class="required">{{"label.password" | translate}}</label>
                     <input type="password" class="form-control" id="password" ng-model="driver.password" required="">
                 </div>
                 <div class="form-group">
-                    <label for="password" class="required">Passwort Wiederholung</label>
+                    <label for="password" class="required">{{"label.passwordRepeat" | translate}}</label>
                     <input type="password" class="form-control" id="password" ng-model="passwordConfirm"
                            required="" compare-to="driver.password">
                 </div>
@@ -54,7 +54,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="image">Profilbild</label>
+                            <label for="image">{{"label.profilePicture" | translate}}</label>
                             <input name="file" id="image" class="form-control" type="file" fileread="image" onchange="angular.element(this).scope().saveImage()" 
                                    ng-show="driver.profilePicture === undefined">
                             <div class="elementImage" ng-if="driver.profilePicture !== undefined">
@@ -69,35 +69,35 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="street" class="required">Stra&szlig;e und Hausnummer</label>
+                    <label for="street" class="required">{{"label.street" | translate}}</label>
                     <input type="text" class="form-control" id="street" ng-model="driver.address.street" required="">
                 </div>  
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="zip" class="required">PLZ</label>
+                            <label for="zip" class="required">{{"label.zip" | translate}}</label>
                             <input type="text" class="form-control" id="zip" ng-model="driver.address.zip" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="city" class="required">Stadt</label>
+                            <label for="city" class="required">{{"label.city" | translate}}</label>
                             <input type="text" class="form-control" id="city" ng-model="driver.address.city" required="">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="country" class="required">Land</label>
+                    <label for="country" class="required">{{"label.country" | translate}}</label>
                     <input type="text" class="form-control" id="country" ng-model="driver.address.country" required="">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="occupation">Beruf</label>
+                    <label for="occupation">{{"label.occupation" | translate}}</label>
                     <input type="text" class="form-control" id="occupation" ng-model="driver.occupation">
                 </div>  
                 <div class="form-group">
-                    <label for="birthdate" class="required">Geburtsdatum</label>
+                    <label for="birthdate" class="required">{{"label.birthdate" | translate}}</label>
                     <p class="input-group">
                         <input type="text" class="form-control" id="birthdate" ng-model="driver.birthdate" datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.options" is-open="datePicker.instances['event1']" required="">
                         <span class="input-group-btn">
@@ -105,7 +105,7 @@
                     </p>
                 </div>  
                 <div class="form-group">
-                    <label for="licenseDate" class="required">F&uuml;hrerschein seit</label>
+                    <label for="licenseDate" class="required">{{"label.licenseDate" | translate}}</label>
                     <p class="input-group">
                         <input type="text" class="form-control" id="birthdate" ng-model="driver.licenseDate" datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.options" is-open="datePicker.instances['event2']" required="">
                         <span class="input-group-btn">
@@ -117,14 +117,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="description">Kurzbeschreibung</label>
+                    <label for="description">{{"label.description" | translate}}</label>
                     <textarea type="text" class="form-control" id="description" ng-model="driver.description"></textarea>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="required">Pflichtfeld</div>
+                <div class="required">{{"label.requiredFields" | translate}}</div>
             </div>
         </div>
         <hr />
@@ -132,11 +132,11 @@
             <div class="col-md-12">
                 <a class="btn btn-default" href="#/registration/">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Abbrechen
+                    {{"button.cancel" | translate}}
                 </a>
                 <button type="submit" class="btn btn-success" ng-click="registerDriver()">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    Registrieren
+                    {{"button.register" | translate}}
                 </button>
             </div>
         </div>

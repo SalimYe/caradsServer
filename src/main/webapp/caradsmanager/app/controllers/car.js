@@ -1,4 +1,4 @@
-app.controller('car', function ($scope, $routeParams, $rootScope, $http, $location) {
+app.controller('car', function ($scope, $routeParams, $rootScope, $http, $location, $translate) {
 
     var driverId = $routeParams.driverId;
     var carId = $routeParams.carId;

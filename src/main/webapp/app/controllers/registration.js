@@ -1,3 +1,3 @@
-startapp.controller('registration', function ($scope, $location) {
+startapp.controller('registration', function ($scope, $location, $translate) {
 
 });

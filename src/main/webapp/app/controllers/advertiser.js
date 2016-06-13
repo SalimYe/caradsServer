@@ -1,4 +1,4 @@
-startapp.controller('advertiser', function ($scope, $routeParams, $http, $timeout) {
+startapp.controller('advertiser', function ($scope, $routeParams, $http, $timeout, $translate) {
 
     $scope.advertiser = {};
 

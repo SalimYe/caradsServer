@@ -2,31 +2,31 @@
     <div class="row">
         <div class="col-md-3">
             <div class="filter-menu">
-                <h3>Filter</h3>
+                <h3>{{"label.filter"| translate}}</h3>
                 <form class="form">
                     <div class="form-group">
-                        <label>Marke</label>
+                        <label>{{"car.brand"| translate}}</label>
                         <select ng-model="filterType.brand" ng-change="setFilterParamValue('brand', 'searchParams')" class="form-control">
                             <option value="" selected="">Alle</option>
                             <option ng-repeat="car in cars| unique:'brand' | orderBy: 'brand'">{{car.brand}}</option>
                         </select>                                               
                     </div>
                     <div class="form-group">
-                        <label>Modell</label>
+                        <label>{{"car.model"| translate}}</label>
                         <select ng-model="filterType.model" ng-change="setFilterParamValue('model', 'searchParams')" class="form-control">
                             <option value="">Alle</option>
                             <option ng-repeat="car in cars| unique:'model' | orderBy:'model'">{{car.model}}</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Farbe</label>
+                        <label>{{"car.color"| translate}}</label>
                         <select ng-model="filterType.color" ng-change="setFilterParamValue('color', 'searchParams')" class="form-control">
                             <option value="">Alle</option>
                             <option ng-repeat="car in cars| unique:'color' | orderBy:'color'">{{car.color}}</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>PLZ</label>
+                        <label>{{"label.zip"| translate}}</label>
                         <select ng-model="filterType.driverZip" ng-change="setFilterParamValue('driverZip', 'searchParams')" class="form-control">
                             <option value="">Alle</option>
                             <option ng-repeat="car in cars| unique:'driverZip' | orderBy:'driverZip'">{{car.driverZip}}</option>
@@ -34,12 +34,12 @@
                     </div>
                     <button type="reset" class="btn btn-default btn-block" ng-click="filterReset('searchParams')">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                        Filter Reset
+                        {{"button.filterReset"| translate}}
                     </button>
                 </form>
             </div>
             <div class="sort-menu">
-                <h3>Sortierung</h3>
+                <h3>{{"label.sort"| translate}}</h3>
                 <select class="form-control" ng-model="predicate" ng-change="order(sortSelection)">
                     <option ng-repeat="opt in sortOptions" value="{{opt.value}}">{{opt.label}}</option>
                 </select>
@@ -47,23 +47,23 @@
                 </select>
             </div>
             <div class="carselection-menu">
-                <h3>Auswahl</h3>
-                <p>Es sind momenten <strong>{{carSelection.length}}</strong> Fahrzeuge ausgewählt.</p>
+                <h3>{{"label.selection"| translate}}</h3>
+                <p>{{"label.selectionTextOne"| translate}} <strong>{{carSelection.length}}</strong> {{"label.selectionTextTwo"| translate}}</p>
                 <button ng-disabled="!carSelection.length > 0" type="button" ng-click="sendCarRequests()" class="btn btn-success btn-block">
                     <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> 
-                    Buchungsanfragen senden
+                    {{"button.sendCarRequest"| translate}}
                 </button>
                 <button ng-disabled="!carSelection.length > 0" type="button" ng-click="deleteCarSelection()" class="btn btn-danger btn-block">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 
-                    Auswahl löschen
+                    {{"button.deleteSelection"| translate}}
                 </button>
                 <button type="button" ng-click="showCampaignDetails()" class="btn btn-default btn-block">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                    Zurück zur Kampagne</button>
+                    {{"button.toCampaign"| translate}}</button>
             </div>
         </div>
         <div class="col-md-9">
-            <h3>Fahrzeug Auswahl</h3>
+            <h3>{{"label.availableCars"| translate}}</h3>
             <div class="alert alert-warning" role="alert" ng-if="cars === undefined || cars.length === 0">
                 <p><strong>Keine Fahrzeuge verfügbar!</strong></p>
                 <p>Daf&uuml;r kann es mehrere Gr&uuml;de geben:</p>
@@ -90,18 +90,20 @@
                                 <div class="details">
                                     <div>
                                         <p>BJ {{car.buildYear| date:'dd.MM.yyyy'}},
-                                            {{car.mileage}}&nbsp;KM, {{car.color}}, PLZ&nbsp;{{car.driverZip}},
+                                            {{car.mileage}}&nbsp;{{"car.milageShort"| translate}}, {{car.color}}, {{"label.zip"| translate}}&nbsp;{{car.driverZip}},
                                             {{car.description}}</p>
                                     </div>
                                     <div class="details-fade"></div>
                                 </div>
-                                <a href="#/driver/{{car.driverId}}/car/{{car.id}}" class="btn btn-default">Details</a>
+                                <a href="#/driver/{{car.driverId}}/car/{{car.id}}" class="btn btn-default">
+                                    {{"label.details"| translate}}
+                                </a>
                                 <button ng-if="!car.isSelected" type="button" ng-click="updateCarSelection(car.id)" class="btn btn-success">
                                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                                    Ausw&auml;len</button>
+                                    {{"button.select"| translate}}</button>
                                 <button ng-if="car.isSelected" type="button" ng-click="updateCarSelection(car.id)" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                                    Entfernen</button>
+                                    {{"button.remove"| translate}}</button>
                             </div>
                         </div>
                     </div>

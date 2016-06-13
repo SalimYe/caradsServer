@@ -64,23 +64,23 @@
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><a href="#/home">Home</a></li>
-                            <li ng-if="realm.advertiserId !== undefined"><a href="#/advertiser/{{realm.advertiserId}}">Mein Profil</a></li>
-                            <li ng-if="realm.advertiserId !== undefined"><a href="#/advertiser/{{realm.advertiserId}}/campaigns">Meine Kampagnen</a></li>
-                            <li ng-if="realm.driverId !== undefined"><a href="#/driver/{{realm.driverId}}">Mein Profil</a></li>
-                            <li ng-if="realm.driverId !== undefined"><a href="#/driver/{{realm.driverId}}/cars">Meine Fahrzeuge</a></li>
-                            <li ng-if="realm.driverId !== undefined"><a href="#/carRequests">Fahrzeug Anfragen</a></li>
-                            <li ng-if="realm.isAdmin"><a href="#/drivers/">Fahrer &Uuml;bersicht</a></li>
-                            <li ng-if="realm.isAdmin"><a href="#/advertisers/">Werbende &Uuml;bersicht</a></li>
+                            <li><a href="#/home">{{"nav.home"| translate}}</a></li>
+                            <li ng-if="realm.advertiserId !== undefined"><a href="#/advertiser/{{realm.advertiserId}}">{{"nav.myProfile"| translate}}</a></li>
+                            <li ng-if="realm.advertiserId !== undefined"><a href="#/advertiser/{{realm.advertiserId}}/campaigns">{{"heading.myCampaigns"| translate}}</a></li>
+                            <li ng-if="realm.driverId !== undefined"><a href="#/driver/{{realm.driverId}}">{{"nav.myProfile"| translate}}</a></li>
+                            <li ng-if="realm.driverId !== undefined"><a href="#/driver/{{realm.driverId}}/cars">{{"heading.myCars"| translate}}</a></li>
+                            <li ng-if="realm.driverId !== undefined"><a href="#/carRequests">{{"label.carRequests"| translate}}</a></li>
+                            <li ng-if="realm.isAdmin"><a href="#/drivers/">{{"heading.driverOverview"| translate}}</a></li>
+                            <li ng-if="realm.isAdmin"><a href="#/advertisers/">{{"heading.advertiserOverview"| translate}}</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#/faq/">FAQ</a></li>
+                            <li><a href="#/faq/">{{"heading.faq"| translate}}</a></li>
                             <li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{realm.username}} <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#/accountSettings/">Konto-Einstellungen</a></li>
+                                    <li><a href="#/accountSettings/">{{"heading.accountSettings"| translate}}</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="../api/realms/logout">Abmelden</a></li>
+                                    <li><a href="../api/realms/logout">{{"nav.logout"| translate}}</a></li>
                                 </ul>
                             </li>
                         </ul>

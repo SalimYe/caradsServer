@@ -1,5 +1,5 @@
 <main>
-    <h3>Werbender Registrierung</h3>
+    <h3>{{"heading.registrationAdvertiser" | translate}}</h3>
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
@@ -8,16 +8,16 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="company" class="required">Unternehmen</label>
+                    <label for="company" class="required">{{"label.company" | translate}}</label>
                     <input type="text" class="form-control" id="company" ng-model="advertiser.company" required="">
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="title" class="required">Titel</label>
+                            <label for="title" class="required">{{"label.title" | translate}}</label>
                             <select type="text" class="form-control" id="title" ng-model="advertiser.title" required="">
-                                <option>Herr</option>
-                                <option>Frau</option>
+                                <option>{{"label.mr" | translate}}</option>
+                                <option>{{"label.mrs" | translate}}</option>
                             </select>
                         </div> 
                     </div>
@@ -25,24 +25,24 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="firstname" class="required">Vorname</label>
+                            <label for="firstname" class="required">{{"label.firstname" | translate}}</label>
                             <input type="text" class="form-control" id="firstname" ng-model="advertiser.firstname" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="lastname" class="required">Nachname</label>
+                            <label for="lastname" class="required">{{"label.lastname" | translate}}</label>
                             <input type="text" class="form-control" id="lastname" ng-model="advertiser.lastname" required="">
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="password" class="required">Passwort</label>
+                    <label for="password" class="required">{{"label.password" | translate}}</label>
                     <input type="password" class="form-control" id="password" ng-model="advertiser.password" required="">
                 </div>
                 <div class="form-group">
-                    <label for="password" class="required">Passwort Wiederholung</label>
+                    <label for="password" class="required">{{"label.passwordRepeat" | translate}}</label>
                     <input type="password" class="form-control" id="password" ng-model="passwordConfirm"
                            required="" compare-to="advertiser.password">
                 </div>
@@ -51,7 +51,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="image">Logo</label>
+                            <label for="image">{{"label.logo" | translate}}</label>
                             <input name="file" id="image" class="form-control" type="file" fileread="image" onchange="angular.element(this).scope().saveImage()" 
                                    ng-show="advertiser.logo === undefined">
                             <div class="elementImage" ng-if="advertiser.logo !== undefined">
@@ -66,39 +66,39 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="required" for="street">Stra&szlig;e und Hausnummer</label>
+                    <label class="required" for="street">{{"label.street" | translate}}</label>
                     <input type="text" class="form-control" id="street" ng-model="advertiser.address.street" required="">
                 </div>  
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="zip" class="required">PLZ</label>
+                            <label for="zip" class="required">{{"label.zip" | translate}}</label>
                             <input type="text" class="form-control" id="zip" ng-model="advertiser.address.zip" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="city" class="required">Stadt</label>
+                            <label for="city" class="required">{{"label.city" | translate}}</label>
                             <input type="text" class="form-control" id="city" ng-model="advertiser.address.city" required="">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="required" for="country">Land</label>
+                    <label class="required" for="country">{{"label.country" | translate}}</label>
                     <input type="text" class="form-control" id="country" ng-model="advertiser.address.country" required="">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="phone" class="required">Telefon</label>
+                    <label for="phone" class="required">{{"label.phone" | translate}}</label>
                     <input type="text" class="form-control" id="phone" ng-model="advertiser.phone" required="">
                 </div>
                 <div class="form-group">
-                    <label for="email" class="required">Mail</label>
+                    <label for="email" class="required">{{"label.mail" | translate}}</label>
                     <input type="email" class="form-control" id="email" ng-model="advertiser.email" required="">
                 </div>
                 <div class="form-group">
-                    <label for="birthdate" class="required">Geburtsdatum</label>
+                    <label for="birthdate" class="required">{{"label.birthdate" | translate}}</label>
                     <p class="input-group">
                         <input type="text" class="form-control" id="birthdate" ng-model="advertiser.birthdate" datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.options" is-open="datePicker.instances['event1']" required="">
                         <span class="input-group-btn">
@@ -109,7 +109,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="required">Pflichtfeld</div>
+                <div class="required">{{"label.requiredFields" | translate}}</div>
             </div>
         </div>
         <hr />
@@ -117,11 +117,11 @@
             <div class="col-md-12">
                 <a class="btn btn-default" href="#/registration/">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Abbrechen
+                    {{"button.cancel" | translate}}
                 </a>
                 <button type="submit" class="btn btn-success" ng-click="registerAdvertiser()" ng-disabled="!advertiserForm.$valid">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    Registrieren
+                    {{"button.register" | translate}}
                 </button>
             </div>
         </div>

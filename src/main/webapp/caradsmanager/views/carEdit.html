@@ -1,5 +1,5 @@
 <main>
-    <h3>Fahrzeug</h3>
+    <h3>{{"label.car"| translate}}</h3>
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
@@ -10,28 +10,28 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="brand" class="required">Marke</label>
+                            <label for="brand" class="required">{{"car.brand"| translate}}</label>
                             <input type="text" class="form-control" id="brand" ng-model="car.brand" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="model" class="required">Modell</label>
+                            <label for="model" class="required">{{"car.model"| translate}}</label>
                             <input type="text" class="form-control" id="model" ng-model="car.model" required="">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="color" class="required">Farbe</label>
+                    <label for="color" class="required">{{"car.color"| translate}}</label>
                     <select class="form-control" id="color" ng-model="car.color" required="">
                         <option ng-repeat="color in colorRange | orderBy: color">{{color}}</option>
-                        <option>sonstiges</option>
+                        <option>{{"label.other"| translate}}</option>
                     </select>
                 </div> 
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="buildYear" class="required">Baujahr</label>
+                    <label for="buildYear" class="required">{{"car.buildYear"| translate}}</label>
                     <p class="input-group">
                         <input type="text" class="form-control" id="buildYear" ng-model="car.buildYear" datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.options" is-open="datePicker.instances['event1']" required="">
                         <span class="input-group-btn">
@@ -39,7 +39,7 @@
                     </p>
                 </div>            
                 <div class="form-group">
-                    <label for="mileage" class="required" >Kilometerstand</label>
+                    <label for="mileage" class="required" >{{"car.milage"| translate}}</label>
                     <input type="text" class="form-control" id="mileage" ng-model="car.mileage" required="">
                 </div>  
             </div>
@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="description" class="required">Fahrzeugbeschreibung</label>
+                    <label for="description" class="required">{{"car.carDescription"| translate}}</label>
                     <textarea type="text" class="form-control" id="description" ng-model="car.description" required=""></textarea>
                 </div>
             </div>
@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="image">Fahrzeug Fotos</label>
+                    <label for="image">{{"car.carImages"| translate}}</label>
                     <input name="file" id="image" class="form-control" type="file" fileread="image"
                            onchange="angular.element(this).scope().saveImages()" multiple="" />
                 </div>
@@ -71,7 +71,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="required">Pflichtfeld</div>
+                <div class="required">{{"label.requiredFields"| translate}}</div>
             </div>
         </div>
         <hr />
@@ -79,15 +79,15 @@
             <div class="col-md-12">
                 <button type="submit" class="btn btn-default" onclick="history.back()">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Schlie&szlig;en
+                    {{"button.close"| translate}}
                 </button>
                 <button type="submit" class="btn btn-danger" ng-click="deleteCar()" ng-if="!isNewCar">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    Löschen
+                    {{"button.delete"| translate}}
                 </button>
                 <button type="submit" class="btn btn-success" ng-click="saveCar()" ng-disabled="!carForm.$valid">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    Speichern
+                    {{"button.save"| translate}}
                 </button>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <main>
-    <h3>Fahrer Übersicht</h3>
+    <h3>{{"heading.driverOverview"| translate}}</h3>
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
@@ -17,7 +17,7 @@
                             <div>{{driver.description}}</div>
                             <div class="details-fade"></div>
                         </div>
-                        <p><a href="#/driver/{{driver.id}}" class="btn btn-primary" role="button">Details</a></p>
+                        <p><a href="#/driver/{{driver.id}}" class="btn btn-primary" role="button">{{"label.details"| translate}}</a></p>
                     </div>
                 </div>
             </div>

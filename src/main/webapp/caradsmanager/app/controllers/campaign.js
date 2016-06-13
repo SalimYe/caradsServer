@@ -1,4 +1,4 @@
-app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $location, $filter, ngTableParams) {
+app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $location, $filter, ngTableParams, $translate) {
 
     var advertiserId = $routeParams.advertiserId;
     var campaignId = $routeParams.campaignId;

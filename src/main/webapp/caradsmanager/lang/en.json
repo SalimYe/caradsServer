@@ -1,10 +1,53 @@
 {
-    "results": {
-        "results": "Results",
-        "keywords": "Keywords"
+    "alert": {
+        "advertiserAdded": "Werbender angelegt",
+        "keywords": "Stichwörter"
     },
-    
-    "query": {
-        "query": "Query"
+    "heading": {
+        "registrationAdvertiser": "Werbender Registrierung",
+        "registrationDriver": "Fahrer Registrierung",
+        "registration": "Registrierung",
+        "faq": "FAQ"
+    },
+    "label": {
+        "company": "Unternehmen",
+        "title": "Anrede",
+        "firstname": "Vorname",
+        "lastname": "Nachname",
+        "mr": "Herr",
+        "mrs": "Frau",
+        "password": "Passwort",
+        "passwordRepeat": "Passwort Wiederholung",
+        "street": "Straße und Hausnummer",
+        "zip": "PLZ",
+        "city": "Stadt",
+        "country": "Land",
+        "mail": "Mail",
+        "phone": "Telefon",
+        "birthdate": "Geburtstag",
+        "requiredFields": "Pflichfeld",
+        "logo": "Logo",
+        "profilePicture": "Profilbild",
+        "occupation": "Beruf",
+        "licenseDate": "Führerschein Ausstellungsdatum",
+        "description": "Kurzbescheibung",
+        "search": "Suche",
+        "menu": "Menü",
+        "details": "Details"
+    },
+    "button": {
+        "cancel": "Abbrechen",
+        "register": "Registrieren",
+        "registNow": "Jetzt Registrieren",
+        "driverRegist": "Als Fahrer Registrieren",
+        "advertiserRegist": "Als Werbender Registrieren"
+    },
+    "home": {
+        "welcome": "Willkommen auf CarAds!",
+        "description": "Registrieren Sie sich noch heute als Fahrer oder Werbender und werden Sie Teil von CarAds!"
+    },
+    "nav": {
+        "login": "Login",
+        "home": "Startseite"
     }
 }

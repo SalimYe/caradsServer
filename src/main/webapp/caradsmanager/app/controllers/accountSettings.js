@@ -1,4 +1,4 @@
-app.controller('accountSettings', function ($scope, $rootScope, $http, $location, $modal) {
+app.controller('accountSettings', function ($scope, $rootScope, $http, $location, $modal, $translate) {
 
     $scope.credentials = {};
     $scope.credentials.newPassword;

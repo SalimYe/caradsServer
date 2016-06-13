@@ -1,3 +1,3 @@
-app.controller('home', function ($scope, $rootScope, $translate, ngTableParams) {
+app.controller('home', function ($scope, $rootScope, $translate, ngTableParams, $translate) {
     
 });

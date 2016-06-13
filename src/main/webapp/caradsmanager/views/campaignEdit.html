@@ -1,5 +1,5 @@
 <main>
-    <h3>Kampagne</h3>         
+    <h3>{{"heading.campaign"| translate}}</h3>         
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
@@ -8,11 +8,11 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="title" class="required">Titel</label>
+                    <label for="title" class="required">{{"label.name"| translate}}</label>
                     <input type="text" class="form-control" id="title" ng-model="campaign.name" required="">
                 </div>
                 <div class="form-group">
-                    <label for="carBudget" class="required">Verg&uuml;tung pro Fahrzeug</label>
+                    <label for="carBudget" class="required">{{"label.carBudget"| translate}}</label>
                     <div class="input-group">
                         <div class="input-group-addon">€</div>
                         <input type="text" class="form-control" id="carBudget" ng-model="campaign.carBudget"
@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="startDate" class="required">Datum Start</label>
+                    <label for="startDate" class="required">{{"label.startDate"| translate}}</label>
                     <p class="input-group">
                         <input type="text" class="form-control" id="startDate" ng-model="campaign.startDate" datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.options" is-open="datePicker.instances['event1']" required="">
                         <span class="input-group-btn">
@@ -31,7 +31,7 @@
                     </p>
                 </div> 
                 <div class="form-group">
-                    <label for="endDate" class="required">Datum Ende</label>
+                    <label for="endDate" class="required">{{"label.endDate"| translate}}</label>
                     <p class="input-group">
                         <input type="text" class="form-control" id="endDate" ng-model="campaign.endDate" datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.options" is-open="datePicker.instances['event2']" required="">
                         <span class="input-group-btn">
@@ -43,7 +43,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="description" class="required">Kurzbeschreibung</label>
+                    <label for="description" class="required">{{"label.description"| translate}}</label>
                     <textarea type="text" class="form-control" id="description" ng-model="campaign.description" required=""></textarea>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="image" class="required">Kampagnen Fotos</label>
+                    <label for="image" class="required">{{"label.campainImages"| translate}}</label>
                     <input name="file" id="image" class="form-control" type="file" fileread="image"
                            onchange="angular.element(this).scope().saveImages()" multiple="" />
                 </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="required">Pflichtfeld</div>
+                <div class="required">{{"label.requiredFields"| translate}}</div>
             </div>
         </div>
         <hr />
@@ -75,15 +75,15 @@
             <div class="col-md-12">
                 <button type="submit" class="btn btn-default" ng-click="exitCampaign()">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Schlie&szlig;en
+                    {{"button.close"| translate}}
                 </button>
                 <button type="submit" class="btn btn-danger" ng-click="deleteCampaign()" ng-if="!isNewCampaign">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    Löschen
+                    {{"button.delete"| translate}}
                 </button>
                 <button type="submit" class="btn btn-success" ng-click="saveCampaign()" ng-disabled="!campaignForm.$valid">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    Speichern
+                    {{"button.save"| translate}}
                 </button>
             </div>
         </div>

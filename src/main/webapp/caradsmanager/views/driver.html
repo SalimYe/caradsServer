@@ -8,24 +8,24 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-6">
-                    <h4>Kontakt</h4>
-                    <p><strong>Mail:</strong> {{driver.email}}<br />
-                        <strong>Telefon:</strong> {{driver.phone}}</p>
-                    <h4>Anschrift</h4>
+                    <h4>{{"label.contactDriver"| translate}}</h4>
+                    <p><strong>{{"label.mail"| translate}}:</strong> {{driver.email}}<br />
+                        <strong>{{"label.phone"| translate}}:</strong> {{driver.phone}}</p>
+                    <h4>{{"label.address"| translate}}</h4>
                     <p>{{driver.address.street}}<br />
                         {{driver.address.city}} {{driver.address.zip}}<br />
                         {{driver.address.country}}</p>
                 </div>
                 <div class="col-md-6">
-                    <h4>Sonstiges</h4>
-                    <p><strong>Beruf:</strong> {{driver.occupation}}<br />
-                        <strong>Geburtsdatum:</strong> {{driver.birthdate | date:'dd.MM.yyyy'}}<br />
-                        <strong>F&uuml;hrerschein seit:</strong> {{driver.licenseDate | date:'dd.MM.yyyy'}}</p>
+                    <h4>{{"label.otherDriver"| translate}}</h4>
+                    <p><strong>{{"label.occupation"| translate}}:</strong> {{driver.occupation}}<br />
+                        <strong>{{"label.birthdate"| translate}}:</strong> {{driver.birthdate | date:'dd.MM.yyyy'}}<br />
+                        <strong>{{"label.licenseDate"| translate}}:</strong> {{driver.licenseDate | date:'dd.MM.yyyy'}}</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-8">
-                    <h4>Beschreibung</h4>
+                    <h4>{{"label.description"| translate}}</h4>
                     <p>{{driver.description}}</p>
                 </div>
             </div>
@@ -42,7 +42,7 @@
             <hr />
             <a  class="btn btn-primary" ng-click="editDetails()" ng-if="realm.isDriver || realm.isAdmin">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                Bearbeiten
+                {{"button.edit"| translate}}
             </a>
         </div>
     </div>

@@ -1,4 +1,4 @@
-app.controller('carRequests', function ($scope, $route, $rootScope, ngTableParams, $filter, $location, $http, $modal) {
+app.controller('carRequests', function ($scope, $route, $rootScope, ngTableParams, $filter, $location, $http, $modal, $translate) {
     
     var driverId = $rootScope.realm.driverId;
     
@@ -81,7 +81,10 @@ app.controller('carRequests', function ($scope, $route, $rootScope, ngTableParam
             sendResponse(response);
         };
         
-        showModal($modal, "Bist Du sicher, dass Du verbindlich auf das Angebot antworten willst?", "Anwort senden", "Abbrechen", "Senden", actionOne, actionTwo, angular);
+        showModal($modal, "Bist Du sicher, dass Du verbindlich auf das Angebot\n\
+            antworten willst? Alle anderen Anfragen, die sich zeitlich mit dieser\n\
+            Kampagne überschneiden, werden automatisch abgelehnt.",
+            "Anwort senden", "Abbrechen", "Senden", actionOne, actionTwo, angular);
         
     };
     

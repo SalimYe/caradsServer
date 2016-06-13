@@ -1,5 +1,5 @@
 <main>
-    <h3>Konto Einstellungen</h3>
+    <h3>{{"heading.accountSettings" | translate}}</h3>
     <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
         <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
         <strong>{{alert.title}}:</strong> {{alert.content}}
@@ -8,15 +8,15 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group">
-                    <label for="oldPassword" class="required">Altes Passwort</label>
+                    <label for="oldPassword" class="required">{{"label.oldPassword" | translate}}</label>
                     <input type="password" class="form-control" id="oldPassword" ng-model="credentials.oldPassword" required="">
                 </div>
                 <div class="form-group">
-                    <label for="newPassword" class="required">Neues Passwort</label>
+                    <label for="newPassword" class="required">{{"label.newPassword" | translate}}</label>
                     <input type="password" class="form-control" id="newPassword" ng-model="credentials.newPassword" required="">
                 </div>
                 <div class="form-group">
-                    <label for="newPasswordConfirm" class="required">Neues Passwort Wiederholung</label>
+                    <label for="newPasswordConfirm" class="required">{{"label.newPasswordRepeat" | translate}}</label>
                     <input type="password" class="form-control" id="newPasswordConfirm" ng-model="newPasswordConfirm" 
                            required="" compare-to="credentials.newPassword" oninvalid="this.setCustomValidity('Bitte hier das zuvor gewählte Passwort erneut eintragen!')">
                 </div>
@@ -24,7 +24,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="required">Pflichtfeld</div>
+                <div class="required">{{"label.requiredFields" | translate}}</div>
             </div>
         </div>
         <hr />
@@ -32,11 +32,11 @@
             <div class="col-md-12">
                 <a class="btn btn-default" href="#">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Schlie&szlig;en
+                    {{"button.close" | translate}}
                 </a>
                 <button type="submit" class="btn btn-success" ng-click="updatePassword()">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    Passwort &auml;ndern
+                    {{"button.changePassword" | translate}}
                 </button>
             </div>
         </div>

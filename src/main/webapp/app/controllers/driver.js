@@ -1,4 +1,4 @@
-startapp.controller('driver', function ($scope, $routeParams, $http, $timeout) {
+startapp.controller('driver', function ($scope, $routeParams, $http, $timeout, $translate) {
 
     $scope.driver = {};
 

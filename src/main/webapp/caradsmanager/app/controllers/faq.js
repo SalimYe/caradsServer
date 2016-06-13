@@ -1,4 +1,4 @@
-app.controller('faq', function ($scope, $routeParams, $http, $location) {
+app.controller('faq', function ($scope, $routeParams, $http, $location, $translate) {
 
     $scope.isOpen = [];
 

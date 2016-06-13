@@ -1,4 +1,4 @@
-app.controller('advertiser', function ($scope, $routeParams, $http, $location, $modal, $timeout) {
+app.controller('advertiser', function ($scope, $routeParams, $http, $location, $modal, $timeout, $translate) {
 
     var advertiserId = $routeParams.id;
     if (advertiserId === undefined) {

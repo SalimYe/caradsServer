@@ -1,5 +1,5 @@
 <main>
-    <h2>Fahrzeug Anfragen</h2>
+    <h2>{{"heading.carRequests"| translate}}</h2>
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
@@ -18,18 +18,18 @@
                                 <button class="btn btn-danger btn-xs" type="button"
                                         ng-click="sendResponse(request.car.id, request.advertiser.id, request.campaign.id, false)">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    Absagen
+                                    {{"button.reject"| translate}}
                                 </button>
                                 <button class="btn btn-success btn-xs" type="button"
                                         ng-click="sendResponse(request.car.id, request.advertiser.id, request.campaign.id, true)">
                                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                    Zusagen
+                                    {{"button.accept"| translate}}
                                 </button>
                             </span>
                             <button class="btn btn-default btn-xs" type="button"
                                     ng-click="openCampaignDetails(request.car.id, request.advertiser.id, request.campaign.id)">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                Details
+                                {{"label.details"| translate}}
                             </button>                            
                         </td>
                     </tr>
