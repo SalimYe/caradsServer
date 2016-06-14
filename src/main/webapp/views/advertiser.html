@@ -97,14 +97,6 @@
                     <label for="email" class="required">{{"label.mail" | translate}}</label>
                     <input type="email" class="form-control" id="email" ng-model="advertiser.email" required="">
                 </div>
-                <div class="form-group">
-                    <label for="birthdate" class="required">{{"label.birthdate" | translate}}</label>
-                    <p class="input-group">
-                        <input type="text" class="form-control" id="birthdate" ng-model="advertiser.birthdate" datepicker-popup="{{datePicker.format}}" datepicker-options="datePicker.options" is-open="datePicker.instances['event1']" required="">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'event1')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </p>
-                </div> 
             </div>
         </div>
         <div class="row">
