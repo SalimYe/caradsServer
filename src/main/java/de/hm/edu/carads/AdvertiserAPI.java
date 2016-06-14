@@ -34,21 +34,54 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.User;
-import de.hm.edu.carads.models.util.Hasher;
 import de.hm.edu.carads.transaction.AdvertiserRegistration;
 import de.hm.edu.carads.transaction.EnrichedCampaign;
 import de.hm.edu.carads.transaction.OfferRequest;
 
+/**
+ * Die REST-Schnittstelle fuer die Bereitstellung aller benötigten Werbenden-Methoden
+ * nach Außen.
+ * Parameter werden immer als JSON erwartet.
+ * Rueckgabewerte sind ebenfalls immer JSON-Dateien.
+ * @author BK
+ *
+ */
 @Path("advertisers")
 public class AdvertiserAPI {
 
+	/**
+	 * Dieses Objekt enthaelt Informationen aus dem Servlet.
+	 */
 	@Context
 	private HttpServletRequest httpServletRequest;
+	
+	/**
+	 * Dieses Objekt wird zum Parsen von JSON-Dateien in Java-Objekte verwendet.
+	 * Zusaetzlich können Java-Objekte als JSON-Datein formatiert werden.
+	 */
 	private Gson gson = new Gson();
+	
+	/**
+	 * Die Schnittstelle zur Datenbank.
+	 */
 	private DatabaseController dbController = new DatabaseControllerImpl(DatabaseFactory.INST_PROD);
+	
+	/**
+	 * Die Schnittstelle zur Applikationslogik.
+	 */
 	private ApplicationController modelController = new ApplicationControllerImpl(dbController);
+	
+	/**
+	 * Die Schnittstelle zur Authentifizierung.
+	 */
 	private RealmController rc = new RealmControllerImpl(dbController);
 	
+	/**
+	 * Alle Werbenden werden angezeigt.
+	 * 
+	 * @return 200 Werbende als Collection<br>
+	 * 204 keine Werbende vorhanden
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAdvertiser() {
@@ -64,16 +97,23 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Ein Werbender wird hinzugefuegt. Er wird auch als User in der Realm-Collection
+	 * gespeichert um sich spaeter einzuloggen.
+	 * 
+	 * @param Werbender als JSON-Objekt
+	 * @return 200 angelegt<br>
+	 * 400 Falsche angaben<br>
+	 * 409 wenn E-Mail bereits vorhanden<br>
+	 * 500 Servererror
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addAdvertiser(String input) {
-
 		try {
 			AdvertiserRegistration advertiserRegistration = gson.fromJson(input, AdvertiserRegistration.class);
-			
 			Advertiser advertiser = modelController.addAdvertiser(advertiserRegistration);
-			
 			try{
 				User realm = new User(advertiserRegistration.getEmail(), advertiserRegistration.getPassword(), "advertiser", advertiser.getId());
 				rc.addUser(realm);
@@ -83,7 +123,6 @@ public class AdvertiserAPI {
 				modelController.deleteAdvertiser(advertiser.getId());
 				throw new InvalidAttributesException();
 			}
-			
 			return Response.ok(gson.toJson(advertiser)).build();
 
 		} catch (AlreadyExistsException e) {
@@ -95,6 +134,14 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Ein Werbender wird anhand seiner ID zurueck gegeben.
+	 * 
+	 * @param id
+	 * @return 200 Werbender als JSON<br>
+	 * 404 nicht gefunden<br>
+	 * 500 Servererror
+	 */
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -110,6 +157,16 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Daten eines Werbenden werden geandert.
+	 * @param id
+	 * @param input
+	 * @return 200 wenn geandert<br>
+	 * 400 wenn falsche Angaben<br>
+	 * 401 wenn keine Berechtigung<br>
+	 * 404 wenn Werbender nicht gefunden<br>
+	 * 500 Servererror
+	 */
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -143,6 +200,15 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Ein Werbender wird anhand seiner ID geloescht.
+	 * 
+	 * @param id
+	 * @return 200 wenn geloescht<br>
+	 * 404 wenn nicht gefunden<br>
+	 * 406 kann aufgrund Abhaengigkeiten nicht geloescht werden<br>
+	 * 500 Servererrror
+	 */
 	@DELETE
 	@Path("/{id}")
 	public Response deleteAdvertiser(@PathParam("id") String id) {
@@ -159,6 +225,15 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Eine Kampagne wird gespeichert.
+	 * 
+	 * @param id des Werbenden
+	 * @param input Kampagne als JSON-Objekt
+	 * @return 200 wenn angelegt<br>
+	 * 400 falsche Angaben<br>
+	 * 500 Servererror
+	 */
 	@POST
 	@Path("/{id}/campaigns")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -179,6 +254,14 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Kampagnen eines Werbenden werden angezeigt.
+	 * 
+	 * @param id des Werbenden
+	 * @return 200 Kampagnen als JSON-Collection<br>
+	 * 404 ID nicht gefunden<br>
+	 * 500 Servererror
+	 */
 	@GET
 	@Path("/{id}/campaigns")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -197,6 +280,15 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Eine Kampagne wird angezeigt.
+	 * 
+	 * @param id ID des Werbender
+	 * @param cid ID der Kampagne
+	 * @return 200 Kampagne als JSON<br>
+	 * 404 Werbender oder Kampagne nicht gefunden<br>
+	 * 500 Servererrror
+	 */
 	@GET
 	@Path("/{id}/campaigns/{cid}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -212,6 +304,17 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Eine Kampagne wird geloescht.
+	 * 
+	 * @param id Werbender
+	 * @param cid Kampagne
+	 * @return 200 geloescht<br>
+	 * 400 falsche Angaben<br>
+	 * 404 Werbender oder Kampagne nicht gefunden<br>
+	 * 406 kann aufgrund Abhaengigkeiten nicht geloescht werden<br>
+	 * 500 Servererror
+	 */
 	@DELETE
 	@Path("/{id}/campaigns/{cid}")
 	public Response deleteCampaign(@PathParam("id") String id,
@@ -230,6 +333,20 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Kampagne wird geandert.
+	 * Daten der Kampagne muessen komplett vorhanden sein.
+	 * 
+	 * @param id Werbender
+	 * @param cid Kampagne 
+	 * @param input Kampagnendaten als JSON
+	 * @return 200 geandert<br>
+	 * 400 falsche Angaben<br>
+	 * 401 Keine Berechtigung<br>
+	 * 403 Fehlangaben<br>
+	 * 404 Werbender oder Kampagne nicht gefunden.
+	 * 500 Servererrror
+	 */
 	@PUT
 	@Path("/{id}/campaigns/{cid}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -255,6 +372,18 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Ein Auto wird fuer eine Kampagne angefragt.
+	 * 
+	 * @param id Werbender
+	 * @param cid Kampagne
+	 * @param input Anfrage als JSON-Collection
+	 * @return 200 angefragt<br>
+	 * 400 Falschangaben<br>
+	 * 404 Werbender oder Kampagne nicht gefunden<br>
+	 * 409 Das Fahrzeug wurde bereits angefragt<br>
+	 * 500 Servererror
+	 */
 	@POST
 	@Path("/{id}/campaigns/{cid}/cars")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -280,6 +409,16 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Alle Fahrzeuge die fuer diese Kampagne angefragt werden koennen werden angezeigt.
+	 * 
+	 * @param id Werbender
+	 * @param cid Kampagne
+	 * @return 204 kein Fahrzeug verfuegbar<br>
+	 * 200 verfuegbare Fahrzeuge<br>
+	 * 404 Werbender oder Kampagne nicht gefunden<br>
+	 * 500 Servererror
+	 */
 	@GET
 	@Path("/{id}/campaigns/{cid}/availableCars")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -297,6 +436,12 @@ public class AdvertiserAPI {
 		}
 	}
 
+	/**
+	 * Der aktuell angemeldete Werbende wird zurueck gegeben.
+	 * 
+	 * @return angemeldeter Werbende
+	 * @throws Exception
+	 */
 	private Advertiser getCurrentAdvertiser() throws Exception {
 		Principal principal = httpServletRequest.getUserPrincipal();
 		String adMail = principal.getName();

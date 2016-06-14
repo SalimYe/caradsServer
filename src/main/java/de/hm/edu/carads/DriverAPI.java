@@ -19,8 +19,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NoContentException;
 import javax.ws.rs.core.Response;
 
-import org.apache.log4j.Logger;
-
 import com.google.gson.Gson;
 
 import de.hm.edu.carads.controller.ApplicationController;
@@ -40,7 +38,7 @@ import de.hm.edu.carads.transaction.OfferInformation;
 import de.hm.edu.carads.transaction.OfferResponse;
 
 /**
- * Die REST-Schnittstelle fuer die Bereitstellung aller benötigten Methoden
+ * Die REST-Schnittstelle fuer die Bereitstellung aller benötigten Fahrer-Methoden
  * nach Außen.
  * Parameter werden immer als JSON erwartet.
  * Rueckgabewerte sind ebenfalls immer JSON-Dateien.
