@@ -1,34 +1,40 @@
-startapp.controller('advertiser', function ($scope, $routeParams, $http, $timeout, $translate) {
+startapp.controller('advertiser', function ($scope, $routeParams, $http, $timeout, $translate, $modal, $location) {
 
     $scope.advertiser = {};
 
-    var alert = function (title, content, level) {
-        $scope.alert = [];
-        $scope.alert.title = title;
-        $scope.alert.content = content;
-        $scope.alert.level = level;
-    };
-
-    $scope.deleteAlert = function () {
-        delete $scope.alert;
-    };
-
     $scope.registerAdvertiser = function () {
-        $http.post('./api/advertisers/', $scope.advertiser).
-                success(function (data, status, headers, config) {
-                    alert("Werbender angelegt", "Der Werbende wurde erfolgreich registriert!", "success");
-                }).
-                error(function (data, status) {
-                    if (status === 409) {
-                        alert("Speichern fehlgeschlagen", "Es ist bereits ein Werbender mit der Mail \""
-                                + $scope.advertiser.email + "\" registiert!", "danger");
-                    } else {
-                        alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                                "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                                "den Administrator.", "danger");
-                    }
+        if ($scope.advertiserForm.$valid) {
+            $http.post('./api/advertisers/', $scope.advertiser).
+                    success(function (data, status, headers, config) {
+                        var title = 'alert.registrationSuccess';
+                        var description = 'alert.registrationSuccessText';
+                        var button = 'nav.login';
+                        var buttonFunction = function () {
+                            window.location = "../../../caradsmanager/";
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }).
+                    error(function (data, status) {
+                        if (status === 409) {
+                            var title = 'alert.registrationError';
+                            var description = 'alert.registrationErrorDuplicateText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
 
-                });
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        } else {
+                            var title = 'alert.registrationError';
+                            var description = 'alert.registrationErrorText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
+
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        }
+
+                    });
+        }
     };
 
     $scope.saveImage = function () {
@@ -52,21 +58,21 @@ startapp.controller('advertiser', function ($scope, $routeParams, $http, $timeou
     $scope.deleteImage = function () {
         delete $scope.advertiser.logo;
     };
-    
+
     $scope.datePicker = (function () {
         var method = {};
         method.instances = [];
- 
+
         method.open = function ($event, instance) {
             $event.preventDefault();
             $event.stopPropagation();
- 
+
             method.instances[instance] = true;
         };
- 
+
         var formats = ['MM/dd/yyyy', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         method.format = formats[3];
- 
+
         return method;
     }());
 });

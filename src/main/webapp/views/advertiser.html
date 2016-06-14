@@ -1,9 +1,5 @@
 <main>
     <h3>{{"heading.registrationAdvertiser" | translate}}</h3>
-    <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
-        <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
-        <strong>{{alert.title}}:</strong> {{alert.content}}
-    </div>
     <form name="advertiserForm">
         <div class="row">
             <div class="col-md-6">
@@ -111,7 +107,7 @@
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     {{"button.cancel" | translate}}
                 </a>
-                <button type="submit" class="btn btn-success" ng-click="registerAdvertiser()" ng-disabled="!advertiserForm.$valid">
+                <button type="submit" class="btn btn-success" ng-click="registerAdvertiser()">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     {{"button.register" | translate}}
                 </button>

@@ -21,5 +21,4 @@ function showModal($modal, modalDescription, modalTitle, modalButtonOneText, mod
         //on dismiss()
         actionTwo();
     });
-}
-;
+};

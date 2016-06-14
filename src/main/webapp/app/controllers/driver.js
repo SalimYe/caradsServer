@@ -2,31 +2,35 @@ startapp.controller('driver', function ($scope, $routeParams, $http, $timeout, $
 
     $scope.driver = {};
 
-    var alert = function (title, content, level) {
-        $scope.alert = [];
-        $scope.alert.title = title;
-        $scope.alert.content = content;
-        $scope.alert.level = level;
-    };
-
-    $scope.deleteAlert = function () {
-        delete $scope.alert;
-    };
-
     $scope.registerDriver = function () {
         if ($scope.driverForm.$valid) {
             $http.post('./api/drivers/', $scope.driver).
                     success(function (data, status, headers, config) {
-                        alert("Fahrer angelegt", "Der Fahrer wurde erfolgreich registriert!", "success");
+                        var title = 'alert.registrationSuccess';
+                        var description = 'alert.registrationSuccessText';
+                        var button = 'nav.login';
+                        var buttonFunction = function () {
+                            window.location = "../../../caradsmanager/";
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
                     }).
                     error(function (data, status) {
                         if (status === 409) {
-                            alert("Speichern fehlgeschlagen", "Es ist bereits ein Fahrer mit der Mail \""
-                                    + $scope.driver.email + "\" registiert!", "danger");
+                            var title = 'alert.registrationError';
+                            var description = 'alert.registrationErrorDuplicateText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
+
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
                         } else {
-                            alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                                    "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                                    "den Administrator.", "danger");
+                            var title = 'alert.registrationError';
+                            var description = 'alert.registrationErrorText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
+
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
                         }
 
                     });
@@ -56,20 +60,20 @@ startapp.controller('driver', function ($scope, $routeParams, $http, $timeout, $
         delete $scope.driver.profilePicture;
     };
 
-$scope.datePicker = (function () {
+    $scope.datePicker = (function () {
         var method = {};
         method.instances = [];
- 
+
         method.open = function ($event, instance) {
             $event.preventDefault();
             $event.stopPropagation();
- 
+
             method.instances[instance] = true;
         };
- 
+
         var formats = ['MM/dd/yyyy', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         method.format = formats[3];
- 
+
         return method;
     }());
 

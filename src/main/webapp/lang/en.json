@@ -1,7 +1,9 @@
 {
     "alert": {
         "advertiserAdded": "Werbender angelegt",
-        "keywords": "Stichwörter"
+        "keywords": "Stichwörter",
+        "registrationSuccess": "Registrierung erfolgreich!",
+        "registrationSuccessText": "Sie haben sich erfolgreich auf CarAds registriert. Klicken Sie auf den Login-Button, um sich einzuloggen."
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",
@@ -33,7 +35,8 @@
         "description": "Kurzbescheibung",
         "search": "Suche",
         "menu": "Menü",
-        "details": "Details"
+        "details": "Details",
+        "faqInfo": "Im Folgenden finden Sie Antworten auf häufig gestellt Fragen. Wenn Sie sich als Fahrer oder Werbender einloggen, erhalten Sie weitere FAQs speziell für Werbende und Fahrer."
     },
     "button": {
         "cancel": "Abbrechen",

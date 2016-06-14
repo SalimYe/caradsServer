@@ -1,13 +1,28 @@
 {
     "alert": {
         "advertiserAdded": "Werbender angelegt",
-        "keywords": "Stichwörter"
+        "keywords": "Stichwörter",
+        "noCars": "Keine Fahrzeuge vorhanden!",
+        "noCarsText": "Klicken Sie auf den Button 'Fahrzeuge hinzufügen', um für die aktuelle Kampagne Fahrzeuge auszuwählen!",
+        "noCampaigns": "Keine Kampagnen vorhanden!",
+        "noCampaignsText": "Klicken Sie auf '+ Kampagne hinzufügen', um eine neue Kampagne anzulegen.",
+        "noCars": "Keine Fahrzeuge vorhanden!",
+        "noCarsText": "Klicken Sie auf '+ Fahrzeug hinzufügen', um ein neues Fahrzeug anzulegen."
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",
         "registrationDriver": "Fahrer Registrierung",
         "registration": "Registrierung",
-        "faq": "FAQ"
+        "faq": "FAQ",
+        "accountSettings": "Konto Einstellungen",
+        "advertisersOverview": "Werbende Übersicht",
+        "campaign": "Kampagne",
+        "campaignOverview": "Kampagnen Übersicht",
+        "myCampaigns": "Meine Kampagnen",
+        "carRequests": "Fahrzeuganfragen",
+        "myCars": "Meine Fahrzeuge",
+        "driver": "Fahrer",
+        "driverOverview": "Fahrer Übersicht"
     },
     "label": {
         "company": "Unternehmen",
@@ -18,6 +33,9 @@
         "mrs": "Frau",
         "password": "Passwort",
         "passwordRepeat": "Passwort Wiederholung",
+        "oldPassword": "Altes Passwort",
+        "newPassword": "Neues Passwort",
+        "newPasswordRepeat": "Neues Passwort Wiederholung",
         "street": "Straße und Hausnummer",
         "zip": "PLZ",
         "city": "Stadt",
@@ -33,21 +51,79 @@
         "description": "Kurzbescheibung",
         "search": "Suche",
         "menu": "Menü",
-        "details": "Details"
+        "details": "Details",
+        "address": "Anschrift",
+        "contact": "Ansprechpartner",
+        "carBudget": "Vergütung pro Fahrzeug",
+        "startDate": "Start-Termin",
+        "endDate": "End-Termin",
+        "carRequests": "Fahrzeuganfragen",
+        "images": "Fotos",
+        "car": "Fahrzeug",
+        "state": "Status",
+        "name": "Titel",
+        "campaignImages": "Kampagnen Fotos",
+        "other": "sonstige",
+        "availableCars": "Für Kampagne verfügbare Fahrzeuge",
+        "filter": "Filter",
+        "sort": "Sortierung",
+        "selection": "Auswahl",
+        "selectionTextOne": "Es sind momenten",
+        "selectionTextTwo": "Fahrzeuge ausgewählt.",
+        "contactDriver": "Kontakt",
+        "otherDriver": "Sonstiges"
+    },
+    "car": {
+        "milage": "Kilometerstand",
+        "brand": "Marke",
+        "model": "Modell",
+        "buildYear": "Baujahr",
+        "color": "Farbe",
+        "carDescription": "Fahrzeugbeschreibung",
+        "carImages": "Fahrzeug Fotos",
+        "buildYearShort": "BJ",
+        "milageShort": "KM"
     },
     "button": {
         "cancel": "Abbrechen",
         "register": "Registrieren",
         "registNow": "Jetzt Registrieren",
         "driverRegist": "Als Fahrer Registrieren",
-        "advertiserRegist": "Als Werbender Registrieren"
+        "advertiserRegist": "Als Werbender Registrieren",
+        "close": "Schließen",
+        "changePassword": "Passwort ändern",
+        "edit": "Bearbeiten",
+        "update": "Aktualisieren",
+        "editCampaign": "Kampagne bearbeiten",
+        "addCars": "Fahrzeuge hinzufügen",
+        "addCar": "Fahrzeug hinzufügen",
+        "carDetails": "Fahrzeug Details",
+        "driverDetails": "Fahrer Details",
+        "delete": "Löschen",
+        "save": "Speichern",
+        "addCampaign": "Kampagne hinzufügen",
+        "accept": "Zusagen",
+        "reject": "Absagen",
+        "filterReset": "Filter zurücksetzen",
+        "sendCarRequest": "Buchungsanfrage senden",
+        "deleteSelection": "Auswahl löschen",
+        "toCampaign": "Zur Kampagne",
+        "select": "Auswählen",
+        "remove": "Entfernen"
     },
     "home": {
-        "welcome": "Willkommen auf CarAds!",
-        "description": "Registrieren Sie sich noch heute als Fahrer oder Werbender und werden Sie Teil von CarAds!"
+        "campaignOverview": "Kampagnen Übersicht",
+        "campaignText": "Verwalten Sie Ihre aktuellen Kampagnen und informieren Sie sich über den aktuellen Status gesendeter Buchungsanfragen.",
+        "newCampaign": "Neue Kampagne",
+        "newCampaignText": "Erstellen Sie eine neue Kampagne und fragen Sie zu dieser Fahrzeuge an. Wälen Sie dazu passende Fahrzeuge anhand von Filtern aus.",
+        "myCars": "Meine Fahrzeuge",
+        "myCarsText": "Verwalte Deine aktuell im Poral hinterlegten Fahrzeuge. Füge Informationen und Fotos zu bestehenden Fahrzeugen hinzu oder lege ein neues Fahrzeug an.",
+        "carRequestsText": "Schau nach, ob aktuelle Buchungsanfragen für Deine Fahrzeuge vorhanden sind. Sag Dir ein Kampagne zu, bestätige die Anfrage für Dein Fahrzeug!"
     },
     "nav": {
         "login": "Login",
-        "home": "Startseite"
+        "logout": "Abmelden",
+        "home": "Startseite",
+        "myProfile": "Mein Profil"
     }
 }
