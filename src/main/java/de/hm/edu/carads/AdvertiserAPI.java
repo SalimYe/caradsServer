@@ -148,6 +148,7 @@ public class AdvertiserAPI {
 	public Response deleteAdvertiser(@PathParam("id") String id) {
 		try {
 			modelController.deleteAdvertiser(id);
+			rc.deleteUser(id);
 			return Response.ok().build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);

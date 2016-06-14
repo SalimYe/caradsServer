@@ -152,4 +152,14 @@ public abstract class Person extends Model{
 		if(this.address==null)
 			this.address= new Address();
 	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	
 }

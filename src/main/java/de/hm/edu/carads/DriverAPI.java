@@ -40,10 +40,10 @@ import de.hm.edu.carads.transaction.OfferInformation;
 import de.hm.edu.carads.transaction.OfferResponse;
 
 /**
- * Die REST-Schnittstelle für die Bereitstellung aller benötigten Methoden
+ * Die REST-Schnittstelle fuer die Bereitstellung aller benötigten Methoden
  * nach Außen.
  * Parameter werden immer als JSON erwartet.
- * Rückgabewerte sind ebenfalls immer JSON-Dateien.
+ * Rueckgabewerte sind ebenfalls immer JSON-Dateien.
  * @author BK
  *
  */
@@ -51,14 +51,14 @@ import de.hm.edu.carads.transaction.OfferResponse;
 public class DriverAPI {
 
 	/**
-	 * Dieses Objekt enthält Informationen aus dem Servlet.
+	 * Dieses Objekt enthaelt Informationen aus dem Servlet.
 	 */
 	@Context
 	private HttpServletRequest httpServletRequest;
 	
 	/**
 	 * Dieses Objekt wird zum Parsen von JSON-Dateien in Java-Objekte verwendet.
-	 * Zusätzlich können Java-Objekte als JSON-Datein formatiert werden.
+	 * Zusaetzlich können Java-Objekte als JSON-Datein formatiert werden.
 	 */
 	private Gson gson = new Gson();
 	
@@ -69,7 +69,7 @@ public class DriverAPI {
 			DatabaseFactory.INST_PROD);
 	
 	/**
-	 * Die Schnittstelle zur Geschäftslogik.
+	 * Die Schnittstelle zur Geschaeftslogik.
 	 */
 	private ApplicationController modelController = new ApplicationControllerImpl(dbController);
 
@@ -160,7 +160,7 @@ public class DriverAPI {
 	 * 
 	 * @param id
 	 * @param Fahrerinformationen
-	 * @return 200 wenn geändert<br>
+	 * @return 200 wenn geaendert<br>
 	 *  401 wenn verboten<br>
 	 *  404 wenn Fahrer nicht gefunden<br>
 	 *  409 wenn neue E-Mail schon vergeben<br>
@@ -208,12 +208,13 @@ public class DriverAPI {
 	}
 
 	/**
-	 * Löscht Fahrer.
-	 * 
+	 * Löscht Fahrer. Bei Erfolg wird auch der Eintrag in der Realm-Collection geloescht.
+	 * Tritt bei dem Löschen des Users ein Fehler auf, bleibt er weiterhin in beiden Collections
+	 * bestehen.
 	 * @param id
 	 * @return 200 wenn gelöscht<br>
 	 * 404 wenn Faher nicht gefunden<br>
-	 * 406 wenn Fahrer noch Abhängigkeiten hat und nicht gelöscht werden darf<br>
+	 * 406 wenn Fahrer noch Abhaengigkeiten hat und nicht gelöscht werden darf<br>
 	 * 500 bei Serverfehler
 	 */
 	@DELETE
@@ -221,6 +222,8 @@ public class DriverAPI {
 	public Response deleteDriver(@PathParam("id") String id) {
 		try {
 			modelController.deleteDriver(id);
+			rc.deleteUser(id);
+
 			return Response.ok().build();
 		} catch (NoContentException e) {
 			throw new WebApplicationException(404);
@@ -232,7 +235,7 @@ public class DriverAPI {
 	}
 
 	/**
-	 * Gibt alle Fahrzeuge eines Fahrers zurück.
+	 * Gibt alle Fahrzeuge eines Fahrers zurueck.
 	 * 
 	 * @param driverid
 	 * @return 200 wenn Fahrzeuge vorhanden<br>
@@ -259,10 +262,10 @@ public class DriverAPI {
 	}
 
 	/**
-	 * Fügt einem Fahrer ein neues Auto hinzu.
+	 * Fuegt einem Fahrer ein neues Auto hinzu.
 	 * @param driverid
 	 * @param Car
-	 * @return 200 wenn Auto hinzugefügt<br>
+	 * @return 200 wenn Auto hinzugefuegt<br>
 	 * 400 wenn Angaben invalide<br>
 	 * 404 Fahrer nicht gefunden<br>
 	 * 500 Serverfehler
@@ -292,7 +295,7 @@ public class DriverAPI {
 	}
 
 	/**
-	 * Gibt ein speziellen Fahrzeug zurück.
+	 * Gibt ein speziellen Fahrzeug zurueck.
 	 * 
 	 * @param driverId
 	 * @param carId
@@ -321,7 +324,7 @@ public class DriverAPI {
 	 * @param carId
 	 * @return 200 gelöscht<br>
 	 * 404 Fahrer oder Fahrzeug nicht gefunden<br>
-	 * 406 Hat Abhängigkeiten. Ist in einer Kampagne angemeldet<br>
+	 * 406 Hat Abhaengigkeiten. Ist in einer Kampagne angemeldet<br>
 	 * 500 Serverfehler
 	 */
 	@DELETE
@@ -344,7 +347,7 @@ public class DriverAPI {
 	 * @param driverId
 	 * @param carId
 	 * @param Car
-	 * @return 200 geändert.<br>
+	 * @return 200 geaendert.<br>
 	 * 400 invalide Angaben<br>
 	 * 404 Fahrer oder Fahrzeug nicht gefunden<br>
 	 * 500 Serverfehler
@@ -431,7 +434,7 @@ public class DriverAPI {
 	}
 	
 	/**
-	 * Gibt den aktuell angemeldeten Fahrer zurück.
+	 * Gibt den aktuell angemeldeten Fahrer zurueck.
 	 * @return Fahrer
 	 * @throws Exception
 	 */
