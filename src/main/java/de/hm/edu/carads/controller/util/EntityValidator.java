@@ -49,16 +49,21 @@ public class EntityValidator {
 	private static boolean isNotEmpty(String str){
 		if(str!=null && !str.isEmpty())
 			return true;
-		logger.error("Attribute is empty");
 		return false;
 	}
 	
+	/**
+	 * Eine Adresse wird auf Gueltigkeit geprueft.
+	 * @param address
+	 * @return Wahrheitswert ueber die Gueltigkeit
+	 */
 	private static boolean isAddressValid(Address address){
 		if(isNotEmpty(address.getCity()) &&
 				isNotEmpty(address.getCountry()) &&
 				isNotEmpty(address.getStreet()) &&
 				isNotEmpty(address.getZip()))
 			return true;
+		logger.error("invalid Address");
 		return false;
 	}
 	
@@ -69,6 +74,7 @@ public class EntityValidator {
 	 */
 	private static boolean isNewAdvertiserValid(Advertiser advertiser){
 		if(isEmailValid(advertiser.getEmail()) &&
+				isNotEmpty(advertiser.getTitle()) &&
 				isNotEmpty(advertiser.getCompany()) &&
 				isNotEmpty(advertiser.getFirstName()) &&
 				isNotEmpty(advertiser.getLastName()) &&
@@ -76,24 +82,28 @@ public class EntityValidator {
 				isAddressValid(advertiser.getAddress())
 				)
 			return true;
+		logger.error("invalid Advertiser");
 		return false;
 	}
-	
-	//TODO richtige Validierung
+
 	/**
 	 * Ein Fahrer wird ueberprueft.
+	 * Notwendige Angaben:titel, Vorname, Nachname, Mail, Telefon, Strasse, PLZ, Stadt, Land, Geburtstag, Lizenztag
 	 * @param driver
 	 * @return Wahrheitswert ueber die Gueltigkeit
 	 */
 	private static boolean isNewDriverValid(Driver driver){
 		if(isEmailValid(driver.getEmail()) &&
+				isAddressValid(driver.getAddress()) &&
+				isNotEmpty(driver.getTitle()) &&
+				isNotEmpty(driver.getPhone()) &&
 				isNotEmpty(driver.getBirthdate()) &&
 				isNotEmpty(driver.getLastName()) &&
 				isNotEmpty(driver.getFirstName()) &&
 				isNotEmpty(driver.getOccupation()) &&
 				isNotEmpty(driver.getLicenseDate()))
 			return true;
-
+		logger.error("Invalid Driver");
 		return false;
 	}	
 
@@ -107,6 +117,7 @@ public class EntityValidator {
 				isNotEmpty(car.getModel())&&
 				isNotEmpty(car.getColor()))
 			return true;
+		logger.error("Invalid Car");
 		return false;
 	}
 	
@@ -122,6 +133,7 @@ public class EntityValidator {
 				isNotEmpty(campaign.getCarBudget()))
 			if(DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
 				return true;
+		logger.error("Invalid Campaign");
 		return false;
 	}
 	
@@ -147,6 +159,7 @@ public class EntityValidator {
     private static boolean isRealmValid(User realm) {
         if(isEmailValid(realm.getUsername()))
 			return true;
+        logger.error("Invalid Realm");
 		return false;
     }
 }

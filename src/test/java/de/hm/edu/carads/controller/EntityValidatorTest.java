@@ -22,9 +22,12 @@ public class EntityValidatorTest {
 	@Test
 	public void testNormalNewDriver() {
 		Driver driver = new Driver(EMAIL, FIRSTNAME, LASTNAME);
+		driver.setTitle("Herr");
 		driver.setBirthdate("2000");
+		driver.setStreet("Lothstr.34");
 		driver.setZip("80333");
 		driver.setCity("Munich");
+		driver.setCountry("Deutschland");
 		driver.setDescription("Ich bin ein Student");
 		driver.setPhone("089-123");
 		driver.setOccupation("Student");
@@ -93,9 +96,12 @@ public class EntityValidatorTest {
 	@Test
 	public void testValidEmailFromDriver() {
 		Driver driver = new Driver("asd@dd.de", FIRSTNAME, LASTNAME);
+		driver.setTitle("Herr");
 		driver.setBirthdate("2000");
+		driver.setStreet("Lothstr.34");
 		driver.setZip("80333");
 		driver.setCity("Munich");
+		driver.setCountry("Deutschland");
 		driver.setDescription("Ich bin ein Student");
 		driver.setPhone("089-123");
 		driver.setOccupation("Student");
@@ -112,6 +118,7 @@ public class EntityValidatorTest {
 		ad1.setStreet("Lothstr. 14");
 		ad1.setPhone("089-1234");
 		ad1.setCompany("HM");
+		ad1.setTitle("Herr");
 		assertTrue(EntityValidator.isEntityValid(ad1));
 	}
 	

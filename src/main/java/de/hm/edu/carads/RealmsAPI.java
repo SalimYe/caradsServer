@@ -29,6 +29,11 @@ import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.transaction.Credidentials;
 
+/**
+ * Die API für die Authentifizierung.
+ * @author BK
+ *
+ */
 @Path("realms")
 public class RealmsAPI {
 

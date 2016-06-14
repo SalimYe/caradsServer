@@ -74,8 +74,10 @@ public class AdvertiserControllerTest {
 		adv.setStreet("Lothstr. 14");
 		adv.setPhone("089-1234");
 		adv.setCompany("HM");
+		adv.setTitle("Herr");
 		Advertiser ad2 =modelController.addAdvertiser(adv);
 		ad2.setEmail(EMAIL);
+		
 		
 		modelController.updateAdvertiser(ad2.getId(), ad2);	}
 	
@@ -234,6 +236,7 @@ public class AdvertiserControllerTest {
 		adv.setStreet("Lothstr. 14");
 		adv.setPhone("089-1234");
 		adv.setCompany("HM");
+		adv.setTitle("Frau");
 		Advertiser adv1 = modelController.addAdvertiser(adv);
 		Campaign camp2 = new Campaign();
 		camp2.setName("BMW Promo");
@@ -298,6 +301,7 @@ public class AdvertiserControllerTest {
 		adv.setStreet("Lothstr. 14");
 		adv.setPhone("089-1234");
 		adv.setCompany("HM");
+		adv.setTitle("Herr");
 		return adv;
 	}
 	

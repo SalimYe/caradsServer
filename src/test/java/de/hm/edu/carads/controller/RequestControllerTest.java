@@ -131,6 +131,7 @@ public class RequestControllerTest {
 		ad1.setStreet("Lothstr. 14");
 		ad1.setPhone("089-1234");
 		ad1.setCompany("HM");
+		ad1.setTitle("Frau");
 		Advertiser ad2 = makeNewAdvertiser();
 		Campaign c1 = new Campaign();
 		c1.setCarBudget("1000");
@@ -161,7 +162,9 @@ public class RequestControllerTest {
 		d1.setPhone("089-123");
 		d1.setOccupation("Student");
 		d1.setLicenseDate("01.01.2000");
-		
+		d1.setStreet("Blastr.14");
+		d1.setCountry("Deut");
+		d1.setTitle("Herr");
 		Driver d2 = makeNewDriver();
 		
 		Car car1 = new Car();
@@ -402,6 +405,7 @@ public class RequestControllerTest {
 		adv.setStreet("Lothstr. 14");
 		adv.setPhone("089-1234");
 		adv.setCompany("HM");
+		adv.setTitle("Herr");
 		return adv;
 	}
 	
@@ -410,10 +414,13 @@ public class RequestControllerTest {
 		driver.setBirthdate("2000");
 		driver.setZip("80333");
 		driver.setCity("Munich");
+		driver.setCountry("Deutschland");
+		driver.setStreet("Lothstr. 35");
 		driver.setDescription("Ich bin ein Student");
 		driver.setPhone("089-123");
 		driver.setOccupation("Student");
 		driver.setLicenseDate("01.01.2000");
+		driver.setTitle("Herr");
 		return driver;
 	}
 

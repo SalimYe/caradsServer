@@ -79,6 +79,11 @@ public class RealmControllerImpl implements RealmController {
 	@Override
 	public User getUserById(String id) throws Exception {
 		return makeUser(dbController.getEntity(ModelCollection.REALM, id));
+	}
+
+	@Override
+	public void deleteUser(String id) throws Exception {
+		dbController.deleteEntity(ModelCollection.REALM, id);
 	}     
 }
 

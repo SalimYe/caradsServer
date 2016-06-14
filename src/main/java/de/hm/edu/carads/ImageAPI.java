@@ -24,13 +24,37 @@ import de.hm.edu.carads.controller.ImageController;
 import de.hm.edu.carads.controller.ImageControllerImpl;
 import de.hm.edu.carads.models.Image;
 
+/**
+ * Die REST-Schnittstelle fuer die Bereitstellung aller benötigten Bild-Methoden
+ * nach Außen.
+ * @author BK
+ *
+ */
 @Path("images")
 public class ImageAPI {
 
+	/**
+	 * Dieses Objekt wird zum Parsen von JSON-Dateien in Java-Objekte verwendet.
+	 * Zusaetzlich können Java-Objekte als JSON-Datein formatiert werden.
+	 */
 	private Gson gson = new Gson();
+	
+	/**
+	 * Die Implementierung der Logik.
+	 */
 	private ImageController ic = new ImageControllerImpl();
 	
-	
+	/**
+	 * Ein Bild wird hochgeladen, wenn es als multipart/form-data ueber ein
+	 * Formular an diese Methode geschickt wird.
+	 * Der Rueckgabewert enthaelt die ID dieses Bildes auf dem Server.
+	 * @param fileInputStream
+	 * @param fileMetaData
+	 * @return 201 wenn angelegt<br>
+	 * 406 wenn fehlerhafte Datei hochgeladen wird<br>
+	 * 500 Servererror
+	 * @throws Exception
+	 */
 	@POST
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
 	@Produces(MediaType.APPLICATION_JSON)
@@ -51,6 +75,14 @@ public class ImageAPI {
 	    }
 	}
 	
+	/**
+	 * Ein Bild wird anhand einer ID vom Server geladen und angezeigt.
+	 * 
+	 * @param id
+	 * @return 200 Bilddaten<br>
+	 * 404 wenn ID nicht auf Server gefunden<br>
+	 * 500 Servererror
+	 */
 	@GET
 	@Path("/{id}")
 	@Produces({ "image/png", "image/jpg" })
@@ -67,6 +99,14 @@ public class ImageAPI {
 		}
 	}
 	
+	/**
+	 * Ein Bild wird vom Filesystem des Servers geloescht.
+	 * 
+	 * @param id
+	 * @return 200 wenn geloescht<br>
+	 * 404 wenn ID nicht gefunden<br>
+	 * 500 Servererror
+	 */
 	@DELETE
 	@Path("/{id}")
 	public Response deleteImage(@PathParam("id") String id){
