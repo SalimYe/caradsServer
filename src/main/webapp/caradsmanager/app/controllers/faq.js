@@ -1,10 +1,22 @@
-app.controller('faq', function ($scope, $routeParams, $http, $location, $translate) {
-
+app.controller('faq', function ($scope, $rootScope, $routeParams, $http, $location, $translate, $sce, $filter) {
+    $scope.sce = $sce;
     $scope.isOpen = [];
+
+    var filterFaqs = function (faqs) {
+        return $filter('filter')(faqs, function (o) {
+            if ($rootScope.realm.isAdvertiser)
+                return o.roles.indexOf('all') >= 0 || o.roles.indexOf('advertiser') >= 0;
+            if ($rootScope.realm.isDriver)
+                return o.roles.indexOf('all') >= 0 || o.roles.indexOf('driver') >= 0;
+            if ($rootScope.realm.isAdmin)
+                return o.roles.indexOf('all') >= 0 || o.roles.indexOf('driver') >= 0 || o.roles.indexOf('advertiser') >= 0;
+            return o.roles.indexOf('all') >= 0;
+        });
+    };
 
     $http.get('../../data/faq.json').
             success(function (data, status, headers, config) {
-                $scope.faqs = data;
+                $scope.faqs = filterFaqs(data);
             });
 
     $scope.changeItem = function (itemId) {
@@ -24,19 +36,5 @@ app.controller('faq', function ($scope, $routeParams, $http, $location, $transla
             scrollTop: $("#faq" + itemId).offset().top
         }, 1500);
     };
-    
-    $scope.isDriverFaq = function (roles) {
-        if(roles.indexOf('driver') >= 0)
-            return true;
-        return false;
-    };
-    
-    $scope.isAdvertiserFaq = function (roles) {
-        if(roles.indexOf('advertiser') >= 0)
-            return true;
-        return false;
-    };
-    
-    $scope.isDriver = true;
 
 });

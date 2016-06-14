@@ -1,10 +1,13 @@
-startapp.controller('faq', function ($scope, $routeParams, $http, $location, $translate) {
-
+startapp.controller('faq', function ($scope, $routeParams, $http, $location, $translate, $sce, $filter) {
+    $scope.sce = $sce;
     $scope.isOpen = [];
 
     $http.get('./data/faq.json').
             success(function (data, status, headers, config) {
-                $scope.faqs = data;
+                var faqs = data;
+                $scope.faqs = $filter('filter')(faqs, function (o){
+                    return o.roles.indexOf('all') >= 0;
+                });
             });
 
     $scope.changeItem = function (itemId) {
@@ -24,19 +27,5 @@ startapp.controller('faq', function ($scope, $routeParams, $http, $location, $tr
             scrollTop: $("#faq" + itemId).offset().top
         }, 1500);
     };
-    
-    $scope.isDriverFaq = function (roles) {
-        if(roles.indexOf('driver') >= 0)
-            return true;
-        return false;
-    };
-    
-    $scope.isAdvertiserFaq = function (roles) {
-        if(roles.indexOf('advertiser') >= 0)
-            return true;
-        return false;
-    };
-    
-    $scope.isDriver = true;
 
 });

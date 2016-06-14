@@ -33,7 +33,8 @@
         "description": "Kurzbescheibung",
         "search": "Suche",
         "menu": "Menü",
-        "details": "Details"
+        "details": "Details",
+        "faqInfo": "Im Folgenden finden Sie Antworten auf häufig gestellt Fragen. Wenn Sie sich als Fahrer oder Werbender einloggen, erhalten Sie weitere FAQs speziell für Werbende und Fahrer."
     },
     "button": {
         "cancel": "Abbrechen",

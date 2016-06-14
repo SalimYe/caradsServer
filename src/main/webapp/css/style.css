@@ -116,3 +116,10 @@ table.table-car tr:first-child:hover {
 div.selectedItem {
     background-color: #fcf8e3;
 }
+
+button.btn-faq {
+    text-align: left;
+    white-space: normal;
+    background-color: white;
+    background-image: none;
+}

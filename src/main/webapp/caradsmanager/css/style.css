@@ -126,3 +126,10 @@ div.carselection-menu button.btn.btn-block {
 div.selectedItem {
     background-color: #fcf8e3;
 }
+
+button.btn-faq {
+    text-align: left;
+    white-space: normal;
+    background-color: white;
+    background-image: none;
+}

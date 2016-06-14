@@ -1,82 +1,88 @@
 [
     {
-        "title": "Test FAQ 1",
+        "title": "Welchen Vorteil habe ich wenn ich CarAds nutze?",
         "roles": [
-            "driver", "advertiser"
+            "all"
         ],
-        "description": "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.",
-        "keywords": [
-            "Anmeldung", "Test"
-        ]
+        "description": "<p>Wenn Sie ein Fahrzeug besitzen, mit dem Sie häufig durch Groß- und Innenstädte fahren, oder dieses dort abgestellt ist, haben Sie als Fahrer die Möglichkeit Ihr Fahrzeug als Werbefläche an Firmen und Werbeagenturen zu vermieten. Hierfür müssen Sie lediglich auf Ihrem Fahrzeug die Werbung (z. B. als Klebefolie) anbringen lassen und diese für die Dauer der Werbekampagne nicht entfernen. Hierfür erhalten Sie vom Werbenden eine feste Vergütung.</p> <p>Wenn Sie Ihr Unternehmen oder als Mitarbeiter einer Werbeagentur die Bekanntheit des Unternehmens oder einer Dienstleistung steigern möchten, können Sie als Werbender über CarAds geeignete Fahrzeuge finden, um diese als Werbefläche zu nutzen.</p>"
+
     },
     {
-        "title": "Test FAQ 2",
+        "title": "Wie funktioniert CarAds?",
         "roles": [
-            "advertiser"
+            "all"
         ],
-        "description": "Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. ",
-        "keywords": [
-            "Anmeldung", "TestB"
-        ]
+        "description": "<p>Nachdem Sie sich als Fahrer oder Werbender registriert haben, können sie sich einloggen.</p> <p> Haben sie sich als Fahrer registriert, haben Sie die Möglichkeit ein Fahrzeug anzulegen. Dieses Fahrzeug wird Werbenden angezeigt, wenn Sie nach verfügbaren Fahrzeugen für eine Werbekampagne suchen.</p> <p> Haben Sie sich als Werbender registriert, haben Sie Möglichkeit eine Werbekampagne anzulegen. Jede Werbekampagne hat eine feste Laufzeit und eine feste Vergütung die der Fahrer des Fahrzeuges erhält. Nachdem Sie eine Kampagne angelegt haben, können Sie verfügbare Fahrzeuge suchen und den Fahrern der Fahrzeuge Anfragen senden.</p> <p>Hat ein Fahrer eine Anfrage für eines seiner Fahrzeuge erhalten, kann er sich die Informationen zu der Werbekampagne ansehen und entscheiden, dieses anzunehmen oder abzulehnen. Wird die Anfrage angenommen, kommt eine Übereinstimmung zustande. Dem Werbenden wird die Annahme der Anfrage angezeigt und er kann ab diesem Zeitpunkt die Kontaktdaten des Fahrers einsehen. Die weitere Abwicklung (Anbringen der Werbung, Auszahlung dder Vergütung etc.) erfolgt außerhalb und unabhängig von carAds.</p>"
+
     },
     {
-        "title": "Test FAQ 3",
+        "title": "Wie kann ich mich registrieren?",
         "roles": [
-            "advertiser"
+            "all"
         ],
-        "description": "Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. ",
-        "keywords": [
-            "Anmeldung", "TestB"
-        ]
+        "description": "Über den Button <b>Registrieren</b> in der Navigationsleiste kann man sich sowohl als Fahrer, als auch als Werbener registrieren."
     },
     {
-        "title": "Test FAQ XYX",
+        "title": "Ist die Nutzung des Webportals kostenfrei?",
         "roles": [
-            "advertiser"
+            "all"
         ],
-        "description": "Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. ",
-        "keywords": [
-            "Anmeldung", "TestB"
-        ]
+        "description": "Ja, sowohl die Nutzung als Fahrer, als auch die Nutzung als Werbender ist kostenfrei."
     },
     {
-        "title": "Test FAQ HNHNH",
+        "title": "Was passiert nachdem eine Übereinstimmung zustande kam?",
         "roles": [
-            "advertiser"
+            "all"
         ],
-        "description": "Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. ",
-        "keywords": [
-            "Anmeldung", "TestB"
-        ]
+        "description": "Wenn ein Fahrer die Buchungsanfrage eines Werbenden angenommen hat und eine Übereinstimmung zustande kam, erhält der Werbende die Kontaktdaten der Fahrers. Hierüber kann er Kontakt zum Fahrer aufnehmen und das weitere Vorgehen besprechen. Auf diesen Prozess hat CarAds keinen Einfluss."
     },
     {
-        "title": "Test FAQ 123123",
+        "title": "Wann sind Fahrzeuge für eine Werbekampagne verfügbar?",
         "roles": [
-            "advertiser"
+            "all"
         ],
-        "description": "Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. ",
-        "keywords": [
-            "Anmeldung", "TestB"
-        ]
+        "description": "Grundsätzlich sind alle Fahrzeuge, die im Zeitraum der Werbekampagne noch von keiner anderen Kampagne gebucht worden sind (d. h. es kam keine Übereinstimmung zustande), verfügbar. Ist ein Fahrzeug für eine Kampagne nicht verfügbar, wird dieses in der Fahrzeugsuche für Werbende nicht angezeigt."
     },
     {
-        "title": "Test FAQ ABC",
-        "roles": [
-            "advertiser"
-        ],
-        "description": "Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. ",
-        "keywords": [
-            "Anmeldung", "TestB"
-        ]
-    },
-    {
-        "title": "Test FAQ XX",
+        "title": "Was passiert wenn ich mehrere Buchungsanfragen für ein Fahrzeug erhalten habe und eine Buchungsanfrage annehme?",
         "roles": [
             "driver"
         ],
-        "description": "Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. Abc das ist ein Text. ",
-        "keywords": [
-            "Anmeldung", "TestB"
-        ]
+        "description": "Nehmen Sie eine Buchungsanfrage für ein Fahrzeug an, werden automatisch alle Buchungsanfragen, deren Zeitraum sich mit dem der angenommenen Buchungsanfrage überschneidet, abgelehnt. Andere Buchungsanfragen für dieses Fahrzeug bleiben unberührt und können angenommen oder abgelehnt werden."
+    },
+    {
+        "title": "Unter welchen Voraussetzungen kann ich als Fahrer eines meiner Fahrzeuge löschen?",
+        "roles": [
+            "driver"
+        ],
+        "description": "Als Fahrer können Sie Fahrzeuge löschen, wenn die folgenden Bedingungen erfüllt sind: <li>Das Fahrzeug ist momentan von keiner laufenden Kampagne gebucht (Übereinstimmung).</li> <li>Das Fahrzeug ist für keine in der Zukunft liegenden Kampagne gebucht (Übereinstimmung).</li>"
+    },
+    {
+        "title": "Wie kann ich als Fahrer mein Nutzerprofil löschen?",
+        "roles": [
+            "driver"
+        ],
+        "description": "Wenn alle vom Fahrer angelegten Fahrzeuge die Bedingungen zur Löschung erfüllen, kann auch das Fahrerprofil gelöscht werden. Wurden unter dem Fahrerprofil keine Fahrzeuge angelegt, oder wurden alle Fahrzeuge bereits gelöscht, kann das Fahrerprofil ebenfalls gelöscht werden. Die Daten werden vollständig aus dem System entfernt und eine Wiederherstellung des Profils ist dann nicht mehr möglich."
+    },
+    {
+        "title": "Wie funktioniert die Fahrzeugsuche?",
+        "roles": [
+            "advertiser"
+        ],
+        "description": "Nachdem Sie eine Kampagne angelegt haben, können Sie in die Detailansicht der Werbekampagne wechseln und von dort die Suche nach verfügbaren Fahrzeugen aufrufen. Eine Suche nach Fahrzeugen ist immer kampagnenspezifisch. Haben Sie mehrere Kampagnen angelegt, erfolgt die Suche nach verfügbaren Fahrzeugen immer erst nachdem Sie eine konkrete Kampagne aufgerufen haben. Das liegt daran, dass die Verfügbarkeit der Fahrzeuge vom Kampagnenzeitraum abhängig ist und daher für jede Kampagne individuell ist. Hierduch wird verhindert, dass ein Fahrzeuges für den gleichen Zeitraum mehfach gebucht werden kann."
+    },
+    {
+        "title": "Unter welchen Voraussetzungen kann ich als Werbender eine Kampagne löschen?",
+        "roles": [
+            "advertiser"
+        ],
+        "description": "Kampagnen können gelöscht werden, wenn die folgenden Bedingungen erfüllt sind: <li>Es sind keine Buchungsanfragen offen (versendet, aber nicht angenommen oder abgelehnt)</li> <li> Es gibt keine Übereinstimmungen mit Fahrzeugen.</li> Das bedeutet, es können auch laufende Kampagnen gelöscht werden, unter der Voraussetzung, dass es keine Übereinstimmungen gab und keine Buchungsanfragen offen sind."
+    },
+    {
+        "title": "Wie kann ich als Werbender mein Nutzerprofil löschen?",
+        "roles": [
+            "advertiser"
+        ],
+        "description": "Wenn alle vom Ihnen angelegte Kampagnen die Bedingungen zur Löschung erfüllen, kann auch das Werbendenprofil gelöscht werden. Wurden unter dem Werbendenprofil keine Kampagnen angelegt, oder wurden alle Kampagnen bereits gelöscht, kann das Werbendenprofil ebenfalls gelöscht werden. Die Daten werden vollständig aus dem System entfernt und eine Wiederherstellung des Profils ist dann nicht mehr möglich."
     }
 ]

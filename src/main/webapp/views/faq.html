@@ -2,6 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <h2>{{"heading.faq" | translate}}</h2>
+            <p>{{"label.faqInfo" | translate}}</p>
         </div>
     </div>
     <div class="row">
@@ -13,10 +14,10 @@
                 </div>
             </form>
             <h3>{{"label.menu" | translate}}</h3>
-            <ul class="list-unstyled">
-                <li style="cursor: pointer" ng-repeat="faq in faqs | filter:faqSearch"
-                    ng-click="selectItem($index)">{{faq.title}}</li>
-            </ul>
+            <div class="btn-group-vertical">
+                <button type="button" style="cursor: pointer" ng-repeat="faq in faqs | filter:faqSearch"
+                    class="btn btn-default btn-faq" ng-click="selectItem($index)">{{faq.title}}</button>
+            </div>
         </div>
         <div class="col-md-9">
             <h3>{{"label.details" | translate}}</h3>
@@ -28,8 +29,7 @@
                         </h4>
                     </div>
                     <div class="panel-collapse" ng-class="{collapse: (!isOpen[$index])}" role="tabpanel">
-                        <div class="panel-body" ng-class="{selectedItem: (selectedItem === $index)}">
-                            {{faq.description}}
+                        <div class="panel-body" ng-class="{selectedItem: (selectedItem === $index)}" ng-bind-html="sce.trustAsHtml(faq.description)">
                         </div>
                     </div>
                 </div>
