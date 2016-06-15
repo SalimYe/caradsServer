@@ -13,7 +13,12 @@
         "update": "Daten aktualisiert",
         "updateText": "Die von Ihnen an den Daten vorgenommenen Änderungen wurden erfolgreich im System gespeichert.",
         "updateError": "Aktualisierung fehlgeschlagen",
-        "updateErrorText": "Die von Ihnen vorgenommenen Änderungen an den Daten konnten nicht gespeichert werden. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator."
+        "updateErrorText": "Die von Ihnen vorgenommenen Änderungen an den Daten konnten nicht gespeichert werden. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "deleteError": "Löschen fehlgeschlagen",
+        "deleteErrorConstraintText": "Das Löschen wurde verweigert. Gründe dafür können in den FAQs nachgelesen werden.",
+        "deleteErrorConstraintText": "Das Löschen ist aus technischen Gründen fehlgeschlagen.",
+        "deleteSuccess": "Löschen erfolgreich",
+        "deleteSuccessText": "Das Löschen war erfolgreich."
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",

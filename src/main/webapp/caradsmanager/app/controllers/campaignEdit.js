@@ -55,12 +55,32 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     $scope.deleteCampaign = function () {
         $http.delete('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId).
                 success(function (data, status, headers, config) {
-                    redirectToCampaignView();
+                    var title = 'alert.deleteSuccess';
+                    var description = 'alert.deleteSuccessText';
+                    var button = 'button.next';
+                    var buttonFunction = function () {
+                        redirectToCampaignView();
+                    };
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).
                 error(function (data, status, headers, config) {
-                    alert("Löschen fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                            "den Administrator.", "danger");
+                    if (status === 406) {
+                        var title = 'alert.deleteError';
+                        var description = 'alert.deleteErrorConstraintText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
+
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    } else {
+                        var title = 'alert.deleteError';
+                        var description = 'alert.deleteErrorText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
+
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }
                 });
     };
 

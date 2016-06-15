@@ -1,4 +1,4 @@
-startapp.controller('driver', function ($scope, $routeParams, $http, $timeout, $translate) {
+startapp.controller('driver', function ($scope, $routeParams, $http, $timeout, $translate, $modal) {
 
     $scope.driver = {};
 
@@ -32,7 +32,6 @@ startapp.controller('driver', function ($scope, $routeParams, $http, $timeout, $
                             };
                             showModal($modal, description, title, button, null, buttonFunction, null, angular);
                         }
-
                     });
         }
     };

@@ -1,9 +1,5 @@
 <main>
     <h3>{{"heading.driverOverview"| translate}}</h3>
-    <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
-        <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
-        <strong>{{alert.title}}:</strong> {{alert.content}}
-    </div>
     <div class="row">
         <div ng-repeat="driver in drivers">
             <div class="col-sm-6 col-md-4">

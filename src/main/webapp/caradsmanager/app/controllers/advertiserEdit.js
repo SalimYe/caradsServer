@@ -36,7 +36,7 @@ app.controller('advertiserEdit', function ($scope, $routeParams, $http, $locatio
                     var description = 'alert.updateErrorText';
                     var button = 'button.back';
                     var buttonFunction = function () {
-                        
+
                     };
                     showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 });
@@ -75,10 +75,32 @@ app.controller('advertiserEdit', function ($scope, $routeParams, $http, $locatio
     $scope.deleteAdvertiser = function () {
         $http.delete('../api/advertisers/' + advertiserId).
                 success(function (data, status, headers, config) {
-                    logout();
+                    var title = 'alert.deleteSuccess';
+                    var description = 'alert.deleteSuccessText';
+                    var button = 'button.next';
+                    var buttonFunction = function () {
+                        logout();
+                    };
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).
                 error(function (data, status, headers, config) {
-                    alert("Löschen fehlgeschlagen", "Werbender konnte nicht gelöscht werden.", "danger");
+                    if (status === 406) {
+                        var title = 'alert.deleteError';
+                        var description = 'alert.deleteErrorConstraintText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
+
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    } else {
+                        var title = 'alert.deleteError';
+                        var description = 'alert.deleteErrorText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
+
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }
                 });
     };
 

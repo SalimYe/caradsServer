@@ -11,19 +11,8 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
         $location.path('/');
     }
 
-    var alert = function (title, content, level) {
-        $scope.alert = [];
-        $scope.alert.title = title;
-        $scope.alert.content = content;
-        $scope.alert.level = level;
-    };
-
     var redirectToCarOverview = function () {
         $location.path('driver/' + driverId + "/cars");
-    };
-
-    $scope.deleteAlert = function () {
-        delete $scope.alert;
     };
 
     var isNewCar = ($routeParams.carId === undefined);
@@ -36,31 +25,67 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
                     $scope.car = data;
                 }).
                 error(function (data, status, headers, config) {
-                    redirectToCarOverview();
+                    var title = 'alert.loadingError';
+                    var description = 'alert.loadingErrorText';
+                    var button = 'button.back';
+                    var buttonFunction = function () {
+                        $location.path('/driver/' + driverId + '/car/' + carId);
+                    };
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 });
     }
 
     var updateCar = function () {
         $http.put('../api/drivers/' + driverId + '/cars/' + carId, $scope.car).
                 success(function (data, status, headers, config) {
-                    redirectToCarOverview();
+                    var title = 'alert.update';
+                    var description = 'alert.updateText';
+                    var button = 'button.next';
+                    var buttonFunction = function () {
+                        $location.path('/driver/' + driverId + '/car/' + carId);
+                    };
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).
                 error(function (data, status, headers, config) {
-                    alert("Update fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                            "den Administrator.", "danger");
+                    var title = 'alert.updateError';
+                    var description = 'alert.updateErrorText';
+                    var button = 'button.back';
+                    var buttonFunction = function () {
+
+                    };
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 });
     };
 
     $scope.deleteCar = function () {
         $http.delete('../api/drivers/' + driverId + '/cars/' + carId).
                 success(function (data, status, headers, config) {
-                    redirectToCarOverview();
+                    var title = 'alert.deleteSuccess';
+                    var description = 'alert.deleteSuccessText';
+                    var button = 'button.next';
+                    var buttonFunction = function () {
+                        redirectToCarOverview();
+                    };
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);  
                 }).
                 error(function (data, status, headers, config) {
-                    alert("Löschen fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                            "den Administrator.", "danger");
+                    if (status === 406) {
+                            var title = 'alert.deleteError';
+                            var description = 'alert.deleteErrorConstraintText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
+
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        } else {
+                            var title = 'alert.deleteError';
+                            var description = 'alert.deleteErrorText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
+
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        }
                 });
     };
 
@@ -116,21 +141,21 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
             return obj.id !== imageId;
         });
     };
-    
+
     $scope.datePicker = (function () {
         var method = {};
         method.instances = [];
- 
+
         method.open = function ($event, instance) {
             $event.preventDefault();
             $event.stopPropagation();
- 
+
             method.instances[instance] = true;
         };
- 
+
         var formats = ['MM/dd/yyyy', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         method.format = formats[3];
- 
+
         return method;
     }());
 });

@@ -1,4 +1,4 @@
-app.controller('campaigns', function ($scope, $routeParams, $http, $location, $translate) {
+app.controller('campaigns', function ($scope, $routeParams, $http, $location, $translate, $modal) {
 
     var advertiserId = $routeParams.advertiserId;
     $scope.advertiserId = advertiserId;
@@ -7,19 +7,18 @@ app.controller('campaigns', function ($scope, $routeParams, $http, $location, $t
         $location.path('/');
     }
 
-    var alert = function (title, content, level) {
-        $scope.alert = [];
-        $scope.alert.title = title;
-        $scope.alert.content = content;
-        $scope.alert.level = level;
-    };
-
     $http.get('../api/advertisers/' + advertiserId + '/campaigns').
             success(function (data, status, headers, config) {
                 $scope.campaigns = data;
             }).
             error(function (data, status, headers, config) {
-                $location.path('/');
+                var title = 'alert.loadingError';
+                var description = 'alert.loadingErrorText';
+                var button = 'button.back';
+                var buttonFunction = function () {
+                    $location.path('/home');
+                };
+                showModal($modal, description, title, button, null, buttonFunction, null, angular);
             });
 
     $scope.hasImage = function (index) {

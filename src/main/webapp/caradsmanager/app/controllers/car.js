@@ -13,9 +13,15 @@ app.controller('car', function ($scope, $routeParams, $rootScope, $http, $locati
                 $scope.car = data;
             }).
             error(function (data, status, headers, config) {
-                $location.path('/');
+                var title = 'alert.loadingError';
+                var description = 'alert.loadingErrorText';
+                var button = 'button.back';
+                var buttonFunction = function () {
+                    $location.path('/home');
+                };
+                showModal($modal, description, title, button, null, buttonFunction, null, angular);
             });
-            
+
     $scope.editCar = function () {
         $location.path('/driver/' + driverId + '/carEdit/' + carId);
     };

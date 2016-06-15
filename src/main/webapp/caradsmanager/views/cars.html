@@ -2,10 +2,6 @@
     <h3>{{"heading.myCars"| translate}}</h3>
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-warning" role="alert" ng-if="cars === undefined || cars.length === 0">
-                <strong>{{"alert.noCars"| translate}}</strong>
-                {{"alert.noCarsText"| translate}}
-            </div>
             <div class="row">
                 <div ng-repeat="car in cars | orderBy: 'car.brand'">
                     <div class="col-sm-6 col-md-4">

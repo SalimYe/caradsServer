@@ -41,9 +41,6 @@ app.controller('navigation', function ($rootScope, $scope, $http, $location, $tr
                 }
                 ;
                 getProfilDetails();
-            }).
-            error(function (data, status, headers, config) {
-                // TODO
             });
 
 });
