@@ -7,7 +7,13 @@
         "noCampaigns": "Keine Kampagnen vorhanden!",
         "noCampaignsText": "Klicken Sie auf '+ Kampagne hinzufügen', um eine neue Kampagne anzulegen.",
         "noCars": "Keine Fahrzeuge vorhanden!",
-        "noCarsText": "Klicken Sie auf '+ Fahrzeug hinzufügen', um ein neues Fahrzeug anzulegen."
+        "noCarsText": "Klicken Sie auf '+ Fahrzeug hinzufügen', um ein neues Fahrzeug anzulegen.",
+        "loadingError": "Fehler beim Laden",
+        "loadingErrorText": "Leider konnten die von Ihnen angeforderten Daten nicht geladen werden. Klicken Sie auf den Zurück-Button und versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "update": "Daten aktualisiert",
+        "updateText": "Die von Ihnen an den Daten vorgenommenen Änderungen wurden erfolgreich im System gespeichert.",
+        "updateError": "Aktualisierung fehlgeschlagen",
+        "updateErrorText": "Die von Ihnen vorgenommenen Änderungen an den Daten konnten nicht gespeichert werden. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator."
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",
@@ -109,7 +115,9 @@
         "deleteSelection": "Auswahl löschen",
         "toCampaign": "Zur Kampagne",
         "select": "Auswählen",
-        "remove": "Entfernen"
+        "remove": "Entfernen",
+        "back": "Zurück",
+        "next": "Weiter"
     },
     "home": {
         "campaignOverview": "Kampagnen Übersicht",

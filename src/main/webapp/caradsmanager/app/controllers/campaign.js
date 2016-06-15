@@ -1,4 +1,4 @@
-app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $location, $filter, ngTableParams, $translate) {
+app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $location, $filter, ngTableParams, $translate, $modal) {
 
     var advertiserId = $routeParams.advertiserId;
     var campaignId = $routeParams.campaignId;
@@ -8,17 +8,6 @@ app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $l
             campaignId === undefined) {
         $location.path('/');
     }
-
-    var alert = function (title, content, level) {
-        $scope.alert = [];
-        $scope.alert.title = title;
-        $scope.alert.content = content;
-        $scope.alert.level = level;
-    };
-
-    $scope.deleteAlert = function () {
-        delete $scope.alert;
-    };
 
     $http.get('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId).
             success(function (data, status, headers, config) {
@@ -30,8 +19,13 @@ app.controller('campaign', function ($scope, $rootScope, $routeParams, $http, $l
                 }
             }).
             error(function (data, status, headers, config) {
-                alert("Fehler", "Die Daten der Kampagene konnten aus technischen\n\
-                    Gründen nicht abgerufen werden.", "danger");
+                var title = 'alert.loadingError';
+                var description = 'alert.loadingErrorText';
+                var button = 'button.back';
+                var buttonFunction = function () {
+                    $location.path('/home');
+                };
+                showModal($modal, description, title, button, null, buttonFunction, null, angular);
             });
 
 

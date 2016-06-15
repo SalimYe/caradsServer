@@ -1,22 +1,11 @@
-app.controller('campaignEdit', function ($scope, $routeParams, $http, $location, $timeout, $translate) {
+app.controller('campaignEdit', function ($scope, $routeParams, $http, $location, $timeout, $translate, $modal) {
 
     var advertiserId = $routeParams.advertiserId;
     var campaignId = $routeParams.campaignId;
     $scope.advertiserId = advertiserId;
 
-    var alert = function (title, content, level) {
-        $scope.alert = [];
-        $scope.alert.title = title;
-        $scope.alert.content = content;
-        $scope.alert.level = level;
-    };
-
     var redirectToCampaignView = function () {
         $location.path('advertiser/' + advertiserId + "/campaign/" + campaignId);
-    };
-
-    $scope.deleteAlert = function () {
-        delete $scope.alert;
     };
 
     var isNewCampaign = ($routeParams.campaignId === undefined);
@@ -29,22 +18,38 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
                     $scope.campaign = data;
                 }).
                 error(function (data, status, headers, config) {
-                    redirectToCampaignView();
+                    var title = 'alert.loadingError';
+                    var description = 'alert.loadingErrorText';
+                    var button = 'button.back';
+                    var buttonFunction = function () {
+                        $location.path('/home');
+                    };
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 });
     }
 
     var updateCampaign = function () {
         if ($scope.campaignForm.$valid) {
-        $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
-                success(function (data, status, headers, config) {
-                    redirectToCampaignView();
-                }).
-                error(function (data, status, headers, config) {
-                    alert("Update fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                            "den Administrator.", "danger");
-                });
-            }
+            $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
+                    success(function (data, status, headers, config) {
+                        var title = 'alert.update';
+                        var description = 'alert.updateText';
+                        var button = 'button.next';
+                        var buttonFunction = function () {
+                            redirectToCampaignView();
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }).
+                    error(function (data, status, headers, config) {
+                        var title = 'alert.updateError';
+                        var description = 'alert.updateErrorText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
+
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    });
+        }
     };
 
     $scope.deleteCampaign = function () {
@@ -115,21 +120,21 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
             return obj.id !== imageId;
         });
     };
-    
+
     $scope.datePicker = (function () {
         var method = {};
         method.instances = [];
- 
+
         method.open = function ($event, instance) {
             $event.preventDefault();
             $event.stopPropagation();
- 
+
             method.instances[instance] = true;
         };
- 
+
         var formats = ['MM/dd/yyyy', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         method.format = formats[3];
- 
+
         return method;
     }());
 });

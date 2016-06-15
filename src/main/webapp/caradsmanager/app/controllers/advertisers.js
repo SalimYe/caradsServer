@@ -1,16 +1,5 @@
 app.controller('advertisers', function ($scope, $routeParams, $http, $location, $modal, $document, $window, $translate) {
 
-    var alert = function (title, content, level) {
-        $scope.alert = [];
-        $scope.alert.title = title;
-        $scope.alert.content = content;
-        $scope.alert.level = level;
-    };
-
-    $scope.deleteAlert = function () {
-        delete $scope.alert;
-    };
-
     $scope.advertisers;
 
     $http.get('../api/advertisers/').
@@ -18,7 +7,13 @@ app.controller('advertisers', function ($scope, $routeParams, $http, $location, 
                 $scope.advertisers = data;
             }).
             error(function (data, status, headers, config) {
-                // TODO
+                var title = 'alert.loadingError';
+                var description = 'alert.loadingErrorText';
+                var button = 'button.back';
+                var buttonFunction = function () {
+                    $location.path('/home');
+                };
+                showModal($modal, description, title, button, null, buttonFunction, null, angular);
             });
             
     $scope.getProfileImage = function (imageId) {

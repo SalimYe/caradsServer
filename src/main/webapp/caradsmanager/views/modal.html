@@ -8,5 +8,5 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-default" ng-click="actionOne()">{{item.buttonOne | translate}}</button>
-    <button ng-if="item.buttonTwo !== undefined" class="btn btn-primary" ng-click="actionTwo()">{{item.buttonTwo | translate}}</button>
+    <button ng-if="item.buttonTwo !== null" class="btn btn-primary" ng-click="actionTwo()">{{item.buttonTwo | translate}}</button>
 </div>

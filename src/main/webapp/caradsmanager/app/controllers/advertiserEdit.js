@@ -1,44 +1,51 @@
-app.controller('advertiserEdit', function ($scope, $routeParams, $http, $location, $modal, $timeout, $translate){
+app.controller('advertiserEdit', function ($scope, $routeParams, $http, $location, $modal, $timeout, $translate) {
 
     var advertiserId = $routeParams.id;
     if (advertiserId === undefined) {
         $location.path('/');
     }
 
-    var alert = function (title, content, level) {
-        $scope.alert = [];
-        $scope.alert.title = title;
-        $scope.alert.content = content;
-        $scope.alert.level = level;
-    };
-
-    $scope.deleteAlert = function () {
-        delete $scope.alert;
-    };
-
-        $http.get('../api/advertisers/' + advertiserId).
+    $http.get('../api/advertisers/' + advertiserId).
             success(function (data, status, headers, config) {
                 $scope.advertiser = data;
             }).
             error(function (data, status, headers, config) {
-                $location.path('/');
+                var title = 'alert.loadingError';
+                var description = 'alert.loadingErrorText';
+                var button = 'button.back';
+                var buttonFunction = function () {
+                    window.history.back();
+                };
+                showModal($modal, description, title, button, null, buttonFunction, null, angular);
             });
 
 
     $scope.updateAdvertiser = function () {
         $http.put('../api/advertisers/' + advertiserId, $scope.advertiser).
                 success(function (data, status, headers, config) {
-                    // TODO
+                    var title = 'alert.update';
+                    var description = 'alert.updateText';
+                    var button = 'button.next';
+                    var buttonFunction = function () {
+                        $location.path('/advertiser/' + advertiserId);
+                    };
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).
                 error(function (data, status, headers, config) {
-                    //TODO
+                    var title = 'alert.updateError';
+                    var description = 'alert.updateErrorText';
+                    var button = 'button.back';
+                    var buttonFunction = function () {
+                        
+                    };
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 });
     };
 
     $scope.exitAdvertiser = function () {
         $location.path('/advertiser/' + advertiserId);
     };
-    
+
     $scope.editDetails = function () {
         $location.path($location.path() + '/edit');
     };
@@ -60,11 +67,11 @@ app.controller('advertiserEdit', function ($scope, $routeParams, $http, $locatio
                     });
         }, 200);
     };
-    
+
     var logout = function () {
         $http.get('../api/realms/logout');
     };
-    
+
     $scope.deleteAdvertiser = function () {
         $http.delete('../api/advertisers/' + advertiserId).
                 success(function (data, status, headers, config) {
@@ -78,21 +85,21 @@ app.controller('advertiserEdit', function ($scope, $routeParams, $http, $locatio
     $scope.deleteImage = function () {
         delete $scope.advertiser.logo;
     };
-    
+
     $scope.datePicker = (function () {
         var method = {};
         method.instances = [];
- 
+
         method.open = function ($event, instance) {
             $event.preventDefault();
             $event.stopPropagation();
- 
+
             method.instances[instance] = true;
         };
- 
+
         var formats = ['MM/dd/yyyy', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         method.format = formats[3];
- 
+
         return method;
     }());
 });

@@ -1,9 +1,5 @@
 <main>
     <h2>{{"heading.campaign"| translate}}</h2>         
-    <div class="alert alert-{{alert.level}}" ng-hide="alert === undefined">
-        <a class="close" ng-click="deleteAlert()" aria-label="close">&times;</a>
-        <strong>{{alert.title}}:</strong> {{alert.content}}
-    </div>
     <div class="row">
         <div class="col-md-3">
             <h4>{{campaign.title}}</h4>
