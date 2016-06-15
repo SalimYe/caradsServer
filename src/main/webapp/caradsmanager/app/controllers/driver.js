@@ -70,7 +70,7 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
                 }).
                 error(function (data, status, headers, config) {
                     if (status === 406) {
-                        var title = 'alert.deleteError';
+                        var title = 'alert.deleteErrorConstraint';
                         var description = 'alert.deleteErrorConstraintText';
                         var button = 'button.back';
                         var buttonFunction = function () {

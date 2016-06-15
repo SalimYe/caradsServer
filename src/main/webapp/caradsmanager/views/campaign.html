@@ -1,11 +1,11 @@
 <main>
-    <h2>{{"heading.campaign"| translate}}</h2>         
+    <h2>{{"heading.campaign"| translate}}</h2>   
+    <h3>{{campaign.name}}</h3>
     <div class="row">
         <div class="col-md-3">
-            <h4>{{campaign.title}}</h4>
             <p><strong>{{"label.carBudget"| translate}}:</strong> {{campaign.carBudget}}<br />
-                <strong>{{"label.startDate"| translate}}:</strong> {{campaign.startDate | date:'dd.MM.yyyy'}}<br />
-                <strong>{{"label.endDate"| translate}}:</strong> {{campaign.endDate | date:'dd.MM.yyyy'}}</p>
+                <strong>{{"label.startDate"| translate}}:</strong> {{campaign.startDate| date:'dd.MM.yyyy'}}<br />
+                <strong>{{"label.endDate"| translate}}:</strong> {{campaign.endDate| date:'dd.MM.yyyy'}}</p>
         </div>
         <div class="col-md-4">
             <h4>{{"label.description"| translate}}</h4>
