@@ -59,7 +59,7 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
                     var description = 'alert.deleteSuccessText';
                     var button = 'button.next';
                     var buttonFunction = function () {
-                        redirectToCampaignView();
+                        $location.path('advertiser/' + advertiserId + '/campaigns/');
                     };
                     showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).
