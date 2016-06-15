@@ -7,10 +7,11 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="title" class="required">{{"label.title" | translate}}</label>
-                            <select type="text" class="form-control" id="title" ng-model="driver.title" required="">
+                            <select type="text" class="form-control" id="title" ng-model="driver.title" titleOpt="" required="">
                                 <option>{{"label.mr" | translate}}</option>
                                 <option>{{"label.mrs" | translate}}</option>
                             </select>
+                            <span ng-if="driver.title === undefined && sendRequest" class="help-block red">{{"alert.errorTitle" | translate}}</span>
                         </div> 
                     </div>
                 </div>
@@ -34,7 +35,8 @@
                 </div>  
                 <div class="form-group">
                     <label for="phone" class="required">{{"label.phone" | translate}}</label>
-                    <input type="text" class="form-control" id="phone" ng-model="driver.phone" required="">
+                    <input type="text" class="form-control" id="phone" ng-model="driver.phone" phone="" required="">
+                    <span ng-if="driverForm.$error.phone && sendRequest" class="help-block red">{{"alert.invalidPhoneNumber" | translate}}</span>
                 </div>
                 <div class="form-group">
                     <label for="password" class="required">{{"label.password" | translate}}</label>
@@ -72,7 +74,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="zip" class="required">{{"label.zip" | translate}}</label>
-                            <input type="text" class="form-control" id="zip" ng-model="driver.address.zip" required="">
+                            <input type="text" class="form-control" id="zip" ng-model="driver.address.zip" zip=""
+                                   minlength="5" maxlength="5" required="">
+                            <span ng-if="driverForm.$error.zip && sendRequest" class="help-block red">{{"alert.invalidZip" | translate}}</span>
                         </div>
                     </div>
                     <div class="col-md-6">

@@ -18,7 +18,18 @@
         "deleteErrorConstraintText": "Das Löschen wurde verweigert. Gründe dafür können in den FAQs nachgelesen werden.",
         "deleteErrorConstraintText": "Das Löschen ist aus technischen Gründen fehlgeschlagen.",
         "deleteSuccess": "Löschen erfolgreich",
-        "deleteSuccessText": "Das Löschen war erfolgreich."
+        "deleteSuccessText": "Das Löschen war erfolgreich.",
+        "invalidPhoneNumber": "Telefonnummer ist nicht gültig! (nur Zahlen und '+'-Zeichen)",
+        "invalidZip": "PLZ nicht gültig! (5-stellig, nur Zahlen)",
+        "notEmpty": "Feld darf nicht leer sein!",
+        "errorTitle": "Es muss eine Anrede ausgewählt sein!",
+        "createCar": "Fahrzeug angelegt!",
+        "createCarText": "Das neue Fahrzeug wurde erfolgreich gespeichert!",
+        "createCampaign": "Kampagne angelegt!",
+        "createCampaignText": "Die neue Kampagne wurde erfolgreich gespeichert!",
+        "creatFailed": "Fehler beim Anlegen!",
+        "creatFailedText": "Beim Speichern der neu angelegten Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator."
+        
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",

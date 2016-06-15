@@ -21,25 +21,28 @@ app.controller('advertiserEdit', function ($scope, $routeParams, $http, $locatio
 
 
     $scope.updateAdvertiser = function () {
-        $http.put('../api/advertisers/' + advertiserId, $scope.advertiser).
-                success(function (data, status, headers, config) {
-                    var title = 'alert.update';
-                    var description = 'alert.updateText';
-                    var button = 'button.next';
-                    var buttonFunction = function () {
-                        $location.path('/advertiser/' + advertiserId);
-                    };
-                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                }).
-                error(function (data, status, headers, config) {
-                    var title = 'alert.updateError';
-                    var description = 'alert.updateErrorText';
-                    var button = 'button.back';
-                    var buttonFunction = function () {
+        $scope.sendRequest = true;
+        if ($scope.advertiserForm.$valid) {
+            $http.put('../api/advertisers/' + advertiserId, $scope.advertiser).
+                    success(function (data, status, headers, config) {
+                        var title = 'alert.update';
+                        var description = 'alert.updateText';
+                        var button = 'button.next';
+                        var buttonFunction = function () {
+                            $location.path('/advertiser/' + advertiserId);
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }).
+                    error(function (data, status, headers, config) {
+                        var title = 'alert.updateError';
+                        var description = 'alert.updateErrorText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
 
-                    };
-                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                });
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    });
+        }
     };
 
     $scope.exitAdvertiser = function () {

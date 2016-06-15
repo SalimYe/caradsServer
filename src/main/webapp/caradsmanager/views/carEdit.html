@@ -40,7 +40,7 @@
                 </div>            
                 <div class="form-group">
                     <label for="mileage" class="required" >{{"car.milage"| translate}}</label>
-                    <input type="text" class="form-control" id="mileage" ng-model="car.mileage" required="">
+                    <input type="number" class="form-control" id="mileage" ng-model="car.mileage" required="">
                 </div>  
             </div>
         </div>
@@ -85,7 +85,7 @@
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     {{"button.delete"| translate}}
                 </button>
-                <button type="submit" class="btn btn-success" ng-click="saveCar()" ng-disabled="!carForm.$valid">
+                <button type="submit" class="btn btn-success" ng-click="saveCar()">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     {{"button.save"| translate}}
                 </button>

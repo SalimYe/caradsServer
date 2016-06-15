@@ -85,16 +85,28 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     };
 
     var createCampaign = function () {
-        $http.post('../api/advertisers/' + advertiserId + '/campaigns/', $scope.campaign).
-                success(function (data, status, headers, config) {
-                    campaignId = data.id;
-                    redirectToCampaignView();
-                }).
-                error(function (data, status) {
-                    alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                            "den Administrator.", "danger");
-                });
+        if ($scope.campaignForm.$valid) {
+            $http.post('../api/advertisers/' + advertiserId + '/campaigns/', $scope.campaign).
+                    success(function (data, status, headers, config) {
+                        campaignId = data.id;
+                        var title = 'alert.createCampaign';
+                        var description = 'alert.createCampaignText';
+                        var button = 'button.next';
+                        var buttonFunction = function () {
+                            redirectToCampaignView();
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }).
+                    error(function (data, status) {
+                        var title = 'alert.creatFailed';
+                        var description = 'alert.creatFailedText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
+
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    });
+        }
     };
 
     $scope.saveCampaign = function () {

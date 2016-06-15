@@ -21,25 +21,28 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
             });
 
     $scope.updateDriver = function () {
-        $http.put('../api/drivers/' + driverId, $scope.driver).
-                success(function (data, status, headers, config) {
-                    var title = 'alert.update';
-                    var description = 'alert.updateText';
-                    var button = 'button.next';
-                    var buttonFunction = function () {
-                        $location.path('driver/' + $scope.driver.id);
-                    };
-                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                }).
-                error(function (data, status, headers, config) {
-                    var title = 'alert.updateError';
-                    var description = 'alert.updateErrorText';
-                    var button = 'button.back';
-                    var buttonFunction = function () {
+        $scope.sendRequest = true;
+        if ($scope.driverForm.$valid) {
+            $http.put('../api/drivers/' + driverId, $scope.driver).
+                    success(function (data, status, headers, config) {
+                        var title = 'alert.update';
+                        var description = 'alert.updateText';
+                        var button = 'button.next';
+                        var buttonFunction = function () {
+                            $location.path('driver/' + $scope.driver.id);
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }).
+                    error(function (data, status, headers, config) {
+                        var title = 'alert.updateError';
+                        var description = 'alert.updateErrorText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
 
-                    };
-                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                });
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    });
+        }
     };
 
     $scope.exitDriver = function () {
@@ -63,26 +66,26 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
                     var buttonFunction = function () {
                         logout();
                     };
-                    showModal($modal, description, title, button, null, buttonFunction, null, angular);  
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).
                 error(function (data, status, headers, config) {
                     if (status === 406) {
-                            var title = 'alert.deleteError';
-                            var description = 'alert.deleteErrorConstraintText';
-                            var button = 'button.back';
-                            var buttonFunction = function () {
+                        var title = 'alert.deleteError';
+                        var description = 'alert.deleteErrorConstraintText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
 
-                            };
-                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                        } else {
-                            var title = 'alert.deleteError';
-                            var description = 'alert.deleteErrorText';
-                            var button = 'button.back';
-                            var buttonFunction = function () {
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    } else {
+                        var title = 'alert.deleteError';
+                        var description = 'alert.deleteErrorText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
 
-                            };
-                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                        }
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }
                 });
     };
 

@@ -3,6 +3,7 @@ startapp.controller('driver', function ($scope, $routeParams, $http, $timeout, $
     $scope.driver = {};
 
     $scope.registerDriver = function () {
+        $scope.sendRequest = true;
         if ($scope.driverForm.$valid) {
             $http.post('./api/drivers/', $scope.driver).
                     success(function (data, status, headers, config) {

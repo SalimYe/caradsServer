@@ -35,3 +35,47 @@ startapp.directive("fileread", [function () {
             }
         }
     }]);
+
+startapp.directive('zip', function() {
+  var INTEGER_REGEXP = /^\-?\d+$/;
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$validators.zip = function(modelValue, viewValue) {
+        if (INTEGER_REGEXP.test(viewValue)) {
+          return true;
+        }
+        return false;
+      };
+    }
+  };  
+});
+
+startapp.directive('phone', function() {
+  var INTEGER_REGEXP = /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/g;
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$validators.phone = function(modelValue, viewValue) {
+        if (INTEGER_REGEXP.test(viewValue)) {
+          return true;
+        }
+        return false;
+      };
+    }
+  };  
+});
+
+startapp.directive('titleOpt', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$validators.titleOpt = function(modelValue, viewValue) {
+        if (viewValue === 'Frau' || viewValue === 'Herr') {
+          return true;
+        }
+        return false;
+      };
+    }
+  };  
+});

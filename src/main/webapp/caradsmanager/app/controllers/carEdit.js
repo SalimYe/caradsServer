@@ -36,25 +36,27 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
     }
 
     var updateCar = function () {
-        $http.put('../api/drivers/' + driverId + '/cars/' + carId, $scope.car).
-                success(function (data, status, headers, config) {
-                    var title = 'alert.update';
-                    var description = 'alert.updateText';
-                    var button = 'button.next';
-                    var buttonFunction = function () {
-                        $location.path('/driver/' + driverId + '/car/' + carId);
-                    };
-                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                }).
-                error(function (data, status, headers, config) {
-                    var title = 'alert.updateError';
-                    var description = 'alert.updateErrorText';
-                    var button = 'button.back';
-                    var buttonFunction = function () {
+        if ($scope.carForm.$valid) {
+            $http.put('../api/drivers/' + driverId + '/cars/' + carId, $scope.car).
+                    success(function (data, status, headers, config) {
+                        var title = 'alert.update';
+                        var description = 'alert.updateText';
+                        var button = 'button.next';
+                        var buttonFunction = function () {
+                            $location.path('/driver/' + driverId + '/car/' + carId);
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }).
+                    error(function (data, status, headers, config) {
+                        var title = 'alert.updateError';
+                        var description = 'alert.updateErrorText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
 
-                    };
-                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                });
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    });
+        }
     };
 
     $scope.deleteCar = function () {
@@ -66,40 +68,51 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
                     var buttonFunction = function () {
                         redirectToCarOverview();
                     };
-                    showModal($modal, description, title, button, null, buttonFunction, null, angular);  
+                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).
                 error(function (data, status, headers, config) {
                     if (status === 406) {
-                            var title = 'alert.deleteError';
-                            var description = 'alert.deleteErrorConstraintText';
-                            var button = 'button.back';
-                            var buttonFunction = function () {
+                        var title = 'alert.deleteError';
+                        var description = 'alert.deleteErrorConstraintText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
 
-                            };
-                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                        } else {
-                            var title = 'alert.deleteError';
-                            var description = 'alert.deleteErrorText';
-                            var button = 'button.back';
-                            var buttonFunction = function () {
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    } else {
+                        var title = 'alert.deleteError';
+                        var description = 'alert.deleteErrorText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
 
-                            };
-                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                        }
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }
                 });
     };
 
     var createCar = function () {
-        console.log($scope.car);
-        $http.post('../api/drivers/' + driverId + '/cars/', $scope.car).
-                success(function (data, status, headers, config) {
-                    redirectToCarOverview();
-                }).
-                error(function (data, status) {
-                    alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                            "den Administrator.", "danger");
-                });
+        if ($scope.carForm.$valid) {
+            $http.post('../api/drivers/' + driverId + '/cars/', $scope.car).
+                    success(function (data, status, headers, config) {
+                        var title = 'alert.createCar';
+                        var description = 'alert.createCarText';
+                        var button = 'button.next';
+                        var buttonFunction = function () {
+                            redirectToCarOverview();
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                                            }).
+                    error(function (data, status) {
+                        var title = 'alert.creatFailed';
+                        var description = 'alert.creatFailedText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
+
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    });
+        }
     };
 
     $scope.saveCar = function () {
