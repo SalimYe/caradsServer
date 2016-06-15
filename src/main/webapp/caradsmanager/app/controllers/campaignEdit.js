@@ -29,26 +29,29 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     }
 
     var updateCampaign = function () {
-        if ($scope.campaignForm.$valid) {
-            $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
-                    success(function (data, status, headers, config) {
-                        var title = 'alert.update';
-                        var description = 'alert.updateText';
-                        var button = 'button.next';
-                        var buttonFunction = function () {
-                            redirectToCampaignView();
-                        };
-                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                    }).
-                    error(function (data, status, headers, config) {
-                        var title = 'alert.updateError';
-                        var description = 'alert.updateErrorText';
-                        var button = 'button.back';
-                        var buttonFunction = function () {
+        $scope.sendRequest = true;
+        if ($scope.campaign.images !== undefined) {
+            if ($scope.campaignForm.$valid && $scope.campaign.images.length > 0) {
+                $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
+                        success(function (data, status, headers, config) {
+                            var title = 'alert.update';
+                            var description = 'alert.updateText';
+                            var button = 'button.next';
+                            var buttonFunction = function () {
+                                redirectToCampaignView();
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        }).
+                        error(function (data, status, headers, config) {
+                            var title = 'alert.updateError';
+                            var description = 'alert.updateErrorText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
 
-                        };
-                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                    });
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        });
+            }
         }
     };
 

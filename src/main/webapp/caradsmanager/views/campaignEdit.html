@@ -54,6 +54,7 @@
                     <label for="image" class="required">{{"label.campaignImages"| translate}}</label>
                     <input name="file" id="image" class="form-control" type="file" fileread="image"
                            onchange="angular.element(this).scope().saveImages()" multiple="" />
+                    <span ng-if="(campaign.images.length <= 0 || campaign.images === undefined) && sendRequest" class="help-block red">{{"alert.noCampaignImages" | translate}}</span>
                 </div>
             </div>
         </div>

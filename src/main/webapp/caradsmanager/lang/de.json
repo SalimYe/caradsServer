@@ -33,7 +33,8 @@
         "carsRequested": "Fahrzeuge erfolgreich angefragt!",
         "carsRequestedText": "Die von Ihnen ausgewählten Fahrzeuge wurden erfolgreich für die Kampagne angefragt. Sie können in den Details einer Kampagne stets den aktuellen Status angefragter Fahrzeuge einsehen.",
         "requstFailed": "Anfrage fehlgeschlagen!",
-        "requstFailedText": "Die von Ihnen gestellte Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator."
+        "requstFailedText": "Die von Ihnen gestellte Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "noCampaignImages": "Eine Kampagne muss über ein oder mehere Fotos verfügen. Fügen Sie bitte Fotos hinzu!"
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",
