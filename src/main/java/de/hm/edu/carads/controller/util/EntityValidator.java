@@ -130,8 +130,8 @@ public class EntityValidator {
 				isNotEmpty(campaign.getStartDate()) &&
 				isNotEmpty(campaign.getEndDate()) &&
 				isNotEmpty(campaign.getCarBudget()) &&
-				isNotEmpty(campaign.getDescription()) &&
-				!campaign.getImages().isEmpty())
+				isNotEmpty(campaign.getDescription()) 
+				)
 			if(DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
 				return true;
 		logger.error("Invalid Campaign");
