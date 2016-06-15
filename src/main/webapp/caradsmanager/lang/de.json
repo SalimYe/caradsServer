@@ -28,8 +28,11 @@
         "createCampaign": "Kampagne angelegt!",
         "createCampaignText": "Die neue Kampagne wurde erfolgreich gespeichert!",
         "creatFailed": "Fehler beim Anlegen!",
-        "creatFailedText": "Beim Speichern der neu angelegten Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator."
-        
+        "creatFailedText": "Beim Speichern der neu angelegten Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "carsRequested": "Fahrzeuge erfolgreich angefragt!",
+        "carsRequestedText": "Die von Ihnen ausgewählten Fahrzeuge wurden erfolgreich für die Kampagne angefragt. Sie können in den Details einer Kampagne stets den aktuellen Status angefragter Fahrzeuge einsehen.",
+        "requstFailed": "Anfrage fehlgeschlagen!",
+        "requstFailedText": "Die von Ihnen gestellte Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator."
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",
@@ -133,7 +136,8 @@
         "select": "Auswählen",
         "remove": "Entfernen",
         "back": "Zurück",
-        "next": "Weiter"
+        "next": "Weiter",
+        "moreCars": "Weitere Fahrzeuge auswählen"
     },
     "home": {
         "campaignOverview": "Kampagnen Übersicht",

@@ -74,7 +74,7 @@ app.controller('carSearch', function ($scope, $cookieStore, $route, $routeParams
         deleteSelectedFlag($scope.filteredCars);
         updateCarSelectionCookie(campaignId);
     };
-    
+
     $scope.showCampaignDetails = function () {
         $location.path('advertiser/' + advertiserId + '/campaign/' + campaignId);
     };
@@ -124,23 +124,37 @@ app.controller('carSearch', function ($scope, $cookieStore, $route, $routeParams
 
     $scope.sendCarRequests = function () {
         var fellows = [];
-        
-        for(var i = 0; i < $scope.carSelection.length; i++) {
+
+        for (var i = 0; i < $scope.carSelection.length; i++) {
             var carId = $scope.carSelection[i];
             fellows[i] = {};
             fellows[i].carId = carId;
         }
-        
+
         var url = '../api/advertisers/' + advertiserId + '/campaigns/' + campaignId + '/cars';
         $http.post(url, fellows).
                 success(function (data, status, headers, config) {
                     $scope.deleteCarSelection();
-                    showModal($modal, "An die ausgewählten Fahrzeuge wurden Anfragen verschickt!\n\
-                        Der Status einzelner Anfragen ist innerhalb der Detailansicht einer Kampagne\n\
-                        einsehbar.", "Anfragen verschickt", "Zurück zur Kampagnen", "weitere Fahrzeuge auswählen", $scope.showCampaignDetails(), $route.reload(), angular);
+                    var title = 'alert.carsRequested';
+                    var description = 'alert.carsRequestedText';
+                    var buttonOne = 'button.toCampaign';
+                    var buttonTwo = 'button.moreCars';
+                    var buttonFunctionOne = function () {
+                        $location.path('advertiser/' + advertiserId + '/campaign/' + campaignId);
+                    };
+                    var buttonFunctionTwo = function () {
+                        $route.reload();
+                    };
+                    showModal($modal, description, title, buttonOne, buttonTwo, buttonFunctionOne, buttonFunctionTwo, angular);
                 }).
                 error(function (data, status, headers, config) {
-                    // TODO
+                    var title = 'alert.requstFailed';
+                        var description = 'alert.requstFailedText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
+
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 });
     };
 

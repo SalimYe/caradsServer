@@ -3,7 +3,14 @@
         "advertiserAdded": "Werbender angelegt",
         "keywords": "Stichwörter",
         "registrationSuccess": "Registrierung erfolgreich!",
-        "registrationSuccessText": "Sie haben sich erfolgreich auf CarAds registriert. Klicken Sie auf den Login-Button, um sich einzuloggen."
+        "registrationSuccessText": "Sie haben sich erfolgreich auf CarAds registriert. Klicken Sie auf den Login-Button, um sich einzuloggen.",
+        "registrationError": "Fehler bei Registrierung",
+        "registrationErrorDuplicateText": "Die von Ihnen verwendete Mail-Adresse ist leider schon vergeben. Bitte versuchen Sie es mit einer anderen Mail-Adresse erneut.",
+        "registrationErrorText": "Bei der Registierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "invalidPhoneNumber": "Telefonnummer ist nicht gültig! (nur Zahlen und '+'-Zeichen)",
+        "invalidZip": "PLZ nicht gültig! (5-stellig, nur Zahlen)",
+        "notEmpty": "Feld darf nicht leer sein!",
+        "errorTitle": "Es muss eine Anrede ausgewählt sein!"
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",
@@ -43,7 +50,8 @@
         "register": "Registrieren",
         "registNow": "Jetzt Registrieren",
         "driverRegist": "Als Fahrer Registrieren",
-        "advertiserRegist": "Als Werbender Registrieren"
+        "advertiserRegist": "Als Werbender Registrieren",
+        "back": "Zurück"
     },
     "home": {
         "welcome": "Willkommen auf CarAds!",
