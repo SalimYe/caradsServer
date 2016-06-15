@@ -161,7 +161,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 	public void deleteAdvertiser(String advertiserId) throws Exception {
 		Iterator<Campaign> it = advertiserController.getEntity(advertiserId).getCampaigns().iterator();
 		while(it.hasNext()){
-			if(hasCampaignBookedFellows(it.next())){
+			if(hasCampaignBookedOrAskedFellows(it.next())){
 				logger.info("Advertiser" + advertiserId + " could not removed");
 				throw new HasConstraintException();
 			}
@@ -513,7 +513,8 @@ public class ApplicationControllerImpl implements ApplicationController {
 
 	/**
 	 * Eine Kampagne wird geloescht. Es wird davor ueberprueft ob die
-	 * Kampagne Fahrzeuge angefragt hat und diese bereits zugesagt haben.
+	 * Kampagne Fahrzeuge angefragt hat oder ob welche bereits zugesagt haben.
+	 * Die Kampagne kann nur geloescht werden wenn alle angefragten Fahrer abgesagt haben.
 	 * @param advertiserId, campaignId
 	 * @throws Exception
 	 */
@@ -523,7 +524,7 @@ public class ApplicationControllerImpl implements ApplicationController {
 		Advertiser advertiser = advertiserController.getEntity(advertiserId);
 		Campaign campaign = advertiser.getCampaign(campaignId);
 		
-		if(hasCampaignBookedFellows(campaign))
+		if(hasCampaignBookedOrAskedFellows(campaign))
 			throw new HasConstraintException();
 		
 		if(!advertiser.removeCampaign(campaign)){
@@ -538,14 +539,17 @@ public class ApplicationControllerImpl implements ApplicationController {
 	
 	/**
 	 * Diese Methode ueberprueft ob die Kampagne bereits Fahrzeuge
-	 * besitzt, bei denen der Fahrer das Angebot angenommen hat.
+	 * besitzt, bei denen der Fahrer das Angebot angenommen hat oder das 
+	 * Angebot noch nicht beantwortet wurde.
 	 * @param campaign
 	 * @return Wahrheitswert
 	 */
-	private boolean hasCampaignBookedFellows(Campaign campaign){
+	private boolean hasCampaignBookedOrAskedFellows(Campaign campaign){
 		Iterator<Fellow> fellowIterator = campaign.getFellows().iterator();
 		while(fellowIterator.hasNext()){
-			if(fellowIterator.next().getState().equals(FellowState.ACCEPTED)){
+			FellowState fellowState = fellowIterator.next().getState();
+			if(fellowState.equals(FellowState.ACCEPTED) ||
+					fellowState.equals(FellowState.ASKED)){
 				logger.info("Campaign "+ campaign.getId() +" has constraints");
 				return true;
 			}

@@ -2,6 +2,9 @@ package de.hm.edu.carads.controller;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.core.NoContentException;
 
@@ -13,6 +16,7 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
+import de.hm.edu.carads.models.Image;
 
 public class AdvertiserControllerTest {
 
@@ -137,6 +141,7 @@ public class AdvertiserControllerTest {
 		newCampaign.setStartDate("01.12.2016");
 		newCampaign.setEndDate("02.02.2017");
 		newCampaign.setCarBudget("1000");
+		newCampaign.setDescription("Ne");
 		
 		modelController.updateCampaign(ad.getId(), c.getId(), newCampaign);
 		
@@ -154,6 +159,7 @@ public class AdvertiserControllerTest {
 		newCampaign.setStartDate("01.12.2016");
 		newCampaign.setEndDate("02.02.2017");
 		newCampaign.setCarBudget("123");
+		newCampaign.setDescription("Ne");
 		modelController.updateCampaign(ad.getId(), "123123", newCampaign);
 	}
 	
@@ -224,6 +230,7 @@ public class AdvertiserControllerTest {
 		camp1.setStartDate("30.01.2000");
 		camp1.setEndDate("01.03.2000");
 		camp1.setCarBudget("123123");
+		camp1.setDescription("Ne");
 		camp1 = modelController.addCampaign(ad.getId(), camp1);
 		modelController.requestVehicleForCampaign(ad.getId(), camp1.getId(), "123");
 		
@@ -243,6 +250,7 @@ public class AdvertiserControllerTest {
 		camp2.setStartDate("30.01.2000");
 		camp2.setEndDate("01.03.2000");
 		camp2.setCarBudget("2");
+		camp2.setDescription("Ne");
 		camp2 = modelController.addCampaign(adv1.getId(), camp2);
 		
 		modelController.requestVehicleForCampaign(adv1.getId(), camp2.getId(), "123");
@@ -265,6 +273,7 @@ public class AdvertiserControllerTest {
 		updatedCampaign.setName(campaign.getName());
 		updatedCampaign.setStartDate(campaign.getStartDate());
 		updatedCampaign.setEndDate(campaign.getEndDate());
+		updatedCampaign.setDescription("Beschr");
 		
 		modelController.updateCampaign(ad.getId(), campaign.getId(), updatedCampaign);
 		
@@ -312,6 +321,7 @@ public class AdvertiserControllerTest {
 		c.setStartDate("01.01.2000");
 		c.setEndDate("31.01.2000");
 		c.setCarBudget("1000");
+		c.setDescription("Beschr");
 		return c;
 	}
 }

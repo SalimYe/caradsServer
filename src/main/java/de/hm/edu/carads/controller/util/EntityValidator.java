@@ -100,7 +100,6 @@ public class EntityValidator {
 				isNotEmpty(driver.getBirthdate()) &&
 				isNotEmpty(driver.getLastName()) &&
 				isNotEmpty(driver.getFirstName()) &&
-				isNotEmpty(driver.getOccupation()) &&
 				isNotEmpty(driver.getLicenseDate()))
 			return true;
 		logger.error("Invalid Driver");
@@ -130,7 +129,9 @@ public class EntityValidator {
 		if(isNotEmpty(campaign.getName()) &&
 				isNotEmpty(campaign.getStartDate()) &&
 				isNotEmpty(campaign.getEndDate()) &&
-				isNotEmpty(campaign.getCarBudget()))
+				isNotEmpty(campaign.getCarBudget()) &&
+				isNotEmpty(campaign.getDescription()) 
+				)
 			if(DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
 				return true;
 		logger.error("Invalid Campaign");

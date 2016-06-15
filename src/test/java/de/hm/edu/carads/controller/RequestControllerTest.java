@@ -242,6 +242,7 @@ public class RequestControllerTest {
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		c.setCarBudget("2");
+		c.setDescription("Ne");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -286,6 +287,7 @@ public class RequestControllerTest {
 		c.setStartDate("01.01.2016");
 		c.setEndDate("31.01.2016");
 		c.setCarBudget("2");
+		c.setDescription("Ne");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -305,6 +307,7 @@ public class RequestControllerTest {
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		c.setCarBudget("2");
+		c.setDescription("Ne");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -324,6 +327,7 @@ public class RequestControllerTest {
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		c.setCarBudget("2");
+		c.setDescription("Ne");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -343,6 +347,7 @@ public class RequestControllerTest {
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		c.setCarBudget("2");
+		c.setDescription("Ne");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -362,6 +367,7 @@ public class RequestControllerTest {
 		c.setStartDate("18.05.2016");
 		c.setEndDate("31.06.2016");
 		c.setCarBudget("2");
+		c.setDescription("Ne");
 		Campaign camp = modelController.addCampaign(ad.getId(), c);
 		
 		Campaign c2 = new Campaign();
@@ -369,6 +375,7 @@ public class RequestControllerTest {
 		c2.setStartDate("20.05.2016");
 		c2.setEndDate("01.07.2016");
 		c2.setCarBudget("2");
+		c2.setDescription("Ne");
 		Campaign camp2 = modelController.addCampaign(ad.getId(), c2);
 		
 		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
@@ -394,6 +401,7 @@ public class RequestControllerTest {
 		c.setCarBudget("10000 Euro");
 		c.setStartDate("01.01.2017");
 		c.setEndDate("31.01.2017");
+		c.setDescription("Ne");
 		return c;
 	}
 	
