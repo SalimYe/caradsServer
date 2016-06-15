@@ -13,7 +13,7 @@
                 </div>
                 <div class="form-group">
                     <label for="newPassword" class="required">{{"label.newPassword" | translate}}</label>
-                    <input type="password" class="form-control" id="newPassword" ng-model="credentials.newPassword" required="">
+                    <input type="password" class="form-control" minlength="6" id="newPassword" ng-model="credentials.newPassword" required="">
                 </div>
                 <div class="form-group">
                     <label for="newPasswordConfirm" class="required">{{"label.newPasswordRepeat" | translate}}</label>
