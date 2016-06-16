@@ -134,7 +134,7 @@ public class EntityValidator {
 				)
 			if(DateController.isABeforeB(campaign.getStartDate(), campaign.getEndDate()))
 				return true;
-		logger.error("Invalid Campaign");
+		logger.error("Invalid Campaign Attributes");
 		return false;
 	}
 	

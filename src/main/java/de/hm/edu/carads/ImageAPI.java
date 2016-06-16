@@ -61,7 +61,8 @@ public class ImageAPI {
 	public Response uploadFile(  @FormDataParam("file") InputStream fileInputStream,
 	                                @FormDataParam("file") FormDataContentDisposition fileMetaData) throws Exception
 	{
-	    String dataType = fileMetaData.getFileName().split("\\.")[1];
+		int pos = fileMetaData.getFileName().lastIndexOf(".");
+		String dataType = fileMetaData.getFileName().substring(pos+1, fileMetaData.getFileName().length());
 	    Image image;
 	    try{
 	    	image = ic.saveImage(fileInputStream, dataType);  
@@ -70,7 +71,6 @@ public class ImageAPI {
 	    }catch(IllegalArgumentException e){
 	    	throw new WebApplicationException(406);
 	    }catch(IOException e){
-	    	System.out.println("Error while uploading");
 	    	throw new WebApplicationException(500);
 	    }
 	}

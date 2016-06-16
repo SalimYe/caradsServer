@@ -12,6 +12,9 @@ import java.util.Arrays;
 import java.util.UUID;
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
+
+import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.util.PropertieController;
 import de.hm.edu.carads.models.Image;
 
@@ -36,6 +39,12 @@ public class ImageControllerImpl implements ImageController {
 	public static final String[] VALID_DATATYPES = new String[] { "JPG", "JPEG", "PNG" };
 
 	/**
+	 * Logger
+	 */
+	final static Logger logger = Logger.getLogger(ImageControllerImpl.class);
+	
+	
+	/**
 	 * Diese Methode speichert ein Bild auf dem Server. Es werden nur JPG und PNG Datein erlaubt.
 	 * @param InputStream des Bildes
 	 * @param Datentyp der Datei
@@ -48,8 +57,11 @@ public class ImageControllerImpl implements ImageController {
 		int read = 0;
 		byte[] bytes = new byte[this.parseAndCheckImgSize(IMG_MAX_SIZE)];
 
-		if (!isDatatypeValid(datatype))
+		if (!isDatatypeValid(datatype)){
+			logger.error("Datatype "+datatype+" not valid");
 			throw new IllegalArgumentException("wrong datatype");
+		}
+			
 
 		//Die ID wird zufaellig generiert.
 		imageData.setId(UUID.randomUUID() + "." + datatype);
