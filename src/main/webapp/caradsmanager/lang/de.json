@@ -15,10 +15,26 @@
         "updateError": "Aktualisierung fehlgeschlagen",
         "updateErrorText": "Die von Ihnen vorgenommenen Änderungen an den Daten konnten nicht gespeichert werden. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
         "deleteError": "Löschen fehlgeschlagen",
+        "deleteErrorConstraint": "Löschen verweigert!",
         "deleteErrorConstraintText": "Das Löschen wurde verweigert. Gründe dafür können in den FAQs nachgelesen werden.",
-        "deleteErrorConstraintText": "Das Löschen ist aus technischen Gründen fehlgeschlagen.",
+        "deleteErrorText": "Das Löschen ist aus technischen Gründen fehlgeschlagen.",
         "deleteSuccess": "Löschen erfolgreich",
-        "deleteSuccessText": "Das Löschen war erfolgreich."
+        "deleteSuccessText": "Das Löschen war erfolgreich.",
+        "invalidPhoneNumber": "Telefonnummer ist nicht gültig! (nur Zahlen und '+'-Zeichen)",
+        "invalidZip": "PLZ nicht gültig! (5-stellig, nur Zahlen)",
+        "notEmpty": "Feld darf nicht leer sein!",
+        "errorTitle": "Es muss eine Anrede ausgewählt sein!",
+        "createCar": "Fahrzeug angelegt!",
+        "createCarText": "Das neue Fahrzeug wurde erfolgreich gespeichert!",
+        "createCampaign": "Kampagne angelegt!",
+        "createCampaignText": "Die neue Kampagne wurde erfolgreich gespeichert!",
+        "creatFailed": "Fehler beim Anlegen!",
+        "creatFailedText": "Beim Speichern der neu angelegten Daten ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "carsRequested": "Fahrzeuge erfolgreich angefragt!",
+        "carsRequestedText": "Die von Ihnen ausgewählten Fahrzeuge wurden erfolgreich für die Kampagne angefragt. Sie können in den Details einer Kampagne stets den aktuellen Status angefragter Fahrzeuge einsehen.",
+        "requstFailed": "Anfrage fehlgeschlagen!",
+        "requstFailedText": "Die von Ihnen gestellte Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "noCampaignImages": "Eine Kampagne muss über ein oder mehere Fotos verfügen. Fügen Sie bitte Fotos hinzu!"
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",
@@ -122,7 +138,8 @@
         "select": "Auswählen",
         "remove": "Entfernen",
         "back": "Zurück",
-        "next": "Weiter"
+        "next": "Weiter",
+        "moreCars": "Weitere Fahrzeuge auswählen"
     },
     "home": {
         "campaignOverview": "Kampagnen Übersicht",

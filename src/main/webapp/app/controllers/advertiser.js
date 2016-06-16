@@ -3,6 +3,7 @@ startapp.controller('advertiser', function ($scope, $routeParams, $http, $timeou
     $scope.advertiser = {};
 
     $scope.registerAdvertiser = function () {
+        $scope.sendRequest = true;
         if ($scope.advertiserForm.$valid) {
             $http.post('./api/advertisers/', $scope.advertiser).
                     success(function (data, status, headers, config) {

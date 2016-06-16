@@ -29,26 +29,29 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     }
 
     var updateCampaign = function () {
-        if ($scope.campaignForm.$valid) {
-            $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
-                    success(function (data, status, headers, config) {
-                        var title = 'alert.update';
-                        var description = 'alert.updateText';
-                        var button = 'button.next';
-                        var buttonFunction = function () {
-                            redirectToCampaignView();
-                        };
-                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                    }).
-                    error(function (data, status, headers, config) {
-                        var title = 'alert.updateError';
-                        var description = 'alert.updateErrorText';
-                        var button = 'button.back';
-                        var buttonFunction = function () {
+        $scope.sendRequest = true;
+        if ($scope.campaign.images !== undefined) {
+            if ($scope.campaignForm.$valid && $scope.campaign.images.length > 0) {
+                $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
+                        success(function (data, status, headers, config) {
+                            var title = 'alert.update';
+                            var description = 'alert.updateText';
+                            var button = 'button.next';
+                            var buttonFunction = function () {
+                                redirectToCampaignView();
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        }).
+                        error(function (data, status, headers, config) {
+                            var title = 'alert.updateError';
+                            var description = 'alert.updateErrorText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
 
-                        };
-                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                    });
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        });
+            }
         }
     };
 
@@ -59,13 +62,13 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
                     var description = 'alert.deleteSuccessText';
                     var button = 'button.next';
                     var buttonFunction = function () {
-                        redirectToCampaignView();
+                        $location.path('advertiser/' + advertiserId + '/campaigns/');
                     };
                     showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).
                 error(function (data, status, headers, config) {
                     if (status === 406) {
-                        var title = 'alert.deleteError';
+                        var title = 'alert.deleteErrorConstraint';
                         var description = 'alert.deleteErrorConstraintText';
                         var button = 'button.back';
                         var buttonFunction = function () {
@@ -85,16 +88,28 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     };
 
     var createCampaign = function () {
-        $http.post('../api/advertisers/' + advertiserId + '/campaigns/', $scope.campaign).
-                success(function (data, status, headers, config) {
-                    campaignId = data.id;
-                    redirectToCampaignView();
-                }).
-                error(function (data, status) {
-                    alert("Speichern fehlgeschlagen", "Das Speichern ist leider fehlgeschlagen. " +
-                            "Sollte dieser Fehler nochmals erscheinen, wenden Sie sich bitte an " +
-                            "den Administrator.", "danger");
-                });
+        if ($scope.campaignForm.$valid) {
+            $http.post('../api/advertisers/' + advertiserId + '/campaigns/', $scope.campaign).
+                    success(function (data, status, headers, config) {
+                        campaignId = data.id;
+                        var title = 'alert.createCampaign';
+                        var description = 'alert.createCampaignText';
+                        var button = 'button.next';
+                        var buttonFunction = function () {
+                            redirectToCampaignView();
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }).
+                    error(function (data, status) {
+                        var title = 'alert.creatFailed';
+                        var description = 'alert.creatFailedText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
+
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    });
+        }
     };
 
     $scope.saveCampaign = function () {

@@ -10,10 +10,11 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="title" class="required">{{"label.title" | translate}}</label>
-                            <select type="text" class="form-control" id="title" ng-model="advertiser.title" required="">
+                            <select type="text" class="form-control" id="title" ng-model="advertiser.title" titleOpt="" required="">
                                 <option>{{"label.mr" | translate}}</option>
                                 <option>{{"label.mrs" | translate}}</option>
                             </select>
+                            <span ng-if="advertiser.title === undefined && sendRequest" class="help-block red">{{"alert.errorTitle" | translate}}</span>
                         </div> 
                     </div>
                 </div>
@@ -58,7 +59,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="zip" class="required">{{"label.zip" | translate}}</label>
-                            <input type="text" class="form-control" id="zip" ng-model="advertiser.address.zip" required="">
+                            <input type="text" class="form-control" id="zip" ng-model="advertiser.address.zip" zip="" 
+                                   minlength="5" maxlength="5" required="">
+                            <span ng-if="advertiserForm.$error.zip && sendRequest" class="help-block red">{{"alert.invalidZip" | translate}}</span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -76,7 +79,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="phone" class="required">{{"label.phone" | translate}}</label>
-                    <input type="text" class="form-control" id="phone" ng-model="advertiser.phone" required="">
+                    <input type="text" class="form-control" id="phone" ng-model="advertiser.phone" phone="" required="">
+                    <span ng-if="advertiserForm.$error.phone && sendRequest" class="help-block red">{{"alert.invalidPhoneNumber" | translate}}</span>
                 </div>
             </div>
         </div>

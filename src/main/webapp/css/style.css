@@ -123,3 +123,9 @@ button.btn-faq {
     background-color: white;
     background-image: none;
 }
+
+/** Alert Text */
+
+span.help-block.red {
+    color: #d9534f;
+}

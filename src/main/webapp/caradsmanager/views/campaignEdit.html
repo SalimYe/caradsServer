@@ -15,7 +15,7 @@
                     <label for="carBudget" class="required">{{"label.carBudget"| translate}}</label>
                     <div class="input-group">
                         <div class="input-group-addon">€</div>
-                        <input type="text" class="form-control" id="carBudget" ng-model="campaign.carBudget"
+                        <input type="number" min="0" max="99999" class="form-control" id="carBudget" ng-model="campaign.carBudget"
                                required="">
                         <div class="input-group-addon">.00</div>
                     </div>
@@ -51,9 +51,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="image" class="required">{{"label.campainImages"| translate}}</label>
+                    <label for="image" class="required">{{"label.campaignImages"| translate}}</label>
                     <input name="file" id="image" class="form-control" type="file" fileread="image"
                            onchange="angular.element(this).scope().saveImages()" multiple="" />
+                    <span ng-if="(campaign.images.length <= 0 || campaign.images === undefined) && sendRequest" class="help-block red">{{"alert.noCampaignImages" | translate}}</span>
                 </div>
             </div>
         </div>
@@ -81,7 +82,7 @@
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     {{"button.delete"| translate}}
                 </button>
-                <button type="submit" class="btn btn-success" ng-click="saveCampaign()" ng-disabled="!campaignForm.$valid">
+                <button type="submit" class="btn btn-success" ng-click="saveCampaign()">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                     {{"button.save"| translate}}
                 </button>
