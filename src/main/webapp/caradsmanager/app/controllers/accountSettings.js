@@ -29,11 +29,16 @@ app.controller('accountSettings', function ($scope, $rootScope, $http, $location
 
             $http.put('../api/realms/' + accountId + '/password', $scope.credentials).
                     success(function (data, status, headers, config) {
-                        alert("Passwort ge&auml;ndert", "Das Password wurde erfolgreich aktualisiert!", "success");
+                        alert("Passwort geändert", "Das Passwort wurde erfolgreich aktualisiert!", "success");
                     }).
                     error(function (data, status, headers, config) {
-                        alert("Änderungen fehlgeschlagen", "Das Passwort konnte nicht aktualisiert werden.\n\
+                        if (status === 401) {
+                            alert("Altes Passwort falsch", "Das Passwort konnte nicht aktualisiert werden.\n\
+                        Das alte Passwort wurde falsch eingegeben.", "danger");
+                        } else {
+                            alert("Änderungen fehlgeschlagen", "Das Passwort konnte nicht aktualisiert werden.\n\
                         Sollte dieser Fehler öfters erscheinen, wenden Sie sich an den Administrator.", "danger");
+                        }
                     });
         }
         ;
