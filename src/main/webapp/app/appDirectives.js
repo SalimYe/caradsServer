@@ -79,3 +79,17 @@ startapp.directive('titleOpt', function() {
     }
   };  
 });
+
+startapp.directive('color', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$validators.color = function(modelValue, viewValue) {
+        if (modelValue !== undefined || modelValue !== '') {
+          return true;
+        }
+        return false;
+      };
+    }
+  };  
+});

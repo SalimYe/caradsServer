@@ -23,11 +23,13 @@
                 </div>
                 <div class="form-group">
                     <label for="color" class="required">{{"car.color"| translate}}</label>
-                    <select class="form-control" id="color" ng-model="car.color" required="">
+                    <select class="form-control" id="color" ng-model="car.color" color="" required=""
+                            ng-class="{'sendRequest': sendRequest}">
                         <option ng-repeat="color in colorRange | orderBy: color">{{color}}</option>
                         <option>{{"label.other"| translate}}</option>
                     </select>
-                </div> 
+                    <span ng-if="car.color === undefined && sendRequest" class="help-block red">{{"alert.colorError" | translate}}</span>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">

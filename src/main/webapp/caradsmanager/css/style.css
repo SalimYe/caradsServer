@@ -139,3 +139,7 @@ button.btn-faq {
 span.help-block.red {
     color: #d9534f;
 }
+
+select.ng-invalid.sendRequest {
+    border-color: red;
+}

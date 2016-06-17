@@ -36,7 +36,8 @@
         "requstFailedText": "Die von Ihnen gestellte Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
         "noCampaignImages": "Eine Kampagne muss über ein oder mehere Fotos verfügen. Fügen Sie bitte Fotos hinzu!",
         "startDateError": "Der Start-Termin muss in der Zunkunft liegen!",
-        "endDateError": "Der End-Termin darf frühstens einen Tag nach dem Beginn liegen!"
+        "endDateError": "Der End-Termin darf frühstens einen Tag nach dem Beginn liegen!",
+        "colorError": "Es muss eine Farbe angegeben werden!"
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",

@@ -37,6 +37,7 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
     }
 
     var updateCar = function () {
+        $scope.sendRequest = true;
         if ($scope.carForm.$valid) {
             $http.put('../api/drivers/' + driverId + '/cars/' + carId, $scope.car).
                     success(function (data, status, headers, config) {
@@ -93,6 +94,7 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
     };
 
     var createCar = function () {
+        $scope.sendRequest = true;
         if ($scope.carForm.$valid) {
             $http.post('../api/drivers/' + driverId + '/cars/', $scope.car).
                     success(function (data, status, headers, config) {
