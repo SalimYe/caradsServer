@@ -34,6 +34,7 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
         $http.get('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId).
                 success(function (data, status, headers, config) {
                     $scope.campaign = data;
+                    $scope.campaign.carBudget = parseInt($scope.campaign.carBudget);
                 }).
                 error(function (data, status, headers, config) {
                     var title = 'alert.loadingError';

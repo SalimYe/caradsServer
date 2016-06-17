@@ -83,6 +83,7 @@ app.controller('advertiserEdit', function ($scope, $routeParams, $http, $locatio
                     var button = 'button.next';
                     var buttonFunction = function () {
                         logout();
+                        window.location.href = '../';
                     };
                     showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).

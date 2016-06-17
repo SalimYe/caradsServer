@@ -3,31 +3,31 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="company" class="required">{{"label.company" | translate}}</label>
+                    <label for="company" class="required">{{"label.company"| translate}}</label>
                     <input type="text" maxlength="64" class="form-control" id="company" ng-model="advertiser.company" required="">
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="title" class="required">{{"label.title" | translate}}</label>
+                            <label for="title" class="required">{{"label.title"| translate}}</label>
                             <select type="text" class="form-control" id="title" ng-model="advertiser.title" titleOpt="" required="">
-                                <option>{{"label.mr" | translate}}</option>
-                                <option>{{"label.mrs" | translate}}</option>
+                                <option>{{"label.mr"| translate}}</option>
+                                <option>{{"label.mrs"| translate}}</option>
                             </select>
-                            <span ng-if="advertiser.title === undefined && sendRequest" class="help-block red">{{"alert.errorTitle" | translate}}</span>
+                            <span ng-if="advertiser.title === undefined && sendRequest" class="help-block red">{{"alert.errorTitle"| translate}}</span>
                         </div> 
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="firstname" class="required">{{"label.firstname" | translate}}</label>
+                            <label for="firstname" class="required">{{"label.firstname"| translate}}</label>
                             <input type="text" maxlength="64" class="form-control" id="firstname" ng-model="advertiser.firstname" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="lastname" class="required">{{"label.lastname" | translate}}</label>
+                            <label for="lastname" class="required">{{"label.lastname"| translate}}</label>
                             <input type="text" maxlength="64" class="form-control" id="lastname" ng-model="advertiser.lastname" required="">
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="image">{{"label.logo" | translate}}</label>
+                            <label for="image">{{"label.logo"| translate}}</label>
                             <input name="file" id="image" class="form-control" type="file" fileread="image" onchange="angular.element(this).scope().saveImage()" 
                                    ng-show="advertiser.logo === undefined">
                             <div class="elementImage" ng-if="advertiser.logo !== undefined">
@@ -52,41 +52,41 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="required" for="street">{{"label.street" | translate}}</label>
+                    <label class="required" for="street">{{"label.street"| translate}}</label>
                     <input type="text" class="form-control" id="street" ng-model="advertiser.address.street" required="">
                 </div> 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="zip" class="required">{{"label.zip" | translate}}</label>
+                            <label for="zip" class="required">{{"label.zip"| translate}}</label>
                             <input type="text" class="form-control" id="zip" ng-model="advertiser.address.zip" zip="" 
                                    minlength="5" maxlength="5" required="">
-                            <span ng-if="advertiserForm.$error.zip && sendRequest" class="help-block red">{{"alert.invalidZip" | translate}}</span>
+                            <span ng-if="advertiserForm.$error.zip && sendRequest" class="help-block red">{{"alert.invalidZip"| translate}}</span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="city" class="required">{{"label.city" | translate}}</label>
+                            <label for="city" class="required">{{"label.city"| translate}}</label>
                             <input type="text" maxlength="64" class="form-control" id="city" ng-model="advertiser.address.city" required="">
                         </div>
                     </div>
                 </div> 
                 <div class="form-group">
-                    <label for="country" class="required">{{"label.country" | translate}}</label>
+                    <label for="country" class="required">{{"label.country"| translate}}</label>
                     <input type="text" maxlength="64" class="form-control" id="country" ng-model="advertiser.address.country" required="">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="phone" class="required">{{"label.phone" | translate}}</label>
+                    <label for="phone" class="required">{{"label.phone"| translate}}</label>
                     <input type="text" class="form-control" id="phone" ng-model="advertiser.phone" phone="" required="">
-                    <span ng-if="advertiserForm.$error.phone && sendRequest" class="help-block red">{{"alert.invalidPhoneNumber" | translate}}</span>
+                    <span ng-if="advertiserForm.$error.phone && sendRequest" class="help-block red">{{"alert.invalidPhoneNumber"| translate}}</span>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="required">{{"label.requiredFields" | translate}}</div>
+                <div class="required">{{"label.requiredFields"| translate}}</div>
             </div>
         </div>
         <hr />
@@ -94,15 +94,15 @@
             <div class="col-md-12">
                 <button type="submit" class="btn btn-primary" ng-click="exitAdvertiser()">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    {{"button.close" | translate}}
+                    {{"button.close"| translate}}
                 </button>
                 <button type="submit" class="btn btn-danger" ng-click="deleteAdvertiser()">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    {{"button.delete" | translate}}
+                    {{"button.delete"| translate}}
                 </button>
-                <button type="submit" class="btn btn-success" ng-click="updateAdvertiser()" ng-disabled="!advertiserForm.$valid">
+                <button type="submit" class="btn btn-success" ng-click="updateAdvertiser()">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    {{"button.update" | translate}}
+                    {{"button.update"| translate}}
                 </button>
             </div>
         </div>

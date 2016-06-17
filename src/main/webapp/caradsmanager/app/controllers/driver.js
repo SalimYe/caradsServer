@@ -65,6 +65,7 @@ app.controller('driver', function ($scope, $routeParams, $http, $location, $moda
                     var button = 'button.next';
                     var buttonFunction = function () {
                         logout();
+                        window.location.href = '../';
                     };
                     showModal($modal, description, title, button, null, buttonFunction, null, angular);
                 }).

@@ -11,7 +11,7 @@
                                 <option>{{"label.mr"| translate}}</option>
                                 <option>{{"label.mrs"| translate}}</option>
                             </select>
-                            <span ng-if="driver.title === undefined && sendRequest" class="help-block red">{{"alert.errorTitle" | translate}}</span>
+                            <span ng-if="driver.title === undefined && sendRequest" class="help-block red">{{"alert.errorTitle"| translate}}</span>
                         </div> 
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <label for="phone" class="required">{{"label.phone"| translate}}</label>
                     <input type="text" class="form-control" id="phone" ng-model="driver.phone" phone="" required="">
-                    <span ng-if="driverForm.$error.phone && sendRequest" class="help-block red">{{"alert.invalidPhoneNumber" | translate}}</span>
+                    <span ng-if="driverForm.$error.phone && sendRequest" class="help-block red">{{"alert.invalidPhoneNumber"| translate}}</span>
                 </div>
             </div>
             <div class="col-md-6">
@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label for="zip" class="required">{{"label.zip"| translate}}</label>
                             <input type="text" class="form-control" id="zip" zip="" minlength="5" maxlength="5" ng-model="driver.address.zip" required="">
-                            <span ng-if="driverForm.$error.zip && sendRequest" class="help-block red">{{"alert.invalidZip" | translate}}</span>
+                            <span ng-if="driverForm.$error.zip && sendRequest" class="help-block red">{{"alert.invalidZip"| translate}}</span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -129,6 +129,5 @@
                     {{"button.update"| translate}}
                 </button>
             </div>
-        </div>
     </form>
 </main>
