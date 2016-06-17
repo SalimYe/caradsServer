@@ -101,7 +101,8 @@
         "selectionTextOne": "Es sind momenten",
         "selectionTextTwo": "Fahrzeuge ausgewählt.",
         "contactDriver": "Kontakt",
-        "otherDriver": "Sonstiges"
+        "otherDriver": "Sonstiges",
+        "profileImage": "Profilbild"
     },
     "car": {
         "milage": "Kilometerstand",
