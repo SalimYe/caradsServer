@@ -11,13 +11,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="brand" class="required">{{"car.brand"| translate}}</label>
-                            <input type="text" class="form-control" id="brand" ng-model="car.brand" required="">
+                            <input type="text" maxlength="64" class="form-control" id="brand" ng-model="car.brand" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="model" class="required">{{"car.model"| translate}}</label>
-                            <input type="text" class="form-control" id="model" ng-model="car.model" required="">
+                            <input type="text" maxlength="64" class="form-control" id="model" ng-model="car.model" required="">
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                 </div>            
                 <div class="form-group">
                     <label for="mileage" class="required" >{{"car.milage"| translate}}</label>
-                    <input type="number" min="1" class="form-control" id="mileage" ng-model="car.mileage" required="">
+                    <input type="number" maxlength="7" min="1" class="form-control" id="mileage" ng-model="car.mileage" required="">
                 </div>  
             </div>
         </div>

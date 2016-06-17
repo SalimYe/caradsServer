@@ -4,7 +4,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="company" class="required">{{"label.company" | translate}}</label>
-                    <input type="text" class="form-control" id="company" ng-model="advertiser.company" required="">
+                    <input type="text" maxlength="64" class="form-control" id="company" ng-model="advertiser.company" required="">
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -22,13 +22,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="firstname" class="required">{{"label.firstname" | translate}}</label>
-                            <input type="text" class="form-control" id="firstname" ng-model="advertiser.firstname" required="">
+                            <input type="text" maxlength="64" class="form-control" id="firstname" ng-model="advertiser.firstname" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="lastname" class="required">{{"label.lastname" | translate}}</label>
-                            <input type="text" class="form-control" id="lastname" ng-model="advertiser.lastname" required="">
+                            <input type="text" maxlength="64" class="form-control" id="lastname" ng-model="advertiser.lastname" required="">
                         </div>
                     </div>
                 </div>
@@ -67,13 +67,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="city" class="required">{{"label.city" | translate}}</label>
-                            <input type="text" class="form-control" id="city" ng-model="advertiser.address.city" required="">
+                            <input type="text" maxlength="64" class="form-control" id="city" ng-model="advertiser.address.city" required="">
                         </div>
                     </div>
                 </div> 
                 <div class="form-group">
                     <label for="country" class="required">{{"label.country" | translate}}</label>
-                    <input type="text" class="form-control" id="country" ng-model="advertiser.address.country" required="">
+                    <input type="text" maxlength="64" class="form-control" id="country" ng-model="advertiser.address.country" required="">
                 </div>
             </div>
             <div class="col-md-6">

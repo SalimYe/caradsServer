@@ -9,7 +9,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="title" class="required">{{"label.name"| translate}}</label>
-                    <input type="text" class="form-control" id="title" ng-model="campaign.name" required="">
+                    <input type="text" maxlength="64" class="form-control" id="title" ng-model="campaign.name" required="">
                 </div>
                 <div class="form-group">
                     <label for="carBudget" class="required">{{"label.carBudget"| translate}}</label>
@@ -46,7 +46,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="description" class="required">{{"label.description"| translate}}</label>
-                    <textarea type="text" class="form-control" id="description" ng-model="campaign.description" required=""></textarea>
+                    <textarea type="text" maxlength="1024" class="form-control" id="description" ng-model="campaign.description" required=""></textarea>
                 </div>
             </div>
         </div>

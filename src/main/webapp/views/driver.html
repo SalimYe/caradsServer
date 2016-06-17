@@ -19,13 +19,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="firstname" class="required">{{"label.firstname" | translate}}</label>
-                            <input type="text" class="form-control" id="firstname" ng-model="driver.firstname" required="">
+                            <input type="text" maxlength="64" class="form-control" id="firstname" ng-model="driver.firstname" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="lastname" class="required">{{"label.lastname" | translate}}</label>
-                            <input type="text" class="form-control" id="lastname" ng-model="driver.lastname" required="">
+                            <input type="text" maxlength="64" class="form-control" id="lastname" ng-model="driver.lastname" required="">
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="street" class="required">{{"label.street" | translate}}</label>
-                    <input type="text" class="form-control" id="street" ng-model="driver.address.street" required="">
+                    <input type="text" maxlength="64" class="form-control" id="street" ng-model="driver.address.street" required="">
                 </div>  
                 <div class="row">
                     <div class="col-md-6">
@@ -82,19 +82,19 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="city" class="required">{{"label.city" | translate}}</label>
-                            <input type="text" class="form-control" id="city" ng-model="driver.address.city" required="">
+                            <input type="text" maxlength="64" class="form-control" id="city" ng-model="driver.address.city" required="">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="country" class="required">{{"label.country" | translate}}</label>
-                    <input type="text" class="form-control" id="country" ng-model="driver.address.country" required="">
+                    <input type="text" maxlength="64" class="form-control" id="country" ng-model="driver.address.country" required="">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="occupation">{{"label.occupation" | translate}}</label>
-                    <input type="text" class="form-control" id="occupation" ng-model="driver.occupation">
+                    <input type="text" maxlength="64" class="form-control" id="occupation" ng-model="driver.occupation">
                 </div>  
                 <div class="form-group">
                     <label for="birthdate" class="required">{{"label.birthdate" | translate}}</label>
@@ -118,7 +118,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="description">{{"label.description" | translate}}</label>
-                    <textarea type="text" class="form-control" id="description" ng-model="driver.description"></textarea>
+                    <textarea type="text" maxlength="1024" class="form-control" id="description" ng-model="driver.description"></textarea>
                 </div>
             </div>
         </div>
