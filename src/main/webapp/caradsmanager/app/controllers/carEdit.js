@@ -23,6 +23,7 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
         $http.get('../api/drivers/' + driverId + '/cars/' + carId).
                 success(function (data, status, headers, config) {
                     $scope.car = data;
+                    $scope.car.buildYear = parseInt($scope.car.buildYear);
                 }).
                 error(function (data, status, headers, config) {
                     var title = 'alert.loadingError';
