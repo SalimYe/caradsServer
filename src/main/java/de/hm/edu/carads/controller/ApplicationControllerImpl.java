@@ -361,7 +361,8 @@ public class ApplicationControllerImpl implements ApplicationController {
 	/**
 	 * Diese Methode dient als Antwort des Fahrers an einen Werbenden.
 	 * Er gibt Antwort mit welchem Auto er an welcher Kampagne teilnehmen möchte 
-	 * oder nicht. Andere Anfragen mit ueberlappenden Zeitraeumen werden automatisch abgesagt.
+	 * oder nicht. Andere Anfragen mit ueberlappenden Zeitraeumen werden automatisch abgesagt,
+	 * falls es zu einer Zusage kam.
 	 * @param carId, advertiserId, campaignId, response
 	 * @throws Exception
 	 */
@@ -370,8 +371,8 @@ public class ApplicationControllerImpl implements ApplicationController {
 		Campaign campaign = this.getCampaign(advertiserId, campaignId);
 		updateFellowSate(carId, advertiserId, campaign, getFellowState(respond));
 		
-		rejectAllOverlappingCampaigns(carId, campaign);
-		
+		if(respond.equals(FellowState.ACCEPTED.toString()))
+			rejectAllOverlappingCampaigns(carId, campaign);
 	}
 	
 	/**

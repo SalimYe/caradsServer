@@ -395,6 +395,51 @@ public class RequestControllerTest {
 		assertEquals(FellowState.ACCEPTED, modelController.getCampaign(ad.getId(), camp.getId()).getFellow(car.getId()).getState());
 	}
 	
+	@Test
+	public void rejectOneAndAcceptAnotherTest() throws Exception{
+		Driver driver = modelController.addDriver(makeNewDriver());
+		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
+		Campaign c1 = makeNewCampaign();
+		c1.setStartDate("01.06.2016");
+		c1.setEndDate("31.12.2016");
+		Campaign campaign1 = modelController.addCampaign(ad.getId(), makeNewCampaign());
+		
+		Campaign c2 = new Campaign();
+		c2.setName("Kampagne2");
+		c2.setStartDate("09.06.2016");
+		c2.setEndDate("31.12.2016");
+		c2.setCarBudget("2");
+		c2.setDescription("Ne");
+		Campaign campaign2 = modelController.addCampaign(ad.getId(), c2);
+		
+		//Zwei Kampagnen mit ueberschneidenden Daten fragen ein Fahrzeug an.
+		modelController.requestVehicleForCampaign(ad.getId(), campaign1.getId(), car.getId());
+		modelController.requestVehicleForCampaign(ad.getId(), campaign2.getId(), car.getId());
+		
+		//Erst moechte der Fahrer die beiden Angebote sehen
+		assertEquals(2, getOpenRequestCount(modelController.getOfferInformation(driver.getId())));
+				
+		//Der Fahrer moechte fuer die erste Kampagne absagen und der zweiten zusagen.
+		modelController.respondToOffer(car.getId(), ad.getId(), campaign2.getId(), "REJECTED");
+		
+		//Erst moechte er die beiden Angebote sehen
+		assertEquals(1, getOpenRequestCount(modelController.getOfferInformation(driver.getId())));
+		
+		modelController.respondToOffer(car.getId(), ad.getId(), campaign1.getId(), "ACCEPTED");
+	}
+	
+	private int getOpenRequestCount(Collection<OfferInformation> collection){
+		Iterator<OfferInformation> iterator = collection.iterator();
+		int count = 0;
+		while(iterator.hasNext()){
+			OfferInformation offerInfo = iterator.next();
+			if(offerInfo.getState().equals(FellowState.ASKED))
+				count++;
+		}
+		return count;
+	}
+	
 	private Campaign makeNewCampaign(){
 		Campaign c = new Campaign();
 		c.setName("Red Bull Icerace");

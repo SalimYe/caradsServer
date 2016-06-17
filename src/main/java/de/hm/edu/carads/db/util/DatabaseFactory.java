@@ -7,20 +7,41 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
-import com.mongodb.client.MongoDatabase;
-
 import de.flapdoodle.embed.mongo.tests.MongodForTestsFactory;
 
-
+/**
+ * Diese Klasse stellt zur Laufzeit eine Datenbank zur Verfuegung. 
+ * @author BK
+ *
+ */
 public class DatabaseFactory {
+	/**
+	 * Static String fuer die Testinstanz.
+	 */
 	public static String INST_TEST = "test";
+	
+	/**
+	 * Static String fuer die Produktivinstanz.
+	 */
 	public static String INST_PROD = "live";
 	
+	/**
+	 * Die Testdatenbank.
+	 */
     private static DB testDB;
+    
+    /**
+     * Die Produktivdatenbank.
+     */
     private static DB prodDB;
     
-    private static MongoDatabase mongoDB;
-
+    /**
+     * Eine MongoDB wird zurueck gegeben. Ob Test oder Produktiv
+     * haengt vom Parameter ab.
+     * 
+     * @param instance Name der angeforderten Instanz
+     * @return MongoDB
+     */
     public static DB getInstanceDB(String instance){
     	if(instance.equalsIgnoreCase(INST_TEST)){
     		if(testDB == null){
@@ -42,6 +63,11 @@ public class DatabaseFactory {
     	throw new EmptyStackException();
     }
     
+    /**
+     * Eine neue MongoDB-Verbindung wird erstellt.
+     * @return
+     * @throws Exception
+     */
     private static DB createNewProductiveMongoDB() throws Exception{
     	MongoClient mongoClient;
 		PropertieController pLoader;
@@ -54,6 +80,11 @@ public class DatabaseFactory {
 		return mongoClient.getDB(pLoader.getPropertyString("DB_NAME"));
     }
     
+    /**
+     * Eine neue Testverbindung zu einer lokalen Mongo-Instanz wird fuer
+     * Testzwecke erstellt.
+     * @return
+     */
     private static DB createNewTestMongoDB() {
         try {
             MongodForTestsFactory factory = new MongodForTestsFactory();
@@ -65,6 +96,9 @@ public class DatabaseFactory {
         }
     }
     
+    /**
+     * Die Datenbank wird geleert und geloescht.
+     */
     public static void dropTestDB(){
     	if(testDB!=null)
     		testDB.dropDatabase();
