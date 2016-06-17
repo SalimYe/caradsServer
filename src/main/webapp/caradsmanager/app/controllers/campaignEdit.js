@@ -12,6 +12,24 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     $scope.campaign;
     $scope.isNewCampaign = isNewCampaign;
 
+    $scope.startDateValid = function (startDate) {
+        var today = new Date();
+        var startDateValue = Date.parse(startDate);
+        today.setHours(0);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        today.setMilliseconds(0);
+
+        return (today.getTime() < startDateValue);
+    };
+
+    $scope.endDateValid = function (startDate, endDate) {
+        var startDateValue = Date.parse(startDate);
+        var endDateValue = Date.parse(endDate);
+
+        return (startDateValue < endDateValue);
+    };
+
     if (!isNewCampaign) {
         $http.get('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId).
                 success(function (data, status, headers, config) {
@@ -28,30 +46,37 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
                 });
     }
 
+    var campaignValidation = function (campaign) {
+        if ($scope.campaign.images === undefined)
+            return false;
+        return ($scope.campaignForm.$valid
+                && $scope.campaign.images.length > 0)
+                && $scope.startDateValid(campaign.startDate)
+                && $scope.endDateValid(campaign.startDate, campaign.endDate);
+    };
+
     var updateCampaign = function () {
         $scope.sendRequest = true;
-        if ($scope.campaign.images !== undefined) {
-            if ($scope.campaignForm.$valid && $scope.campaign.images.length > 0) {
-                $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
-                        success(function (data, status, headers, config) {
-                            var title = 'alert.update';
-                            var description = 'alert.updateText';
-                            var button = 'button.next';
-                            var buttonFunction = function () {
-                                redirectToCampaignView();
-                            };
-                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                        }).
-                        error(function (data, status, headers, config) {
-                            var title = 'alert.updateError';
-                            var description = 'alert.updateErrorText';
-                            var button = 'button.back';
-                            var buttonFunction = function () {
+        if (campaignValidation($scope.campaign)) {
+            $http.put('../api/advertisers/' + advertiserId + '/campaigns/' + campaignId, $scope.campaign).
+                    success(function (data, status, headers, config) {
+                        var title = 'alert.update';
+                        var description = 'alert.updateText';
+                        var button = 'button.next';
+                        var buttonFunction = function () {
+                            redirectToCampaignView();
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    }).
+                    error(function (data, status, headers, config) {
+                        var title = 'alert.updateError';
+                        var description = 'alert.updateErrorText';
+                        var button = 'button.back';
+                        var buttonFunction = function () {
 
-                            };
-                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                        });
-            }
+                        };
+                        showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                    });
         }
     };
 
@@ -88,7 +113,8 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
     };
 
     var createCampaign = function () {
-        if ($scope.campaignForm.$valid) {
+        $scope.sendRequest = true;
+        if (campaignValidation($scope.campaign)) {
             $http.post('../api/advertisers/' + advertiserId + '/campaigns/', $scope.campaign).
                     success(function (data, status, headers, config) {
                         campaignId = data.id;

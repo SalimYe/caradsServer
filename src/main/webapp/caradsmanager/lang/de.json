@@ -34,7 +34,9 @@
         "carsRequestedText": "Die von Ihnen ausgewählten Fahrzeuge wurden erfolgreich für die Kampagne angefragt. Sie können in den Details einer Kampagne stets den aktuellen Status angefragter Fahrzeuge einsehen.",
         "requstFailed": "Anfrage fehlgeschlagen!",
         "requstFailedText": "Die von Ihnen gestellte Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
-        "noCampaignImages": "Eine Kampagne muss über ein oder mehere Fotos verfügen. Fügen Sie bitte Fotos hinzu!"
+        "noCampaignImages": "Eine Kampagne muss über ein oder mehere Fotos verfügen. Fügen Sie bitte Fotos hinzu!",
+        "startDateError": "Der Start-Termin muss in der Zunkunft liegen!",
+        "endDateError": "Der End-Termin darf frühstens einen Tag nach dem Beginn liegen!"
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",

@@ -29,6 +29,7 @@
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'event1')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </p>
+                    <span ng-if="!startDateValid(campaign.startDate) && sendRequest" class="help-block red">{{"alert.startDateError"| translate}}</span>
                 </div> 
                 <div class="form-group">
                     <label for="endDate" class="required">{{"label.endDate"| translate}}</label>
@@ -37,6 +38,7 @@
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="datePicker.open($event, 'event2')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </p>
+                    <span ng-if="!endDateValid(campaign.startDate, campaign.endDate) && sendRequest" class="help-block red">{{"alert.endDateError"| translate}}</span>
                 </div> 
             </div>
         </div>
@@ -54,7 +56,7 @@
                     <label for="image" class="required">{{"label.campaignImages"| translate}}</label>
                     <input name="file" id="image" class="form-control" type="file" fileread="image"
                            onchange="angular.element(this).scope().saveImages()" multiple="" />
-                    <span ng-if="(campaign.images.length <= 0 || campaign.images === undefined) && sendRequest" class="help-block red">{{"alert.noCampaignImages" | translate}}</span>
+                    <span ng-if="(campaign.images.length <= 0 || campaign.images === undefined) && sendRequest" class="help-block red">{{"alert.noCampaignImages"| translate}}</span>
                 </div>
             </div>
         </div>
