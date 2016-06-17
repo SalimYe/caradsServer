@@ -50,7 +50,23 @@ startapp.controller('driver', function ($scope, $routeParams, $http, $timeout, $
                         $scope.driver.profilePicture = image;
                     })
                     .error(function (data, status) {
+                        if (status === 406) {
+                            var title = 'alert.imageFormatError';
+                            var description = 'alert.imageFormatErrorText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
 
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        } else {
+                            var title = 'alert.imageError';
+                            var description = 'alert.imageErrorText';
+                            var button = 'button.back';
+                            var buttonFunction = function () {
+
+                            };
+                            showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                        }
                     });
         }, 200);
 

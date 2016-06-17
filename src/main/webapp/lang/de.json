@@ -10,7 +10,11 @@
         "invalidPhoneNumber": "Telefonnummer ist nicht gültig! (nur Zahlen und '+'-Zeichen)",
         "invalidZip": "PLZ nicht gültig! (5-stellig, nur Zahlen)",
         "notEmpty": "Feld darf nicht leer sein!",
-        "errorTitle": "Es muss eine Anrede ausgewählt sein!"
+        "errorTitle": "Es muss eine Anrede ausgewählt sein!",
+        "imageError": "Bild-Upload fehlgeschlagen!",
+        "imageErrorText": "Das Bild konnte leider nicht an den Server übermittelt werden. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "imageFormatError": "Bild-Upload fehlgeschlagen!",
+        "imageFormatErrorText": "Das Bild konnte nicht gespeichert werden, da es keinem gültigen Format entspricht. Wählen Sie ein Bild im JPG oder PNG Format aus und versuchen Sie es erneut."
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",

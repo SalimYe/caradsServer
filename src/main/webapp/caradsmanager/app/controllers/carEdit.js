@@ -105,7 +105,7 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
                             redirectToCarOverview();
                         };
                         showModal($modal, description, title, button, null, buttonFunction, null, angular);
-                                            }).
+                    }).
                     error(function (data, status) {
                         var title = 'alert.creatFailed';
                         var description = 'alert.creatFailedText';
@@ -144,7 +144,23 @@ app.controller('carEdit', function ($scope, $routeParams, $http, $location, $mod
                                 $scope.car.images.push(image);
                             })
                             .error(function (data, status) {
+                                if (status === 406) {
+                                    var title = 'alert.imageFormatError';
+                                    var description = 'alert.imageFormatErrorText';
+                                    var button = 'button.back';
+                                    var buttonFunction = function () {
 
+                                    };
+                                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                                } else {
+                                    var title = 'alert.imageError';
+                                    var description = 'alert.imageErrorText';
+                                    var button = 'button.back';
+                                    var buttonFunction = function () {
+
+                                    };
+                                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                                }
                             });
                 }
             }

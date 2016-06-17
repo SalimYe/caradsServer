@@ -15,8 +15,9 @@
         "updateError": "Aktualisierung fehlgeschlagen",
         "updateErrorText": "Die von Ihnen vorgenommenen Änderungen an den Daten konnten nicht gespeichert werden. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
         "deleteError": "Löschen fehlgeschlagen",
+        "deleteErrorConstraint": "Löschen verweigert!",
         "deleteErrorConstraintText": "Das Löschen wurde verweigert. Gründe dafür können in den FAQs nachgelesen werden.",
-        "deleteErrorConstraintText": "Das Löschen ist aus technischen Gründen fehlgeschlagen.",
+        "deleteErrorText": "Das Löschen ist aus technischen Gründen fehlgeschlagen.",
         "deleteSuccess": "Löschen erfolgreich",
         "deleteSuccessText": "Das Löschen war erfolgreich.",
         "invalidPhoneNumber": "Telefonnummer ist nicht gültig! (nur Zahlen und '+'-Zeichen)",
@@ -32,7 +33,15 @@
         "carsRequested": "Fahrzeuge erfolgreich angefragt!",
         "carsRequestedText": "Die von Ihnen ausgewählten Fahrzeuge wurden erfolgreich für die Kampagne angefragt. Sie können in den Details einer Kampagne stets den aktuellen Status angefragter Fahrzeuge einsehen.",
         "requstFailed": "Anfrage fehlgeschlagen!",
-        "requstFailedText": "Die von Ihnen gestellte Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator."
+        "requstFailedText": "Die von Ihnen gestellte Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "noCampaignImages": "Eine Kampagne muss über ein oder mehere Fotos verfügen. Fügen Sie bitte Fotos hinzu!",
+        "startDateError": "Der Start-Termin muss in der Zunkunft liegen!",
+        "endDateError": "Der End-Termin darf frühstens einen Tag nach dem Beginn liegen!",
+        "colorError": "Es muss eine Farbe angegeben werden!",
+        "imageError": "Bild-Upload fehlgeschlagen!",
+        "imageErrorText": "Das Bild konnte leider nicht an den Server übermittelt werden. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
+        "imageFormatError": "Bild-Upload fehlgeschlagen!",
+        "imageFormatErrorText": "Das Bild konnte nicht gespeichert werden, da es keinem gültigen Format entspricht. Wählen Sie ein Bild im JPG oder PNG Format aus und versuchen Sie es erneut."
     },
     "heading": {
         "registrationAdvertiser": "Werbender Registrierung",
@@ -96,7 +105,8 @@
         "selectionTextOne": "Es sind momenten",
         "selectionTextTwo": "Fahrzeuge ausgewählt.",
         "contactDriver": "Kontakt",
-        "otherDriver": "Sonstiges"
+        "otherDriver": "Sonstiges",
+        "profileImage": "Profilbild"
     },
     "car": {
         "milage": "Kilometerstand",

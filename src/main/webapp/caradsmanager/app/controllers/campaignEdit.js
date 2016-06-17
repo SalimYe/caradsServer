@@ -169,7 +169,23 @@ app.controller('campaignEdit', function ($scope, $routeParams, $http, $location,
                                 $scope.campaign.images.push(image);
                             })
                             .error(function (data, status) {
+                                if (status === 406) {
+                                    var title = 'alert.imageFormatError';
+                                    var description = 'alert.imageFormatErrorText';
+                                    var button = 'button.back';
+                                    var buttonFunction = function () {
 
+                                    };
+                                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                                } else {
+                                    var title = 'alert.imageError';
+                                    var description = 'alert.imageErrorText';
+                                    var button = 'button.back';
+                                    var buttonFunction = function () {
+
+                                    };
+                                    showModal($modal, description, title, button, null, buttonFunction, null, angular);
+                                }
                             });
                 }
             }
