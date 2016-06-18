@@ -10,11 +10,15 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.ModelCollection;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.User;
-import de.hm.edu.carads.transaction.Credidentials;
+import de.hm.edu.carads.transaction.Credentials;
 
+/**
+ * Die Authentifizierungsmethoden werden getestet.
+ * @author BK
+ *
+ */
 public class RealmControllerTest {
 
-	private static String USER_ID = "123";
 	private static String USER_NAME = "test@test.de";
 	
 	private DatabaseController dbController = new DatabaseControllerImpl(
@@ -41,7 +45,7 @@ public class RealmControllerTest {
 		rc.addUser(makeNewUser());
 		User user = rc.getUser(USER_NAME);
 		
-		rc.changeCredentials(user.getId(), new Credidentials("password", "asd"));
+		rc.changeCredentials(user.getId(), new Credentials("password", "asd"));
 	}
 	
 	@Test

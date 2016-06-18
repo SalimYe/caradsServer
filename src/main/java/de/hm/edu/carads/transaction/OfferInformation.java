@@ -5,6 +5,11 @@ import de.hm.edu.carads.models.Campaign;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.util.FellowState;
 
+/**
+ * Diese Klasse repreaesentiert die Vorlage einer Fahrerantwort im JSON Format.
+ * @author BK
+ *
+ */
 public class OfferInformation {
 	private Car car;
 	private Campaign campaign;

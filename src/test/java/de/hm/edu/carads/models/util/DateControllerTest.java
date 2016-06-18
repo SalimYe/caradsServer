@@ -5,8 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import de.hm.edu.carads.controller.util.DateController;
-import de.hm.edu.carads.models.Campaign;
 
+/**
+ * Die Datumslogik wird geprueft.
+ * Dazu zaehlt das konvertieren von eingegebenen Daten und der Vergleich von Daten.
+ * @author BK
+ *
+ */
 public class DateControllerTest {
 
 	@Test

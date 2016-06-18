@@ -1,24 +1,20 @@
 package de.hm.edu.carads.controller;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.Collection;
-
 import javax.ws.rs.core.NoContentException;
 
 import com.google.gson.Gson;
-import com.mongodb.util.JSON;
 import com.mongodb.BasicDBObject;
+import com.mongodb.util.JSON;
 
 import de.hm.edu.carads.db.DatabaseController;
 import de.hm.edu.carads.db.ModelCollection;
 import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.models.util.Hasher;
-import de.hm.edu.carads.models.util.Person;
-import de.hm.edu.carads.transaction.Credidentials;
+import de.hm.edu.carads.transaction.Credentials;
 
 /**
- *
- * @author florian
+ * Die Logik fuer die Authentifizierung und Verwaltung der Benutzer.
+ * @author FS, BK
  */
 public class RealmControllerImpl implements RealmController {
 	protected DatabaseController dbController;
@@ -57,7 +53,7 @@ public class RealmControllerImpl implements RealmController {
 	}
 
 	@Override
-	public void changeCredentials(String id, Credidentials credidentials) throws Exception{
+	public void changeCredentials(String id, Credentials credidentials) throws Exception{
 		User user = makeUser(dbController.getEntity(ModelCollection.REALM, id));
 		
 		if(user.getPassword().equals(Hasher.getShaHash(credidentials.getOldPassword()))){

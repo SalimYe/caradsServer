@@ -5,10 +5,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author florian
+ * Das Hashen von Passwoertern wird geprueft.
+ * @author FS
  */
-public class HelperTest {
+public class HashTest {
     
     private static final String PASSWORD = "bla";
     private static final String PASSWORDHASH = "4df3c3f68fcc83b27e9d42c90431a72499f17875c81a599b566c9889b9696703";

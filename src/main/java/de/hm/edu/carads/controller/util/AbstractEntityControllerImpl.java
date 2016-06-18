@@ -27,7 +27,6 @@ import de.hm.edu.carads.models.util.Person;
  * Diese Klasse repreasentiert die Steuerungsinstanz fuer die Entitaeten Werbender, Fahrer.
  * 
  * @author BK
- *
  * @param <E>
  */
 public class AbstractEntityControllerImpl<E extends Person> implements AbstractEntityController<E>{

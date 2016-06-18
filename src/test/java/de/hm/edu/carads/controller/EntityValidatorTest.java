@@ -9,6 +9,11 @@ import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
 
+/**
+ * Hier wird der Validator geprueft.
+ * @author BK
+ *
+ */
 public class EntityValidatorTest {
 
 	private static String EMAIL = "muster.mann@hm.edu";

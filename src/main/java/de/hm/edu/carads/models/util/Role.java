@@ -1,8 +1,8 @@
 package de.hm.edu.carads.models.util;
 
 /**
- *
- * @author florian
+ * Eine Rolle beschreibt den Status eines Benutzers und seine Berechtigung.
+ * @author FS
  */
 public class Role {
     private String name;

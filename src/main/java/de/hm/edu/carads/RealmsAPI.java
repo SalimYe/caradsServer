@@ -27,7 +27,7 @@ import de.hm.edu.carads.controller.RealmControllerImpl;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.User;
-import de.hm.edu.carads.transaction.Credidentials;
+import de.hm.edu.carads.transaction.Credentials;
 
 /**
  * Die API für die Authentifizierung.
@@ -84,7 +84,7 @@ public class RealmsAPI {
 	public Response changePassword(@PathParam("id") String driverId,
 			String input) {
 
-		Credidentials credidentials = gson.fromJson(input, Credidentials.class);
+		Credentials credidentials = gson.fromJson(input, Credentials.class);
 		try {
 			rc.changeCredentials(driverId, credidentials);
 			return Response.ok().build();

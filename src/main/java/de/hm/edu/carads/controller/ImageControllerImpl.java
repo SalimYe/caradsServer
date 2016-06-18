@@ -10,11 +10,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.UUID;
+
 import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
-import de.hm.edu.carads.controller.util.EntityValidator;
 import de.hm.edu.carads.db.util.PropertieController;
 import de.hm.edu.carads.models.Image;
 

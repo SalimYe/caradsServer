@@ -38,8 +38,8 @@ import de.hm.edu.carads.transaction.OfferInformation;
 import de.hm.edu.carads.transaction.OfferResponse;
 
 /**
- * Die REST-Schnittstelle fuer die Bereitstellung aller benötigten Fahrer-Methoden
- * nach Außen.
+ * Die REST-Schnittstelle fuer die Bereitstellung aller benoetigten Fahrer-Methoden
+ * nach Aussen.
  * Parameter werden immer als JSON erwartet.
  * Rueckgabewerte sind ebenfalls immer JSON-Dateien.
  * @author BK
@@ -56,7 +56,7 @@ public class DriverAPI {
 	
 	/**
 	 * Dieses Objekt wird zum Parsen von JSON-Dateien in Java-Objekte verwendet.
-	 * Zusaetzlich können Java-Objekte als JSON-Datein formatiert werden.
+	 * Zusaetzlich koennen Java-Objekte als JSON-Datein formatiert werden.
 	 */
 	private Gson gson = new Gson();
 	
@@ -206,13 +206,13 @@ public class DriverAPI {
 	}
 
 	/**
-	 * Löscht Fahrer. Bei Erfolg wird auch der Eintrag in der Realm-Collection geloescht.
-	 * Tritt bei dem Löschen des Users ein Fehler auf, bleibt er weiterhin in beiden Collections
+	 * Loescht Fahrer. Bei Erfolg wird auch der Eintrag in der Realm-Collection geloescht.
+	 * Tritt bei dem Loeschen des Users ein Fehler auf, bleibt er weiterhin in beiden Collections
 	 * bestehen.
 	 * @param id
-	 * @return 200 wenn gelöscht<br>
+	 * @return 200 wenn geloescht<br>
 	 * 404 wenn Faher nicht gefunden<br>
-	 * 406 wenn Fahrer noch Abhaengigkeiten hat und nicht gelöscht werden darf<br>
+	 * 406 wenn Fahrer noch Abhaengigkeiten hat und nicht geloescht werden darf<br>
 	 * 500 bei Serverfehler
 	 */
 	@DELETE
@@ -317,10 +317,10 @@ public class DriverAPI {
 	}
 
 	/**
-	 * Löscht ein Fahrzeug eines Fahrers.
+	 * Loescht ein Fahrzeug eines Fahrers.
 	 * @param driverId
 	 * @param carId
-	 * @return 200 gelöscht<br>
+	 * @return 200 geloescht<br>
 	 * 404 Fahrer oder Fahrzeug nicht gefunden<br>
 	 * 406 Hat Abhaengigkeiten. Ist in einer Kampagne angemeldet<br>
 	 * 500 Serverfehler

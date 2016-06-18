@@ -6,13 +6,24 @@ import de.hm.edu.carads.models.util.Model;
 import de.hm.edu.carads.models.util.Role;
 
 /**
- *
+ * Ein User ist ein Benutzer des Web-Portals. Dies kann ein Admin, Fahrer oder Werbender sein.
  * @author florian, BK
  */
 public class User extends Model{
 
+	/**
+	 * E-Mail des Benutzers.
+	 */
     private String username;
+    
+    /**
+     * Passwort.
+     */
     private String credentials;
+    
+    /**
+     * Der User kann mehrere Rollen haben.
+     */
     private Collection <Role> roles;
 
     public User(String username, String credentials, String role, String roleId) {

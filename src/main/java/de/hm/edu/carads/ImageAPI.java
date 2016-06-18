@@ -25,7 +25,7 @@ import de.hm.edu.carads.controller.ImageControllerImpl;
 import de.hm.edu.carads.models.Image;
 
 /**
- * Die REST-Schnittstelle fuer die Bereitstellung aller benötigten Bild-Methoden
+ * Die REST-Schnittstelle fuer die Bereitstellung aller benoetigten Bild-Methoden
  * nach Außen.
  * @author BK
  *
@@ -35,7 +35,7 @@ public class ImageAPI {
 
 	/**
 	 * Dieses Objekt wird zum Parsen von JSON-Dateien in Java-Objekte verwendet.
-	 * Zusaetzlich können Java-Objekte als JSON-Datein formatiert werden.
+	 * Zusaetzlich koennen Java-Objekte als JSON-Datein formatiert werden.
 	 */
 	private Gson gson = new Gson();
 	

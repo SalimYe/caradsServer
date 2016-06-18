@@ -1,9 +1,8 @@
 package de.hm.edu.carads.controller;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import javax.naming.directory.InvalidAttributesException;
 import javax.ws.rs.core.NoContentException;
@@ -16,8 +15,13 @@ import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
-import de.hm.edu.carads.models.Image;
 
+/**
+ * Diese Klasse enthaelt Testmethoden fuer den AdvertiserController.
+ * 
+ * @author BK
+ *
+ */
 public class AdvertiserControllerTest {
 
 	private static String EMAIL = "muster.mann@mustermann.com";
@@ -152,7 +156,7 @@ public class AdvertiserControllerTest {
 	@Test (expected = NoContentException.class)
 	public void updateCampaignTest2() throws Exception{
 		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
-		Campaign c = modelController.addCampaign(ad.getId(), makeNewCampaign());
+		modelController.addCampaign(ad.getId(), makeNewCampaign());
 		
 		Campaign newCampaign = new Campaign();
 		newCampaign.setName("BMW Promo");

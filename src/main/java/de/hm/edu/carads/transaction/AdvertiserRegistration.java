@@ -3,8 +3,8 @@ package de.hm.edu.carads.transaction;
 import de.hm.edu.carads.models.Advertiser;
 
 /**
- *
- * @author florian, BK
+ * Der Werbende registriert sich und sendet diese Klasse im JSON-Format an den Server.
+ * @author FS, BK
  */
 public class AdvertiserRegistration extends Advertiser{
 

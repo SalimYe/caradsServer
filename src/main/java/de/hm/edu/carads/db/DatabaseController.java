@@ -14,12 +14,9 @@ public interface DatabaseController {
 	public BasicDBObject addEntity(ModelCollection collection, BasicDBObject entity, String id);
 	public void updateEntity(ModelCollection collection, String id, BasicDBObject newEntity) throws NoContentException;
 	public void deleteEntity(ModelCollection collection, String id) throws NoContentException;
-	
 	public long getCollectionCount(ModelCollection collection);
-	
 	public boolean existEntityByKeyValue(ModelCollection collection, String key, String value);
 	public BasicDBObject getEntityByKeyValue(ModelCollection collection, String key, String value);
 	public List<DBObject> getAllEntities(ModelCollection collection);
-	
 	public String getNewId();
 }

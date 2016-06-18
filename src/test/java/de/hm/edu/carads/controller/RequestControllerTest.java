@@ -9,7 +9,6 @@ import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.controller.exceptions.HasConstraintException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
@@ -20,8 +19,12 @@ import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.models.util.Fellow;
 import de.hm.edu.carads.models.util.FellowState;
 import de.hm.edu.carads.transaction.OfferInformation;
-import de.hm.edu.carads.transaction.OfferRequest;
 
+/**
+ * Das Anfragen und Annehmen von Angeboten zu Kampagnen wird hier expliziet getestet.
+ * @author BK
+ *
+ */
 public class RequestControllerTest {
 	private static String EMAIL = "muster.mann@mustermann.com";
 	private static String FIRSTNAME = "Muster";
@@ -77,7 +80,7 @@ public class RequestControllerTest {
 	@Test
 	public void offerInformationSizeTest2() throws Exception {
 		Driver driver = modelController.addDriver(makeNewDriver());
-		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		modelController.addCar(driver.getId(), makeNewCar());
 
 		assertEquals(0, modelController.getOfferInformation(driver.getId()).size());
 	}

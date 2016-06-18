@@ -1,10 +1,10 @@
 package de.hm.edu.carads.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 
 import javax.naming.directory.InvalidAttributesException;
@@ -13,18 +13,21 @@ import javax.ws.rs.core.NoContentException;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
 import de.hm.edu.carads.db.DatabaseControllerImpl;
 import de.hm.edu.carads.db.util.DatabaseFactory;
 import de.hm.edu.carads.models.Car;
 import de.hm.edu.carads.models.Driver;
-import de.hm.edu.carads.models.util.MetaInformation;
-import de.hm.edu.carads.controller.exceptions.AlreadyExistsException;
-import de.hm.edu.carads.controller.util.DateController;
 
+/**
+ * Diese Klasse enthaelt Testmethoden fuer den DriverController
+ * 
+ * @author BK
+ *
+ */
 public class DriverControllerTest {
 
 	private static String EMAIL = "muster.mann@hm.edu";
-	private static String EMAILTWO = "flosch@web.de";
 	private static String FIRSTNAME = "Muster";
 	private static String LASTNAME = "Mann";
 
@@ -47,7 +50,7 @@ public class DriverControllerTest {
 
 	@Test
 	public void getAllDriversTest() throws Exception {
-		Driver driver = modelController.addDriver(makeNewDriver());
+		modelController.addDriver(makeNewDriver());
 		assertEquals(1, modelController.getAllDrivers().size());
 		Driver driver2 = makeNewDriver();
 		driver2.setEmail("neu@gmx.de");
@@ -57,7 +60,7 @@ public class DriverControllerTest {
         
         @Test
 	public void getDriverByIdTest() throws Exception {
-        Driver driver = modelController.addDriver(makeNewDriver());
+        modelController.addDriver(makeNewDriver());
         Driver dbDriver = modelController.getDriverByMail(EMAIL);
 		assertEquals(EMAIL, dbDriver.getEmail());
 	}
@@ -222,7 +225,7 @@ public class DriverControllerTest {
 		driver2.setPhone("089-123");
 		driver2.setOccupation("Student");
 		driver2.setLicenseDate("01.01.2000");
-		Driver d = modelController.addDriver(driver1);
+		modelController.addDriver(driver1);
 		Driver d2 = modelController.addDriver(driver2);
 		d2.setEmail(EMAIL);
 
@@ -232,7 +235,7 @@ public class DriverControllerTest {
 	@Test
 	public void getDriverInfoInCarTest() throws Exception{
 		Driver driver = modelController.addDriver(makeNewDriver());
-		Car car = modelController.addCar(driver.getId(), makeNewCar());
+		modelController.addCar(driver.getId(), makeNewCar());
 		
 		Iterator<Car> cars = modelController.getCars(driver.getId()).iterator(); 
 		Car checkCar = cars.next();

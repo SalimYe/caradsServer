@@ -1,10 +1,17 @@
 package de.hm.edu.carads.transaction;
 
-public class Credidentials {
+/**
+ * 
+ * 
+ * Das alte und neue Passwort wird bei Passwortaenderung vom Client empfangen.
+ * @author BK
+ *
+ */
+public class Credentials {
 	private String oldPassword;
 	private String newPassword;
 	
-	public Credidentials(String oldPassword, String newPassword){
+	public Credentials(String oldPassword, String newPassword){
 		this.oldPassword = oldPassword;
 		this.newPassword = newPassword;
 	}

@@ -39,8 +39,8 @@ import de.hm.edu.carads.transaction.EnrichedCampaign;
 import de.hm.edu.carads.transaction.OfferRequest;
 
 /**
- * Die REST-Schnittstelle fuer die Bereitstellung aller benötigten Werbenden-Methoden
- * nach Außen.
+ * Die REST-Schnittstelle fuer die Bereitstellung aller benoetigten Werbenden-Methoden
+ * nach Aussen.
  * Parameter werden immer als JSON erwartet.
  * Rueckgabewerte sind ebenfalls immer JSON-Dateien.
  * @author BK
@@ -57,7 +57,7 @@ public class AdvertiserAPI {
 	
 	/**
 	 * Dieses Objekt wird zum Parsen von JSON-Dateien in Java-Objekte verwendet.
-	 * Zusaetzlich können Java-Objekte als JSON-Datein formatiert werden.
+	 * Zusaetzlich koennen Java-Objekte als JSON-Datein formatiert werden.
 	 */
 	private Gson gson = new Gson();
 	
