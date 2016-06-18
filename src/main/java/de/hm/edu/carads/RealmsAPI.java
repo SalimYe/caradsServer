@@ -30,7 +30,7 @@ import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.transaction.Credentials;
 
 /**
- * Die API für die Authentifizierung.
+ * Die API fuer die Authentifizierung.
  * @author BK
  *
  */

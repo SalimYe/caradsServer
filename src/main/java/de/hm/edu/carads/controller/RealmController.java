@@ -4,8 +4,8 @@ import de.hm.edu.carads.models.User;
 import de.hm.edu.carads.transaction.Credentials;
 
 /**
- *
- * @author FS
+ * Die Schnittstelle zur Authentifizierung.
+ * @author FS, BK
  */
 public interface RealmController{
     

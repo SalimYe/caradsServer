@@ -1,8 +1,7 @@
+
 package de.hm.edu.carads.controller;
 
 import java.util.Collection;
-
-import javax.ws.rs.core.NoContentException;
 
 import de.hm.edu.carads.models.Advertiser;
 import de.hm.edu.carads.models.Campaign;
@@ -11,6 +10,11 @@ import de.hm.edu.carads.models.Driver;
 import de.hm.edu.carads.transaction.EnrichedCampaign;
 import de.hm.edu.carads.transaction.OfferInformation;
 
+/**
+ * Die Hauptschnittstelle zur Geschaeftslogik.
+ * @author BK
+ *
+ */
 public interface ApplicationController {
 	public Collection<Driver> getAllDrivers();
 	public Driver addDriver(Driver driver) throws Exception;

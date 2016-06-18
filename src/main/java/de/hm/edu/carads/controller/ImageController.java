@@ -4,6 +4,11 @@ import java.io.InputStream;
 
 import de.hm.edu.carads.models.Image;
 
+/**
+ * Die Schnittstelle zum ImageController.
+ * @author BK
+ *
+ */
 public interface ImageController {
 	public Image saveImage(InputStream input, String datatype) throws Exception;
 	public byte[] getImage(String id) throws Exception;

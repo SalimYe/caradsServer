@@ -6,7 +6,11 @@ import javax.ws.rs.core.NoContentException;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-
+/**
+ * Die Schnittstelle zur Datenbank.
+ * @author BK
+ *
+ */
 public interface DatabaseController {
 		
 	public BasicDBObject getEntity(ModelCollection collection, String id) throws NoContentException;
