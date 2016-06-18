@@ -1,9 +1,6 @@
 package de.hm.edu.carads.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -258,19 +255,6 @@ public class ApplicationControllerImpl implements ApplicationController {
 		else
 			throw new NoContentException("driver not found");
 		
-	}
-	
-	/**
-	 * Wahrheitswert ueber folgende Bedingungen:
-	 * Das Fahrzeug ist momentan von keiner laufenden Kampagne gebucht.
-	 * Das Fahrzeug ist fuer keine in der Zukunft liegenden Kampagne gebucht.
-	 * @param carId
-	 * @return true when booked
-	 */
-	private boolean isCarBooked(String carId) throws Exception{
-		DateFormat df = new SimpleDateFormat(DateController.DATE_FORMAT_CAMPAIGNTIME);
-		String now = df.format(Calendar.getInstance().getTime());
-		return isCarOccupiedInTime(carId, now, "2199-12-31");
 	}
 
 	/**
@@ -682,6 +666,23 @@ public class ApplicationControllerImpl implements ApplicationController {
 	@Override
 	public boolean isCarOccupiedInTime(String carId, String start, String end) throws Exception {
 		Iterator<Campaign> it = this.getAllCampaignsInTime(start, end).iterator();
+		while(it.hasNext()){
+			Campaign campaign = it.next();
+			if(campaign.hasFellowAccepted(carId))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Uberprueft ob das Auto bereits fuer eine Kampagne
+	 * zugesagt hat.
+	 * @param carId
+	 * @return Wahrheitswert ueber die Zusage in einer Kampagne
+	 * @throws Exception
+	 */
+	private boolean isCarBooked(String carId) throws Exception{
+		Iterator<Campaign> it = this.getAllCampaigns().iterator();
 		while(it.hasNext()){
 			Campaign campaign = it.next();
 			if(campaign.hasFellowAccepted(carId))

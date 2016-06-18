@@ -277,26 +277,6 @@ public class RequestControllerTest {
 	}
 	
 	@Test
-	public void deleteBookedCarTest4() throws Exception{
-		Driver driver = modelController.addDriver(makeNewDriver());
-		Car car = modelController.addCar(driver.getId(), makeNewCar());
-		Advertiser ad = modelController.addAdvertiser(makeNewAdvertiser());
-		
-		Campaign c = new Campaign();
-		c.setName("test");
-		c.setStartDate("01.01.2016");
-		c.setEndDate("31.01.2016");
-		c.setCarBudget("2");
-		c.setDescription("Ne");
-		Campaign camp = modelController.addCampaign(ad.getId(), c);
-		
-		modelController.requestVehicleForCampaign(ad.getId(), camp.getId(), car.getId());
-		modelController.respondToOffer(car.getId(), ad.getId(), camp.getId(), "ACCEPTED");
-		
-		modelController.deleteCar(driver.getId(), car.getId());
-	}
-	
-	@Test
 	(expected = HasConstraintException.class)
 	public void deleteDriverWithBookedCarTest() throws Exception{
 		Driver driver = modelController.addDriver(makeNewDriver());
