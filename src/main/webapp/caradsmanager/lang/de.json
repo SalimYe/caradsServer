@@ -20,7 +20,7 @@
         "deleteErrorText": "Das Löschen ist aus technischen Gründen fehlgeschlagen.",
         "deleteSuccess": "Löschen erfolgreich",
         "deleteSuccessText": "Das Löschen war erfolgreich.",
-        "invalidPhoneNumber": "Telefonnummer ist nicht gültig! (nur Zahlen und '+'-Zeichen)",
+        "invalidPhoneNumber": "Telefonnummer ist nicht gültig! (nur Zahlen)",
         "invalidZip": "PLZ nicht gültig! (5-stellig, nur Zahlen)",
         "notEmpty": "Feld darf nicht leer sein!",
         "errorTitle": "Es muss eine Anrede ausgewählt sein!",
@@ -106,7 +106,9 @@
         "selectionTextTwo": "Fahrzeuge ausgewählt.",
         "contactDriver": "Kontakt",
         "otherDriver": "Sonstiges",
-        "profileImage": "Profilbild"
+        "profileImage": "Profilbild",
+        "questions": "Fragen",
+        "answers": "Antworten"
     },
     "car": {
         "milage": "Kilometerstand",

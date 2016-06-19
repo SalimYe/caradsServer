@@ -35,7 +35,7 @@
                 </div>  
                 <div class="form-group">
                     <label for="phone" class="required">{{"label.phone" | translate}}</label>
-                    <input type="text" class="form-control" id="phone" ng-model="driver.phone" phone="" required="">
+                    <input type="text" class="form-control" id="phone" ng-model="driver.phone" maxlength="64" zip="" required="">
                     <span ng-if="driverForm.$error.phone && sendRequest" class="help-block red">{{"alert.invalidPhoneNumber" | translate}}</span>
                 </div>
                 <div class="form-group">

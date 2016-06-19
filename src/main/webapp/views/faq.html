@@ -13,14 +13,14 @@
                     <input class="form-control" id="faqSearch" ng-model="faqSearch" type="text" />
                 </div>
             </form>
-            <h3>{{"label.menu" | translate}}</h3>
+            <h3>{{"label.questions" | translate}}</h3>
             <div class="btn-group-vertical">
                 <button type="button" style="cursor: pointer" ng-repeat="faq in faqs | filter:faqSearch"
                     class="btn btn-default btn-faq" ng-click="selectItem($index)">{{faq.title}}</button>
             </div>
         </div>
         <div class="col-md-9">
-            <h3>{{"label.details" | translate}}</h3>
+            <h3>{{"label.answers" | translate}}</h3>
             <div class="panel-group">
                 <div class="panel panel-default" ng-repeat="faq in faqs | filter:faqSearch" id="faq{{$index}}">
                     <div style="cursor: pointer" class="panel-heading" role="tab" ng-click="changeItem($index)">

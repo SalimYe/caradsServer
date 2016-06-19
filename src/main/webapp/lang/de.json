@@ -7,7 +7,7 @@
         "registrationError": "Fehler bei Registrierung",
         "registrationErrorDuplicateText": "Die von Ihnen verwendete Mail-Adresse ist leider schon vergeben. Bitte versuchen Sie es mit einer anderen Mail-Adresse erneut.",
         "registrationErrorText": "Bei der Registierung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut. Sollte der Fehler öfters auftreten, wenden Sie sich bitte an den Administrator.",
-        "invalidPhoneNumber": "Telefonnummer ist nicht gültig! (nur Zahlen und '+'-Zeichen)",
+        "invalidPhoneNumber": "Telefonnummer ist nicht gültig! (nur Zahlen)",
         "invalidZip": "PLZ nicht gültig! (5-stellig, nur Zahlen)",
         "notEmpty": "Feld darf nicht leer sein!",
         "errorTitle": "Es muss eine Anrede ausgewählt sein!",
@@ -47,7 +47,9 @@
         "search": "Suche",
         "menu": "Menü",
         "details": "Details",
-        "faqInfo": "Im Folgenden finden Sie Antworten auf häufig gestellt Fragen. Wenn Sie sich als Fahrer oder Werbender einloggen, erhalten Sie weitere FAQs speziell für Werbende und Fahrer."
+        "faqInfo": "Im Folgenden finden Sie Antworten auf häufig gestellte Fragen. Wenn Sie sich als Fahrer oder Werbender einloggen, erhalten Sie weitere FAQs speziell für Werbende und Fahrer.",
+        "questions": "Fragen",
+        "answers": "Antworten"
     },
     "button": {
         "cancel": "Abbrechen",

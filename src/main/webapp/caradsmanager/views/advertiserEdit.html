@@ -79,7 +79,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="phone" class="required">{{"label.phone"| translate}}</label>
-                    <input type="text" class="form-control" id="phone" ng-model="advertiser.phone" phone="" required="">
+                    <input type="text" class="form-control" id="phone" ng-model="advertiser.phone" maxlength="64" zip="" required="">
                     <span ng-if="advertiserForm.$error.phone && sendRequest" class="help-block red">{{"alert.invalidPhoneNumber"| translate}}</span>
                 </div>
             </div>
